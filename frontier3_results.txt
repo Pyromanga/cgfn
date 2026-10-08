@@ -1,0 +1,44 @@
+======================================================================
+FRONTIER 3: Phasenübergangs-Analyse des Repräsentationskollaps
+seeds=[0, 1, 2]  tasks=['copy', 'reverse', 'parity', 'mod3']  hidden_dim=32
+======================================================================
+
+--- A) FTLE-Spektrum, d_eff und Kollaps-Typ ---
+task       seed     loss  ftle_mean   d_eff                  phase
+copy          0   0.0007     0.2898    4.00               Kritisch
+copy          1   0.0006     0.2430    4.00               Kritisch
+copy          2   0.0010     0.1369    5.00               Kritisch
+reverse       0   0.5316     0.1545    6.00               Kritisch
+reverse       1   0.5575     0.1922    6.00               Kritisch
+reverse       2   0.5122     0.0629    5.00               Kritisch
+parity        0   0.6835     0.2064    6.00               Kritisch
+parity        1   0.5528     0.2274    4.00               Kritisch
+parity        2   0.6015     0.0757    4.00               Kritisch
+mod3          0   0.6764     0.2012    6.00               Kritisch
+mod3          1   0.6559     0.1819    4.00               Kritisch
+mod3          2   0.6756     0.0529    5.00               Kritisch
+
+--- B) Tau-Sweep: FTLE und Kollaps-Typ ---
+   tau task           loss  ftle_mean   d_eff                  phase
+   0.1 copy         0.0011     2.2469    2.00         Type-2 (Chaos)
+   0.1 parity       0.6915     2.2943    1.00         Type-2 (Chaos)
+   0.1 mod3         0.6867     2.2939    1.00         Type-2 (Chaos)
+   0.5 copy         0.0010     0.8018    3.00         Type-2 (Chaos)
+   0.5 parity       0.6909     0.7934    4.00         Type-2 (Chaos)
+   0.5 mod3         0.6863     0.7761    5.00         Type-2 (Chaos)
+   1.0 copy         0.0017     0.2881    5.00               Kritisch
+   1.0 parity       0.6884     0.2343    6.00               Kritisch
+   1.0 mod3         0.6849     0.2100    6.00               Kritisch
+   2.0 copy         0.0040    -0.0019    7.00               Kritisch
+   2.0 parity       0.6878    -0.0396    6.00               Kritisch
+   2.0 mod3         0.6866    -0.0701    6.00               Kritisch
+   5.0 copy         0.0113    -0.1283    8.00               Kritisch
+   5.0 parity       0.6908    -0.3007    6.00               Kritisch
+   5.0 mod3         0.6888    -0.3183    7.00               Kritisch
+
+--- C) Korrelationen (Pearson) ---
+  corr(ftle, d_eff)  = -0.1280
+  corr(ftle, loss)   = -0.4095
+  corr(d_eff, loss)  = +0.3942
+
+=== FERTIG ===
