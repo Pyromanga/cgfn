@@ -1,0 +1,45 @@
+=== A) Baseline: task_scale=1.0 ===
+  seed 0: copy=0.136  reverse=0.535  parity=0.645
+  seed 1: copy=0.087  reverse=0.446  parity=0.651
+  seed 2: copy=0.122  reverse=0.449  parity=0.641
+
+=== B) Task-Sensitivitaet (fester Input, variiere Task-Vektor) ===
+   CKA nahe 1.0 = Modell ignoriert Task-Vektor
+   CKA deutlich < 1.0 = Modell reagiert auf Task
+  seed 0:
+    copy     vs reverse : CKA=0.3560
+    copy     vs parity  : CKA=0.9933
+    reverse  vs parity  : CKA=0.3668
+  seed 1:
+    copy     vs reverse : CKA=0.4652
+    copy     vs parity  : CKA=0.9853
+    reverse  vs parity  : CKA=0.5142
+  seed 2:
+    copy     vs reverse : CKA=0.3424
+    copy     vs parity  : CKA=0.9679
+    reverse  vs parity  : CKA=0.3898
+
+=== C) Verstaerkter Task-Vektor: task_scale=5.0 ===
+  seed 0: copy=0.031  reverse=0.519  parity=0.592
+  seed 1: copy=0.045  reverse=0.476  parity=0.624
+  seed 2: copy=0.080  reverse=0.467  parity=0.627
+
+=== D) Task-Sensitivitaet mit task_scale=5.0 ===
+  seed 0:
+    copy     vs reverse : CKA=0.6578
+    copy     vs parity  : CKA=0.9572
+    reverse  vs parity  : CKA=0.6771
+  seed 1:
+    copy     vs reverse : CKA=0.7567
+    copy     vs parity  : CKA=0.9776
+    reverse  vs parity  : CKA=0.7766
+  seed 2:
+    copy     vs reverse : CKA=0.6071
+    copy     vs parity  : CKA=0.8908
+    reverse  vs parity  : CKA=0.6502
+
+=== E) Zusammenfassung ===
+Wenn Baseline: copy<->parity ~0.98 und Task-Sensitivitaet auch ~0.98
+-> Mode Collapse bestaetigt. Modell ignoriert Task-Vektor.
+Wenn task_scale=5.0 die Losses verbessert und Task-Sensitivitaet senkt
+-> War es ein Skalierungsproblem, kein Kapazitaetsproblem.
