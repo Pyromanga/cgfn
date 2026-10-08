@@ -1,0 +1,49 @@
+============================================================
+A) Architektur-Vergleich (hidden_dim=32)
+============================================================
+
+--- CT-RNN ---
+  seed 0 copy loss: 0.0001
+  seed 1 copy loss: 0.0001
+  CKA cross-seed copy: 0.9932
+  DSA cross-seed copy (aligned): 0.0000
+  CKA copy vs parity (same seed): 0.6358
+
+--- GRU ---
+  seed 0 copy loss: 0.0002
+  seed 1 copy loss: 0.0002
+  CKA cross-seed copy: 0.9999
+  DSA cross-seed copy (aligned): 0.0000
+  CKA copy vs parity (same seed): 0.9968
+
+--- LSTM ---
+  seed 0 copy loss: 0.0002
+  seed 1 copy loss: 0.0002
+  CKA cross-seed copy: 0.9999
+  DSA cross-seed copy (aligned): 0.0000
+  CKA copy vs parity (same seed): 0.9944
+
+--- VanillaRNN ---
+  seed 0 copy loss: 0.0002
+  seed 1 copy loss: 0.0002
+  CKA cross-seed copy: 1.0000
+  DSA cross-seed copy (aligned): 0.0000
+  CKA copy vs parity (same seed): 1.0000
+
+============================================================
+B) INSD: Simplicity Bias brechen
+============================================================
+
+--- Baseline (kein INSD) ---
+  parity: loss=0.3245
+  mod3: loss=0.6346
+
+--- INSD mit copy als Referenz ---
+  parity: loss=0.6938 (INSD)
+  mod3: loss=0.6789 (INSD)
+
+--- INSD mit copy+reverse als Referenz ---
+  parity: loss=0.6938 (INSD 2 refs)
+  mod3: loss=0.6789 (INSD 2 refs)
+
+=== FERTIG ===
