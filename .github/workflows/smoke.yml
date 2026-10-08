@@ -3,10 +3,27 @@ name: cgfn-smoke
 on:
   push:
   workflow_dispatch:
+    inputs:
+      seeds:
+        description: "Seeds, z.B. 0,1,2,3,4"
+        default: "0,1,2"
+      tasks:
+        description: "Aufgaben, z.B. copy,parity,mod3"
+        default: "copy,reverse,parity,mod3,delayed_xor"
+      steps:
+        description: "Trainingsschritte"
+        default: "4000"
+      hidden_dim:
+        description: "hidden_dim"
+        default: "64"
+      seq_len:
+        description: "seq_len"
+        default: "8"
 
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -19,4 +36,18 @@ jobs:
       - name: Unit tests
         run: python -m pytest -q
       - name: Smoke experiment
-        run: python experiments/run_smoke.py
+        run: |
+          python experiments/run_smoke.py \
+            --seeds "${{ inputs.seeds || '0,1,2' }}" \
+            --tasks "${{ inputs.tasks || 'copy,reverse,parity,mod3,delayed_xor' }}" \
+            --steps "${{ inputs.steps || '4000' }}" \
+            --hidden_dim "${{ inputs.hidden_dim || '64' }}" \
+            --seq_len "${{ inputs.seq_len || '8' }}" \
+            2>&1 | tee smoke_results.txt
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-results
+          path: smoke_results.txt
+          retention-days: 14
