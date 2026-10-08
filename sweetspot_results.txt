@@ -5,41 +5,49 @@ tasks=['copy', 'parity', 'mod3']  seeds=[0, 1]
 ==========================================================================
 
 >>> tau = 0.75
-Traceback (most recent call last):
-  File "/workspaces/cgfn/experiments/sweetspot_finder.py", line 15, in <module>
-    results = find_sweet_spot(tau_grid, tasks, seeds, steps=1500, hidden_dim=32)
-  File "/workspaces/cgfn/src/cgfn/sweetspot.py", line 108, in find_sweet_spot
-    r = measure_at_tau(tau, tasks, seeds, **kwargs)
-  File "/usr/local/python/3.14.2/lib/python3.14/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
-    return func(*args, **kwargs)
-  File "/workspaces/cgfn/src/cgfn/sweetspot.py", line 59, in measure_at_tau
-    m, l = train(seed, task)
-           ~~~~~^^^^^^^^^^^^
-  File "/workspaces/cgfn/src/cgfn/sweetspot.py", line 39, in train
-    opt.zero_grad(); loss.backward(); opt.step()
-                     ~~~~~~~~~~~~~^^
-  File "/usr/local/python/3.14.2/lib/python3.14/site-packages/torch/_tensor.py", line 623, in backward
-    torch.autograd.backward(
-    ~~~~~~~~~~~~~~~~~~~~~~~^
-        self, gradient, retain_graph, create_graph, inputs=inputs
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/python/3.14.2/lib/python3.14/site-packages/torch/autograd/__init__.py", line 395, in backward
-    _engine_run_backward(
-    ~~~~~~~~~~~~~~~~~~~~^
-        tensors,
-        ^^^^^^^^
-    ...<5 lines>...
-        accumulate_grad=True,
-        ^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "/usr/local/python/3.14.2/lib/python3.14/site-packages/torch/autograd/graph.py", line 1072, in _engine_run_backward
-    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        t_outputs, *args, **kwargs
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )  # Calls into the C++ engine to run the backward pass
-    ^
-RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+    CKA_mean=0.5112  ftle=+0.4449  worst_loss=0.6883
+
+>>> tau = 1.0
+    CKA_mean=0.4558  ftle=+0.2198  worst_loss=0.6879
+
+>>> tau = 1.25
+    CKA_mean=0.4209  ftle=+0.0821  worst_loss=0.6883
+
+>>> tau = 1.5
+    CKA_mean=0.4142  ftle=+0.0006  worst_loss=0.6886
+
+>>> tau = 1.75
+    CKA_mean=0.4492  ftle=-0.0697  worst_loss=0.6888
+
+>>> tau = 2.0
+    CKA_mean=0.5120  ftle=-0.1265  worst_loss=0.6889
+
+>>> tau = 2.5
+    CKA_mean=0.5955  ftle=-0.2038  worst_loss=0.6892
+
+>>> tau = 3.0
+    CKA_mean=0.6407  ftle=-0.2572  worst_loss=0.6894
+
+==========================================================================
+ZUSAMMENFASSUNG
+==========================================================================
+   tau   CKA_mean  ftle_mean  copy_loss  parity_loss  mod3_loss
+  0.75     0.5112    +0.4449     0.0011       0.6589     0.6883
+  1.00     0.4558    +0.2198     0.0014       0.6658     0.6879
+  1.25     0.4209    +0.0821     0.0018       0.6736     0.6883
+  1.50     0.4142    +0.0006     0.0023       0.6769     0.6886
+  1.75     0.4492    -0.0697     0.0029       0.6784     0.6888
+  2.00     0.5120    -0.1265     0.0036       0.6792     0.6889
+  2.50     0.5955    -0.2038     0.0046       0.6802     0.6892
+  3.00     0.6407    -0.2572     0.0056       0.6811     0.6894
+
+Sweet Spot (min CKA_mean, copy_loss < 0.05):
+  tau       = 1.50
+  CKA_mean  = 0.4142
+  ftle_mean = +0.0006
+
+Kritischer Punkt (ftle ~ 0):
+  tau       = 1.50
+  ftle_mean = +0.0006
+
+=== FERTIG ===

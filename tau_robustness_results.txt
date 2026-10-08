@@ -1,0 +1,18 @@
+==========================================================================
+PFAD 2: Tau vs. adversarial Robustheit
+hidden_dim=32  taus=[0.5, 1.0, 1.5, 2.0, 3.0, 5.0]
+==========================================================================
+
+   tau  copy_loss     ftle   CKA(c,p)   adv_sens(0.1)
+  0.50     0.0010  +0.8012     0.9264          5.7859
+  1.00     0.0017  +0.2862     0.4399          4.2437
+  1.50     0.0027  +0.0961     0.2045          3.7152
+  2.00     0.0040  -0.0034     0.2069          3.3403
+  3.00     0.0064  -0.0371     0.2385          2.8096
+  5.00     0.0113  -0.1459     0.4426          2.3995
+
+=== FERTIG ===
+Interpretation:
+  - Wenn adv_sens am Sweet Spot (tau~2) minimal ist,
+    dann korreliert Repräsentationstrennung mit Robustheit.
+  - Wenn nicht, ist Repräsentationstrennung unabhaengig von Robustheit.
