@@ -1,0 +1,16 @@
+
+--- CT-RNN ---
+  cross-seed copy: err_self=0.1942 err_cross=0.9871 raw=-4.0827
+  copy vs parity: err_self=0.2100 err_cross=0.0650 raw=0.6905
+
+--- GRU ---
+  cross-seed copy: err_self=0.1641 err_cross=0.2214 raw=-0.3492
+  copy vs parity: err_self=0.1658 err_cross=4.8457 raw=-28.2204
+
+--- LSTM ---
+  cross-seed copy: err_self=0.0983 err_cross=0.1569 raw=-0.5957
+  copy vs parity: err_self=0.0945 err_cross=1.5976 raw=-15.9051
+
+--- Vanilla ---
+  cross-seed copy: err_self=0.0934 err_cross=0.1173 raw=-0.2567
+  copy vs parity: err_self=0.0970 err_cross=11.3638 raw=-116.2110

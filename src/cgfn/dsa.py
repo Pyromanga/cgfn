@@ -1,11 +1,4 @@
-"""
-Dynamical Similarity Analysis (DSA) mit Procrustes-Alignment.
-Ohne Alignment ist DSA bedeutungslos: verschiedene Modelle leben in
-verschiedenen Koordinatensystemen. Procrustes findet die orthogonale
-Transformation, die die Zustaende aligniert.
-"""
 import torch
-
 
 @torch.no_grad()
 def collect_states(model, task, seq_len=8, batch=32, device="cpu"):
@@ -22,49 +15,28 @@ def collect_states(model, task, seq_len=8, batch=32, device="cpu"):
         states = states.squeeze(0)
     return states
 
-
 def procrustes_align(X, Y):
-    """
-    Findet orthogonale Matrix Q, sodass X @ Q ~ Y.
-    X: (n, H), Y: (n, H). Rueckgabe: Y_aligned.
-    """
     Xc = X - X.mean(dim=0, keepdim=True)
     Yc = Y - Y.mean(dim=0, keepdim=True)
     U, _, Vh = torch.linalg.svd(Xc.T @ Yc)
     Q = U @ Vh
     return Xc @ Q + Y.mean(dim=0, keepdim=True)
 
-
 @torch.no_grad()
-def dsa(model_a, model_b, task, seq_len=8, device="cpu", align=True):
-    """DSA mit optionalem Procrustes-Alignment."""
+def dsa_debug(model_a, model_b, task, seq_len=8, device="cpu"):
     A = collect_states(model_a, task, seq_len, device=device)
     B = collect_states(model_b, task, seq_len, device=device)
     za = A[:, :-1, :].reshape(-1, A.shape[-1])
     za_next = A[:, 1:, :].reshape(-1, A.shape[-1])
     zb = B[:, :-1, :].reshape(-1, B.shape[-1])
     zb_next = B[:, 1:, :].reshape(-1, B.shape[-1])
-
-    if align:
-        # Aligniere B auf A
-        zb_aligned = procrustes_align(zb, za)
-        zb_next_aligned = procrustes_align(zb_next, za_next)
-    else:
-        zb_aligned = zb
-        zb_next_aligned = zb_next
-
+    zb_aligned = procrustes_align(zb, za)
+    zb_next_aligned = procrustes_align(zb_next, za_next)
     H = za.shape[1]
     lambda_reg = 1e-3
-
-    # W_a aus A
     M_a = za.T @ za + lambda_reg * torch.eye(H, device=device)
     W_a = torch.linalg.solve(M_a, za.T @ za_next)
-
-    # Self-Error auf A
-    err_self = ((za @ W_a - za_next) ** 2).mean()
-
-    # Cross-Error: W_a auf aligned B
-    err_cross = ((zb_aligned @ W_a - zb_next_aligned) ** 2).mean()
-
-    score = 1.0 - (err_cross / (err_self + 1e-12)).item()
-    return max(0.0, min(1.0, score))
+    err_self = ((za @ W_a - za_next) ** 2).mean().item()
+    err_cross = ((zb_aligned @ W_a - zb_next_aligned) ** 2).mean().item()
+    raw_score = 1.0 - (err_cross / (err_self + 1e-12))
+    return {"err_self": err_self, "err_cross": err_cross, "raw_score": raw_score}
