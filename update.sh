@@ -1,3 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+echo "=== Schreibe experiments/run_smoke.py neu ==="
+cat > experiments/run_smoke.py <<'EOF'
 import torch
 from collections import defaultdict
 from cgfn.model import ContinuousRNN
@@ -74,3 +79,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+EOF
+
+echo
+echo "=== Syntax-Check ==="
+python -c "import ast; ast.parse(open('experiments/run_smoke.py').read()); print('OK')"
+
+echo
+echo "=== Fuehre Experiment aus (dauert ein paar Minuten) ==="
+python experiments/run_smoke.py 2>&1 | tee smoke3.txt
+
+echo
+echo "=== Fertig ==="
+echo "Ausgabe: smoke3.txt"
