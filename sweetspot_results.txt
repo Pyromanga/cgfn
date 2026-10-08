@@ -1,0 +1,45 @@
+==========================================================================
+SWEET-SPOT-FINDER: Feines tau-Gitter um den kritischen Punkt
+taus=[0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0]
+tasks=['copy', 'parity', 'mod3']  seeds=[0, 1]
+==========================================================================
+
+>>> tau = 0.75
+Traceback (most recent call last):
+  File "/workspaces/cgfn/experiments/sweetspot_finder.py", line 15, in <module>
+    results = find_sweet_spot(tau_grid, tasks, seeds, steps=1500, hidden_dim=32)
+  File "/workspaces/cgfn/src/cgfn/sweetspot.py", line 108, in find_sweet_spot
+    r = measure_at_tau(tau, tasks, seeds, **kwargs)
+  File "/usr/local/python/3.14.2/lib/python3.14/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+  File "/workspaces/cgfn/src/cgfn/sweetspot.py", line 59, in measure_at_tau
+    m, l = train(seed, task)
+           ~~~~~^^^^^^^^^^^^
+  File "/workspaces/cgfn/src/cgfn/sweetspot.py", line 39, in train
+    opt.zero_grad(); loss.backward(); opt.step()
+                     ~~~~~~~~~~~~~^^
+  File "/usr/local/python/3.14.2/lib/python3.14/site-packages/torch/_tensor.py", line 623, in backward
+    torch.autograd.backward(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        self, gradient, retain_graph, create_graph, inputs=inputs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/python/3.14.2/lib/python3.14/site-packages/torch/autograd/__init__.py", line 395, in backward
+    _engine_run_backward(
+    ~~~~~~~~~~~~~~~~~~~~^
+        tensors,
+        ^^^^^^^^
+    ...<5 lines>...
+        accumulate_grad=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/local/python/3.14.2/lib/python3.14/site-packages/torch/autograd/graph.py", line 1072, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        t_outputs, *args, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )  # Calls into the C++ engine to run the backward pass
+    ^
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn

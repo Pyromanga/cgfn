@@ -1,60 +1,3 @@
-#!/usr/bin/env bash
-set -e
-
-echo "=== Neue Datei: src/cgfn/adversarial.py ==="
-cat > src/cgfn/adversarial.py <<'EOF'
-"""
-Adversariale Robustheit als Funktion von tau.
-Misst, wie stark kleine Input-Perturbationen den Output verändern.
-"""
-import torch
-from cgfn.model import ContinuousRNN
-from cgfn.tasks import TASKS, make_batch
-
-
-@torch.no_grad()
-def adversarial_sensitivity(model, task, task_dim, eps=0.1, device="cpu"):
-    """
-    Misst die maximale Output-Änderung bei Input-Perturbation der Größe eps.
-    Verwendet FGSM-ähnliche Perturbation (einfacher Gradientenschritt).
-    """
-    idx = TASKS.index(task)
-    x, y = make_batch(task, batch_size=32, seq_len=8, device=device)
-    tv = torch.zeros(x.shape[0], task_dim, device=device)
-    tv[:, idx] = 1.0
-
-    # Vorwärts mit Original
-    out_orig, _ = model(x, tv)
-
-    # FGSM: Gradient der Loss nach Input
-    x_adv = x.clone().detach().requires_grad_(True)
-    out, _ = model(x_adv, tv)
-    loss = torch.nn.BCEWithLogitsLoss()(out, y)
-    loss.backward()
-    grad = x_adv.grad
-
-    # Perturbation
-    x_pert = x + eps * grad.sign()
-    out_pert, _ = model(x_pert, tv)
-
-    # Maximale absolute Änderung
-    diff = (out_pert - out_orig).abs().max().item()
-    return diff
-
-
-@torch.no_grad()
-def sensitivity_curve(model, task, task_dim, eps_values, device="cpu"):
-    """Sensitivität für verschiedene eps-Werte."""
-    results = []
-    for eps in eps_values:
-        s = adversarial_sensitivity(model, task, task_dim, eps, device)
-        results.append((eps, s))
-    return results
-EOF
-
-echo
-echo "=== Experiment: Tau vs. adversarial Robustheit ==="
-cat > experiments/tau_robustness.py <<'EOF'
 import torch
 from cgfn.model import ContinuousRNN
 from cgfn.tasks import TASKS, make_batch
@@ -143,15 +86,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-EOF
-
-echo
-echo "=== Syntax-Check ==="
-python -c "import ast; ast.parse(open('src/cgfn/adversarial.py').read()); print('adversarial OK')"
-python -c "import ast; ast.parse(open('experiments/tau_robustness.py').read()); print('tau_robustness OK')"
-
-echo
-echo "=== Lauf (15-30 min) ==="
-python experiments/tau_robustness.py 2>&1 | tee tau_robustness_results.txt
-echo
-echo "=== Fertig: tau_robustness_results.txt ==="
