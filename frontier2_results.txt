@@ -1,0 +1,20 @@
+======================================================================
+FRONTIER 2: Effective Dimension + InputDSA + Tau-Sweep
+seeds=[0, 1, 2]  tasks=['copy', 'reverse', 'parity', 'mod3']  hidden_dim=32
+======================================================================
+
+--- A) Effective Dimension (hoeher = reichere Geometrie) ---
+task       seed     loss   d_eff   ratio
+Traceback (most recent call last):
+  File "/workspaces/cgfn/experiments/frontier2.py", line 111, in <module>
+    main()
+    ~~~~^^
+  File "/workspaces/cgfn/experiments/frontier2.py", line 65, in main
+    m, loss = train(seed, task)
+              ~~~~~^^^^^^^^^^^^
+  File "/workspaces/cgfn/experiments/frontier2.py", line 32, in train
+    tv = one_hot(idx, x.shape[0])
+  File "/workspaces/cgfn/experiments/frontier2.py", line 20, in one_hot
+    v[:, idx] = 1.0
+         ^^^
+NameError: name 'idx' is not defined. Did you mean: 'id'?
