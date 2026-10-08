@@ -1,0 +1,58 @@
+============================================================
+A) Architektur-Vergleich: CT-RNN vs GRU vs LSTM vs Vanilla
+============================================================
+
+--- CT-RNN ---
+  seed 0 copy loss: 0.0001
+  seed 1 copy loss: 0.0001
+  CKA cross-seed copy: 0.9932
+  DSA cross-seed copy: 0.0000
+  CKA copy vs parity (same seed): 0.6358
+  DSA copy-model vs parity-model: 0.0000
+
+--- GRU ---
+  seed 0 copy loss: 0.0002
+  seed 1 copy loss: 0.0002
+  CKA cross-seed copy: 0.9999
+  DSA cross-seed copy: 0.0000
+  CKA copy vs parity (same seed): 0.9968
+  DSA copy-model vs parity-model: 0.0000
+
+--- LSTM ---
+  seed 0 copy loss: 0.0002
+  seed 1 copy loss: 0.0002
+  CKA cross-seed copy: 0.9999
+  DSA cross-seed copy: 0.0000
+  CKA copy vs parity (same seed): 0.9944
+  DSA copy-model vs parity-model: 0.0000
+
+--- VanillaRNN ---
+  seed 0 copy loss: 0.0002
+  seed 1 copy loss: 0.0002
+  CKA cross-seed copy: 1.0000
+  DSA cross-seed copy: 0.0000
+  CKA copy vs parity (same seed): 1.0000
+  DSA copy-model vs parity-model: 0.0000
+
+============================================================
+B) INSD: Simplicity Bias brechen
+============================================================
+
+--- Baseline (kein INSD) ---
+  parity: loss=0.4055
+  mod3: loss=0.5974
+
+--- INSD mit copy als Referenz ---
+Traceback (most recent call last):
+  File "/workspaces/cgfn/experiments/frontier.py", line 148, in <module>
+    main()
+    ~~~~^^
+  File "/workspaces/cgfn/experiments/frontier.py", line 109, in main
+    m, loss = train_with_insd(0, task, reference_states=ref_states,
+              ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              lambda_insd=0.5)
+                              ^^^^^^^^^^^^^^^^
+  File "/workspaces/cgfn/src/cgfn/insd.py", line 56, in train_with_insd
+    proj = Z @ Q @ Q.T
+           ~~^~~
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (256x64 and 32x32)
