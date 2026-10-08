@@ -1,19 +1,18 @@
 import torch
 from collections import defaultdict
+from itertools import combinations
 from cgfn.model import ContinuousRNN
 from cgfn.tasks import TASKS, make_batch
-from cgfn.criticality import branching_ratio
-from cgfn.geometry import mean_state_signature, signature_distance
+from cgfn.cka import cka
 
 device = "cpu"
 task_index = {t: i for i, t in enumerate(TASKS)}
 task_dim = len(TASKS)
 
 
-def one_hot(task, batch_size, device):
-    idx = task_index[task]
+def one_hot(task, batch_size):
     v = torch.zeros(batch_size, task_dim, device=device)
-    v[:, idx] = 1.0
+    v[:, task_index[task]] = 1.0
     return v
 
 
@@ -25,65 +24,65 @@ def train_multitask(seed, steps=4000, lr=1e-3, seq_len=8, hidden_dim=64):
     for step in range(steps):
         task = TASKS[step % len(TASKS)]
         x, y = make_batch(task, seq_len=seq_len, device=device)
-        tv = one_hot(task, x.shape[0], device)
+        tv = one_hot(task, x.shape[0])
         out, _ = model(x, tv)
         loss = lossfn(out, y)
         opt.zero_grad(); loss.backward(); opt.step()
-    # finale losses
-    losses = {}
-    for task in TASKS:
-        x, y = make_batch(task, seq_len=seq_len, device=device)
-        tv = one_hot(task, x.shape[0], device)
-        with torch.no_grad():
-            out, _ = model(x, tv)
-            losses[task] = lossfn(out, y).item()
-    return model, losses
+    return model
 
 
-def collect_signature(model, task, seq_len=8, batch=64):
+def collect_reps(model, task, seq_len=8, batch=32):
+    """Gibt eine (batch*T, hidden) Matrix zurueck."""
     x, _ = make_batch(task, batch_size=batch, seq_len=seq_len, device=device)
-    tv = one_hot(task, batch, device)
+    tv = one_hot(task, batch)
     with torch.no_grad():
-        _, states = model(x, tv)
-    return mean_state_signature(states), branching_ratio(states).mean().item()
+        _, states = model(x, tv)          # (B, T, H)
+    B, T, H = states.shape
+    return states.reshape(B * T, H)
 
 
 def main():
     seeds = [0, 1, 2]
-    print("=== Multi-Task-Modell, gleiche Gewichte fuer alle Aufgaben ===\n")
-    all_sigs = defaultdict(list)
-    all_branches = defaultdict(list)
-    for seed in seeds:
-        model, losses = train_multitask(seed)
-        print(f"Seed {seed} losses: " +
-              "  ".join(f"{t}={losses[t]:.4f}" for t in TASKS))
+    print("=== Trainiere Multi-Task-Modelle ===")
+    models = {}
+    for s in seeds:
+        print(f"  seed {s}...")
+        models[s] = train_multitask(s)
+
+    print("\n=== Sammle Repraesentationen ===")
+    reps = {}
+    for s in seeds:
         for task in TASKS:
-            sig, br = collect_signature(model, task)
-            all_sigs[task].append(sig)
-            all_branches[task].append(br)
-        print()
+            reps[(s, task)] = collect_reps(models[s], task)
 
-    print("=== Signaturen pro Aufgabe (Mittel ueber Seeds) ===")
-    means = {}
+    print("\n=== CKA: Seed-Stabilitaet pro Aufgabe (hoeher = stabiler) ===")
     for task in TASKS:
-        S = torch.stack(all_sigs[task])
-        means[task] = S.mean(dim=0)
-        intra = ((S - means[task]) ** 2).sum(dim=1).mean().item()
-        print(f"  {task:8s}: norm={means[task].norm():.4f}  intra_var={intra:.4f}")
+        vals = []
+        for a, b in combinations(seeds, 2):
+            vals.append(cka(reps[(a, task)], reps[(b, task)], kernel="linear"))
+        mean = sum(vals) / len(vals)
+        print(f"  {task:8s}: mean CKA={mean:.4f}  values={[f'{v:.3f}' for v in vals]}")
 
-    print("\n=== Inter vs Intra (jetzt mit geteilter Basis) ===")
-    for i, a in enumerate(TASKS):
-        for b in TASKS[i+1:]:
-            inter = signature_distance(means[a], means[b])
-            intra = (((torch.stack(all_sigs[a]) - means[a])**2).sum(dim=1).mean().item()
-                     + ((torch.stack(all_sigs[b]) - means[b])**2).sum(dim=1).mean().item()) / 2
-            ratio = inter / (intra + 1e-8)
-            print(f"  {a:8s} vs {b:8s}: inter={inter:.4f} intra={intra:.4f} ratio={ratio:.4f}")
+    print("\n=== CKA: Aufgaben-Trennung pro Seed (niedriger = besser getrennt) ===")
+    for s in seeds:
+        vals = []
+        for a, b in combinations(TASKS, 2):
+            vals.append(cka(reps[(s, a)], reps[(s, b)], kernel="linear"))
+        mean = sum(vals) / len(vals)
+        print(f"  seed {s}: mean CKA={mean:.4f}  values={[f'{v:.3f}' for v in vals]}")
 
-    print("\n=== Branching Ratio pro Aufgabe ===")
+    print("\n=== Die entscheidende Frage ===")
+    print("Vergleiche: cross-seed-same-task CKA vs cross-task-same-seed CKA")
+    print("Wenn ersteres >> letzteres: Repraesentationen sind aufgabenstabil.")
+    print("Wenn vergleichbar: Aufgabe strukturiert den Zustandsraum nicht.")
+
+    print("\n=== Zusatz: RBF-Kernel (nichtlinearer Vergleich) ===")
     for task in TASKS:
-        b = torch.tensor(all_branches[task])
-        print(f"  {task:8s}: mean={b.mean():.4f}  std={b.std():.4f}")
+        vals = []
+        for a, b in combinations(seeds, 2):
+            vals.append(cka(reps[(a, task)], reps[(b, task)], kernel="rbf"))
+        mean = sum(vals) / len(vals)
+        print(f"  cross-seed {task:8s}: mean CKA={mean:.4f}")
 
 
 if __name__ == "__main__":

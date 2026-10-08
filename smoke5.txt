@@ -1,0 +1,26 @@
+=== Trainiere Multi-Task-Modelle ===
+  seed 0...
+  seed 1...
+  seed 2...
+
+=== Sammle Repraesentationen ===
+
+=== CKA: Seed-Stabilitaet pro Aufgabe (hoeher = stabiler) ===
+  copy    : mean CKA=0.9844  values=['0.981', '0.987', '0.985']
+  reverse : mean CKA=0.4568  values=['0.510', '0.376', '0.485']
+  parity  : mean CKA=0.9828  values=['0.992', '0.977', '0.980']
+
+=== CKA: Aufgaben-Trennung pro Seed (niedriger = besser getrennt) ===
+  seed 0: mean CKA=0.5333  values=['0.302', '0.983', '0.314']
+  seed 1: mean CKA=0.6325  values=['0.436', '0.981', '0.481']
+  seed 2: mean CKA=0.5243  values=['0.293', '0.965', '0.315']
+
+=== Die entscheidende Frage ===
+Vergleiche: cross-seed-same-task CKA vs cross-task-same-seed CKA
+Wenn ersteres >> letzteres: Repraesentationen sind aufgabenstabil.
+Wenn vergleichbar: Aufgabe strukturiert den Zustandsraum nicht.
+
+=== Zusatz: RBF-Kernel (nichtlinearer Vergleich) ===
+  cross-seed copy    : mean CKA=0.9442
+  cross-seed reverse : mean CKA=0.6104
+  cross-seed parity  : mean CKA=0.9624

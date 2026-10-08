@@ -1,65 +1,57 @@
 #!/usr/bin/env bash
 set -e
 
-echo "=== Erweitere model.py um Aufgaben-Konditionierung ==="
-cat > src/cgfn/model.py <<'EOF'
+echo "=== Neue Datei: src/cgfn/cka.py ==="
+cat > src/cgfn/cka.py <<'EOF'
 import torch
-import torch.nn as nn
 
 
-class ContinuousRNN(nn.Module):
-    """dz/dt = -z/tau + W tanh(z) + U [x; task_onehot], RK2-integriert."""
+def center(K):
+    n = K.shape[0]
+    H = torch.eye(n, device=K.device) - torch.ones(n, n, device=K.device) / n
+    return H @ K @ H
 
-    def __init__(self, input_dim=1, task_dim=0, hidden_dim=32,
-                 tau=1.0, dt=0.1, substeps=5):
-        super().__init__()
-        self.hidden_dim = hidden_dim
-        self.task_dim = task_dim
-        self.tau, self.dt, self.substeps = tau, dt, substeps
-        self.W = nn.Parameter(torch.randn(hidden_dim, hidden_dim) * 0.3)
-        self.U = nn.Linear(input_dim + task_dim, hidden_dim)
-        self.readout = nn.Linear(hidden_dim, input_dim)
 
-    def dynamics(self, z, x, task_vec):
-        u = torch.cat([x, task_vec], dim=-1) if self.task_dim > 0 else x
-        return -z / self.tau + torch.tanh(z) @ self.W.T + self.U(u)
-
-    def forward(self, x_seq, task_vec=None):
-        B, T, _ = x_seq.shape
-        if task_vec is None:
-            task_vec = torch.zeros(B, 0, device=x_seq.device)
-        z = torch.zeros(B, self.hidden_dim, device=x_seq.device)
-        states = []
-        for t in range(T):
-            x = x_seq[:, t]
-            for _ in range(self.substeps):
-                k1 = self.dynamics(z, x, task_vec)
-                k2 = self.dynamics(z + 0.5 * self.dt * k1, x, task_vec)
-                z = z + self.dt * k2
-            states.append(z)
-        states = torch.stack(states, dim=1)
-        return self.readout(states), states
+def cka(X, Y, kernel="linear"):
+    """X: (n, d1), Y: (n, d2). Rueckgabe: Skalar in [0, 1]."""
+    if kernel == "linear":
+        Kx = X @ X.T
+        Ky = Y @ Y.T
+    elif kernel == "rbf":
+        def rbf(A, sigma=None):
+            d2 = torch.cdist(A, A) ** 2
+            if sigma is None:
+                sigma = d2[d2 > 0].median().sqrt()
+            return torch.exp(-d2 / (2 * sigma ** 2))
+        Kx = rbf(X)
+        Ky = rbf(Y)
+    else:
+        raise ValueError(kernel)
+    Kxc = center(Kx)
+    Kyc = center(Ky)
+    num = (Kxc * Kyc).sum()
+    den = (Kxc * Kxc).sum().sqrt() * (Kyc * Kyc).sum().sqrt()
+    return (num / (den + 1e-12)).item()
 EOF
 
 echo
-echo "=== Neue Multi-Task-Version des Experiments ==="
+echo "=== Neues Experiment: CKA-Analyse ==="
 cat > experiments/run_smoke.py <<'EOF'
 import torch
 from collections import defaultdict
+from itertools import combinations
 from cgfn.model import ContinuousRNN
 from cgfn.tasks import TASKS, make_batch
-from cgfn.criticality import branching_ratio
-from cgfn.geometry import mean_state_signature, signature_distance
+from cgfn.cka import cka
 
 device = "cpu"
 task_index = {t: i for i, t in enumerate(TASKS)}
 task_dim = len(TASKS)
 
 
-def one_hot(task, batch_size, device):
-    idx = task_index[task]
+def one_hot(task, batch_size):
     v = torch.zeros(batch_size, task_dim, device=device)
-    v[:, idx] = 1.0
+    v[:, task_index[task]] = 1.0
     return v
 
 
@@ -71,65 +63,65 @@ def train_multitask(seed, steps=4000, lr=1e-3, seq_len=8, hidden_dim=64):
     for step in range(steps):
         task = TASKS[step % len(TASKS)]
         x, y = make_batch(task, seq_len=seq_len, device=device)
-        tv = one_hot(task, x.shape[0], device)
+        tv = one_hot(task, x.shape[0])
         out, _ = model(x, tv)
         loss = lossfn(out, y)
         opt.zero_grad(); loss.backward(); opt.step()
-    # finale losses
-    losses = {}
-    for task in TASKS:
-        x, y = make_batch(task, seq_len=seq_len, device=device)
-        tv = one_hot(task, x.shape[0], device)
-        with torch.no_grad():
-            out, _ = model(x, tv)
-            losses[task] = lossfn(out, y).item()
-    return model, losses
+    return model
 
 
-def collect_signature(model, task, seq_len=8, batch=64):
+def collect_reps(model, task, seq_len=8, batch=32):
+    """Gibt eine (batch*T, hidden) Matrix zurueck."""
     x, _ = make_batch(task, batch_size=batch, seq_len=seq_len, device=device)
-    tv = one_hot(task, batch, device)
+    tv = one_hot(task, batch)
     with torch.no_grad():
-        _, states = model(x, tv)
-    return mean_state_signature(states), branching_ratio(states).mean().item()
+        _, states = model(x, tv)          # (B, T, H)
+    B, T, H = states.shape
+    return states.reshape(B * T, H)
 
 
 def main():
     seeds = [0, 1, 2]
-    print("=== Multi-Task-Modell, gleiche Gewichte fuer alle Aufgaben ===\n")
-    all_sigs = defaultdict(list)
-    all_branches = defaultdict(list)
-    for seed in seeds:
-        model, losses = train_multitask(seed)
-        print(f"Seed {seed} losses: " +
-              "  ".join(f"{t}={losses[t]:.4f}" for t in TASKS))
+    print("=== Trainiere Multi-Task-Modelle ===")
+    models = {}
+    for s in seeds:
+        print(f"  seed {s}...")
+        models[s] = train_multitask(s)
+
+    print("\n=== Sammle Repraesentationen ===")
+    reps = {}
+    for s in seeds:
         for task in TASKS:
-            sig, br = collect_signature(model, task)
-            all_sigs[task].append(sig)
-            all_branches[task].append(br)
-        print()
+            reps[(s, task)] = collect_reps(models[s], task)
 
-    print("=== Signaturen pro Aufgabe (Mittel ueber Seeds) ===")
-    means = {}
+    print("\n=== CKA: Seed-Stabilitaet pro Aufgabe (hoeher = stabiler) ===")
     for task in TASKS:
-        S = torch.stack(all_sigs[task])
-        means[task] = S.mean(dim=0)
-        intra = ((S - means[task]) ** 2).sum(dim=1).mean().item()
-        print(f"  {task:8s}: norm={means[task].norm():.4f}  intra_var={intra:.4f}")
+        vals = []
+        for a, b in combinations(seeds, 2):
+            vals.append(cka(reps[(a, task)], reps[(b, task)], kernel="linear"))
+        mean = sum(vals) / len(vals)
+        print(f"  {task:8s}: mean CKA={mean:.4f}  values={[f'{v:.3f}' for v in vals]}")
 
-    print("\n=== Inter vs Intra (jetzt mit geteilter Basis) ===")
-    for i, a in enumerate(TASKS):
-        for b in TASKS[i+1:]:
-            inter = signature_distance(means[a], means[b])
-            intra = (((torch.stack(all_sigs[a]) - means[a])**2).sum(dim=1).mean().item()
-                     + ((torch.stack(all_sigs[b]) - means[b])**2).sum(dim=1).mean().item()) / 2
-            ratio = inter / (intra + 1e-8)
-            print(f"  {a:8s} vs {b:8s}: inter={inter:.4f} intra={intra:.4f} ratio={ratio:.4f}")
+    print("\n=== CKA: Aufgaben-Trennung pro Seed (niedriger = besser getrennt) ===")
+    for s in seeds:
+        vals = []
+        for a, b in combinations(TASKS, 2):
+            vals.append(cka(reps[(s, a)], reps[(s, b)], kernel="linear"))
+        mean = sum(vals) / len(vals)
+        print(f"  seed {s}: mean CKA={mean:.4f}  values={[f'{v:.3f}' for v in vals]}")
 
-    print("\n=== Branching Ratio pro Aufgabe ===")
+    print("\n=== Die entscheidende Frage ===")
+    print("Vergleiche: cross-seed-same-task CKA vs cross-task-same-seed CKA")
+    print("Wenn ersteres >> letzteres: Repraesentationen sind aufgabenstabil.")
+    print("Wenn vergleichbar: Aufgabe strukturiert den Zustandsraum nicht.")
+
+    print("\n=== Zusatz: RBF-Kernel (nichtlinearer Vergleich) ===")
     for task in TASKS:
-        b = torch.tensor(all_branches[task])
-        print(f"  {task:8s}: mean={b.mean():.4f}  std={b.std():.4f}")
+        vals = []
+        for a, b in combinations(seeds, 2):
+            vals.append(cka(reps[(a, task)], reps[(b, task)], kernel="rbf"))
+        mean = sum(vals) / len(vals)
+        print(f"  cross-seed {task:8s}: mean CKA={mean:.4f}")
 
 
 if __name__ == "__main__":
@@ -138,12 +130,12 @@ EOF
 
 echo
 echo "=== Syntax-Check ==="
-python -c "import ast; ast.parse(open('src/cgfn/model.py').read()); print('model.py OK')"
+python -c "import ast; ast.parse(open('src/cgfn/cka.py').read()); print('cka.py OK')"
 python -c "import ast; ast.parse(open('experiments/run_smoke.py').read()); print('run_smoke.py OK')"
 
 echo
 echo "=== Lauf (dauert ein paar Minuten) ==="
-python experiments/run_smoke.py 2>&1 | tee smoke4.txt
+python experiments/run_smoke.py 2>&1 | tee smoke5.txt
 
 echo
-echo "=== Fertig. Ausgabe: smoke4.txt ==="
+echo "=== Fertig. Ausgabe: smoke5.txt ==="
