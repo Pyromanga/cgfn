@@ -5,16 +5,46 @@ seeds=[0, 1, 2]  tasks=['copy', 'reverse', 'parity', 'mod3']  hidden_dim=32
 
 --- A) Effective Dimension (hoeher = reichere Geometrie) ---
 task       seed     loss   d_eff   ratio
-Traceback (most recent call last):
-  File "/workspaces/cgfn/experiments/frontier2.py", line 111, in <module>
-    main()
-    ~~~~^^
-  File "/workspaces/cgfn/experiments/frontier2.py", line 65, in main
-    m, loss = train(seed, task)
-              ~~~~~^^^^^^^^^^^^
-  File "/workspaces/cgfn/experiments/frontier2.py", line 32, in train
-    tv = one_hot(idx, x.shape[0])
-  File "/workspaces/cgfn/experiments/frontier2.py", line 20, in one_hot
-    v[:, idx] = 1.0
-         ^^^
-NameError: name 'idx' is not defined. Did you mean: 'id'?
+copy          0   0.0007    4.00   0.125
+copy          1   0.0006    4.00   0.125
+copy          2   0.0010    5.00   0.156
+reverse       0   0.5316    6.00   0.188
+reverse       1   0.5575    6.00   0.188
+reverse       2   0.5122    5.00   0.156
+parity        0   0.6835    6.00   0.188
+parity        1   0.5528    4.00   0.125
+parity        2   0.6015    4.00   0.125
+mod3          0   0.6764    6.00   0.188
+mod3          1   0.6559    4.00   0.125
+mod3          2   0.6756    5.00   0.156
+
+  Mittelwerte:
+    copy      : d_eff=4.33
+    reverse   : d_eff=5.67
+    parity    : d_eff=4.67
+    mod3      : d_eff=5.00
+
+--- B) InputDSA: Normen der intrinsischen und input-getriebenen Dynamik ---
+task       seed     loss    ||A||    ||B||
+copy          0   0.0007 112.6248   1.2096
+copy          1   0.0006 172.0294  21.8255
+copy          2   0.0010  78.0183   0.8720
+reverse       0   0.5316  33.6515   0.6067
+reverse       1   0.5575  26.2356   0.5172
+reverse       2   0.5122  42.7307   0.7721
+parity        0   0.6835  23.7244   0.5038
+parity        1   0.5528  86.1334   0.5969
+parity        2   0.6015  65.4262   1.4914
+mod3          0   0.6764  20.6836   2.2923
+mod3          1   0.6559  41.9844   0.3323
+mod3          2   0.6756  49.4004   1.1646
+
+--- C) Tau-Sweep: Effekt der Rueckstellkraft auf Kollaps ---
+   tau  copy_loss  parity_loss  mod3_loss   CKA(copy,parity)
+   0.1     0.0011       0.6915     0.6867             0.9649
+   0.5     0.0010       0.6909     0.6863             0.9264
+   1.0     0.0017       0.6884     0.6849             0.4399
+   2.0     0.0040       0.6878     0.6866             0.2069
+   5.0     0.0113       0.6908     0.6888             0.4426
+
+=== FERTIG ===

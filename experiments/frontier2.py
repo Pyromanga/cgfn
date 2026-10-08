@@ -17,7 +17,7 @@ TASK_SUBSET = ["copy", "reverse", "parity", "mod3"]
 
 def one_hot(task_idx, batch_size):
     v = torch.zeros(batch_size, task_dim, device=device)
-    v[:, idx] = 1.0
+    v[:, task_idx] = 1.0
     return v
 
 
@@ -56,7 +56,7 @@ def main():
     print(f"seeds={SEEDS}  tasks={TASK_SUBSET}  hidden_dim={HIDDEN}")
     print("=" * 70)
 
-    # ─── A) Effective Dimension ───
+    # A) Effective Dimension
     print("\n--- A) Effective Dimension (hoeher = reichere Geometrie) ---")
     print(f"{'task':10s} {'seed':>4s} {'loss':>8s} {'d_eff':>7s} {'ratio':>7s}")
     all_d_eff = {t: [] for t in TASK_SUBSET}
@@ -75,9 +75,9 @@ def main():
         mean = sum(vals) / len(vals)
         print(f"    {task:10s}: d_eff={mean:.2f}")
 
-    # ─── B) InputDSA ───
-    print("\n--- B) InputDSA: intrinsische vs input-getriebene Dynamik ---")
-    print(f"{'task':10s} {'seed':>4s} {'loss':>8s} {'dsa_int':>8s} {'dsa_inp':>8s}")
+    # B) InputDSA
+    print("\n--- B) InputDSA: Normen der intrinsischen und input-getriebenen Dynamik ---")
+    print(f"{'task':10s} {'seed':>4s} {'loss':>8s} {'||A||':>8s} {'||B||':>8s}")
     for task in TASK_SUBSET:
         for seed in SEEDS:
             m, loss = train(seed, task)
@@ -89,8 +89,8 @@ def main():
             except Exception as e:
                 print(f"{task:10s} {seed:4d} {loss:8.4f} ERROR: {e}")
 
-    # ─── C) Tau-Sweep ───
-    print("\n--- C) Tau-Sweep: Effekt der Rückstellkraft auf Kollaps ---")
+    # C) Tau-Sweep
+    print("\n--- C) Tau-Sweep: Effekt der Rueckstellkraft auf Kollaps ---")
     taus = [0.1, 0.5, 1.0, 2.0, 5.0]
     print(f"{'tau':>6s} {'copy_loss':>10s} {'parity_loss':>12s} {'mod3_loss':>10s} {'CKA(copy,parity)':>18s}")
     for tau in taus:
