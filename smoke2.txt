@@ -1,0 +1,14 @@
+task           loss   spec_rad   branch
+copy         0.0004     4.6305   0.6244
+reverse      0.4689     1.9028   0.2464
+parity       0.4201     3.2078   0.1070
+
+Signatur-Distanzen (Mittelwert im Feature-Raum):
+  copy     vs reverse : 13.1092
+  copy     vs parity  : 22.4995
+  reverse  vs parity  : 22.6995
+
+Signatur-Normen:
+  copy    : 9.0808
+  reverse : 8.6538
+  parity  : 19.1270

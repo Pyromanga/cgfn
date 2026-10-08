@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
+mkdir -p src/cgfn experiments tests .github/workflows
+touch src/cgfn/__init__.py
+
 cat > pyproject.toml <<'EOF'
 [project]
 name = "cgfn"
@@ -17,9 +20,6 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-EOF
-
-cat > src/cgfn/__init__.py <<'EOF'
 EOF
 
 cat > src/cgfn/model.py <<'EOF'
@@ -83,17 +83,27 @@ cat > src/cgfn/geometry.py <<'EOF'
 import torch
 
 
-def svd_signature(states):
-    X = states.mean(dim=1)
-    X = X - X.mean(dim=0, keepdim=True)
-    U, S, _ = torch.linalg.svd(X, full_matrices=False)
-    return U * S, S
+def mean_state_signature(states):
+    """states: (B, T, H) -> (H,) gemittelt ueber Batch und letzte 25% der Zeit."""
+    T = states.shape[1]
+    tail = states[:, int(0.75 * T):, :]
+    return tail.mean(dim=(0, 1))
 
 
-def steering_loss(states, target_sig, basis):
-    X = states.mean(dim=1)
+def covariance_signature(states):
+    """states: (B, T, H) -> (H, H) Kovarianz ueber Batch*Zeit."""
+    B, T, H = states.shape
+    X = states.reshape(B * T, H)
     X = X - X.mean(dim=0, keepdim=True)
-    sig = X @ basis.T
+    return (X.T @ X) / (X.shape[0] - 1)
+
+
+def signature_distance(sig_a, sig_b):
+    return (sig_a - sig_b).norm().item()
+
+
+def steering_loss(states, target_sig):
+    sig = mean_state_signature(states)
     return ((sig - target_sig) ** 2).mean()
 EOF
 
@@ -121,18 +131,18 @@ import torch
 from cgfn.model import ContinuousRNN
 from cgfn.tasks import TASKS, make_batch
 from cgfn.criticality import jacobian_spectral_radius, branching_ratio
-from cgfn.geometry import svd_signature
+from cgfn.geometry import mean_state_signature, signature_distance
 
 torch.manual_seed(0)
 device = "cpu"
 
 
-def train_on(task, steps=300, lr=3e-3):
-    model = ContinuousRNN()
+def train_on(task, steps=2000, lr=1e-3, seq_len=8, hidden_dim=64):
+    model = ContinuousRNN(hidden_dim=hidden_dim)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     lossfn = torch.nn.BCEWithLogitsLoss()
     for _ in range(steps):
-        x, y = make_batch(task, device=device)
+        x, y = make_batch(task, seq_len=seq_len, device=device)
         out, _ = model(x)
         loss = lossfn(out, y)
         opt.zero_grad()
@@ -146,22 +156,24 @@ def main():
     signatures = {}
     for task in TASKS:
         model, loss = train_on(task)
-        x, _ = make_batch(task, batch_size=64, device=device)
+        x, _ = make_batch(task, batch_size=64, seq_len=8, device=device)
         with torch.no_grad():
             _, states = model(x)
-        z_final = states[:, -1]
-        sr = jacobian_spectral_radius(model, z_final).mean().item()
+        sr = jacobian_spectral_radius(model, states[:, -1]).mean().item()
         br = branching_ratio(states).mean().item()
-        sig, _ = svd_signature(states)
-        signatures[task] = sig.mean(dim=0)
+        signatures[task] = mean_state_signature(states)
         print(f"{task:10s} {loss:8.4f} {sr:10.4f} {br:8.4f}")
 
-    print("\nPaarweise Signatur-Distanzen:")
+    print("\nSignatur-Distanzen (Mittelwert im Feature-Raum):")
     keys = list(signatures)
     for i in range(len(keys)):
         for j in range(i + 1, len(keys)):
-            d = (signatures[keys[i]] - signatures[keys[j]]).norm().item()
+            d = signature_distance(signatures[keys[i]], signatures[keys[j]])
             print(f"  {keys[i]:8s} vs {keys[j]:8s}: {d:.4f}")
+
+    print("\nSignatur-Normen:")
+    for k, v in signatures.items():
+        print(f"  {k:8s}: {v.norm().item():.4f}")
 
 
 if __name__ == "__main__":
@@ -218,3 +230,26 @@ jobs:
 EOF
 
 echo "Alle Dateien neu geschrieben."
+
+echo
+echo "=== Syntax-Check ==="
+for f in src/cgfn/*.py tests/*.py experiments/*.py; do
+  python -c "import ast; ast.parse(open('$f').read())" 2>&1 \
+    && echo "OK: $f" \
+    || echo "FAIL: $f"
+done
+
+echo
+echo "=== Installation ==="
+pip install -e ".[dev]" >/dev/null
+
+echo
+echo "=== Pytest ==="
+python -m pytest -q
+
+echo
+echo "=== Smoke-Experiment ==="
+python experiments/run_smoke.py 2>&1 | tee smoke2.txt
+
+echo
+echo "Fertig. Ausgabe auch in smoke2.txt."
