@@ -1,19 +1,22 @@
 name: cgfn-smoke
-on: [push, workflow_dispatch]
+
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   smoke:
-      runs-on: ubuntu-latest
-          steps:
-                - uses: actions/checkout@v4
-                      - uses: actions/setup-python@v5
-                              with:
-                                        python-version: "3.11"
-                                              - name: Install torch (CPU)
-                                                      run: pip install torch --index-url https://download.pytorch.org/whl/cpu
-                                                            - name: Install package
-                                                                    run: pip install -e .
-                                                                          - name: Unit tests
-                                                                                  run: pytest -q
-                                                                                        - name: Smoke experiment
-                                                                                                run: python experiments/run_smoke.py
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package
+        run: pip install -e .
+      - name: Unit tests
+        run: python -m pytest -q
+      - name: Smoke experiment
+        run: python experiments/run_smoke.py
