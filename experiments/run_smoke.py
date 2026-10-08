@@ -16,11 +16,9 @@ def one_hot(task, batch_size):
     return v
 
 
-def train_multitask(seed, steps=4000, lr=1e-3, seq_len=8, hidden_dim=64,
-                    task_scale=1.0):
+def train_multitask(seed, steps=8000, lr=1e-3, seq_len=8, hidden_dim=64):
     torch.manual_seed(seed)
-    model = ContinuousRNN(task_dim=task_dim, hidden_dim=hidden_dim,
-                          task_scale=task_scale)
+    model = ContinuousRNN(task_dim=task_dim, hidden_dim=hidden_dim)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     lossfn = torch.nn.BCEWithLogitsLoss()
     for step in range(steps):
@@ -60,48 +58,24 @@ def losses_for(model, seq_len=8):
 def main():
     seeds = [0, 1, 2]
     seq_len = 8
-
-    # Fester Input für Task-Sensitivitäts-Test
     torch.manual_seed(999)
     x_fixed = torch.randint(0, 2, (32, seq_len, 1), device=device).float()
 
-    print("=== A) Baseline: task_scale=1.0 ===")
-    models_a = [train_multitask(s, task_scale=1.0) for s in seeds]
-    for s, m in zip(seeds, models_a):
+    print("=== Losses (Zufall: copy=0.69, parity=0.69, mod3=0.63, dxor=0.69) ===")
+    models = [train_multitask(s) for s in seeds]
+    for s, m in zip(seeds, models):
         losses = losses_for(m)
-        print(f"  seed {s}: " +
-              "  ".join(f"{t}={losses[t]:.3f}" for t in TASKS))
+        print(f"  seed {s}: " + "  ".join(f"{t}={losses[t]:.3f}" for t in TASKS))
 
-    print("\n=== B) Task-Sensitivitaet (fester Input, variiere Task-Vektor) ===")
-    print("   CKA nahe 1.0 = Modell ignoriert Task-Vektor")
-    print("   CKA deutlich < 1.0 = Modell reagiert auf Task")
-    for s, m in zip(seeds, models_a):
+    print("\n=== Task-Sensitivitaet, fester Input, CKA-Matrix ===")
+    print("   (niedrig = getrennte Repraesentation)")
+    for s, m in zip(seeds, models):
         reps = {t: reps_for(m, t, fixed_x=x_fixed) for t in TASKS}
         print(f"  seed {s}:")
         for a, b in combinations(TASKS, 2):
             c = cka(reps[a], reps[b], kernel="linear")
-            print(f"    {a:8s} vs {b:8s}: CKA={c:.4f}")
-
-    print("\n=== C) Verstaerkter Task-Vektor: task_scale=5.0 ===")
-    models_c = [train_multitask(s, task_scale=5.0) for s in seeds]
-    for s, m in zip(seeds, models_c):
-        losses = losses_for(m)
-        print(f"  seed {s}: " +
-              "  ".join(f"{t}={losses[t]:.3f}" for t in TASKS))
-
-    print("\n=== D) Task-Sensitivitaet mit task_scale=5.0 ===")
-    for s, m in zip(seeds, models_c):
-        reps = {t: reps_for(m, t, fixed_x=x_fixed) for t in TASKS}
-        print(f"  seed {s}:")
-        for a, b in combinations(TASKS, 2):
-            c = cka(reps[a], reps[b], kernel="linear")
-            print(f"    {a:8s} vs {b:8s}: CKA={c:.4f}")
-
-    print("\n=== E) Zusammenfassung ===")
-    print("Wenn Baseline: copy<->parity ~0.98 und Task-Sensitivitaet auch ~0.98")
-    print("-> Mode Collapse bestaetigt. Modell ignoriert Task-Vektor.")
-    print("Wenn task_scale=5.0 die Losses verbessert und Task-Sensitivitaet senkt")
-    print("-> War es ein Skalierungsproblem, kein Kapazitaetsproblem.")
+            mark = "  <-- verdaechtig" if c > 0.9 else ""
+            print(f"    {a:12s} vs {b:12s}: CKA={c:.4f}{mark}")
 
 
 if __name__ == "__main__":

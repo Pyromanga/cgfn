@@ -1,52 +1,34 @@
 #!/usr/bin/env bash
 set -e
 
-echo "=== Neue Datei: src/cgfn/model.py (mit skalierbarem Task-Vektor) ==="
-cat > src/cgfn/model.py <<'EOF'
+cat > src/cgfn/tasks.py <<'EOF'
 import torch
-import torch.nn as nn
+
+TASKS = ["copy", "reverse", "parity", "mod3", "delayed_xor"]
 
 
-class ContinuousRNN(nn.Module):
-    """dz/dt = -z/tau + W tanh(z) + U [x; task_vec], RK2-integriert."""
-
-    def __init__(self, input_dim=1, task_dim=0, hidden_dim=32,
-                 tau=1.0, dt=0.1, substeps=5, task_scale=1.0):
-        super().__init__()
-        self.hidden_dim = hidden_dim
-        self.task_dim = task_dim
-        self.task_scale = task_scale
-        self.tau, self.dt, self.substeps = tau, dt, substeps
-        self.W = nn.Parameter(torch.randn(hidden_dim, hidden_dim) * 0.3)
-        self.U = nn.Linear(input_dim + task_dim, hidden_dim)
-        self.readout = nn.Linear(hidden_dim, input_dim)
-
-    def dynamics(self, z, x, task_vec):
-        if self.task_dim > 0:
-            u = torch.cat([x, task_vec * self.task_scale], dim=-1)
-        else:
-            u = x
-        return -z / self.tau + torch.tanh(z) @ self.W.T + self.U(u)
-
-    def forward(self, x_seq, task_vec=None):
-        B, T, _ = x_seq.shape
-        if task_vec is None:
-            task_vec = torch.zeros(B, 0, device=x_seq.device)
-        z = torch.zeros(B, self.hidden_dim, device=x_seq.device)
-        states = []
-        for t in range(T):
-            x = x_seq[:, t]
-            for _ in range(self.substeps):
-                k1 = self.dynamics(z, x, task_vec)
-                k2 = self.dynamics(z + 0.5 * self.dt * k1, x, task_vec)
-                z = z + self.dt * k2
-            states.append(z)
-        states = torch.stack(states, dim=1)
-        return self.readout(states), states
+def make_batch(task, batch_size=32, seq_len=16, device="cpu"):
+    x = torch.randint(0, 2, (batch_size, seq_len), device=device).float()
+    if task == "copy":
+        y = x
+    elif task == "reverse":
+        y = x.flip(1)
+    elif task == "parity":
+        y = torch.cumsum(x, dim=1) % 2
+    elif task == "mod3":
+        z = torch.randint(0, 3, (batch_size, seq_len), device=device).float()
+        y = torch.cumsum(z, dim=1) % 3 / 2.0
+        return z.unsqueeze(-1) / 2.0, y.unsqueeze(-1)
+    elif task == "delayed_xor":
+        B, T = x.shape
+        y = torch.zeros_like(x)
+        y[:, 2:] = (x[:, 2:] + x[:, :-2]) % 2
+        y[:, :2] = x[:, :2]
+    else:
+        raise ValueError(task)
+    return x.unsqueeze(-1), y.unsqueeze(-1)
 EOF
 
-echo
-echo "=== Neues Experiment: Task-Sensitivitaet + Mode-Collapse-Check ==="
 cat > experiments/run_smoke.py <<'EOF'
 import torch
 from collections import defaultdict
@@ -66,11 +48,9 @@ def one_hot(task, batch_size):
     return v
 
 
-def train_multitask(seed, steps=4000, lr=1e-3, seq_len=8, hidden_dim=64,
-                    task_scale=1.0):
+def train_multitask(seed, steps=8000, lr=1e-3, seq_len=8, hidden_dim=64):
     torch.manual_seed(seed)
-    model = ContinuousRNN(task_dim=task_dim, hidden_dim=hidden_dim,
-                          task_scale=task_scale)
+    model = ContinuousRNN(task_dim=task_dim, hidden_dim=hidden_dim)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     lossfn = torch.nn.BCEWithLogitsLoss()
     for step in range(steps):
@@ -110,62 +90,31 @@ def losses_for(model, seq_len=8):
 def main():
     seeds = [0, 1, 2]
     seq_len = 8
-
-    # Fester Input für Task-Sensitivitäts-Test
     torch.manual_seed(999)
     x_fixed = torch.randint(0, 2, (32, seq_len, 1), device=device).float()
 
-    print("=== A) Baseline: task_scale=1.0 ===")
-    models_a = [train_multitask(s, task_scale=1.0) for s in seeds]
-    for s, m in zip(seeds, models_a):
+    print("=== Losses (Zufall: copy=0.69, parity=0.69, mod3=0.63, dxor=0.69) ===")
+    models = [train_multitask(s) for s in seeds]
+    for s, m in zip(seeds, models):
         losses = losses_for(m)
-        print(f"  seed {s}: " +
-              "  ".join(f"{t}={losses[t]:.3f}" for t in TASKS))
+        print(f"  seed {s}: " + "  ".join(f"{t}={losses[t]:.3f}" for t in TASKS))
 
-    print("\n=== B) Task-Sensitivitaet (fester Input, variiere Task-Vektor) ===")
-    print("   CKA nahe 1.0 = Modell ignoriert Task-Vektor")
-    print("   CKA deutlich < 1.0 = Modell reagiert auf Task")
-    for s, m in zip(seeds, models_a):
+    print("\n=== Task-Sensitivitaet, fester Input, CKA-Matrix ===")
+    print("   (niedrig = getrennte Repraesentation)")
+    for s, m in zip(seeds, models):
         reps = {t: reps_for(m, t, fixed_x=x_fixed) for t in TASKS}
         print(f"  seed {s}:")
         for a, b in combinations(TASKS, 2):
             c = cka(reps[a], reps[b], kernel="linear")
-            print(f"    {a:8s} vs {b:8s}: CKA={c:.4f}")
-
-    print("\n=== C) Verstaerkter Task-Vektor: task_scale=5.0 ===")
-    models_c = [train_multitask(s, task_scale=5.0) for s in seeds]
-    for s, m in zip(seeds, models_c):
-        losses = losses_for(m)
-        print(f"  seed {s}: " +
-              "  ".join(f"{t}={losses[t]:.3f}" for t in TASKS))
-
-    print("\n=== D) Task-Sensitivitaet mit task_scale=5.0 ===")
-    for s, m in zip(seeds, models_c):
-        reps = {t: reps_for(m, t, fixed_x=x_fixed) for t in TASKS}
-        print(f"  seed {s}:")
-        for a, b in combinations(TASKS, 2):
-            c = cka(reps[a], reps[b], kernel="linear")
-            print(f"    {a:8s} vs {b:8s}: CKA={c:.4f}")
-
-    print("\n=== E) Zusammenfassung ===")
-    print("Wenn Baseline: copy<->parity ~0.98 und Task-Sensitivitaet auch ~0.98")
-    print("-> Mode Collapse bestaetigt. Modell ignoriert Task-Vektor.")
-    print("Wenn task_scale=5.0 die Losses verbessert und Task-Sensitivitaet senkt")
-    print("-> War es ein Skalierungsproblem, kein Kapazitaetsproblem.")
+            mark = "  <-- verdaechtig" if c > 0.9 else ""
+            print(f"    {a:12s} vs {b:12s}: CKA={c:.4f}{mark}")
 
 
 if __name__ == "__main__":
     main()
 EOF
 
-echo
-echo "=== Syntax-Check ==="
-python -c "import ast; ast.parse(open('src/cgfn/model.py').read()); print('model.py OK')"
-python -c "import ast; ast.parse(open('experiments/run_smoke.py').read()); print('run_smoke.py OK')"
-
-echo
-echo "=== Lauf (dauert laenger: 6 Trainingslaeufe) ==="
-python experiments/run_smoke.py 2>&1 | tee smoke6.txt
-
-echo
-echo "=== Fertig. Ausgabe: smoke6.txt ==="
+python -c "import ast; ast.parse(open('src/cgfn/tasks.py').read()); print('tasks OK')"
+python -c "import ast; ast.parse(open('experiments/run_smoke.py').read()); print('exp OK')"
+python experiments/run_smoke.py 2>&1 | tee smoke7.txt
+echo "=== smoke7.txt ==="

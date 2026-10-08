@@ -1,0 +1,40 @@
+=== Losses (Zufall: copy=0.69, parity=0.69, mod3=0.63, dxor=0.69) ===
+  seed 0: copy=0.021  reverse=0.462  parity=0.481  mod3=0.607  delayed_xor=0.336
+  seed 1: copy=0.019  reverse=0.575  parity=0.542  mod3=0.646  delayed_xor=0.418
+  seed 2: copy=0.006  reverse=0.497  parity=0.491  mod3=0.628  delayed_xor=0.362
+
+=== Task-Sensitivitaet, fester Input, CKA-Matrix ===
+   (niedrig = getrennte Repraesentation)
+  seed 0:
+    copy         vs reverse     : CKA=0.6946
+    copy         vs parity      : CKA=0.9506  <-- verdaechtig
+    copy         vs mod3        : CKA=0.9502  <-- verdaechtig
+    copy         vs delayed_xor : CKA=0.9049  <-- verdaechtig
+    reverse      vs parity      : CKA=0.7208
+    reverse      vs mod3        : CKA=0.7220
+    reverse      vs delayed_xor : CKA=0.6932
+    parity       vs mod3        : CKA=0.9988  <-- verdaechtig
+    parity       vs delayed_xor : CKA=0.9702  <-- verdaechtig
+    mod3         vs delayed_xor : CKA=0.9675  <-- verdaechtig
+  seed 1:
+    copy         vs reverse     : CKA=0.8869
+    copy         vs parity      : CKA=0.9593  <-- verdaechtig
+    copy         vs mod3        : CKA=0.9604  <-- verdaechtig
+    copy         vs delayed_xor : CKA=0.8631
+    reverse      vs parity      : CKA=0.8826
+    reverse      vs mod3        : CKA=0.8837
+    reverse      vs delayed_xor : CKA=0.7956
+    parity       vs mod3        : CKA=0.9992  <-- verdaechtig
+    parity       vs delayed_xor : CKA=0.9560  <-- verdaechtig
+    mod3         vs delayed_xor : CKA=0.9534  <-- verdaechtig
+  seed 2:
+    copy         vs reverse     : CKA=0.5027
+    copy         vs parity      : CKA=0.8381
+    copy         vs mod3        : CKA=0.8808
+    copy         vs delayed_xor : CKA=0.7463
+    reverse      vs parity      : CKA=0.5155
+    reverse      vs mod3        : CKA=0.5307
+    reverse      vs delayed_xor : CKA=0.5263
+    parity       vs mod3        : CKA=0.9946  <-- verdaechtig
+    parity       vs delayed_xor : CKA=0.9795  <-- verdaechtig
+    mod3         vs delayed_xor : CKA=0.9589  <-- verdaechtig
