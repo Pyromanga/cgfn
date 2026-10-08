@@ -1,0 +1,60 @@
+======================================================================
+CT-RNN-Hypothese: 5 Seeds x 4 Aufgaben x 4 Architekturen
+hidden_dim=32  steps=2000
+======================================================================
+
+=== CT-RNN ===
+  Cross-seed same-task (Mittel ueber 10 Paare, 4 Aufgaben):
+    copy      : CKA=0.9925  DSA_raw=-3.9772
+    reverse   : CKA=0.6232  DSA_raw=-63.5010
+    parity    : CKA=0.9132  DSA_raw=-10.9175
+    mod3      : CKA=0.9672  DSA_raw=-10.0510
+  Same-seed cross-task (Mittel ueber 3 Seeds, alle Paare):
+    copy       vs reverse   : CKA=0.0625  DSA_raw=-2.0490
+    copy       vs parity    : CKA=0.1629  DSA_raw=-6.2683
+    copy       vs mod3      : CKA=0.1589  DSA_raw=-3.1273
+    reverse    vs parity    : CKA=0.2703  DSA_raw=-73.2687
+    reverse    vs mod3      : CKA=0.2813  DSA_raw=-53.9973
+    parity     vs mod3      : CKA=0.9598  DSA_raw=-5.5857
+
+=== GRU ===
+  Cross-seed same-task (Mittel ueber 10 Paare, 4 Aufgaben):
+    copy      : CKA=0.9995  DSA_raw=-6.9232
+    reverse   : CKA=0.9359  DSA_raw=-40.1047
+    parity    : CKA=0.9706  DSA_raw=-5.0303
+    mod3      : CKA=0.9806  DSA_raw=-7.7645
+  Same-seed cross-task (Mittel ueber 3 Seeds, alle Paare):
+    copy       vs reverse   : CKA=0.0271  DSA_raw=-9.6354
+    copy       vs parity    : CKA=0.3292  DSA_raw=-68.2579
+    copy       vs mod3      : CKA=0.1547  DSA_raw=-11.2380
+    reverse    vs parity    : CKA=0.0353  DSA_raw=-107.5557
+    reverse    vs mod3      : CKA=0.1179  DSA_raw=-39.8002
+    parity     vs mod3      : CKA=0.2897  DSA_raw=-0.7846
+
+=== LSTM ===
+  Cross-seed same-task (Mittel ueber 10 Paare, 4 Aufgaben):
+    copy      : CKA=0.9996  DSA_raw=-2.1831
+    reverse   : CKA=0.8746  DSA_raw=-55.5835
+    parity    : CKA=0.9761  DSA_raw=-6.0923
+    mod3      : CKA=0.9686  DSA_raw=-3.7642
+  Same-seed cross-task (Mittel ueber 3 Seeds, alle Paare):
+    copy       vs reverse   : CKA=0.0361  DSA_raw=-2.5491
+    copy       vs parity    : CKA=0.2007  DSA_raw=-26.4900
+    copy       vs mod3      : CKA=0.1961  DSA_raw=-9.3170
+    reverse    vs parity    : CKA=0.0413  DSA_raw=-91.5775
+    reverse    vs mod3      : CKA=0.2976  DSA_raw=-41.3183
+    parity     vs mod3      : CKA=0.2558  DSA_raw=-0.2091
+
+=== Vanilla ===
+  Cross-seed same-task (Mittel ueber 10 Paare, 4 Aufgaben):
+    copy      : CKA=1.0000  DSA_raw=-5.2630
+    reverse   : CKA=0.8696  DSA_raw=-52.8274
+    parity    : CKA=0.9425  DSA_raw=-4.9578
+    mod3      : CKA=0.9395  DSA_raw=-27.2408
+  Same-seed cross-task (Mittel ueber 3 Seeds, alle Paare):
+    copy       vs reverse   : CKA=0.0330  DSA_raw=-308.2141
+    copy       vs parity    : CKA=0.4216  DSA_raw=-328.6787
+    copy       vs mod3      : CKA=0.1255  DSA_raw=-162.5272
+    reverse    vs parity    : CKA=0.0382  DSA_raw=-121.8593
+    reverse    vs mod3      : CKA=0.0477  DSA_raw=-53.2077
+    parity     vs mod3      : CKA=0.6463  DSA_raw=-0.3428

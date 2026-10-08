@@ -5,12 +5,14 @@ from cgfn.baselines import GRUBaseline, LSTMBaseline, VanillaRNNBaseline
 from cgfn.tasks import TASKS, make_batch
 from cgfn.cka import cka
 from cgfn.dsa import dsa
-from cgfn.insd import train_with_insd, collect_states_for_ref
 
 device = "cpu"
 task_dim = len(TASKS)
 SEQ_LEN = 8
 HIDDEN = 32
+STEPS = 2000
+SEEDS = [0, 1, 2, 3, 4]
+TASK_SUBSET = ["copy", "reverse", "parity", "mod3"]
 
 
 def one_hot(task_idx, batch_size):
@@ -19,99 +21,86 @@ def one_hot(task_idx, batch_size):
     return v
 
 
-def train_model(ModelClass, seed, task, steps=4000, lr=1e-3):
+def train(ModelClass, seed, task, steps=STEPS, lr=1e-3):
     torch.manual_seed(seed)
     model = ModelClass(task_dim=task_dim, hidden_dim=HIDDEN)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     lossfn = torch.nn.BCEWithLogitsLoss()
-    task_idx = TASKS.index(task)
+    idx = TASKS.index(task)
     for _ in range(steps):
         x, y = make_batch(task, seq_len=SEQ_LEN, device=device)
-        tv = one_hot(task_idx, x.shape[0])
+        tv = one_hot(idx, x.shape[0])
         out, _ = model(x, tv)
         loss = lossfn(out, y)
         opt.zero_grad(); loss.backward(); opt.step()
-    return model, loss.item()
+    return model
 
 
-def collect_reps(model, task, fixed_x):
-    task_idx = TASKS.index(task)
-    tv = one_hot(task_idx, fixed_x.shape[0])
+def reps(model, task, fixed_x):
+    idx = TASKS.index(task)
+    tv = one_hot(idx, fixed_x.shape[0])
     with torch.no_grad():
-        _, states = model(fixed_x, tv)
-    if states.dim() == 4:
-        states = states.squeeze(0)
-    B, T, H = states.shape
-    return states.reshape(B * T, H)
+        _, s = model(fixed_x, tv)
+    if s.dim() == 4:
+        s = s.squeeze(0)
+    B, T, H = s.shape
+    return s.reshape(B * T, H)
 
 
 def main():
-    seeds = [0, 1]
     torch.manual_seed(999)
     x_fixed = torch.randint(0, 2, (32, SEQ_LEN, 1), device=device).float()
 
-    print("=" * 60)
-    print("A) Architektur-Vergleich (hidden_dim=%d)" % HIDDEN)
-    print("=" * 60)
-
-    for name, ModelClass in [
+    archs = [
         ("CT-RNN", ContinuousRNN),
         ("GRU", GRUBaseline),
         ("LSTM", LSTMBaseline),
-        ("VanillaRNN", VanillaRNNBaseline),
-    ]:
-        print(f"\n--- {name} ---")
-        models = []
-        for s in seeds:
-            m, loss = train_model(ModelClass, s, "copy")
-            models.append(m)
-            print(f"  seed {s} copy loss: {loss:.4f}")
-
-        reps = [collect_reps(m, "copy", x_fixed) for m in models]
-        if len(reps) >= 2:
-            c = cka(reps[0], reps[1], kernel="linear")
-            print(f"  CKA cross-seed copy: {c:.4f}")
-
-        if len(models) >= 2:
-            d = dsa(models[0], models[1], "copy", align=True)
-            print(f"  DSA cross-seed copy (aligned): {d:.4f}")
-
-        m = models[0]
-        reps_c = collect_reps(m, "copy", x_fixed)
-        reps_p = collect_reps(m, "parity", x_fixed)
-        c = cka(reps_c, reps_p, kernel="linear")
-        print(f"  CKA copy vs parity (same seed): {c:.4f}")
-
-    print("\n" + "=" * 60)
-    print("B) INSD: Simplicity Bias brechen")
-    print("=" * 60)
-
-    print("\n--- Baseline (kein INSD) ---")
-    for task in ["parity", "mod3"]:
-        m, loss = train_with_insd(0, task, reference_states=None, hidden_dim=HIDDEN)
-        print(f"  {task}: loss={loss:.4f}")
-
-    print("\n--- INSD mit copy als Referenz ---")
-    copy_model, _ = train_model(ContinuousRNN, 0, "copy")
-    ref_states = [collect_states_for_ref(copy_model, "copy")]
-
-    for task in ["parity", "mod3"]:
-        m, loss = train_with_insd(0, task, reference_states=ref_states,
-                                  lambda_insd=0.5, hidden_dim=HIDDEN)
-        print(f"  {task}: loss={loss:.4f} (INSD)")
-
-    print("\n--- INSD mit copy+reverse als Referenz ---")
-    rev_model, _ = train_model(ContinuousRNN, 0, "reverse")
-    ref_states = [
-        collect_states_for_ref(copy_model, "copy"),
-        collect_states_for_ref(rev_model, "reverse"),
+        ("Vanilla", VanillaRNNBaseline),
     ]
-    for task in ["parity", "mod3"]:
-        m, loss = train_with_insd(0, task, reference_states=ref_states,
-                                  lambda_insd=0.5, hidden_dim=HIDDEN)
-        print(f"  {task}: loss={loss:.4f} (INSD 2 refs)")
 
-    print("\n=== FERTIG ===")
+    print("=" * 70)
+    print(f"CT-RNN-Hypothese: 5 Seeds x 4 Aufgaben x 4 Architekturen")
+    print(f"hidden_dim={HIDDEN}  steps={STEPS}")
+    print("=" * 70)
+
+    for name, MC in archs:
+        print(f"\n=== {name} ===")
+        models = {}
+        for seed in SEEDS:
+            for task in TASK_SUBSET:
+                models[(seed, task)] = train(MC, seed, task)
+
+        # Cross-seed same-task CKA und DSA
+        print("  Cross-seed same-task (Mittel ueber 10 Paare, 4 Aufgaben):")
+        for task in TASK_SUBSET:
+            cka_vals, dsa_vals = [], []
+            for i, a in enumerate(SEEDS):
+                for b in SEEDS[i+1:]:
+                    ra = reps(models[(a, task)], task, x_fixed)
+                    rb = reps(models[(b, task)], task, x_fixed)
+                    cka_vals.append(cka(ra, rb, kernel="linear"))
+                    d = dsa(models[(a, task)], models[(b, task)], task)
+                    dsa_vals.append(d["raw"])
+            cm = sum(cka_vals) / len(cka_vals)
+            dm = sum(dsa_vals) / len(dsa_vals)
+            print(f"    {task:10s}: CKA={cm:.4f}  DSA_raw={dm:+.4f}")
+
+        # Same-seed cross-task CKA und DSA
+        print("  Same-seed cross-task (Mittel ueber 3 Seeds, alle Paare):")
+        for i, ta in enumerate(TASK_SUBSET):
+            for j, tb in enumerate(TASK_SUBSET):
+                if j <= i:
+                    continue
+                cka_vals, dsa_vals = [], []
+                for seed in SEEDS:
+                    ra = reps(models[(seed, ta)], ta, x_fixed)
+                    rb = reps(models[(seed, tb)], tb, x_fixed)
+                    cka_vals.append(cka(ra, rb, kernel="linear"))
+                    d = dsa(models[(seed, ta)], models[(seed, tb)], ta)
+                    dsa_vals.append(d["raw"])
+                cm = sum(cka_vals) / len(cka_vals)
+                dm = sum(dsa_vals) / len(dsa_vals)
+                print(f"    {ta:10s} vs {tb:10s}: CKA={cm:.4f}  DSA_raw={dm:+.4f}")
 
 
 if __name__ == "__main__":
