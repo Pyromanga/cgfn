@@ -1,0 +1,22 @@
+=== Multi-Task-Modell, gleiche Gewichte fuer alle Aufgaben ===
+
+Seed 0 losses: copy=0.1377  reverse=0.5166  parity=0.6668
+
+Seed 1 losses: copy=0.1002  reverse=0.4769  parity=0.6430
+
+Seed 2 losses: copy=0.1089  reverse=0.5176  parity=0.6271
+
+=== Signaturen pro Aufgabe (Mittel ueber Seeds) ===
+  copy    : norm=10.9433  intra_var=180.5932
+  reverse : norm=5.6833  intra_var=106.7562
+  parity  : norm=11.9151  intra_var=241.6457
+
+=== Inter vs Intra (jetzt mit geteilter Basis) ===
+  copy     vs reverse : inter=12.1758 intra=143.6747 ratio=0.0847
+  copy     vs parity  : inter=13.8056 intra=211.1195 ratio=0.0654
+  reverse  vs parity  : inter=12.7773 intra=174.2010 ratio=0.0733
+
+=== Branching Ratio pro Aufgabe ===
+  copy    : mean=0.0646  std=0.0024
+  reverse : mean=0.3554  std=0.0112
+  parity  : mean=0.0581  std=0.0022

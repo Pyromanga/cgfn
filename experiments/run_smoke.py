@@ -6,69 +6,83 @@ from cgfn.criticality import branching_ratio
 from cgfn.geometry import mean_state_signature, signature_distance
 
 device = "cpu"
+task_index = {t: i for i, t in enumerate(TASKS)}
+task_dim = len(TASKS)
 
 
-def train_single(task, seed, steps=2000, lr=1e-3, seq_len=8, hidden_dim=64):
+def one_hot(task, batch_size, device):
+    idx = task_index[task]
+    v = torch.zeros(batch_size, task_dim, device=device)
+    v[:, idx] = 1.0
+    return v
+
+
+def train_multitask(seed, steps=4000, lr=1e-3, seq_len=8, hidden_dim=64):
     torch.manual_seed(seed)
-    model = ContinuousRNN(hidden_dim=hidden_dim)
+    model = ContinuousRNN(task_dim=task_dim, hidden_dim=hidden_dim)
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     lossfn = torch.nn.BCEWithLogitsLoss()
-    for _ in range(steps):
+    for step in range(steps):
+        task = TASKS[step % len(TASKS)]
         x, y = make_batch(task, seq_len=seq_len, device=device)
-        out, _ = model(x)
+        tv = one_hot(task, x.shape[0], device)
+        out, _ = model(x, tv)
         loss = lossfn(out, y)
         opt.zero_grad(); loss.backward(); opt.step()
-    return model, loss.item()
+    # finale losses
+    losses = {}
+    for task in TASKS:
+        x, y = make_batch(task, seq_len=seq_len, device=device)
+        tv = one_hot(task, x.shape[0], device)
+        with torch.no_grad():
+            out, _ = model(x, tv)
+            losses[task] = lossfn(out, y).item()
+    return model, losses
 
 
-def collect_signature(model, seq_len=8):
-    x, _ = make_batch("copy", batch_size=64, seq_len=seq_len, device=device)
+def collect_signature(model, task, seq_len=8, batch=64):
+    x, _ = make_batch(task, batch_size=batch, seq_len=seq_len, device=device)
+    tv = one_hot(task, batch, device)
     with torch.no_grad():
-        _, states = model(x)
+        _, states = model(x, tv)
     return mean_state_signature(states), branching_ratio(states).mean().item()
 
 
 def main():
-    seeds = [0, 1, 2, 3, 4]
-    print("=== Teil 1: Pro Aufgabe, 5 Seeds ===\n")
-    print(f"{'task':10s} {'seed':>4s} {'loss':>8s} {'branch':>8s}")
-    sigs = defaultdict(list)
-    branches = defaultdict(list)
-    for task in TASKS:
-        for seed in seeds:
-            model, loss = train_single(task, seed)
-            sig, br = collect_signature(model)
-            sigs[task].append(sig)
-            branches[task].append(br)
-            print(f"{task:10s} {seed:4d} {loss:8.4f} {br:8.4f}")
+    seeds = [0, 1, 2]
+    print("=== Multi-Task-Modell, gleiche Gewichte fuer alle Aufgaben ===\n")
+    all_sigs = defaultdict(list)
+    all_branches = defaultdict(list)
+    for seed in seeds:
+        model, losses = train_multitask(seed)
+        print(f"Seed {seed} losses: " +
+              "  ".join(f"{t}={losses[t]:.4f}" for t in TASKS))
+        for task in TASKS:
+            sig, br = collect_signature(model, task)
+            all_sigs[task].append(sig)
+            all_branches[task].append(br)
+        print()
 
-    print("\n=== Intra-Aufgaben-Varianz (Mittel ueber Seeds) ===")
+    print("=== Signaturen pro Aufgabe (Mittel ueber Seeds) ===")
     means = {}
     for task in TASKS:
-        S = torch.stack(sigs[task])
-        mu = S.mean(dim=0)
-        means[task] = mu
-        var = ((S - mu) ** 2).sum(dim=1).mean().item()
-        print(f"  {task:8s}: mean_norm={mu.norm():.4f}  intra_var={var:.4f}")
+        S = torch.stack(all_sigs[task])
+        means[task] = S.mean(dim=0)
+        intra = ((S - means[task]) ** 2).sum(dim=1).mean().item()
+        print(f"  {task:8s}: norm={means[task].norm():.4f}  intra_var={intra:.4f}")
 
-    print("\n=== Inter-Aufgaben-Distanz (zwischen Mittelwerten) ===")
-    for i, a in enumerate(TASKS):
-        for b in TASKS[i+1:]:
-            d = signature_distance(means[a], means[b])
-            print(f"  {a:8s} vs {b:8s}: {d:.4f}")
-
-    print("\n=== Verhaeltnis Inter/Intra (groesser = besser trennbar) ===")
+    print("\n=== Inter vs Intra (jetzt mit geteilter Basis) ===")
     for i, a in enumerate(TASKS):
         for b in TASKS[i+1:]:
             inter = signature_distance(means[a], means[b])
-            intra = (((torch.stack(sigs[a]) - means[a])**2).sum(dim=1).mean().item()
-                     + ((torch.stack(sigs[b]) - means[b])**2).sum(dim=1).mean().item()) / 2
+            intra = (((torch.stack(all_sigs[a]) - means[a])**2).sum(dim=1).mean().item()
+                     + ((torch.stack(all_sigs[b]) - means[b])**2).sum(dim=1).mean().item()) / 2
             ratio = inter / (intra + 1e-8)
-            print(f"  {a:8s} vs {b:8s}: ratio={ratio:.4f}")
+            print(f"  {a:8s} vs {b:8s}: inter={inter:.4f} intra={intra:.4f} ratio={ratio:.4f}")
 
     print("\n=== Branching Ratio pro Aufgabe ===")
     for task in TASKS:
-        b = torch.tensor(branches[task])
+        b = torch.tensor(all_branches[task])
         print(f"  {task:8s}: mean={b.mean():.4f}  std={b.std():.4f}")
 
 
