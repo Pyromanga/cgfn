@@ -1,0 +1,13 @@
+README.md
+pyproject.toml
+src/cgfn/__init__.py
+src/cgfn/criticality.py
+src/cgfn/geometry.py
+src/cgfn/model.py
+src/cgfn/tasks.py
+src/cgfn.egg-info/PKG-INFO
+src/cgfn.egg-info/SOURCES.txt
+src/cgfn.egg-info/dependency_links.txt
+src/cgfn.egg-info/requires.txt
+src/cgfn.egg-info/top_level.txt
+tests/test_smoke.py
