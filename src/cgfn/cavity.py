@@ -8,10 +8,11 @@ lautet (nach Zeitreskalierung t -> tau*t, W -> tau*W):
 
 F7-Erweiterung: DREI konkurrierende Chaos-Regeln aus der Gewichtsmatrix:
     (a) Mean-Field:     tau * g * sqrt(Q) > 1            (Sompolinsky, Bulk)
-    (b) Eigenwert:      Re lambda_max(W) > 1 / tau       (exakte lineare
-                        Stabilitaet am Ursprung, spektraler Rand)
-    (c) Singulärwert:   log sigma_max(W) + log sqrt(Q) > 1 / tau
-                        (nicht-normale spektrale Kante, SVD-Analogon)
+    (b) Eigenwert:      tau * Re lambda_max(W) > 1       (exakte lineare
+                        Stabilitaet am Ursprung: J0 = -I/tau + W)
+    (c) Singulärwert:   tau * sv_max(W) * sqrt(Q) > 1
+                        (nicht-normale spektrale Kante; nahe an der
+                        SVD-basierten FTLE-Messung)
 plus Nicht-Normalitaet  kappa = sigma_max(W) / |lambda_max(W)|  —
 Verdacht aus F6: die 21 Kriterium-Misses (alle konservativ, alle mit
 kleinem Q) kommen von Nicht-Normalitaet + SVD-basierter FTLE-Messung.
@@ -52,7 +53,7 @@ def linearized_spectrum(model):
 
 @torch.no_grad()
 def spectral_edge(model):
-    """sigma_max(W) — größter Singulärwert der Gewichtsmatrix."""
+    """sv_max(W) — größter Singulärwert der Gewichtsmatrix."""
     return torch.linalg.svdvals(model.W.detach())[0].item()
 
 
@@ -66,7 +67,7 @@ def eig_max(model):
 @torch.no_grad()
 def nonnormality(model):
     """
-    kappa = sigma_max(W) / max(|lambda_i(W)|, eps).
+    kappa = sv_max(W) / max(|lambda_i(W)|, eps).
     kappa=1: normale Matrix; kappa>>1: starke Nicht-Normalitaet
     (transientes Wachstum moeglich, SVD-FTLE > Eigenwert-Lyapunov).
     """
@@ -80,15 +81,16 @@ def nonnormality(model):
 def chaos_criterion(model, states):
     """
     Alle drei Chaos-Regeln als Referenz. Liefert die Größen als dict.
+    'chaos_predicted' bleibt Mean-Field (Backward-kompatibel zu F6).
     """
     g = effective_gain(model)
     Q = q_factor(model, states)
     lin = linearized_spectrum(model)
     sv_W = spectral_edge(model)
     lam_W = eig_max(model)
-    mf = model.tau * g * math.sqrt(Q)          # (a) Mean-Field
-    eig_rule = model.tau * lam_W               # (b) > 1 <=> Chaos am Ursprung
-    sv_rule = model.tau * math.log(sv_W * math.sqrt(max(Q, 1e-9)) + 1e-12)  # (c)
+    mf = model.tau * g * math.sqrt(Q)           # (a) Mean-Field
+    eig_rule = model.tau * lam_W                # (b) > 1 <=> instabil am Ursprung
+    sv_rule = model.tau * sv_W * math.sqrt(max(Q, 1e-9))  # (c) nicht-normale Kante
     return {
         "g": g,
         "Q": Q,
@@ -96,11 +98,11 @@ def chaos_criterion(model, states):
         "eig_max": lam_W,
         "sv_max": sv_W,
         "tau_eig": eig_rule,
-        "tau_svlog": sv_rule,
+        "tau_sv": sv_rule,
         "pred_mf": mf > 1.0,
         "pred_eig": eig_rule > 1.0,
         "pred_sv": sv_rule > 1.0,
-        "chaos_predicted": mf > 1.0,  # Backward-kompatibel zu F6
+        "chaos_predicted": mf > 1.0,
         "lin_sv_max": lin.max().item(),
         "lin_log_sv_max": torch.log(lin.max() + 1e-12).item(),
     }

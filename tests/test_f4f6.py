@@ -60,9 +60,17 @@ def test_cavity_reference_values():
     assert 0.0 <= Q <= 1.0  # tanh^2 in [0,1]
 
     crit = chaos_criterion(model, states)
-    assert set(crit) == {"g", "Q", "tau_g_sqrtQ", "chaos_predicted",
-                         "lin_sv_max", "lin_log_sv_max"}
+    # F7 hat chaos_criterion um pred_mf/pred_eig/pred_sv, tau_eig/tau_sv,
+    # eig_max/sv_max erweitert — Subset-Pruefung statt exakter Key-Menge,
+    # damit neue Diagnose-Keys den Smoke-Test nicht mehr rot machen.
+    required = {"g", "Q", "tau_g_sqrtQ", "chaos_predicted",
+                "lin_sv_max", "lin_log_sv_max"}
+    assert all(k in crit for k in required), set(crit)
     assert isinstance(crit["chaos_predicted"], bool)
+    # F7-Erweiterungen: drei Regeln + Nicht-Normalitaets-Groessen
+    for k in ("pred_mf", "pred_eig", "pred_sv", "tau_eig", "tau_sv",
+              "eig_max", "sv_max"):
+        assert k in crit, k
 
     comp = compare_spectrum(model, states)
     assert comp["lin_spectrum"].shape == comp["traj_spectrum"].shape
