@@ -1,0 +1,25 @@
+==============================================================================
+F5 KONTINUIERLICH: Bleibt der Sweet-Spot auf sinus/lorenz/OU erhalten?
+tasks=['sinus_memory', 'lorenz', 'ou_noise']  taus=[0.5, 1.0, 2.0, 4.0]  seeds=[0, 1]  steps=800  seq_len=32  hidden=32  loss=MSE
+==============================================================================
+         task    tau  loss_eval  ftle_mean   d_eff
+ sinus_memory   0.50     0.0171    +0.7643    1.94
+ sinus_memory   1.00     0.0146    +0.1678    3.24
+ sinus_memory   2.00     0.1459    -0.4655    2.61
+ sinus_memory   4.00     0.2854    -1.1229    1.38
+       lorenz   0.50     0.0018    +0.7909    1.20
+       lorenz   1.00     0.0030    +0.1253    1.96
+       lorenz   2.00     0.0165    -0.5341    1.92
+       lorenz   4.00     0.0278    -1.1577    2.04
+     ou_noise   0.50     0.1653    +0.7988    1.22
+     ou_noise   1.00     0.1676    +0.1535    2.36
+     ou_noise   2.00     0.1813    -0.5100    2.21
+     ou_noise   4.00     0.2059    -1.1588    1.58
+
+--- Auswertung: tau*(min loss) vs tau*(min |FTLE|) pro Task ---
+ sinus_memory: tau*(loss)=1.00 (loss=0.0146)   tau*(|FTLE|)=1.00 (ftle=+0.1678)
+       lorenz: tau*(loss)=0.50 (loss=0.0018)   tau*(|FTLE|)=1.00 (ftle=+0.1253)
+     ou_noise: tau*(loss)=0.50 (loss=0.1653)   tau*(|FTLE|)=1.00 (ftle=+0.1535)
+
+Referenz binary-Tasks: Sweet-Spot im mittleren tau-Bereich, kritisch ab tau~1 (sweetspot_results.txt).
+=== FERTIG ===

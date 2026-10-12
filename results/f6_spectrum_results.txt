@@ -1,0 +1,40 @@
+============================================================================================
+F6 THEORIE: Sompolinsky-Kriterium tau*g*sqrt(Q)>1 vs. gemessenes FTLE_max;
+Spektrum: J0 = -I/tau + W vs. Trajektorien-FTLE (sortierte Korrelation)
+g_scales=[0.5, 1.0, 1.5, 2.0, 3.0]  taus=[0.5, 1.0, 2.0]  seeds=[0, 1, 2]  hidden=64  train_steps(copy)=300
+============================================================================================
+ g_scale   tau      mode      g      Q  tau*g*sqrtQ  pred   ftle_max  meas  hit spec_corr
+    0.50  0.50 untrained  1.198  0.039        0.118 False    +1.3041  True    N     1.000
+    0.50  0.50   trained  1.963  0.091        0.295 False    +2.3064  True    N     0.999
+    0.50  1.00 untrained  1.198  0.213        0.550 False    +0.9404  True    N     0.985
+    0.50  1.00   trained  1.697  0.089        0.506 False    +2.1041  True    N     0.995
+    0.50  2.00 untrained  1.198  0.432        1.573  True    +0.6843  True    Y     0.992
+    0.50  2.00   trained  1.414  0.220        1.325  True    +1.6383  True    Y     0.996
+    1.00  0.50 untrained  2.395  0.185        0.513 False    +1.6402  True    N     0.977
+    1.00  0.50   trained  2.734  0.091        0.413 False    +2.1923  True    N     0.997
+    1.00  1.00 untrained  2.395  0.485        1.668  True    +1.3572  True    Y     0.990
+    1.00  1.00   trained  2.459  0.334        1.419  True    +1.5750  True    Y     0.994
+    1.00  2.00 untrained  2.395  0.636        3.819  True    +1.1727  True    Y     0.977
+    1.00  2.00   trained  2.404  0.579        3.659  True    +1.2639  True    Y     0.976
+    1.50  0.50 untrained  3.593  0.405        1.143  True    +1.8545  True    Y     0.993
+    1.50  0.50   trained  3.695  0.223        0.868 False    +2.0082  True    N     0.998
+    1.50  1.00 untrained  3.593  0.622        2.834  True    +1.6488  True    Y     0.981
+    1.50  1.00   trained  3.604  0.603        2.797  True    +1.6742  True    Y     0.979
+    1.50  2.00 untrained  3.593  0.731        6.145  True    +1.5148  True    Y     0.951
+    1.50  2.00   trained  3.594  0.719        6.097  True    +1.5347  True    Y     0.955
+    2.00  0.50 untrained  4.791  0.539        1.758  True    +2.0200  True    Y     0.986
+    2.00  0.50   trained  4.832  0.469        1.654  True    +2.0955  True    Y     0.991
+    2.00  1.00 untrained  4.791  0.704        4.018  True    +1.8593  True    Y     0.965
+    2.00  1.00   trained  4.795  0.696        4.001  True    +1.8710  True    Y     0.961
+    2.00  2.00 untrained  4.791  0.788        8.504  True    +1.7539  True    Y     0.923
+    2.00  2.00   trained  4.790  0.783        8.478  True    +1.7531  True    Y     0.929
+    3.00  0.50 untrained  7.186  0.670        2.940  True    +2.3025  True    Y     0.976
+    3.00  0.50   trained  7.191  0.654        2.908  True    +2.3125  True    Y     0.974
+    3.00  1.00 untrained  7.186  0.794        6.404  True    +2.1647  True    Y     0.930
+    3.00  1.00   trained  7.185  0.796        6.410  True    +2.1489  True    Y     0.930
+    3.00  2.00 untrained  7.186  0.851       13.258  True    +2.0804  True    Y     0.878
+    3.00  2.00   trained  7.185  0.848       13.234  True    +2.0598  True    Y     0.878
+
+Trefferquote Sompolinsky-Kriterium vs. FTLE-Vorzeichen: 69/90 = 76.7%
+Leseart: >=80% => Mean-Field-Kriterium ist am CT-RNN mit -z/tau-Decay tragfaehig (nach tau-Reskalierung); spec_corr nahe +1 => die linearisierte Jacobi erklaert das Trajektorien-Spektrum.
+=== FERTIG ===

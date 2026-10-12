@@ -1,0 +1,40 @@
+================================================================================
+F4 NOISE: Driftet der Sweet-Spot unter Eingangs-Rauschen? (Training noisy, Eval clean)
+tasks=['copy', 'parity']  taus=[0.5, 1.0, 2.0, 4.0]  sigmas=[0.0, 0.1, 0.3]  seeds=[0, 1]  steps=1000
+================================================================================
+    task  sigma    tau  loss_clean  ftle_mean   d_eff
+    copy   0.00   0.50      0.0023    +0.7955    1.65
+    copy   0.00   1.00      0.0042    +0.2589    1.74
+    copy   0.00   2.00      0.0147    -0.0383    2.74
+    copy   0.00   4.00      0.0360    -0.2315    2.90
+    copy   0.10   0.50      0.0014    +0.7970    1.63
+    copy   0.10   1.00      0.0029    +0.2566    1.74
+    copy   0.10   2.00      0.0131    -0.0559    2.71
+    copy   0.10   4.00      0.0349    -0.2480    2.81
+    copy   0.30   0.50      0.0045    +0.8162    1.54
+    copy   0.30   1.00      0.0069    +0.2660    1.72
+    copy   0.30   2.00      0.0259    -0.0522    2.88
+    copy   0.30   4.00      0.0578    -0.3089    2.20
+  parity   0.00   0.50      0.6841    +0.7733    2.01
+  parity   0.00   1.00      0.6813    +0.1912    1.83
+  parity   0.00   2.00      0.6849    -0.1558    1.40
+  parity   0.00   4.00      0.6871    -0.4105    1.45
+  parity   0.10   0.50      0.6861    +0.7781    1.98
+  parity   0.10   1.00      0.6842    +0.1962    1.67
+  parity   0.10   2.00      0.6865    -0.1527    1.40
+  parity   0.10   4.00      0.6883    -0.3988    1.34
+  parity   0.30   0.50      0.6863    +0.7768    1.87
+  parity   0.30   1.00      0.6856    +0.1955    1.73
+  parity   0.30   2.00      0.6869    -0.1427    1.50
+  parity   0.30   4.00      0.6885    -0.3848    1.43
+
+--- Auswertung: tau*(min clean loss) pro (task, sigma) ---
+    copy sigma=0.00: tau*=0.50  loss_clean=0.0023  ftle=+0.7955
+    copy sigma=0.10: tau*=0.50  loss_clean=0.0014  ftle=+0.7970
+    copy sigma=0.30: tau*=0.50  loss_clean=0.0045  ftle=+0.8162
+  parity sigma=0.00: tau*=1.00  loss_clean=0.6813  ftle=+0.1912
+  parity sigma=0.10: tau*=1.00  loss_clean=0.6842  ftle=+0.1962
+  parity sigma=0.30: tau*=1.00  loss_clean=0.6856  ftle=+0.1955
+
+Leseart: tau* konstant ueber sigma => Sweet-Spot ist noise-robust (FTLE-Kalibrierung uebertraegt sich); tau* driftet => Kritikalitaet muss unter Rauschen neu kalibriert werden.
+=== FERTIG ===
