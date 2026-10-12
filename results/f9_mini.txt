@@ -1,0 +1,18 @@
+====================================================================================================================
+F9 GENERATIVES PENDANT: Designed W (Schur-Bau) — sagt der Ruler das Verhalten voraus?
+lam_max=[1.15]  s_nonnormal=[0.0]  taus=[0.7, 1.0]  seeds=[0]  steps=5  hidden=32
+Vorhersage per Bau: tau_pred_eig = 1/lam_max (exakt); Frage: folgt das gemessene
+FTLE-Crossing der Eigenwert- oder der SVD-Kante — und sitzt tau*(loss) darauf?
+====================================================================================================================
+  lam    s  kappa   tEig    tSv  tCross  |dEig|   |dSv| tau*loss |star-X|  winner
+ 1.15  0.0   1.00  0.870  0.870 kein Wechsel (sup)   tau*loss=0.70
+
+--- Aggregat ---
+
+LESEAT: Bei s=0 (kappa~1) MUSS tau_cross ~ tau_pred_eig sein (Konsistenz-Check).
+Wenn tau_cross mit wachsendem s zur SVD-Kante (tau_pred_sv) wandert,
+legt die SVD-basierte FTLE-Messung die nicht-normale Kante frei —
+dann ist kappa der Schalter zwischen den Regeln: Ruler = f(kappa).
+Wenn tau*(loss) ~ tau_cross bleibt, generalisiert der F5-Befund
+(Memory-Optimum auf Kritikalitaet) auf designed Netzwerke.
+=== FERTIG ===

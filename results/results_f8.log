@@ -1,0 +1,26 @@
+        copy  0.80  1.00     0    1.160   2.743   2.36  0.169    1.160    0.862   +1.0656 False  True True       Y
+        copy  0.80  1.00   150    0.893   4.683   5.24  0.087    0.893    1.119   +1.4828 False False True       N
+================================================================================================================
+F8 RULER-ANWENDUNG: Chaos-Regeln ueber das Training verfolgt — wo gilt der Spectral Ruler?
+tasks=['copy']  g_scales=[0.8]  taus=[1.0]  seeds=[0]  steps=150  ckpt=150  hidden=32
+================================================================================================================
+        task  g_sc   tau  step  lam_max  sv_max  kappa      Q  tau*eig tau_pred  ftle_max   pMF  pEig  pSV hit_eig
+        copy  0.80  1.00     0    1.160   2.743   2.36  0.169    1.160    0.862   +1.0656 False  True True       Y
+        copy  0.80  1.00   150    0.893   4.683   5.24  0.087    0.893    1.119   +1.4828 False False True       N
+
+--- Regel-Guete über ALLE Checkpoints (vs. FTLE-Vorzeichen) ---
+Regel   mf: 0/2 = 0.0%
+Regel  eig: 1/2 = 50.0%
+Regel   sv: 2/2 = 100.0%
+
+--- Kritikalitaets-Drift: lambda_max(W) vor vs. nach Training ---
+        copy g=0.8 seed=0: lam +1.160 -> +0.893 (Regelrand 1/tau = 1.000)  Richtung-Rand: JA
+Netto: 1/1 Nets wandern Richtung Regelrand (=> Training treibt Richtung Kritikalitaet).
+
+LESEAT: hit_eig-Spalte ~100% und hoher pEig-Anteil => Eigenwert-Regel
+ist der tragfaechste Ruler; Abweichungen konzentrieren sich dort,
+wo pred_eig=False aber pSV=True (transiente Nische).
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f8_mini.txt geschrieben.
+f8_exit=0
