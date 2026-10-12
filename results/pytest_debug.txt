@@ -1,0 +1,48 @@
+.....F..................                                                 [100%]
+=================================== FAILURES ===================================
+____________________________ test_spectral_measures ____________________________
+
+    def test_spectral_measures():
+        torch.manual_seed(0)
+        model = ContinuousRNN(task_dim=len(TASKS), hidden_dim=16, tau=1.5)
+        idx = TASKS.index("parity")
+        x, _ = make_batch("parity", batch_size=4, seq_len=8)
+        tv = torch.zeros(4, len(TASKS))
+        tv[:, idx] = 1.0
+        _, states = model(x, tv)
+    
+        sv = spectral_edge(model)
+        lam = eig_max(model)
+        kappa, sv2, lam2 = nonnormality(model)
+>       assert sv == sv2 and lam == lam2
+E       assert (1.9766080379486084 == 1.9766080379486084 and 0.7205212116241455 == 1.1987156867980957)
+
+tests/test_f7.py:21: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[sinus_memory]
+PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[lorenz]
+PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[ou_noise]
+PASSED tests/test_f4f6.py::test_continuous_training_reduces_loss
+PASSED tests/test_f4f6.py::test_cavity_reference_values
+PASSED tests/test_f7.py::test_eig_rule_detects_scaled_chaos
+PASSED tests/test_f8f9.py::test_design_eig_max_exact
+PASSED tests/test_f8f9.py::test_kappa_grows_with_nonnormality
+PASSED tests/test_f8f9.py::test_freeze_w_flag
+PASSED tests/test_f8f9.py::test_ruler_report_keys_and_prediction
+PASSED tests/test_f8f9.py::test_ruler_with_states
+PASSED tests/test_frontier.py::test_regulator_updates_tau
+PASSED tests/test_frontier.py::test_regulator_respects_bounds
+PASSED tests/test_frontier.py::test_regulator_ema_smoothing
+PASSED tests/test_frontier.py::test_dormant_fraction_detects_constant_units
+PASSED tests/test_frontier.py::test_weight_churn_zero_for_identical
+PASSED tests/test_frontier.py::test_plasticity_snapshot_finite
+PASSED tests/test_frontier.py::test_correlate_perfect
+PASSED tests/test_smoke.py::test_model_forward_shapes
+PASSED tests/test_smoke.py::test_tasks_shapes
+PASSED tests/test_smoke.py::test_training_reduces_loss
+PASSED tests/test_smoke.py::test_ftle_summary_runs
+PASSED tests/test_smoke.py::test_effective_dimension_runs
+FAILED tests/test_f7.py::test_spectral_measures - assert (1.9766080379486084 == 1.9766080379486084 and 0.7205212116241455 == 1.1987156867980957)
+1 failed, 23 passed in 5.69s
+pytest_exit=1
