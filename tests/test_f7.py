@@ -18,9 +18,14 @@ def test_spectral_measures():
     sv = spectral_edge(model)
     lam = eig_max(model)
     kappa, sv2, lam2 = nonnormality(model)
-    assert sv == sv2 and lam == lam2
+    assert sv == sv2
+    # nonnormality() liefert den SPEKTRALRADIUS max|lambda| (damit
+    # kappa = sv_max/max|lambda| >= 1 garantiert ist), eig_max() den
+    # groessten REALTEIL. Beides ist nur identisch, wenn der dominante
+    # Eigenwert reell-positiv ist — hier nur Ordnungsrelation pruefen:
+    assert lam2 >= lam - 1e-6  # Spektralradius >= max Re lambda, immer
     assert sv > 0 and lam > 0
-    assert kappa >= 1.0 - 1e-6  # sv_max >= |lam_max| immer
+    assert kappa >= 1.0 - 1e-6  # sv_max >= Spektralradius immer
 
     crit = chaos_criterion(model, states)
     for key in ("pred_mf", "pred_eig", "pred_sv", "tau_g_sqrtQ",
