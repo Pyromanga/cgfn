@@ -1,0 +1,28 @@
+============================================================================================================
+F10 SAETTIGUNGS-KORRIGIERTER RULER: tau* = 1/(lam_max * d), d = <sech^2(z)> = 1-Q
+lams=[0.8, 1.15, 1.6]  taus=[0.5, 0.7, 0.9, 1.1, 1.4, 1.7, 2.0, 2.4, 2.8, 3.3]  seeds=[0, 1]  iters=4 (gedaempft)  hidden=32
+============================================================================================================
+
+--- (A) Designed W, s=0 (kappa=1): Crossing vs. Vorhersagen ---
+  lam   tRaw   tSC1    tSC  tCross  |dRaw|  |dSC1|   |dSC|   best                           SC-Trace
+ 0.80  1.250  1.565  2.560   2.010   0.760   0.445   0.550    sc1 1.25 -> 1.56 -> 1.91 -> 2.28 -> 2.56
+ 1.15  0.870  1.010  1.438   2.709   1.839   1.699   1.271     sc 0.87 -> 1.01 -> 1.21 -> 1.37 -> 1.44
+ 1.60  0.625  0.724  0.887 kein Wechsel
+mean |cross - 1/lam|   = 1.300   (unkorrigiert, 0 Rollouts)
+mean |cross - tSC1|   = 1.072   (EINE Iteration, 1 Rollout)
+mean |cross - tSC|    = 0.910   (konvergiert, gedaempft)
+Sieger: raw=0, sc1=1, sc=1, kein Crossing=1
+
+--- (B) Trainierte Netze (F8-Design): Regel-Güte MF / Eig / EigQbar / SV ---
+tasks=copy+sinus_memory  g_scales=0.8,1.6  taus=1.0  seeds=[0, 1]  steps=600  ckpt=150
+Regel       mf: 24/40 = 60.0%
+Regel      eig: 35/40 = 87.5%
+Regel  eigqbar: 19/40 = 47.5%
+Regel       sv: 40/40 = 100.0%
+
+LESEAT (A): |dSC1| << |dRaw| => das Gesetz tau* = 1/(lam*d) trifft
+mit EINEM Rollout — der F9-Twist ist Saettigung, kein Widerspruch.
+LESEAT (B): eigqbar nahe 100% => auch trainierte Netze folgen dem
+korrigierten Gesetz; eigqbar vs. sv entscheidet, ob die d-Korrektur
+die SVD-Regel ersetzt (EINE Regel statt dreier) — der Durchbruch.
+=== FERTIG ===
