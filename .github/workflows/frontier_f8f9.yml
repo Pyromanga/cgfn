@@ -3,6 +3,8 @@ name: cgfn-frontier (F8/F9)
 # F8 — Spectral Ruler als Diagnose-Tool (Checkpoint-Sweep, Regel-Guete MF/Eig/SV)
 # F9 — Generatives Pendant: Designed W, Vorhersage-gegen-Messung.
 # Laeuft sonntags nachts (CPU-Budget) UND per Marker-Commit (.trigger/f8f9).
+# Run-Logs werden IMMER nach results/ committet (auch bei Crash) —
+# Diagnose-Kanal ohne Actions-UI (Lesson aus wildgrove Issue #5).
 
 on:
   workflow_dispatch:
@@ -38,17 +40,19 @@ jobs:
         run: python -m pytest -q
       - name: Run F8 ruler application experiment
         run: |
+          set -o pipefail
           python experiments/f8_ruler.py \
             --seeds "${{ inputs.seeds || '0,1' }}" \
             --total-steps "${{ inputs.train_steps || '600' }}" \
-            --out results/f8_ruler_results.txt
+            --out results/f8_ruler_results.txt 2>&1 | tee results/f8_run.log
       - name: Run F9 designed-network experiment
         run: |
+          set -o pipefail
           python experiments/f9_design.py \
             --seeds "${{ inputs.seeds || '0,1' }}" \
             --train-steps "${{ inputs.train_steps || '400' }}" \
-            --out results/f9_design_results.txt
-      - name: Commit results to repo
+            --out results/f9_design_results.txt 2>&1 | tee results/f9_run.log
+      - name: Commit results and logs to repo
         if: always()
         run: |
           git config user.name "github-actions[bot]"
