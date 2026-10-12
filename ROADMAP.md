@@ -8,6 +8,13 @@
 4. **Architektur-Vergleich** (`universal_criticality_results.txt`): Gain- vs. tau-Kontrolle über CT-RNN/GRU/LSTM/Vanilla.
 5. **FTLE-Trainingsdynamik** (`lyap_training_results.txt`): Lyapunov-Verlauf während des Lernens.
 
+
+## Erste Befunde aus den Erstrunden-Laewenfen (2026-10-12, results/*.txt)
+
+- **F4 (Noise):** tau* ist vollstaendig sigma-invariant (copy: tau*=0.5, parity: tau*=1.0 ueber sigma in {0, 0.1, 0.3}); FTLE-Werte kaum veraendert => FTLE-Kalibrierung uebertraegt sich auf noisy Deployment. Bonbon: copy bei sigma=0.1 besser als sigma=0 (Noise als Regularisierer). OFFEN: parity bei 1000 Steps noch auf Zufallsniveau (loss~0.68~ln2) — F4 mit --steps>=3000 wiederholen, sonst taugt die parity-Spalte nicht als Beweis.
+- **F5 (Kontinuierlich):** sinus_memory (Memory-Task): tau*(loss)=1.0 = tau*(|FTLE|)=1.0 — EXAKTER Treffer auf dem Kritikalitaetspunkt, scharfes Minimum (0.0146 vs 0.146 bei tau=2). lorenz/ou_noise (reactive Tasks): flache Minima mit leichter Praeferenz tau=0.5. Muster: Memory-Tasks sitzen auf FTLE~0, reactive Tasks brauchen schnelle Units.
+- **F6 (Theorie):** Spektrum-Korrelation 0.88–1.00 ueberall — die Trajektorien-Lyapunov-Struktur ist fast vollstaendig durch die STATISCHE Jacobi J0=-I/tau+W determiniert. Sompolinsky-Trefferquote 76.7%, ABER einseitig exakt: kein einziger Fall "Chaos vorhergesagt, keins gemessen"; alle 21 Misses konservativ bei kleinem Q. => Verdacht: Bulk-Mittel (g*sqrt Q) unterschaetzt Chaos nahe dem Ursprung, wo der spektrale Rand von W (Nicht-Normalitaet) dominiert. Genau das testet F7.
+
 ## Nächste Frontier-Schritte (priorisiert)
 
 ### F1 — Scaling-Gesetz des Sweet Spots  *(implementiert: `experiments/scaling.py`)*
@@ -41,6 +48,12 @@ Mean-field-Theory (Sompolinsky/Van Vreeswijk): Übergangschaos-Bedingung `g·sqr
 Implementierung: Chaos-Kriterium `tau·g·sqrt(Q) > 1` (nach tau-Zeitreskalierung) gegen Vorzeichen des gemessenen FTLE_max — Trefferquote über g-Sweep × tau-Sweep, untrainiert vs. kurz trainiert. Plus: volles linearisiertes Jacobi-Spektrum `J0 = -I/tau + W` gegen Trajektorien-FTLE-Spektrum (sortierte Spektrum-Korrelation).
 
 > **Paper-Radar 2026-10-12:** [arXiv:2610.12426](https://arxiv.org/abs/2610.12426) (Clark) berechnet das vollständige Lyapunov-Spektrum random-asymmetrischer RNNs exakt via Cavity-Methode (N→∞, extensives Chaos). → F6: direkter analytischer Referenzpunkt für `g·sqrt(Q)=1`; Jacobi-SVD-Pipeline so erweitern, dass neben FTLE_max das gesamte Spektrum gegen die Cavity-Vorhersage gestellt wird. ✔ umgesetzt in `compare_spectrum()`.
+
+
+### F7 — Spectral Ruler: Kritikalitaet aus der Gewichtsmatrix  *(implementiert: `src/cgfn/cavity.py` erweitert, `experiments/f7_spectral.py`, `.github/workflows/frontier_f7.yml` — samstags 03:00 UTC + Marker-Commit `.trigger/f7`)*
+Motiviert durch den F6-Befund (Spektrum-Korrelation 0.88–1.00; Kriterium einseitig exakt, alle 21 Misses konservativ bei kleinem Q): DREI konkurrierende Chaos-Regeln aus W allein —
+(a) Mean-Field `tau*g*sqrt(Q)>1`, (b) Eigenwert `tau*Re lambda_max(W)>1` (exakte lineare Stabilitaet), (c) Singulärwert `tau*(log sv_max + log sqrt(Q))>1` (nicht-normale Kante) — gegen gemessenes SVD-FTLE, untrainiert vs. trainiert, plus Nicht-Normalitaet kappa=sigma_max/|lam_max| als Miss-Erklaerung.
+**Ziel-Claim ("Durchbruch"):** Wenn (b) gewinnt, ist der Sweet-Spot geschlossen berechenbar — `tau* ~ 1/Re lambda_max(W)` — Hyperparameter-Kalibrierung ohne Rollout. Die F6-Luecke waere dann kein Widerspruch zur Mean-Field-Theorie, sondern deren praegnantere spektrale Verfeinerung (Bulk vs. spektraler Rand nicht-normaler Matrizen).
 
 ## Reproduzierbarkeit & Hygiene
 

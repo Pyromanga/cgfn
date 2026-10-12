@@ -6,11 +6,18 @@ Sompolinsky / Van Vreeswijk Chaos-Kriterium für rekurrente tanh-Netze
 lautet (nach Zeitreskalierung t -> tau*t, W -> tau*W):
     Chaos  <=>  tau * g * sqrt(Q) > 1,   Q = <tanh(z)^2>
 
-Hier: analytische Referenzwerte + empirischer Abgleich gegen die
-gemessenen FTLE-Werte aus cgfn.ftle. Anschluss an arXiv:2610.12426
-(Clark, vollständiges Lyapunov-Spektrum random-asymmetrischer RNNs):
-das volle Spektrum der linearisierten Jacobi wird mit dem
-Trajektorien-FTLE-Spektrum verglichen.
+F7-Erweiterung: DREI konkurrierende Chaos-Regeln aus der Gewichtsmatrix:
+    (a) Mean-Field:     tau * g * sqrt(Q) > 1            (Sompolinsky, Bulk)
+    (b) Eigenwert:      Re lambda_max(W) > 1 / tau       (exakte lineare
+                        Stabilitaet am Ursprung, spektraler Rand)
+    (c) Singulärwert:   log sigma_max(W) + log sqrt(Q) > 1 / tau
+                        (nicht-normale spektrale Kante, SVD-Analogon)
+plus Nicht-Normalitaet  kappa = sigma_max(W) / |lambda_max(W)|  —
+Verdacht aus F6: die 21 Kriterium-Misses (alle konservativ, alle mit
+kleinem Q) kommen von Nicht-Normalitaet + SVD-basierter FTLE-Messung.
+
+Anschluss an Clark (arXiv:2610.12426): volles Spektrum der linearisierten
+Jacobi gegen Trajektorien-FTLE (Spektrum-Korrelation).
 """
 import math
 
@@ -44,20 +51,56 @@ def linearized_spectrum(model):
 
 
 @torch.no_grad()
+def spectral_edge(model):
+    """sigma_max(W) — größter Singulärwert der Gewichtsmatrix."""
+    return torch.linalg.svdvals(model.W.detach())[0].item()
+
+
+@torch.no_grad()
+def eig_max(model):
+    """Re lambda_max(W) — größter Realteil des Eigenwertspektrums."""
+    ev = torch.linalg.eigvals(model.W.detach())
+    return ev.real.max().item()
+
+
+@torch.no_grad()
+def nonnormality(model):
+    """
+    kappa = sigma_max(W) / max(|lambda_i(W)|, eps).
+    kappa=1: normale Matrix; kappa>>1: starke Nicht-Normalitaet
+    (transientes Wachstum moeglich, SVD-FTLE > Eigenwert-Lyapunov).
+    """
+    sv = spectral_edge(model)
+    ev = torch.linalg.eigvals(model.W.detach())
+    lam = ev.abs().max().item()
+    return sv / max(lam, 1e-9), sv, lam
+
+
+@torch.no_grad()
 def chaos_criterion(model, states):
     """
-    Sompolinsky-Kriterium (mit tau-Reskalierung) + linearisierte Jacobi
-    als Referenz. Liefert alle Größen als dict.
+    Alle drei Chaos-Regeln als Referenz. Liefert die Größen als dict.
     """
     g = effective_gain(model)
     Q = q_factor(model, states)
     lin = linearized_spectrum(model)
-    criterion = model.tau * g * math.sqrt(Q)
+    sv_W = spectral_edge(model)
+    lam_W = eig_max(model)
+    mf = model.tau * g * math.sqrt(Q)          # (a) Mean-Field
+    eig_rule = model.tau * lam_W               # (b) > 1 <=> Chaos am Ursprung
+    sv_rule = model.tau * math.log(sv_W * math.sqrt(max(Q, 1e-9)) + 1e-12)  # (c)
     return {
         "g": g,
         "Q": Q,
-        "tau_g_sqrtQ": criterion,
-        "chaos_predicted": criterion > 1.0,
+        "tau_g_sqrtQ": mf,
+        "eig_max": lam_W,
+        "sv_max": sv_W,
+        "tau_eig": eig_rule,
+        "tau_svlog": sv_rule,
+        "pred_mf": mf > 1.0,
+        "pred_eig": eig_rule > 1.0,
+        "pred_sv": sv_rule > 1.0,
+        "chaos_predicted": mf > 1.0,  # Backward-kompatibel zu F6
         "lin_sv_max": lin.max().item(),
         "lin_log_sv_max": torch.log(lin.max() + 1e-12).item(),
     }
