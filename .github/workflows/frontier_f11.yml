@@ -1,0 +1,61 @@
+name: cgfn-frontier (F11)
+
+# F11 — Messplatz-Validierung: SVD-FTLE vs. Benettin-QR + Stabilitaets-Audit.
+# Laeuft per Marker-Commit (.trigger/f11) + dienstags 03:00 UTC.
+# Run-Log IMMER nach results/ committen (Crash-Diagnose ohne Actions-UI).
+
+on:
+  workflow_dispatch:
+    inputs:
+      seeds:
+        description: "Seeds"
+        default: "0,1"
+      train_steps:
+        description: "Train-Steps (trainierte Netze)"
+        default: "300"
+  push:
+    paths:
+      - ".trigger/f11"
+  schedule:
+    - cron: "0 3 * * 2"  # dienstags 03:00 UTC
+
+jobs:
+  frontier-f11:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Unit tests
+        run: python -m pytest -q
+      - name: Run F11 measurement-validation experiment
+        run: |
+          set -o pipefail
+          python experiments/f11_benettin.py \
+            --seeds "${{ inputs.seeds || '0,1' }}" \
+            --train-steps "${{ inputs.train_steps || '300' }}" \
+            --out results/f11_benettin_results.txt 2>&1 | tee results/f11_run.log
+      - name: Commit results and logs to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: F11-Benettin-Lauf ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          git push
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontier-f11-results
+          path: results/
+          retention-days: 30
