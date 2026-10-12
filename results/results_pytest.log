@@ -1,6 +1,28 @@
-........................                                                 [100%]
+......F..........................                                        [100%]
+=================================== FAILURES ===================================
+_____________________ test_benettin_unstable_net_positive ______________________
+
+    def test_benettin_unstable_net_positive():
+        """Sehr grosse Kopplung => Instabilitaet => FTLE > 0."""
+        model = ContinuousRNN(task_dim=0, hidden_dim=8, tau=2.0)
+        with torch.no_grad():
+            model.W.copy_(model.W * 8.0)
+        x, _ = make_continuous_batch("sinus_memory", 2, 24)
+>       assert benettin_ftle_max(model, x) > 0.0
+E       assert -0.27233150601387024 > 0.0
+E        +  where -0.27233150601387024 = benettin_ftle_max(ContinuousRNN(\n  (U): Linear(in_features=1, out_features=8, bias=True)\n  (readout): Linear(in_features=8, out_features=1, bias=True)\n), tensor([[[ 0.6120],\n         [ 0.8094],\n         [-0.5620],\n         [-0.8441],\n         [ 0.5099],\n         [ 0.8756]...       [ 0.9188],\n         [ 0.9242],\n         [ 0.3721],\n         [-0.4045],\n         [-0.9370],\n         [-0.9043]]]))
+
+tests/test_f11.py:36: AssertionError
 ==================================== PASSES ====================================
 =========================== short test summary info ============================
+PASSED tests/test_f10.py::test_qbar_plus_q_equals_one
+PASSED tests/test_f10.py::test_chaos_criterion_has_qbar_keys
+PASSED tests/test_f10.py::test_ruler_report_qbar_prediction
+PASSED tests/test_f10.py::test_ruler_without_states_qbar_defaults
+PASSED tests/test_f11.py::test_benettin_spectrum_finite_and_sorted
+PASSED tests/test_f11.py::test_benettin_decaying_net_negative
+PASSED tests/test_f11.py::test_stability_audit_flags
+PASSED tests/test_f11.py::test_benettin_designed_normal_net
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[sinus_memory]
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[lorenz]
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[ou_noise]
@@ -25,5 +47,7 @@ PASSED tests/test_smoke.py::test_tasks_shapes
 PASSED tests/test_smoke.py::test_training_reduces_loss
 PASSED tests/test_smoke.py::test_ftle_summary_runs
 PASSED tests/test_smoke.py::test_effective_dimension_runs
-24 passed in 5.22s
-pytest_exit=0
+FAILED tests/test_f11.py::test_benettin_unstable_net_positive - assert -0.27233150601387024 > 0.0
+ +  where -0.27233150601387024 = benettin_ftle_max(ContinuousRNN(\n  (U): Linear(in_features=1, out_features=8, bias=True)\n  (readout): Linear(in_features=8, out_features=1, bias=True)\n), tensor([[[ 0.6120],\n         [ 0.8094],\n         [-0.5620],\n         [-0.8441],\n         [ 0.5099],\n         [ 0.8756]...       [ 0.9188],\n         [ 0.9242],\n         [ 0.3721],\n         [-0.4045],\n         [-0.9370],\n         [-0.9043]]]))
+1 failed, 32 passed in 5.52s
+pytest_exit=1
