@@ -7,18 +7,23 @@ W-Ruler nimmt die Ursprungs-Näherung d=sech^2(0)=1 an, aber das Netz ist
 input-getrieben — entlang der Trajektorie gilt J(z) = -I/tau + W diag(sech^2(z)),
 d.h. der effektive Gain schrumpft auf d = <sech^2(z)> = 1 - Q.
 
-F10-These (das candidates Gesetz):
+F10-These (das Kandidaten-Gesetz):
     Chaos  <=>  tau * d * Re lambda_max(W) > 1,   d = <sech^2(z)>
     Sweet-Spot:  tau* = 1 / (lam_max * d(tau*))   — self-consistent.
 
+Run-1-Vorabdaten (lambda=0.8, kappa=1): Crossing=1.92, unkorrigiert=1.25
+(|dRaw|=0.67), nach EINER Iteration 1.74 (|dSC1|=0.18) — die Korrektur
+trifft sofort besser; die ungedämpfte Iteration schoss auf 2.99 darüber
+hinaus (groesseres tau -> mehr Saettigung -> kleineres d -> noch groesseres
+tau). Fix: gedämpfte Iteration + separater Report von tSC1.
+
 Zwei Prüfteile:
   (A) Designed Networks (kappa=1, Schur-Bau): empirisches FTLE-Crossing
-      vs. 1/lam (unkorrigiert) vs. self-consistent 1/(lam*d). Wenn die
-      korrigierte Vorhersage das Crossing trifft, ist das Gesetz geschlossen.
+      vs. 1/lam (unkorrigiert) vs. tSC1 (ein Rollout) vs. tSC (konvergiert).
   (B) F8-Replikat (trainierte Netze, Checkpoints): Regel-Güte
       MF / Eig / EigQbar / SV vs. FTLE-Vorzeichen. Frage: schließt die
-      Korrektur die 5 hit_eig-Misses aus F8 — und wie verhält sie sich
-      gegen die 100%-SVD-Regel?
+      Korrektur die 5 hit_eig-Misses aus F8 — und verhält sie sich gegen
+      die 100%-SVD-Regel?
 """
 import argparse
 import os
@@ -59,10 +64,11 @@ def tau_crossing(lam, s, taus, hidden_dim, seed):
 
 def self_consistent_tau(lam, s, hidden_dim, seed, iters=4, tau_min=0.2, tau_max=6.0):
     """
-    F10-Kern: tau* = 1/(lam * d(tau*)) iterativ.
-    Start bei der Ursprungs-Vorhersage 1/lam; pro Iteration EIN Rollout
-    (kein Training, kein FTLE), d messen, tau nachziehen. Konvergenz in
-    wenigen Schritten erwartet (d aendert sich langsam mit tau).
+    F10-Kern: tau* = 1/(lam * d(tau*)) iterativ, GEDAEMPFT.
+    Start bei 1/lam; pro Iteration EIN Rollout, d messen, tau nachziehen
+    mit Dämpfung (halber Schritt) — verhindert das Überschwingen aus Run 1.
+    trace[0]=1/lam, trace[1]=tSC1 (eine Iteration, der beste Ein-Rollout-
+    Schätzer laut Run-1-Daten).
     """
     tau_it = min(max(1.0 / lam, tau_min), tau_max)
     trace = [tau_it]
@@ -71,8 +77,9 @@ def self_consistent_tau(lam, s, hidden_dim, seed, iters=4, tau_min=0.2, tau_max=
         states = rollout_states(model)
         crit = chaos_criterion(model, states)
         d = crit["Qbar"]
-        tau_new = 1.0 / max(lam * max(d, 1e-9), 1e-9)
-        tau_new = min(max(tau_new, tau_min), tau_max)
+        tau_target = 1.0 / max(lam * max(d, 1e-9), 1e-9)
+        tau_target = min(max(tau_target, tau_min), tau_max)
+        tau_new = min(max(0.5 * (tau_it + tau_target), tau_min), tau_max)
         trace.append(tau_new)
         if abs(tau_new - tau_it) < 0.01:
             tau_it = tau_new
@@ -101,16 +108,16 @@ def main():
     lines = []
     lines.append("=" * 108)
     lines.append("F10 SAETTIGUNGS-KORRIGIERTER RULER: tau* = 1/(lam_max * d), d = <sech^2(z)> = 1-Q")
-    lines.append(f"lams={lams}  taus={grid}  seeds={seeds}  iters={args.iters}  hidden={args.hidden_dim}")
+    lines.append(f"lams={lams}  taus={grid}  seeds={seeds}  iters={args.iters} (gedaempft)  hidden={args.hidden_dim}")
     lines.append("=" * 108)
 
     # ── Teil A: Designed Networks (kappa=1) ──────────────────────────────
     lines.append("")
     lines.append("--- (A) Designed W, s=0 (kappa=1): Crossing vs. Vorhersagen ---")
-    lines.append(f"{'lam':>5s} {'tRaw':>6s} {'tSC':>6s} {'tCross':>7s} "
-                 f"{'|dRaw|':>7s} {'|dSC|':>7s} {'d_final':>7s} {'winner':>7s} {'SC-Trace':>34s}")
-    errs_raw, errs_sc = [], []
-    wins = {"raw": 0, "sc": 0, "none": 0}
+    lines.append(f"{'lam':>5s} {'tRaw':>6s} {'tSC1':>6s} {'tSC':>6s} {'tCross':>7s} "
+                 f"{'|dRaw|':>7s} {'|dSC1|':>7s} {'|dSC|':>7s} {'best':>6s} {'SC-Trace':>34s}")
+    errs_raw, errs_sc1, errs_sc = [], [], []
+    wins = {"raw": 0, "sc1": 0, "sc": 0, "none": 0}
     for lam in lams:
         crosses = []
         for seed in seeds:
@@ -119,28 +126,30 @@ def main():
                 crosses.append(cross)
         tau_sc, trace = self_consistent_tau(lam, 0.0, args.hidden_dim, seeds[0],
                                             iters=args.iters)
-        # final d am self-consistenten Punkt fuer die Tabelle
-        model = make_designed_model(args.hidden_dim, tau_sc, lam, 0.0, seeds[0], task_dim=0)
-        crit = chaos_criterion(model, rollout_states(model))
-        d_final = crit["Qbar"]
         if not crosses:
             wins["none"] += 1
-            lines.append(f"{lam:5.2f} {1.0/lam:6.3f} {tau_sc:6.3f} {'kein Wechsel':>12s}   d={d_final:.3f}")
+            lines.append(f"{lam:5.2f} {1.0/lam:6.3f} {trace[1] if len(trace)>1 else tau_sc:6.3f} "
+                         f"{tau_sc:6.3f} {'kein Wechsel':>12s}")
             continue
         cross = sum(crosses) / len(crosses)
-        d_raw, d_sc = abs(cross - 1.0 / lam), abs(cross - tau_sc)
-        errs_raw.append(d_raw); errs_sc.append(d_sc)
-        winner = "raw" if d_raw <= d_sc else "SC"
-        wins[winner] += 1
-        line = (f"{lam:5.2f} {1.0/lam:6.3f} {tau_sc:6.3f} {cross:7.3f} "
-                f"{d_raw:7.3f} {d_sc:7.3f} {d_final:7.3f} {winner:>7s} "
+        tau_sc1 = trace[1] if len(trace) > 1 else tau_sc
+        d_raw = abs(cross - 1.0 / lam)
+        d_sc1 = abs(cross - tau_sc1)
+        d_sc = abs(cross - tau_sc)
+        errs_raw.append(d_raw); errs_sc1.append(d_sc1); errs_sc.append(d_sc)
+        best = min([("raw", d_raw), ("sc1", d_sc1), ("sc", d_sc)], key=lambda kv: kv[1])[0]
+        wins[best] += 1
+        line = (f"{lam:5.2f} {1.0/lam:6.3f} {tau_sc1:6.3f} {tau_sc:6.3f} {cross:7.3f} "
+                f"{d_raw:7.3f} {d_sc1:7.3f} {d_sc:7.3f} {best:>6s} "
                 f"{' -> '.join(f'{t:.2f}' for t in trace):>34s}")
         lines.append(line)
         print(line, flush=True)
     if errs_raw:
-        lines.append(f"mean |cross - 1/lam|   = {sum(errs_raw)/len(errs_raw):.3f}   (unkorrigiert)")
-        lines.append(f"mean |cross - tau_SC| = {sum(errs_sc)/len(errs_sc):.3f}   (self-consistent)")
-        lines.append(f"Sieger: raw={wins['raw']}, SC={wins['sc']}, kein Crossing={wins['none']}")
+        n = len(errs_raw)
+        lines.append(f"mean |cross - 1/lam|   = {sum(errs_raw)/n:.3f}   (unkorrigiert, 0 Rollouts)")
+        lines.append(f"mean |cross - tSC1|   = {sum(errs_sc1)/n:.3f}   (EINE Iteration, 1 Rollout)")
+        lines.append(f"mean |cross - tSC|    = {sum(errs_sc)/n:.3f}   (konvergiert, gedaempft)")
+        lines.append(f"Sieger: raw={wins['raw']}, sc1={wins['sc1']}, sc={wins['sc']}, kein Crossing={wins['none']}")
 
     # ── Teil B: F8-Replikat mit 4. Regel ─────────────────────────────────
     lines.append("")
@@ -209,13 +218,11 @@ def main():
         lines.append(f"Regel {rule:>8s}: {h}/{t} = {h/max(1,t):.1%}")
 
     lines.append("")
-    lines.append("LESEAT (A): |dSC| << |dRaw| => das Gesetz tau* = 1/(lam*d) ist")
-    lines.append("geschlossen — der Ruler braucht genau EINEN Rollout, kein Training,")
-    lines.append("keinen FTLE-Sweep. Der F9-Twist waere aufgeklaert (Sättigung, nicht")
-    lines.append("Widerspruch). LESEAT (B): eigqbar nahe 100% => auch die trainierten")
-    lines.append("Netze folgen dem korrigierten Gesetz; eigqbar vs. sv entscheidet,")
-    lines.append("ob der Ruler mit d-Korrektur die SVD-Regel ersetzt (eine Regel statt")
-    lines.append("dreier) — das waeere der Durchbruch.")
+    lines.append("LESEAT (A): |dSC1| << |dRaw| => das Gesetz tau* = 1/(lam*d) trifft")
+    lines.append("mit EINEM Rollout — der F9-Twist ist Saettigung, kein Widerspruch.")
+    lines.append("LESEAT (B): eigqbar nahe 100% => auch trainierte Netze folgen dem")
+    lines.append("korrigierten Gesetz; eigqbar vs. sv entscheidet, ob die d-Korrektur")
+    lines.append("die SVD-Regel ersetzt (EINE Regel statt dreier) — der Durchbruch.")
     lines.append("=== FERTIG ===")
     out = "\n".join(lines) + "\n"
     Path(args.out).write_text(out, encoding="utf-8")
