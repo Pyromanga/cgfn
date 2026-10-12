@@ -28,19 +28,22 @@ sequentielle Tasks, Messung der FTLE-Drift pro Task, Korrelation mit Loss-Einbru
 
 > **Paper-Radar 2026-10-12:** [arXiv:2610.01583](https://arxiv.org/abs/2610.01583) (Continual RL with Neuroevolution) zeigt: Plasticity-Loss-Symptome (dormant neurons, Churn) treten unter Neuroevolution nicht auf — die Kontraktion ist offenbar gradientengetrieben, konsistent mit der Wang-Kontraktions-These. Task-Nachbarschaft (Overlap der Loss-Landschaften) als zusätzliches Erklärmaß für Stabilität/Plastizität übernehmen.
 
-### F4 — Robustheit gegen Rauschen & Verteilungs-Shift
+### F4 — Robustheit gegen Rauschen & Verteilungs-Shift  *(implementiert: `experiments/f4_noise.py`, `.github/workflows/frontier_f4f6.yml` — freitags 03:00 UTC + manuell)*
 Ist der Sweet-Spot auch unter Eingangs-Rauschen / Distribution-Shift optimal? (Anschluss an `tau_robustness_results.txt`, aber mit systematischem Noise-Sweep.)
+Design: Training noisy (additives Gauß auf Input, sigma-Sweep), Evaluation clean — misst, ob tau*(min clean loss) mit sigma driftet (FTLE-Kalibrierung überträgt sich oder nicht).
 
-### F5 — Von binary toy tasks zu kontinuierlichen Tasks
-Alle aktuellen Tasks sind bitbasiert. Kontinuierliche Sequenzen (z.B.Sinus-Memory, Lorenz-Vorhersage) — bleibt der Sweet Spot erhalten?
+### F5 — Von binary toy tasks zu kontinuierlichen Tasks  *(implementiert: `src/cgfn/continuous.py` (sinus_memory/lorenz/ou_noise), `experiments/f5_continuous.py`, Workflow s.o.)*
+Alle aktuellen Tasks sind bitbasiert. Kontinuierliche Sequenzen (Sinus-Memory, Lorenz-Vorhersage, Ornstein-Uhlenbeck — MSE statt BCE) — bleibt der Sweet Spot erhalten?
+Auswertung pro Task: tau*(min loss) vs. tau*(min |FTLE|), referenziert gegen den binary-Befund (Sweet-Spot mittleres tau, kritisch ab tau≈1).
 
-### F6 — Theorie-Anschluss
+### F6 — Theorie-Anschluss  *(implementiert: `src/cgfn/cavity.py`, `experiments/f6_spectrum.py`, Workflow s.o.)*
 Mean-field-Theory (Sompolinsky/Van Vreeswijk): Übergangschaos-Bedingung `g·sqrt(Q)=1` explizit gegen gemessene FTLE-Werte stellen; analytische Vorhersage des Sweet-Spot-tau als Funktion von W-Statistik.
+Implementierung: Chaos-Kriterium `tau·g·sqrt(Q) > 1` (nach tau-Zeitreskalierung) gegen Vorzeichen des gemessenen FTLE_max — Trefferquote über g-Sweep × tau-Sweep, untrainiert vs. kurz trainiert. Plus: volles linearisiertes Jacobi-Spektrum `J0 = -I/tau + W` gegen Trajektorien-FTLE-Spektrum (sortierte Spektrum-Korrelation).
 
-> **Paper-Radar 2026-10-12:** [arXiv:2610.12426](https://arxiv.org/abs/2610.12426) (Clark) berechnet das vollständige Lyapunov-Spektrum random-asymmetrischer RNNs exakt via Cavity-Methode (N→∞, extensives Chaos). → F6: direkter analytischer Referenzpunkt für `g·sqrt(Q)=1`; Jacobi-SVD-Pipeline so erweitern, dass neben FTLE_max das gesamte Spektrum gegen die Cavity-Vorhersage gestellt wird.
+> **Paper-Radar 2026-10-12:** [arXiv:2610.12426](https://arxiv.org/abs/2610.12426) (Clark) berechnet das vollständige Lyapunov-Spektrum random-asymmetrischer RNNs exakt via Cavity-Methode (N→∞, extensives Chaos). → F6: direkter analytischer Referenzpunkt für `g·sqrt(Q)=1`; Jacobi-SVD-Pipeline so erweitern, dass neben FTLE_max das gesamte Spektrum gegen die Cavity-Vorhersage gestellt wird. ✔ umgesetzt in `compare_spectrum()`.
 
 ## Reproduzierbarkeit & Hygiene
 
 - Result-TXTs bleiben als Referenz im Repo; neue Experimente schreiben nach `results/` (siehe `experiments/scaling.py`).
 - Jedes Experiment: argparse-Parameter + Seeds im Log, damit Runs vergleichbar bleiben.
-- CI (`smoke.yml`) sichert, dass die Bibliothek nach jedem Push noch läuft.
+- CI (`smoke.yml`) sichert, dass die Bibliothek nach jedem Push noch läuft; `tests/test_f4f6.py` deckt continuous/cavity ab.
