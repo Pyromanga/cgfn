@@ -1,0 +1,108 @@
+        copy  0.80  1.00     0    1.160   2.743   2.36  0.169    1.160    0.862   +1.0656 False  True True       Y
+        copy  0.80  1.00   150    0.893   4.683   5.24  0.087    0.893    1.119   +1.4828 False False True       N
+        copy  0.80  1.00   300    0.900   8.586   9.54  0.120    0.900    1.112   +2.0593 False False True       N
+        copy  0.80  1.00   450    0.928  10.694  11.52  0.183    0.928    1.077   +2.2363  True False True       N
+        copy  0.80  1.00   600    0.993  12.139  12.22  0.231    0.993    1.007   +2.3349  True False True       N
+        copy  0.80  1.00     0    1.218   2.645   2.17  0.157    1.218    0.821   +1.0996 False  True True       Y
+        copy  0.80  1.00   150    1.164   5.094   4.38  0.091    1.164    0.859   +1.5759 False  True True       Y
+        copy  0.80  1.00   300    1.119   8.668   7.74  0.122    1.119    0.893   +2.0841 False  True True       Y
+        copy  0.80  1.00   450    1.085  10.738   9.90  0.187    1.085    0.922   +2.2726  True  True True       Y
+        copy  0.80  1.00   600    1.062  12.101  11.40  0.234    1.062    0.942   +2.3725  True  True True       Y
+        copy  1.60  1.00     0    2.321   5.486   2.36  0.455    2.321    0.431   +1.4889  True  True True       Y
+        copy  1.60  1.00   150    1.942   5.506   2.83  0.336    1.942    0.515   +1.5529  True  True True       Y
+        copy  1.60  1.00   300    1.817   6.663   3.67  0.195    1.817    0.550   +1.7846  True  True True       Y
+        copy  1.60  1.00   450    1.722   8.402   4.88  0.195    1.722    0.581   +1.9917  True  True True       Y
+        copy  1.60  1.00   600    1.598   9.853   6.17  0.205    1.598    0.626   +2.1455  True  True True       Y
+        copy  1.60  1.00     0    2.437   5.289   2.17  0.510    2.437    0.410   +1.4257  True  True True       Y
+        copy  1.60  1.00   150    2.100   5.282   2.52  0.465    2.100    0.476   +1.4646  True  True True       Y
+        copy  1.60  1.00   300    2.075   5.966   2.88  0.360    2.075    0.482   +1.6291  True  True True       Y
+        copy  1.60  1.00   450    1.955   7.660   3.92  0.296    1.955    0.512   +1.8659  True  True True       Y
+        copy  1.60  1.00   600    1.958   9.072   4.63  0.269    1.958    0.511   +2.0377  True  True True       Y
+sinus_memory  0.80  1.00     0    1.160   2.743   2.36  0.310    1.160    0.862   +1.0399 False  True True       Y
+sinus_memory  0.80  1.00   150    1.038   3.240   3.12  0.210    1.038    0.963   +1.1134 False  True True       Y
+sinus_memory  0.80  1.00   300    1.099   4.334   3.94  0.207    1.099    0.910   +1.3449 False  True True       Y
+sinus_memory  0.80  1.00   450    1.096   4.586   4.18  0.212    1.096    0.913   +1.3941 False  True True       Y
+sinus_memory  0.80  1.00   600    0.984   4.805   4.88  0.198    0.984    1.016   +1.4445 False False True       N
+sinus_memory  0.80  1.00     0    1.218   2.645   2.17  0.381    1.218    0.821   +0.9914 False  True True       Y
+sinus_memory  0.80  1.00   150    1.068   2.707   2.53  0.315    1.068    0.936   +1.0287 False  True True       Y
+sinus_memory  0.80  1.00   300    1.052   4.278   4.06  0.306    1.052    0.950   +1.3271 False  True True       Y
+sinus_memory  0.80  1.00   450    1.165   4.731   4.06  0.309    1.165    0.858   +1.4447 False  True True       Y
+sinus_memory  0.80  1.00   600    1.215   4.721   3.89  0.312    1.215    0.823   +1.4339 False  True True       Y
+sinus_memory  1.60  1.00     0    2.321   5.486   2.36  0.540    2.321    0.431   +1.4843  True  True True       Y
+sinus_memory  1.60  1.00   150    2.218   5.525   2.49  0.561    2.218    0.451   +1.4436  True  True True       Y
+sinus_memory  1.60  1.00   300    2.154   5.726   2.66  0.563    2.154    0.464   +1.5232  True  True True       Y
+sinus_memory  1.60  1.00   450    2.562   6.040   2.36  0.568    2.562    0.390   +1.6199  True  True True       Y
+sinus_memory  1.60  1.00   600    2.708   6.253   2.31  0.568    2.708    0.369   +1.6588  True  True True       Y
+sinus_memory  1.60  1.00     0    2.437   5.289   2.17  0.604    2.437    0.410   +1.4286  True  True True       Y
+sinus_memory  1.60  1.00   150    2.159   5.332   2.47  0.521    2.159    0.463   +1.5045  True  True True       Y
+sinus_memory  1.60  1.00   300    2.059   5.526   2.68  0.509    2.059    0.486   +1.5465  True  True True       Y
+sinus_memory  1.60  1.00   450    2.195   5.739   2.61  0.493    2.195    0.456   +1.5886  True  True True       Y
+sinus_memory  1.60  1.00   600    2.217   5.835   2.63  0.489    2.217    0.451   +1.5962  True  True True       Y
+================================================================================================================
+F8 RULER-ANWENDUNG: Chaos-Regeln ueber das Training verfolgt — wo gilt der Spectral Ruler?
+tasks=['copy', 'sinus_memory']  g_scales=[0.8, 1.6]  taus=[1.0]  seeds=[0, 1]  steps=600  ckpt=150  hidden=32
+================================================================================================================
+        task  g_sc   tau  step  lam_max  sv_max  kappa      Q  tau*eig tau_pred  ftle_max   pMF  pEig  pSV hit_eig
+        copy  0.80  1.00     0    1.160   2.743   2.36  0.169    1.160    0.862   +1.0656 False  True True       Y
+        copy  0.80  1.00   150    0.893   4.683   5.24  0.087    0.893    1.119   +1.4828 False False True       N
+        copy  0.80  1.00   300    0.900   8.586   9.54  0.120    0.900    1.112   +2.0593 False False True       N
+        copy  0.80  1.00   450    0.928  10.694  11.52  0.183    0.928    1.077   +2.2363  True False True       N
+        copy  0.80  1.00   600    0.993  12.139  12.22  0.231    0.993    1.007   +2.3349  True False True       N
+        copy  0.80  1.00     0    1.218   2.645   2.17  0.157    1.218    0.821   +1.0996 False  True True       Y
+        copy  0.80  1.00   150    1.164   5.094   4.38  0.091    1.164    0.859   +1.5759 False  True True       Y
+        copy  0.80  1.00   300    1.119   8.668   7.74  0.122    1.119    0.893   +2.0841 False  True True       Y
+        copy  0.80  1.00   450    1.085  10.738   9.90  0.187    1.085    0.922   +2.2726  True  True True       Y
+        copy  0.80  1.00   600    1.062  12.101  11.40  0.234    1.062    0.942   +2.3725  True  True True       Y
+        copy  1.60  1.00     0    2.321   5.486   2.36  0.455    2.321    0.431   +1.4889  True  True True       Y
+        copy  1.60  1.00   150    1.942   5.506   2.83  0.336    1.942    0.515   +1.5529  True  True True       Y
+        copy  1.60  1.00   300    1.817   6.663   3.67  0.195    1.817    0.550   +1.7846  True  True True       Y
+        copy  1.60  1.00   450    1.722   8.402   4.88  0.195    1.722    0.581   +1.9917  True  True True       Y
+        copy  1.60  1.00   600    1.598   9.853   6.17  0.205    1.598    0.626   +2.1455  True  True True       Y
+        copy  1.60  1.00     0    2.437   5.289   2.17  0.510    2.437    0.410   +1.4257  True  True True       Y
+        copy  1.60  1.00   150    2.100   5.282   2.52  0.465    2.100    0.476   +1.4646  True  True True       Y
+        copy  1.60  1.00   300    2.075   5.966   2.88  0.360    2.075    0.482   +1.6291  True  True True       Y
+        copy  1.60  1.00   450    1.955   7.660   3.92  0.296    1.955    0.512   +1.8659  True  True True       Y
+        copy  1.60  1.00   600    1.958   9.072   4.63  0.269    1.958    0.511   +2.0377  True  True True       Y
+sinus_memory  0.80  1.00     0    1.160   2.743   2.36  0.310    1.160    0.862   +1.0399 False  True True       Y
+sinus_memory  0.80  1.00   150    1.038   3.240   3.12  0.210    1.038    0.963   +1.1134 False  True True       Y
+sinus_memory  0.80  1.00   300    1.099   4.334   3.94  0.207    1.099    0.910   +1.3449 False  True True       Y
+sinus_memory  0.80  1.00   450    1.096   4.586   4.18  0.212    1.096    0.913   +1.3941 False  True True       Y
+sinus_memory  0.80  1.00   600    0.984   4.805   4.88  0.198    0.984    1.016   +1.4445 False False True       N
+sinus_memory  0.80  1.00     0    1.218   2.645   2.17  0.381    1.218    0.821   +0.9914 False  True True       Y
+sinus_memory  0.80  1.00   150    1.068   2.707   2.53  0.315    1.068    0.936   +1.0287 False  True True       Y
+sinus_memory  0.80  1.00   300    1.052   4.278   4.06  0.306    1.052    0.950   +1.3271 False  True True       Y
+sinus_memory  0.80  1.00   450    1.165   4.731   4.06  0.309    1.165    0.858   +1.4447 False  True True       Y
+sinus_memory  0.80  1.00   600    1.215   4.721   3.89  0.312    1.215    0.823   +1.4339 False  True True       Y
+sinus_memory  1.60  1.00     0    2.321   5.486   2.36  0.540    2.321    0.431   +1.4843  True  True True       Y
+sinus_memory  1.60  1.00   150    2.218   5.525   2.49  0.561    2.218    0.451   +1.4436  True  True True       Y
+sinus_memory  1.60  1.00   300    2.154   5.726   2.66  0.563    2.154    0.464   +1.5232  True  True True       Y
+sinus_memory  1.60  1.00   450    2.562   6.040   2.36  0.568    2.562    0.390   +1.6199  True  True True       Y
+sinus_memory  1.60  1.00   600    2.708   6.253   2.31  0.568    2.708    0.369   +1.6588  True  True True       Y
+sinus_memory  1.60  1.00     0    2.437   5.289   2.17  0.604    2.437    0.410   +1.4286  True  True True       Y
+sinus_memory  1.60  1.00   150    2.159   5.332   2.47  0.521    2.159    0.463   +1.5045  True  True True       Y
+sinus_memory  1.60  1.00   300    2.059   5.526   2.68  0.509    2.059    0.486   +1.5465  True  True True       Y
+sinus_memory  1.60  1.00   450    2.195   5.739   2.61  0.493    2.195    0.456   +1.5886  True  True True       Y
+sinus_memory  1.60  1.00   600    2.217   5.835   2.63  0.489    2.217    0.451   +1.5962  True  True True       Y
+
+--- Regel-Guete über ALLE Checkpoints (vs. FTLE-Vorzeichen) ---
+Regel   mf: 24/40 = 60.0%
+Regel  eig: 35/40 = 87.5%
+Regel   sv: 40/40 = 100.0%
+
+--- Kritikalitaets-Drift: lambda_max(W) vor vs. nach Training ---
+        copy g=0.8 seed=0: lam +1.160 -> +0.993 (Regelrand 1/tau = 1.000)  Richtung-Rand: JA
+        copy g=0.8 seed=1: lam +1.218 -> +1.062 (Regelrand 1/tau = 1.000)  Richtung-Rand: JA
+        copy g=1.6 seed=0: lam +2.321 -> +1.598 (Regelrand 1/tau = 1.000)  Richtung-Rand: JA
+        copy g=1.6 seed=1: lam +2.437 -> +1.958 (Regelrand 1/tau = 1.000)  Richtung-Rand: JA
+sinus_memory g=0.8 seed=0: lam +1.160 -> +0.984 (Regelrand 1/tau = 1.000)  Richtung-Rand: JA
+sinus_memory g=0.8 seed=1: lam +1.218 -> +1.215 (Regelrand 1/tau = 1.000)  Richtung-Rand: JA
+sinus_memory g=1.6 seed=0: lam +2.321 -> +2.708 (Regelrand 1/tau = 1.000)  Richtung-Rand: nein
+sinus_memory g=1.6 seed=1: lam +2.437 -> +2.217 (Regelrand 1/tau = 1.000)  Richtung-Rand: JA
+Netto: 7/8 Nets wandern Richtung Regelrand (=> Training treibt Richtung Kritikalitaet).
+
+LESEAT: hit_eig-Spalte ~100% und hoher pEig-Anteil => Eigenwert-Regel
+ist der tragfaechste Ruler; Abweichungen konzentrieren sich dort,
+wo pred_eig=False aber pSV=True (transiente Nische).
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f8_ruler_results.txt geschrieben.
