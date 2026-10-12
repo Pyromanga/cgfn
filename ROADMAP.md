@@ -66,6 +66,10 @@ Umkehrung der Diagnose: Gewichte per Schur-Bau mit vorgeschriebenem Re lambda_ma
 Prüfung: Sagt der Ruler das Verhalten VORHER — liegt das empirische FTLE-Crossing bei tau_pred_eig=1/lam_max (bei s=0 zwingend, Konsistenz-Check) oder wandert es mit wachsendem kappa zur SVD-Kante tau_pred_sv? Und sitzt tau*(loss) auf dem Crossing?
 **Mögliche Kernentdeckung:** Wenn kappa der Schalter zwischen Eigenwert- und SVD-Regel ist, haben wir keinen Widerspruch, sondern ein *zwei-Regime-Gesetz* — Ruler = f(kappa) — und Mean-Fields 76.7% wären der Grenzfall normaler Matrizen.
 
+### F10 — Sättigungs-korrigierter Ruler: das eine Gesetz?  *(implementiert: `src/cgfn/cavity.py`+`src/cgfn/ruler.py` erweitert, `experiments/f10_qbar.py`, `.github/workflows/frontier_f10.yml` — sonntags 03:30 UTC + Marker `.trigger/f10`)*
+F9 zeigte bei kappa=1: das FTLE-Crossing liegt NICHT bei 1/lam_max, sondern deutlich darüber (1.25→1.84, 0.87→2.54). These: Der Ruler am Ursprung (d=sech²(0)=1) überschätzt Instabilität bei input-getriebenen Netzen; entlang der Trajektorie gilt J(z) = -I/tau + W·diag(sech²(z)), also Chaos <=> tau·d·Re lambda_max(W) > 1 mit d = <sech²(z)> = 1-Q. Messbar aus EINEM Rollout, self-consistent iterierbar: tau* = 1/(lam_max·d(tau*)).
+**Prüfung:** (A) Designed Networks (kappa=1): Crossing vs. 1/lam vs. self-consistent 1/(lam·d). (B) F8-Replikat: Regel-Güte MF/Eig/EigQbar/SV — schließt die Korrektur die 5 hit_eig-Misses, ersetzt sie die SVD-Regel? Wenn ja: EIN Gesetz statt dreier Regeln — der Durchbruch-Claim.
+
 ## Das Validierungs-Dreieck (Messung / Theorie / Konstruktion)
 
 Warum drei „Teilnehmer" statt zwei: Eine Messung, die nur gegen eine Theorie geprüft wird (Dyade), ist zirkulär — beide können denselben systematischen Fehler teilen (hier: Mean-Field-Annahme g*sqrt(Q) + SVD-FTLE-Messung, die beide die nicht-normale Kante verwischen). Erst ein drittes, unabhängiges Bein bricht den Zirkel:

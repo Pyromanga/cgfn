@@ -40,6 +40,18 @@ def q_factor(model, states):
 
 
 @torch.no_grad()
+def qbar_factor(model, states):
+    """
+    d = <sech^2(z)> = 1 - <tanh^2(z)> — effektiver lokaler Gain der
+    tanh-Linearisierung entlang der Trajektorie (F10). d=1 am Ursprung,
+    d->0 in Saettigung. Kern der Saettigungs-Korrektur: J(z) ~ -I/tau + d*W.
+    """
+    if states.dim() == 4:
+        states = states.squeeze(0)
+    return (1.0 - torch.tanh(states).pow(2)).mean().item()
+
+
+@torch.no_grad()
 def linearized_spectrum(model):
     """
     Singulärwerte der Jacobi am Fixpunkt z=0 (sech^2(0)=1):
@@ -85,23 +97,28 @@ def chaos_criterion(model, states):
     """
     g = effective_gain(model)
     Q = q_factor(model, states)
+    dbar = qbar_factor(model, states)
     lin = linearized_spectrum(model)
     sv_W = spectral_edge(model)
     lam_W = eig_max(model)
     mf = model.tau * g * math.sqrt(Q)           # (a) Mean-Field
     eig_rule = model.tau * lam_W                # (b) > 1 <=> instabil am Ursprung
     sv_rule = model.tau * sv_W * math.sqrt(max(Q, 1e-9))  # (c) nicht-normale Kante
+    eig_qbar = model.tau * dbar * lam_W         # (d) F10: saettigungskorrigiert
     return {
         "g": g,
         "Q": Q,
+        "Qbar": dbar,
         "tau_g_sqrtQ": mf,
         "eig_max": lam_W,
         "sv_max": sv_W,
         "tau_eig": eig_rule,
         "tau_sv": sv_rule,
+        "tau_eig_qbar": eig_qbar,
         "pred_mf": mf > 1.0,
         "pred_eig": eig_rule > 1.0,
         "pred_sv": sv_rule > 1.0,
+        "pred_eig_qbar": eig_qbar > 1.0,
         "chaos_predicted": mf > 1.0,
         "lin_sv_max": lin.max().item(),
         "lin_log_sv_max": torch.log(lin.max() + 1e-12).item(),

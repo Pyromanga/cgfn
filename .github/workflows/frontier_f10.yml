@@ -1,0 +1,62 @@
+name: cgfn-frontier (F10)
+
+# F10 — Saettigungs-korrigierter Spectral Ruler:
+# tau* = 1/(lam_max * d), d = <sech^2(z)> = 1-Q, self-consistent iteriert.
+# Laeuft sonntags nachts (CPU-Budget) UND per Marker-Commit (.trigger/f10).
+# Run-Log wird IMMER nach results/ committet (Crash-Diagnose ohne Actions-UI).
+
+on:
+  workflow_dispatch:
+    inputs:
+      iters:
+        description: "Self-consistency-Iterationen"
+        default: "4"
+      seeds:
+        description: "Seeds"
+        default: "0,1"
+  push:
+    paths:
+      - ".trigger/f10"
+  schedule:
+    - cron: "30 3 * * 0"  # sonntags 03:30 UTC
+
+jobs:
+  frontier-f10:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write  # fuer den Result-Commit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Unit tests
+        run: python -m pytest -q
+      - name: Run F10 saturation-corrected ruler experiment
+        run: |
+          set -o pipefail
+          python experiments/f10_qbar.py \
+            --seeds "${{ inputs.seeds || '0,1' }}" \
+            --iters "${{ inputs.iters || '4' }}" \
+            --out results/f10_qbar_results.txt 2>&1 | tee results/f10_run.log
+      - name: Commit results and logs to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: F10-Qbar-Ruler-Lauf ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          git push
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontier-f10-results
+          path: results/
+          retention-days: 30

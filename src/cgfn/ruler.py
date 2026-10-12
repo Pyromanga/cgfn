@@ -7,9 +7,15 @@ Q), ob das Netz am aktuellen tau chaotisch ist, wo der Kritikalitaets-
 Sweet-Spot liegen MUSS (tau* ~ 1/Re lambda_max bzw. 1/(sv_max*sqrt(Q)))
 und wie nicht-normal die Dynamik ist (kappa).
 
+F10: zusaetzlich die saettigungs-korrigierte Vorhersage
+    tau* ~ 1 / (Re lambda_max(W) * d),  d = <sech^2(z)> = 1 - Q
+aus einem einzigen billigen Rollout — schliesst die Luecke, die F9 bei
+kappa=1 aufdeckte (Crossing bei 1/(lam*d), nicht bei 1/lam).
+
 Diagnose-Fragen, die das Tool beantwortet:
   - Ist das Netz am aktuellen tau chaotisch / subkritisch / kritisch?
   - Welches tau waere der Sweet-Spot (ohne einen einzigen Rollout)?
+  - Welches tau nach Saettigungs-Korrektur (ein Rollout, kein Training)?
   - Ist die Dynamik stark nicht-normal (transientes Wachstum moeglich)?
   - Wie viele Units sind dormant (Plasticity-Loss-Fruehwarnung)?
   - Wie breit ist der Abstand zwischen Eigenwert- und SVD-Vorhersage
@@ -23,6 +29,7 @@ from cgfn.cavity import (
     effective_gain,
     nonnormality,
     q_factor,
+    qbar_factor,
     spectral_edge,
 )
 
@@ -55,40 +62,48 @@ def spectral_report(model, states=None):
     """
     Der Spectral Ruler als Ein-Aufruf-Diagnose.
 
-    states=None => Ursprungs-Naeherung (Q=1): reine W-Analyse ohne Rollout.
+    states=None => Ursprungs-Naeherung (Q=1, d=1): reine W-Analyse ohne Rollout.
     states=(B,T,H) => mit Saettigungs-Korrektur aus der Trajektorie.
 
     Liefert u.a.:
-      tau_pred_eig = 1 / Re lambda_max(W)      — lineare Sweet-Spot-Vorhersage
-      tau_pred_sv  = 1 / (sv_max(W)*sqrt(Q))   — nicht-normale Kante
-      verdict      — Klartext-Diagnose
+      tau_pred_eig      = 1 / Re lambda_max(W)          — lineare Vorhersage
+      tau_pred_eig_qbar = 1 / (Re lambda_max(W) * d)    — F10, mit Rollout
+      tau_pred_sv       = 1 / (sv_max(W)*sqrt(Q))      — nicht-normale Kante
+      verdict           — Klartext-Diagnose
     """
     if states is not None:
         crit = chaos_criterion(model, states)
         act = activation_stats(states)
+        dbar = crit["Qbar"]
+        pred_eig_qbar = crit["pred_eig_qbar"]
     else:
-        # Ursprungs-Naeherung: Q=1, keine Dormant-Info
+        # Ursprungs-Naeherung: Q=1, d=1, keine Dormant-Info
         g = effective_gain(model)
         lam = eig_max(model)
         sv = spectral_edge(model)
         kappa, _, _ = nonnormality(model)
         crit = {
-            "g": g, "Q": 1.0, "tau_g_sqrtQ": model.tau * g,
+            "g": g, "Q": 1.0, "Qbar": 1.0, "tau_g_sqrtQ": model.tau * g,
             "eig_max": lam, "sv_max": sv,
             "pred_mf": model.tau * g > 1.0,
             "pred_eig": model.tau * lam > 1.0,
             "pred_sv": model.tau * sv > 1.0,
         }
+        dbar = 1.0
+        pred_eig_qbar = crit["pred_eig"]
         act = {"saturation_Q": 1.0, "d_eff_ratio": None, "dormant_frac": None}
 
     lam = crit["eig_max"]
     sv = crit["sv_max"]
     Q = crit["Q"]
     tau_pred_eig = 1.0 / max(lam, 1e-9)
+    tau_pred_eig_qbar = 1.0 / max(lam * max(dbar, 1e-9), 1e-9)
     tau_pred_sv = 1.0 / max(sv * max(Q, 1e-9) ** 0.5, 1e-9)
 
-    if crit["pred_eig"]:
-        phase = "chaotisch (Eigenwert-Regel: instabil am Ursprung)"
+    if pred_eig_qbar:
+        phase = "chaotisch (Sättigungs-korrigierte Eigenwert-Regel)"
+    elif crit["pred_eig"]:
+        phase = "chaotisch am Ursprung, aber sättigungsstabilisiert (transient)"
     elif crit["pred_sv"]:
         phase = "nicht-normal transient (SVD-Kante instabil, Eigenwert stabil)"
     else:
@@ -97,6 +112,7 @@ def spectral_report(model, states=None):
     verdict = (
         f"tau={model.tau:g}: {phase}. "
         f"Sweet-Spot-Vorhersage: tau*~{tau_pred_eig:.2f} (Eigenwert) / "
+        f"{tau_pred_eig_qbar:.2f} (sättigungskorrigiert, d={dbar:.2f}) / "
         f"{tau_pred_sv:.2f} (SVD-Kante). "
         f"Stabilitaetsrand tau*lam_max-1 = {margin:+.3f}."
     )
@@ -107,11 +123,14 @@ def spectral_report(model, states=None):
         "sv_max": sv,
         "kappa": sv / max(abs(lam), 1e-9),
         "Q": Q,
+        "Qbar": dbar,
         "g": crit["g"],
         "pred_mf": crit["pred_mf"],
         "pred_eig": crit["pred_eig"],
         "pred_sv": crit["pred_sv"],
+        "pred_eig_qbar": pred_eig_qbar,
         "tau_pred_eig": tau_pred_eig,
+        "tau_pred_eig_qbar": tau_pred_eig_qbar,
         "tau_pred_sv": tau_pred_sv,
         "stability_margin": margin,
         "phase": phase,
