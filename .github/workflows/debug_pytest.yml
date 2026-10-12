@@ -1,8 +1,7 @@
 name: cgfn-debug (pytest log)
 
-# Debug: pytest mit vollem Traceback laufen lassen und das Log nach
-# results/pytest_debug.txt committen — damit der Hausmeister den Rot-
-# Grund auch ohne Actions-UI lesen kann. Kein Schedule, nur Marker.
+# Debug: pytest + Mini-Laeufe der Experimente mit vollem Traceback, Log wird
+# nach results/ committet — Lesbarkeit ohne Actions-UI. Nur Marker-Trigger.
 
 on:
   push:
@@ -13,7 +12,7 @@ on:
 jobs:
   debug-pytest:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     permissions:
       contents: write
     steps:
@@ -30,15 +29,27 @@ jobs:
           set +e
           python -m pytest -q --tb=long -rA > results_pytest.log 2>&1
           echo "pytest_exit=$?" >> results_pytest.log
-          mkdir -p results
-          mv results_pytest.log results/pytest_debug.txt
-          tail -n 80 results/pytest_debug.txt
-      - name: Commit debug log
+          tail -n 60 results_pytest.log
+      - name: Mini-run F8 (log, do not fail job)
+        run: |
+          set +e
+          python experiments/f8_ruler.py --tasks copy --g-scales 0.8 --taus 1.0 --seeds 0 --total-steps 150 --ckpt-every 150 --out results/f8_mini.txt > results_f8.log 2>&1
+          echo "f8_exit=$?" >> results_f8.log
+          tail -n 60 results_f8.log
+      - name: Mini-run F9 (log, do not fail job)
+        run: |
+          set +e
+          python experiments/f9_design.py --lams 1.15 --svals 0.0 --taus 0.7,1.0 --seeds 0 --train-steps 5 --out results/f9_mini.txt > results_f9.log 2>&1
+          echo "f9_exit=$?" >> results_f9.log
+          tail -n 60 results_f9.log
+      - name: Commit debug logs
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/pytest_debug.txt
-          if git diff --cached --quiet; then echo "[i] kein Log."; exit 0; fi
-          git commit -m "debug: pytest log ($(date -u '+%F %H:%M') UTC)"
+          mkdir -p results
+          mv results_pytest.log results_f8.log results_f9.log results/ 2>/dev/null || true
+          git add results/ || true
+          if git diff --cached --quiet; then echo "[i] keine Logs."; exit 0; fi
+          git commit -m "debug: pytest+F8/F9 mini logs ($(date -u '+%F %H:%M') UTC)"
           git push
