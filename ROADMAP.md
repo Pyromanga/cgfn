@@ -17,12 +17,12 @@ Verschiebt sich der kritische Sweet Spot (FTLE≈0) mit hidden_dim?
 
 > **Paper-Radar 2026-10-12:** [Phys. Rev. E „Towards critical branching mechanism in recurrent neural networks"](https://journals.aps.org/pre/abstract/10.1103/bg2r-m6g5) findet kapazitätsabhängige Kritikalität in trainierten LSTMs (kleine Netze nahezu kritisch, größere subkritisch). Stützt Hypothese (b): Sweet-Spot könnte mit N driften. → `experiments/scaling.py` sollte zusätzlich den Branching-Parameter (Avalanche-Statistik) als zweite Metrik neben FTLE loggen.
 
-### F2 — Kausaler Test: FTLE-Zwang während des Trainings
-Feedback-Regler, der tau (oder W-Skalierung) online nachregelt, sodass FTLE≈0 bleibt.
+### F2 — Kausaler Test: FTLE-Zwang während des Trainings  *(implementiert: `src/cgfn/regulator.py`, `experiments/f2_regulator.py`, `.github/workflows/frontier_f2f3.yml` — donnerstags 03:00 UTC + manuell)*
+Feedback-Regler (`FtleRegulator`, P-Regler in log-tau mit EMA-Smoothing), der model.tau online nachregelt, sodass FTLE≈0 bleibt. Experiment vergleicht free (tau fix, suboptimaler Start tau=4) gegen Regler-Arme mit Targets {0.0, +0.3, −0.3}: Learning-Speed auf Task A, Loss auf Task B, Retention auf A — die kausale Lesart steht im Output-File.
 Vergleich: reguliert vs. frei — Lerngeschwindigkeit, Endverlust, Retention (Plasticity-Loss-These von Wang et al.).
 **Das wäre der stärkste kausale Beweis**, dass Kritikalität Ursache ist, nicht nur Korrelat.
 
-### F3 — Plasticity-Loss am CT-RNN
+### F3 — Plasticity-Loss am CT-RNN  *(implementiert: `src/cgfn/plasticity.py`, `experiments/f3_plasticity.py`, Workflow s.o.)*
 Wang-et-al.-Ergebnisse (Plasticity Loss = Lyapunov-Kontraktion) am kontinuierlichen Modell reproduzieren:
 sequentielle Tasks, Messung der FTLE-Drift pro Task, Korrelation mit Loss-Einbruch im späteren Task.
 
