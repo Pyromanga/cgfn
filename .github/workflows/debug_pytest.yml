@@ -1,0 +1,44 @@
+name: cgfn-debug (pytest log)
+
+# Debug: pytest mit vollem Traceback laufen lassen und das Log nach
+# results/pytest_debug.txt committen — damit der Hausmeister den Rot-
+# Grund auch ohne Actions-UI lesen kann. Kein Schedule, nur Marker.
+
+on:
+  push:
+    paths:
+      - ".trigger/debug"
+  workflow_dispatch:
+
+jobs:
+  debug-pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Run pytest (log to file, do not fail job)
+        run: |
+          set +e
+          python -m pytest -q --tb=long -rA > results_pytest.log 2>&1
+          echo "pytest_exit=$?" >> results_pytest.log
+          mkdir -p results
+          mv results_pytest.log results/pytest_debug.txt
+          tail -n 80 results/pytest_debug.txt
+      - name: Commit debug log
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/pytest_debug.txt
+          if git diff --cached --quiet; then echo "[i] kein Log."; exit 0; fi
+          git commit -m "debug: pytest log ($(date -u '+%F %H:%M') UTC)"
+          git push
