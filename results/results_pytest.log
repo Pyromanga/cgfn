@@ -1,4 +1,63 @@
-...................................                                      [100%]
+..................F...F.........................                         [100%]
+=================================== FAILURES ===================================
+______________________ test_design_measures_and_mc_finite ______________________
+
+    def test_design_measures_and_mc_finite():
+        for name in ("gru", "cornn", "ct"):
+            torch.manual_seed(0)
+            m = make_zoo_model(name, hidden_dim=8, seed=0)
+>           d = m.design()
+                ^^^^^^^^^^
+
+tests/test_f13.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = ZooModel(
+  (core): _GruCell()
+  (readout): Linear(in_features=8, out_features=1, bias=True)
+)
+
+    def design(self):
+        if self.name == "ct":
+            W = self.core.W.detach()
+            rho = torch.linalg.eigvals(W).abs().max().item()
+            sv = torch.linalg.svdvals(W)[0].item()
+            return {"rho_W": rho, "sv_W": sv, "kappa": sv / max(rho, 1e-9),
+                    "design_ok": self.core.tau * rho < 1.0}
+        if self.name == "gru":
+            W = self.core.weight_hh.detach()  # (3H, H) — Standard-ESN-Maass
+>           rho = torch.linalg.eigvals(W).abs().max().item()
+                  ^^^^^^^^^^^^^^^^^^^^^^^
+E           RuntimeError: linalg.eigvals: A must be batches of square matrices, but they are 24 by 8 matrices
+
+src/cgfn/zoo.py:161: RuntimeError
+________________________ test_penalty_pulls_kappa_down _________________________
+
+    def test_penalty_pulls_kappa_down():
+        """Ein paar Gradienten-Schritte NUR auf die Penalty senken kappa."""
+        torch.manual_seed(0)
+        m = make_designed_model(16, 1.0, 0.6, 2.0, 0, task_dim=0)
+        m.W.requires_grad_(True)
+        k0 = kappa_of(m)
+        opt = torch.optim.Adam([m.W], lr=0.05)
+        for _ in range(50):
+            opt.zero_grad()
+            loss = kappa_cap_penalty(m, kappa_target=2.0)
+            loss.backward()
+            opt.step()
+        assert kappa_of(m) < k0
+>       assert kappa_of(m) <= 2.0 + 0.5
+E       assert 2.792112932216741 <= (2.0 + 0.5)
+E        +  where 2.792112932216741 = kappa_of(ContinuousRNN(\n  (U): Linear(in_features=1, out_features=16, bias=True)\n  (readout): Linear(in_features=16, out_features=1, bias=True)\n))
+
+tests/test_f14.py:50: AssertionError
+=============================== warnings summary ===============================
+tests/test_f14.py::test_kappa_cap_penalty_positive_with_grad_for_nonnormal
+  /home/runner/work/cgfn/cgfn/tests/test_f14.py:32: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+  Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+    assert float(pen) > 0.0
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 ==================================== PASSES ====================================
 =========================== short test summary info ============================
 PASSED tests/test_f10.py::test_qbar_plus_q_equals_one
@@ -12,6 +71,17 @@ PASSED tests/test_f11.py::test_benettin_unforced_unstable_equilibrium_exact
 PASSED tests/test_f11.py::test_benettin_saturation_caps_driven_ftle
 PASSED tests/test_f11.py::test_stability_audit_flags
 PASSED tests/test_f11.py::test_benettin_designed_normal_net
+PASSED tests/test_f12.py::test_mc_finite_and_lag0_strong
+PASSED tests/test_f12.py::test_mc_edge_net_beats_tiny_net
+PASSED tests/test_f12.py::test_mc_deterministic_for_same_seed
+PASSED tests/test_f13.py::test_gru_step_matches_torch_cell
+PASSED tests/test_f13.py::test_step_jacobian_matches_finite_difference
+PASSED tests/test_f13.py::test_driven_lyap_signs_ct
+PASSED tests/test_f13.py::test_driven_lyap_runs_on_all_zoo_models
+PASSED tests/test_f14.py::test_kappa_normal_design_is_one
+PASSED tests/test_f14.py::test_kappa_cap_penalty_zero_when_target_huge
+PASSED tests/test_f14.py::test_kappa_cap_penalty_positive_with_grad_for_nonnormal
+PASSED tests/test_f14.py::test_f14_mini_smoke
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[sinus_memory]
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[lorenz]
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[ou_noise]
@@ -36,5 +106,8 @@ PASSED tests/test_smoke.py::test_tasks_shapes
 PASSED tests/test_smoke.py::test_training_reduces_loss
 PASSED tests/test_smoke.py::test_ftle_summary_runs
 PASSED tests/test_smoke.py::test_effective_dimension_runs
-35 passed in 4.96s
-pytest_exit=0
+FAILED tests/test_f13.py::test_design_measures_and_mc_finite - RuntimeError: linalg.eigvals: A must be batches of square matrices, but they are 24 by 8 matrices
+FAILED tests/test_f14.py::test_penalty_pulls_kappa_down - assert 2.792112932216741 <= (2.0 + 0.5)
+ +  where 2.792112932216741 = kappa_of(ContinuousRNN(\n  (U): Linear(in_features=1, out_features=16, bias=True)\n  (readout): Linear(in_features=16, out_features=1, bias=True)\n))
+2 failed, 46 passed, 1 warning in 3.74s
+pytest_exit=1
