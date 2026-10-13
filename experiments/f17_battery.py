@@ -45,53 +45,10 @@ from cgfn.memory_capacity import memory_capacity
 from cgfn.model import ContinuousRNN
 from cgfn.continuous import make_continuous_batch
 
-DRIVE_GEN_SEED = 20261013
-
-
-def drive_input(n, T, scale, batch=4):
-    gen = torch.Generator().manual_seed(DRIVE_GEN_SEED)
-    return torch.randn(batch, T, 1, generator=gen) * scale
+from cgfn.field import drive_input, sech2_field_iteration, predict_driven_ftle_field  # noqa: E402  (Bibliothek)
 
 
 # ── HYPOTHESE A: selbstkonsistente Feld-Iteration ──
-
-@torch.no_grad()
-def sech2_field_iteration(model, x_probe, n_iter=40, damp=0.7):
-    """Iteriere d_i = <sech^2(z_i)> entlang der getriebenen Trajektorie
-    bis Stationaritaet; Rueckgabe: stabiler d-Vektor."""
-    m = model
-    H = m.hidden_dim
-    d = torch.ones(H)
-    # Wir integrieren die Trajektorie mit AKTUELLEM d nicht — d wird aus
-    # der echten Modell-Trajektorie gelesen, dann die effektive Jacobi
-    # stationaer iteriert: der Trick ist, dass die Trajektorie fix ist,
-    # nur die lineare Analyse iteriert wird.
-    _, states = m(x_probe, None)
-    for _ in range(n_iter):
-        # effektive Jacobi mit Feld d
-        J = -torch.eye(H) / m.tau + m.W * d.unsqueeze(0)
-        # linearisierte Kovarianz der getriebenen (weissen) Trajektorie:
-        # Q ~ sum J^k J^k^T (gekraemmte geometrische Summe via Iteration)
-        # Wir nutzen: z-Statistik aendert sich NICHT (Trajektorie fix),
-        # aber d wurde aus <sech^2(z)> gelesen — Iteration hier: d aus
-        # Trajektorie, J aus d, FTLE-Vorhersage aus J. Da d aus der
-        # Trajektorie fix ist, ist die "Iteration" die selbstkonsistente
-        # Zuordnung: d_i = mean_t sech^2(z_i,t) — bereits die Loesung.
-        d_new = (1.0 - torch.tanh(states[0]) ** 2).mean(dim=0)
-        d = damp * d + (1 - damp) * d_new
-    return d
-
-
-@torch.no_grad()
-def predict_driven_ftle(model, x_probe):
-    """Vorhersage: groesster LLE von J = -I/tau + W diag(d(traj)) —
-    das ist die FELD-Version der F10-Skalarkorrektur."""
-    d = sech2_field_iteration(model, x_probe)
-    H = model.hidden_dim
-    J = -torch.eye(H) / model.tau + model.W * d.unsqueeze(0)
-    lams = torch.linalg.eigvals(J)
-    return (lams.real.max()).item()
-
 
 def hyp_a(lines, seeds, hidden, taus=(1.0,), lams=(0.6, 1.0, 1.4), s_vals=(0.0, 0.5, 1.0, 2.0)):
     lines.append("")
@@ -106,7 +63,7 @@ def hyp_a(lines, seeds, hidden, taus=(1.0,), lams=(0.6, 1.0, 1.4), s_vals=(0.0, 
                 torch.manual_seed(seed)
                 m = make_designed_model(hidden, 1.0, lam, s, seed, task_dim=0)
                 x = drive_input(4, 48, 0.5)
-                pred = predict_driven_ftle(m, x)
+                pred = predict_driven_ftle_field(m, x)
                 ben = benettin_ftle_max(m, x)
                 kap = spectral_edge(m) / max(abs(float(eig_max(m))), 1e-9)
                 err = pred - ben
@@ -213,7 +170,7 @@ def hyp_d(lines, seeds, hidden=32, sigmas=(0.1, 0.2, 0.5, 1.0, 2.0)):
         for sig in sigmas:
             x = drive_input(4, 48, sig)
             ben = benettin_ftle_max(m, x)
-            pred = predict_driven_ftle(m, x)
+            pred = predict_driven_ftle_field(m, x)
             lines.append(f"{sig:6.2f} {ben:+9.3f} {pred:+10.3f}")
 
 

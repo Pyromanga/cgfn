@@ -33,36 +33,8 @@ import torch
 from cgfn.design import make_designed_model
 from cgfn.cavity import eig_max, spectral_edge
 from cgfn.benettin import benettin_ftle_max
-from experiments.f17_battery import sech2_field_iteration, predict_driven_ftle, drive_input
-
-
-def kreiss_constant(J):
-    """K(J) = ||J||_2 * ||J^{-1}||_2 - 1 (Scharnier fuer Transienten)."""
-    sv = torch.linalg.svdvals(J)
-    sv_min = sv[-1].item() if sv[-1].item() > 1e-12 else 1e-12
-    return (sv[0].item() / sv_min) - 1.0
-
-
-def transient_bound_pseudo(J, n_grid=16):
-    """Trefethen-Unterschranke: max_s 1/sv((J-sI)^{-1})...
-    Genauer: transient growth <= max_{s in grid} sv((J - sI)^{-1})^{-1}
-    (approximiert; wir nutzen ein grobes 1D-Gitter entlang des
-    Spektral-Realteils von lambda_min bis lambda_max)."""
-    H = J.shape[0]
-    lams = torch.linalg.eigvals(J).real
-    grid = torch.linspace(lams.min().item(), lams.max().item(), n_grid)
-    best = 0.0
-    I = torch.eye(H)
-    for s in grid:
-        sv_min = torch.linalg.svdvals((J - s * I).inverse())[0].item() if False else None
-        # sv_min of M = sv_max of M^{-1} -> wir nutzen: kleinste Singulaerwert
-        M = J - s * I
-        sv = torch.linalg.svdvals(M)
-        if sv[-1].item() < 1e-12:
-            return float("inf")  # s im Spektrum: transientes Wachstum beliebig
-        sv_min_inv = 1.0 / sv[-1].item()
-        best = max(best, sv_min_inv)
-    return best
+from cgfn.field import (sech2_field_iteration, drive_input, kreiss_constant,
+                         transient_bound_pseudo)
 
 
 @torch.no_grad()
