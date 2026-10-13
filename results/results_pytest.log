@@ -1,4 +1,340 @@
-................................................                         [100%]
+..........................F..FF.........................                 [100%]
+=================================== FAILURES ===================================
+______________________ test_ben_regulator_respects_bounds ______________________
+
+    def test_ben_regulator_respects_bounds():
+        m = _model(tau=1.0)
+        r = BenettinRegulator(target=+1e6, gain=100.0, tau_min=0.05, tau_max=50.0)
+        for i in range(5):
+>           r.update(i, m)
+
+tests/test_f14b.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<cgfn.regulator.BenettinRegulator object at 0x7fce5cf1a090>, 0, ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+))
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cgfn.regulator.BenettinRegulator object at 0x7fce5cf1a090>, step = 0
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None
+
+    @torch.no_grad()
+    def update(self, step, model, states=None):
+        import math
+        raw = self.measure_ftle(model, states)
+        if self._ema is None:
+            self._ema = raw
+        else:
+            s = self.smoothing
+            self._ema = s * self._ema + (1.0 - s) * raw
+        err = self._ema - self.target
+        tau_prev = float(model.tau)
+>       tau_new = tau_prev * math.exp(-self.gain * err)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       OverflowError: math range error
+
+src/cgfn/regulator.py:138: OverflowError
+_________________ test_svd_regulator_diverges_on_nonnormal_net _________________
+
+    def test_svd_regulator_diverges_on_nonnormal_net():
+        """kappa-hohes Netz + SVD-Regler => tau laeuft Richtung Clamp."""
+        torch.manual_seed(0)
+        m = make_designed_model(16, 1.0, 0.6, 2.0, 0, task_dim=0)
+        m.tau = 1.0
+        reg = FtleRegulator(target=-0.2, gain=0.8, interval=1)
+        tau0 = float(m.tau)
+        for i in range(30):
+>           reg.update(i, m, None)
+
+tests/test_f15.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<cgfn.regulator.FtleRegulator object at 0x7fce5cda0790>, 0, ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+), None)
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cgfn.regulator.FtleRegulator object at 0x7fce5cda0790>, step = 0
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None
+
+    @torch.no_grad()
+    def update(self, step, model, states):
+        """Ein Regel-Update: misst FTLE und stellt tau nach. Rueckgab: Dict|None."""
+>       raw = self.measure_ftle(model, states)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/cgfn/regulator.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<cgfn.regulator.FtleRegulator object at 0x7fce5cda0790>, ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+), None)
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cgfn.regulator.FtleRegulator object at 0x7fce5cda0790>
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None
+
+    @torch.no_grad()
+    def measure_ftle(self, model, states):
+        """FTLE-Mittelwert einer frischen Trajektorie (B, T, H)."""
+>       return float(ftle_summary(model, states)["ftle_mean"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/cgfn/regulator.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+), None)
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None
+
+    @torch.no_grad()
+    def ftle_summary(model, states):
+        """Zusammenfassung: max, min, mean des FTLE-Spektrums."""
+>       ftle = ftle_spectrum(model, states)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/cgfn/ftle.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+), None)
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None, dt = 1.0
+
+    @torch.no_grad()
+    def ftle_spectrum(model, states, dt=1.0):
+        """
+        states: (B, T, H) Trajektorie.
+        Schätzt FTLE pro Zeitschritt über die Jacobi-Matrix der Dynamik.
+        """
+>       H = states.shape[-1]
+            ^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'shape'
+
+src/cgfn/ftle.py:16: AttributeError
+____________________ test_svd_regulator_mild_on_normal_net _____________________
+
+    def test_svd_regulator_mild_on_normal_net():
+        """kappa~1 (s=0): Artefakt klein => kein Doom-Drift."""
+        torch.manual_seed(0)
+        m = make_designed_model(16, 1.0, 0.6, 0.0, 0, task_dim=0)
+        m.tau = 1.0
+        reg = FtleRegulator(target=-0.2, gain=0.8, interval=1)
+        for i in range(30):
+>           reg.update(i, m, None)
+
+tests/test_f15.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<cgfn.regulator.FtleRegulator object at 0x7fce5cda9c50>, 0, ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+), None)
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cgfn.regulator.FtleRegulator object at 0x7fce5cda9c50>, step = 0
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None
+
+    @torch.no_grad()
+    def update(self, step, model, states):
+        """Ein Regel-Update: misst FTLE und stellt tau nach. Rueckgab: Dict|None."""
+>       raw = self.measure_ftle(model, states)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/cgfn/regulator.py:53: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<cgfn.regulator.FtleRegulator object at 0x7fce5cda9c50>, ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+), None)
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <cgfn.regulator.FtleRegulator object at 0x7fce5cda9c50>
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None
+
+    @torch.no_grad()
+    def measure_ftle(self, model, states):
+        """FTLE-Mittelwert einer frischen Trajektorie (B, T, H)."""
+>       return float(ftle_summary(model, states)["ftle_mean"])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/cgfn/regulator.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+), None)
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None
+
+    @torch.no_grad()
+    def ftle_summary(model, states):
+        """Zusammenfassung: max, min, mean des FTLE-Spektrums."""
+>       ftle = ftle_spectrum(model, states)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/cgfn/ftle.py:35: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+), None)
+kwargs = {}
+
+    @functools.wraps(func)
+    def decorate_context(*args, **kwargs):
+        # pyrefly: ignore [bad-context-manager]
+        with ctx_factory():
+>           return func(*args, **kwargs)
+                   ^^^^^^^^^^^^^^^^^^^^^
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+model = ContinuousRNN(
+  (U): Linear(in_features=1, out_features=16, bias=True)
+  (readout): Linear(in_features=16, out_features=1, bias=True)
+)
+states = None, dt = 1.0
+
+    @torch.no_grad()
+    def ftle_spectrum(model, states, dt=1.0):
+        """
+        states: (B, T, H) Trajektorie.
+        Schätzt FTLE pro Zeitschritt über die Jacobi-Matrix der Dynamik.
+        """
+>       H = states.shape[-1]
+            ^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'shape'
+
+src/cgfn/ftle.py:16: AttributeError
 =============================== warnings summary ===============================
 tests/test_f14.py::test_kappa_cap_penalty_positive_with_grad_for_nonnormal
   /home/runner/work/cgfn/cgfn/tests/test_f14.py:32: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
@@ -32,6 +368,11 @@ PASSED tests/test_f14.py::test_kappa_cap_penalty_zero_when_target_huge
 PASSED tests/test_f14.py::test_kappa_cap_penalty_positive_with_grad_for_nonnormal
 PASSED tests/test_f14.py::test_penalty_pulls_kappa_down
 PASSED tests/test_f14.py::test_f14_mini_smoke
+PASSED tests/test_f14b.py::test_ben_regulator_measurement_deterministic
+PASSED tests/test_f14b.py::test_ben_regulator_direction
+PASSED tests/test_f14b.py::test_ben_regulator_interval_gate
+PASSED tests/test_f14b.py::test_f14b_mini_smoke
+PASSED tests/test_f15.py::test_benettin_regulator_bounded_everywhere
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[sinus_memory]
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[lorenz]
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[ou_noise]
@@ -56,5 +397,8 @@ PASSED tests/test_smoke.py::test_tasks_shapes
 PASSED tests/test_smoke.py::test_training_reduces_loss
 PASSED tests/test_smoke.py::test_ftle_summary_runs
 PASSED tests/test_smoke.py::test_effective_dimension_runs
-48 passed, 1 warning in 7.52s
-pytest_exit=0
+FAILED tests/test_f14b.py::test_ben_regulator_respects_bounds - OverflowError: math range error
+FAILED tests/test_f15.py::test_svd_regulator_diverges_on_nonnormal_net - AttributeError: 'NoneType' object has no attribute 'shape'
+FAILED tests/test_f15.py::test_svd_regulator_mild_on_normal_net - AttributeError: 'NoneType' object has no attribute 'shape'
+3 failed, 53 passed, 1 warning in 6.31s
+pytest_exit=1
