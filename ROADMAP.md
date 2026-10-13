@@ -124,6 +124,10 @@ F11/F12 lieferten das Rezept ("was ist anders, wenn man es richtig macht?"): get
 - **GRU-spezifisch:** rho(W_hh) driftet 0.65 -> 1.88 unter Training (Echo-State-Zertifikat erlischt), Benettin bleibt stabil (-0.46) — Gate-Nicht-Normalitaet macht rho(W) zum schlechten Stabilitaets-Proxy, genau die vermutete GRU-Issue.
 - **Hygiene:** seeds=[0,1], 20 Zeilen, coRNN-rho exakt 1.00 (Wertebereich-Sonderfall des Designs) — F11.2-Statistik-Aufstockung gilt hier mit.
 
+### F14b — Fix it, richtig gemessen: Benettin-Regler im Regelkreis  *(implementiert: `BenettinRegulator` in `src/cgfn/regulator.py`, `experiments/f14b_fix.py`, `.github/workflows/frontier_f14b.yml` — montags 05:30 UTC + Marker `.trigger/f14b`)*
+F14 zeigte: Die Rezept-Idee (Kanten-Pinning subkritisch) scheiterte nicht an sich selbst, sondern am MESSGERAET IM REGELKREIS — der SVD-Artefakt (F11/F12/F13: corr(kappa, Messdifferenz) bis +0.99) liess den Regler endlos korrigieren (tau -> Clamp 0.05, Benettin +0.37, MC ~0.05). F14b ist der direkte A/B-Beweis: derselbe Test, aber der Regler misst per Benettin-QR (`BenettinRegulator`: deterministische Treib-Probe, dieselben Input-Statistiken wie der F12/F14-Messvertrag) — und der SVD-Regler-Arm (pin) laeuft im SELBEN Lauf mit.
+**Fragen:** (1) Konvergiert pinben zu sinnvollem tau mit Benettin-Ende ~ target (-0.2) statt Clamp? (2) Schlaegt pinben den SVD-Regler auf ALLEN Metriken (lossA/lossB/retentA/MC/Benettin) — der kausale Beweis, dass der F14-Fail der Artefakt war, nicht die Idee? (3) Gewinnt Kanten-Pinning mit richtigem Messgeraet gegen free/kcap — oder bleibt der kappa-Cap (F14) das bessere billige Rezept? bothben = volles Rezept (Cap + Benettin-Pinning).
+
 ## Reichweite & Einordnung (Allgemeingueltigkeit der Experimente)
 
 Damit die Ergebnisse paper-fest EINORDENBAR sind, wird explizit getrennt, was generisch ist und was modellspezifisch:
