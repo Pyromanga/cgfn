@@ -2,16 +2,43 @@
  0.60  0.0   1.00  +0.532    0.05     2.996   True    2.06     0.725   False       False
  0.60  0.5   4.41  +0.385    0.05     2.996   True    1.39     0.330   False       False
  0.60  0.5   4.60  +0.340    0.05     2.996   True    1.21     0.187   False       False
- 0.60  1.0   8.43  +0.070    0.05     2.996   True    0.61     0.488   False       False
- 0.60  1.0   8.14  +0.117    0.05     2.996   True    0.73     0.318   False       False
- 0.60  2.0  11.47  -0.104    0.05     2.996   True    0.51     0.668   False       False
- 0.60  2.0  13.17  +0.047    0.05     2.996   True    0.66     0.414   False       False
- 0.60  3.0  12.88  -0.323    0.05     2.996   True    0.38     0.974   False       False
- 0.60  3.0  13.77  -0.126    0.05     2.996   True    0.47     0.763   False       False
-Traceback (most recent call last):
-  File "/home/runner/work/cgfn/cgfn/experiments/f15_doom.py", line 164, in <module>
-    main()
-  File "/home/runner/work/cgfn/cgfn/experiments/f15_doom.py", line 143, in main
-    a_max_ok = max(r[3] for r in rows if not r[6])
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-ValueError: max() arg is an empty sequence
+ 0.60  1.0   8.98  +0.070    0.05     2.996   True    0.61     0.488   False       False
+ 0.60  1.0   8.59  +0.117    0.05     2.996   True    0.73     0.318   False       False
+ 0.60  2.0  11.71  -0.104    0.05     2.996   True    0.51     0.668   False       False
+ 0.60  2.0  13.15  +0.047    0.05     2.996   True    0.67     0.400   False       False
+ 0.60  3.0  12.82  -0.314    0.05     2.996   True    0.38     0.973   False       False
+ 0.60  3.0  13.87  -0.123    0.05     2.996   True    0.47     0.763   False       False
+==============================================================================================================
+F15 DOOM-KRITERIUM: Artefakt A(kappa) sagt Regler-Doom vorher — eingefrorene Netze, kein Training
+seeds=[0, 1] lams=[0.6] s=[0.0, 0.5, 1.0, 2.0, 3.0] H=32 gain=0.8 target=-0.2 updates=50
+A(kappa) = FTLE_svd - FTLE_ben (gemessen auf derselben Treib-Probe); Doom: tau-Clamp erreicht oder |log(tau_end/tau_0)| > 1.0
+==============================================================================================================
+  lam    s  kappa  A(kap)  svdtau svd_drift svDOOM  bentau ben_drift benDOOM rk2ok@clamp
+ 0.60  0.0   1.00  +0.592    0.05     2.996   True    2.59     0.952   False       False
+ 0.60  0.0   1.00  +0.532    0.05     2.996   True    2.06     0.725   False       False
+ 0.60  0.5   4.41  +0.385    0.05     2.996   True    1.39     0.330   False       False
+ 0.60  0.5   4.60  +0.340    0.05     2.996   True    1.21     0.187   False       False
+ 0.60  1.0   8.98  +0.070    0.05     2.996   True    0.61     0.488   False       False
+ 0.60  1.0   8.59  +0.117    0.05     2.996   True    0.73     0.318   False       False
+ 0.60  2.0  11.71  -0.104    0.05     2.996   True    0.51     0.668   False       False
+ 0.60  2.0  13.15  +0.047    0.05     2.996   True    0.67     0.400   False       False
+ 0.60  3.0  12.82  -0.314    0.05     2.996   True    0.38     0.973   False       False
+ 0.60  3.0  13.87  -0.123    0.05     2.996   True    0.47     0.763   False       False
+
+--- Vorhersage: Artefakt A vs. SVD-Regler-Doom ---
+Doom-Faelle: 10/10 (Korrelation nur bei gemischtem Ausgang informativ)
+UNIVERSALER DOOM: alle 10 Zeilen doomed — kleinster
+Artefakt unter Doom A=-0.314 reicht bereits; KEINE Trennflaeche nach kappa/A.
+=> SVD-Kurzfenster ist im Regelkreis PAUSCHAL untauglich (Saettigungs-Deckel,
+nicht nur Transient-Wachstum bei kappa>>1).
+
+Benettin-Regler: 0/10 doomed (Erwartung: 0 — artefaktfreies Messgeraet kennt keinen Phantom-Fehler)
+
+Lesart: (1) Doom nur bei hohem A(kappa) und 0 beim Benettin-Regler => das
+Kriterium ist das MESSGERAET x SYSTEM-KAPPA, nicht die Regel-Idee — Systeme
+sind VORHERSAGBAR verurteilt: Canary = Artefakt-Probe auf eingefrorenem Netz,
+kein Training noetig. (2) Clamp 0.05 mit rk2ok=False zeigt: der Tod ist teils
+NUMERISCH — Tau-Grenzen muessen das RK2-Fenster respektieren.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f15_doom_results.txt geschrieben.

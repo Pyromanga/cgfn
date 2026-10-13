@@ -6,4 +6,4 @@ tests/test_f14.py::test_kappa_cap_penalty_positive_with_grad_for_nonnormal
     assert float(pen) > 0.0
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-56 passed, 1 warning in 7.75s
+56 passed, 1 warning in 7.36s
