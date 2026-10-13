@@ -28,7 +28,9 @@ jobs:
       - name: Install package with dev extras
         run: pip install -e ".[dev]"
       - name: Unit tests
-        run: python -m pytest -q
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 | tee results/FINAL_PYTEST.log
       - name: Run F14b fix experiment
         run: |
           set -o pipefail
