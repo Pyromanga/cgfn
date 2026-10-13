@@ -1,0 +1,38 @@
+========================================================================================================================
+F12 RESSOURCEN-EXPERIMENT: Memory Capacity vs. Nicht-Normalitaet kappa — langes Gedaechtnis ohne Chaos?
+seeds=[0, 1] taus=[1.0] lams=[0.6, 1.0, 1.4] s=[0.0, 0.5, 1.0, 2.0] hidden=32 max_lag=16
+MC = sum_{lag=1..L} corr^2(Ridge(z_t), x_{t-lag}) — Jaeger-Standard, deterministisch, disjunktes Testset
+========================================================================================================================
+                  config   lam  kappa     MC  benettin  svdftle  tau*lam  svJ0dt rk2ok
+          lam=0.60 s=0.0  0.60   1.00   2.23   -0.5992   +0.356     0.60    0.15  True
+          lam=0.60 s=0.5  0.60   4.50   3.31   -0.3967   +0.938     0.60    0.32  True
+          lam=0.60 s=1.0  0.60   8.29   2.71   -0.0676   +1.430     0.60    0.57  True
+          lam=0.60 s=2.0  0.60  12.32   0.48   +0.1155   +1.902     0.60    1.11  True
+          lam=1.00 s=0.0  1.00   1.00   2.63   -0.3823   +0.524     1.00    0.19  True
+          lam=1.00 s=0.5  1.00   4.50   2.88   -0.2223   +1.257     1.00    0.49  True
+          lam=1.00 s=1.0  1.00   8.54   0.73   -0.0036   +1.771     1.00    0.93  True
+          lam=1.00 s=2.0  1.00  11.25   0.43   +0.3131   +2.298     1.00    1.83  True
+          lam=1.40 s=0.0  1.40   1.00   2.67   -0.2235   +0.658     1.40    0.22  True
+          lam=1.40 s=0.5  1.40   4.50   1.94   -0.1653   +1.403     1.40    0.67  True
+          lam=1.40 s=1.0  1.40   8.66   0.44   +0.0468   +2.069     1.40    1.29  True
+          lam=1.40 s=2.0  1.40  12.77   0.35   +0.4407   +2.565     1.40    2.56 False
+
+--- (1) MC vs. kappa bei fixem lam (Ressourcen-These) ---
+lam=0.60: MC 2.23 (kappa=1.00) -> 0.48 (kappa=12.32)  corr(kappa, MC)=-0.65
+lam=1.00: MC 2.63 (kappa=1.00) -> 0.43 (kappa=11.25)  corr(kappa, MC)=-0.91
+lam=1.40: MC 2.67 (kappa=1.00) -> 0.44 (kappa=8.66)  corr(kappa, MC)=-0.99
+
+--- (2) MC vs. getriebener Kante (Benettin-FTLE ~ 0?) ---
+s=0.0: bestes MC=2.67 bei lam=1.40 (Benettin -0.223, Spektral-Rand tau*lam=1.40)
+s=0.5: bestes MC=3.31 bei lam=0.60 (Benettin -0.397, Spektral-Rand tau*lam=0.60)
+s=1.0: bestes MC=2.71 bei lam=0.60 (Benettin -0.068, Spektral-Rand tau*lam=0.60)
+s=2.0: bestes MC=0.48 bei lam=0.60 (Benettin +0.115, Spektral-Rand tau*lam=0.60)
+
+--- (3) SVD-Chaos-Illusion: SVD-FTLE > 0 waehrend Benettin < 0 ---
+8/11 rk2-gueltige Konfigurationen: SVD-FTLE vortaeuscht Expansions-Ressource, Benettin sagt subkritisch.
+
+LESEAT: (1) steigt MC mit kappa => transientes Wachstum ist dekodierbare
+Speicherressource, kein Messfehler. (2) MC-Optimum nahe Benettin-Kante =>
+getriebene (nicht spektrale) Kante ist die Bau-Anweisung. (3) hoher Anteil =>
+SVD-basierte Reservoir-Regeln uebertreiben die nutzbare Ressource.
+=== FERTIG ===
