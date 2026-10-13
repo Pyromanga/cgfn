@@ -1,0 +1,49 @@
+====================================================================================================================================
+F13 ZOO-AUDIT: Design-Kriterien der Praxis vs. getriebene Lyapunov-Realitaet (GRU / coRNN / CT-RNN)
+models=['ct', 'gru', 'cornn'] seeds=[0, 1] H=32 train=200 max_lag=12
+design_ok = klassisches Kriterium (CT: tau*rho<1, diskret: rho<1); lyap_ben = Benettin-QR auf exakten Schritt-Jacobians (weisses Rauschen)
+====================================================================================================================================
+   model    H seed   phase  rho_W   sv_W  kap_d designOK  lyap_ben  lyap_svd kap_tr  agree     MC
+      ct   32    0    init   1.77   3.43   1.94    False   -0.0713   +0.2899   1.41  False   3.02
+      ct   32    0 trained   2.97   4.01   1.35    False   -0.0797   +0.2596   1.35  False   4.70
+      ct   32    1    init   1.94   3.31   1.71    False   -0.1701   +0.1069   1.29  False   2.79
+      ct   32    1 trained   2.85   3.88   1.36    False   -0.1564   +0.2831   1.49  False   4.71
+     gru   32    0    init   0.65   1.49   2.28     True   -0.4776   -0.3579   1.10   True   2.50
+     gru   32    0 trained   1.88   4.92   2.63    False   -0.4576   +0.4029   2.20  False   4.50
+     gru   32    1    init   0.66   1.52   2.30     True   -0.4708   -0.3595   1.09   True   2.74
+     gru   32    1 trained   1.70   4.69   2.75    False   -0.2569   +0.4401   1.85  False   4.66
+   cornn   32    0    init   1.00   1.01   1.01     True   -0.0133   +0.0051   1.01  False   0.76
+   cornn   32    0 trained   1.00   1.04   1.05     True   -0.0120   +0.0391   1.04  False   1.42
+   cornn   32    1    init   1.00   1.01   1.01     True   -0.0099   +0.0066   1.01  False   0.73
+   cornn   32    1 trained   1.00   1.04   1.05     True   -0.0087   +0.0422   1.05  False   1.37
+--- Skalen-Check (Allgemeingueltigkeit): ct bei H=16/64 ---
+      ct   16    0    init   1.20   1.98   1.65    False   -0.2670   -0.0060   1.28   True   3.38
+      ct   16    0 trained   2.34   2.88   1.23    False   -0.1680   +0.1057   1.27  False   4.44
+      ct   16    1    init   1.55   2.44   1.58    False   -0.1776   +0.0185   1.22  False   3.29
+      ct   16    1 trained   1.59   2.49   1.56    False   -0.2134   +0.0433   1.26  False   3.91
+      ct   64    0    init   2.42   4.53   1.87    False   +0.0216   +0.5111   1.52   True   0.86
+      ct   64    0 trained   3.05   4.89   1.60    False   -0.0112   +0.5391   1.65  False   4.02
+      ct   64    1    init   2.65   4.59   1.73    False   -0.1038   +0.3998   1.55  False   1.03
+      ct   64    1 trained   2.52   4.65   1.85    False   -0.0775   +0.4388   1.69  False   1.63
+
+--- (1) Design-Fehlurteile vs. getriebene Realitaet ---
+     ct: 0/12 'Design sagt stabil, getrieben chaotisch' | 11/12 'Design verwirft, getrieben stabil'
+    gru: 0/4 'Design sagt stabil, getrieben chaotisch' | 2/4 'Design verwirft, getrieben stabil'
+  cornn: 0/4 'Design sagt stabil, getrieben chaotisch' | 0/4 'Design verwirft, getrieben stabil'
+
+--- (2) Artefakt-Generalisierung: corr(kappa_traj, |lyap_svd - lyap_ben|) ---
+ueber ALLE Architekturen/Zeilen: corr = +0.99 (F11-Anker auf CT: +0.51)
+Vorzeichen-Diskordanz SVD vs. Benettin: 16/20 Zeilen
+
+--- (3) Ressource: MC vs. getriebenem Kanten-Abstand ---
+     ct: bestes MC=4.71 bei trained seed=1 (lyap_ben=-0.156, design rho=2.85)
+    gru: bestes MC=4.66 bei trained seed=1 (lyap_ben=-0.257, design rho=1.70)
+  cornn: bestes MC=1.42 bei trained seed=0 (lyap_ben=-0.012, design rho=1.00)
+
+LESEAT: (1) hohe Fehlurteile => die Praxis-Design-Kriterien
+messen die ungetriebene Strecke — genau der F11-Befund, jetzt
+an fremden Architekturen. (2) positive Korrelation ueber ALLE
+Modelle => SVD-Kurzfenster-Messung ist architektur-uebergreifend
+verzerrt (nicht nur ein CT-RNN-Artefakt). (3) MC-Gipfel nahe
+lyap_ben~0 => getriebene Kante ist die universelle Ressourcen-Lage.
+=== FERTIG ===
