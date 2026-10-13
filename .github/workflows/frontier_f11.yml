@@ -51,7 +51,17 @@ jobs:
           git add results/ 2>/dev/null || true
           if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
           git commit -m "results: F11-Benettin-Lauf ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
-          git push
+          # FIX (2026-10-13, Push-Race debug<>f11): Parallele Workflows (z.B.
+          # debug + f11 im selben Trigger-Commit) pushen beide nach main — der
+          # zweite push wurde als non-fast-forward rejected und der Job lief
+          # ROT, obwohl das Experiment erfolgreich war. Rebase + Retry:
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
+            git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4
