@@ -5,7 +5,7 @@ Vorhersage per Bau: tau_pred_eig = 1/lam_max (exakt); Frage: folgt das gemessene
 FTLE-Crossing der Eigenwert- oder der SVD-Kante — und sitzt tau*(loss) darauf?
 ====================================================================================================================
   lam    s  kappa   tEig    tSv  tCross  |dEig|   |dSv| tau*loss |star-X|  winner
- 1.15  0.0   1.00  0.870  0.870 kein Wechsel (sup)   tau*loss=0.70
+ 1.15  0.0   1.00  0.870  0.870 kein Wechsel (sup)   tau*loss=1.00
 
 --- Aggregat ---
 
