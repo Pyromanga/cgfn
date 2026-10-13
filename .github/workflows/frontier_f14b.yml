@@ -30,7 +30,7 @@ jobs:
       - name: Unit tests
         run: |
           set -o pipefail
-          python -m pytest -q 2>&1 | tee results/FINAL_PYTEST.log
+          python -m pytest -q 2>&1 | tee results/FINAL_PYTEST_f14b.log
       - name: Run F14b fix experiment
         run: |
           set -o pipefail
