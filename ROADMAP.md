@@ -179,6 +179,8 @@ F17-A-Eskalation: Das Feld-Gesetz (Pro-Unit-sech^2, |err| 0.172) hat EINEN syste
 - T2 (Pseudospektrum, fest 0.1): |err| 1.302 — massives Ueberschiessen; die Unterschranke ist zu grob als additiver Term.
 - Struktur des T0-Fehlers reproduziert F17: bei kappa<5 praezise, bei kappa>=8 systematisch zu negativ. => F18b: die erlaubte Kalibrierung mit HELD-OUT-Test — Ridge auf [1, T0, log1p(K), log1p(pseudo)], gefittet auf der halben Gitters, bewertet auf der gehaltenen Haelfte. Ziel: Held-out |err| < 0.12, Vorzeichen > 85%; die gelernten Koeffizienten quantifizieren die Transienten-Kopplung (erwartet: positives Gewicht auf log1p(K)).
 
+**F18b-Befund (2026-10-13, n=192, 8 Seeds, held-out 96):** Ziel verfehlt, aber Struktur gefunden — held-out |err| 0.163 (Ziel 0.12), Vorzeichen 78% (85%). Die kappa-Band-Aufschluesselung ist der eigentliche Fund: T0 pur ist bei kappa<5 EXZELLENT (0.057!), die globale Ridge verschlechtert es dort (0.171); bei kappa>=10 ist die Transienten-Luecke real (T0: 0.329) und die Korrektur HELFT WIRKLICH (0.145, mehr als halbiert). Es gibt kein globales Modell auf allen kappa — es gibt ZWEI REGIME. => F18c: κ-Schalter-Gesetz — T0 pur bei kappa<kappa_c (Linearisierung IST das Gesetz), gelernte Fehler-Korrektur (Ridge auf ben-t0 aus log1p(K), log1p(pseudo)) bei kappa>=kappa_c; kappa_c per Grid-Search NUR auf Train, Held-out entscheidet. Erwartung: kappa_c landet bei der F11/F13-Transienten-Schwelle (~5-8) — dann ist der Schalter nicht gefittet, sondern die selbe Physik, die wir den ganzen Tag gegen den SVD-Artefakt benutzt haben.
+
 ## Reichweite & Einordnung (Allgemeingueltigkeit der Experimente)
 
 Damit die Ergebnisse paper-fest EINORDENBAR sind, wird explizit getrennt, was generisch ist und was modellspezifisch:
