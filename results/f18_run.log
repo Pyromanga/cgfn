@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home/runner/work/cgfn/cgfn/experiments/f18_law.py", line 36, in <module>
+    from experiments.f17_battery import sech2_field_iteration, predict_driven_ftle, drive_input
+ModuleNotFoundError: No module named 'experiments'
