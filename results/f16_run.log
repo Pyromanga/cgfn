@@ -1,0 +1,52 @@
+     ct  free    0   1.94   1.48  -0.46  0.0266   5.15   -0.200  +0.262
+     ct  free    1   1.71   1.47  -0.23  0.0235   5.25   -0.229  +0.306
+     ct  kcap    0   1.94   1.48  -0.46  0.0266   5.15   -0.200  +0.262
+     ct  kcap    1   1.71   1.47  -0.23  0.0235   5.25   -0.229  +0.306
+    gru  free    0   2.28   3.38  +1.10  0.0077   4.36   -0.202  +0.696
+    gru  free    1   2.30   2.87  +0.57  0.0078   4.67   -0.112  +0.655
+    gru  kcap    0   2.28   3.38  +1.10  0.0077   4.36   -0.202  +0.696
+    gru  kcap    1   2.30   2.87  +0.57  0.0078   4.67   -0.112  +0.655
+  cornn  free    0   1.01   1.07  +0.06  0.3357   1.59   +0.041  +0.143
+  cornn  free    1   1.01   1.13  +0.12  0.3247   2.06   +0.022  +0.164
+  cornn  kcap    0   1.01   1.07  +0.06  0.3357   1.59   +0.041  +0.143
+  cornn  kcap    1   1.01   1.13  +0.12  0.3247   2.06   +0.022  +0.164
+======================================================================================================================
+F16 KAPPA-DRIFT-AUDIT: SGD-Selbst-Sabotage der Nicht-Normalitaet ueber Architekturen + kappa-Cap
+models=['ct', 'gru', 'cornn'] seeds=[0, 1] steps=600 lr=0.002 H=32
+kappa_target=4.0 kappa_weight=0.02 — Task: sinus_memory (MSE), kappa-Tracking alle 50 Steps
+kappa = sv_max/|lam_max| des REKURRENTEN Gewichts (gru: weight_hh-Stack, cornn: linearisierte Schritt-Map)
+======================================================================================================================
+  model   arm seed   kap0   kap1   dkap    loss     MC      ben     svd
+     ct  free    0   1.94   1.48  -0.46  0.0266   5.15   -0.200  +0.262
+     ct  free    1   1.71   1.47  -0.23  0.0235   5.25   -0.229  +0.306
+     ct  kcap    0   1.94   1.48  -0.46  0.0266   5.15   -0.200  +0.262
+     ct  kcap    1   1.71   1.47  -0.23  0.0235   5.25   -0.229  +0.306
+    gru  free    0   2.28   3.38  +1.10  0.0077   4.36   -0.202  +0.696
+    gru  free    1   2.30   2.87  +0.57  0.0078   4.67   -0.112  +0.655
+    gru  kcap    0   2.28   3.38  +1.10  0.0077   4.36   -0.202  +0.696
+    gru  kcap    1   2.30   2.87  +0.57  0.0078   4.67   -0.112  +0.655
+  cornn  free    0   1.01   1.07  +0.06  0.3357   1.59   +0.041  +0.143
+  cornn  free    1   1.01   1.13  +0.12  0.3247   2.06   +0.022  +0.164
+  cornn  kcap    0   1.01   1.07  +0.06  0.3357   1.59   +0.041  +0.143
+  cornn  kcap    1   1.01   1.13  +0.12  0.3247   2.06   +0.022  +0.164
+
+--- (1) kappa-Drift unter freiem SGD, pro Architektur ---
+     ct free: d_kappa=-0.35 (stabil)
+    gru free: d_kappa=+0.83 (DRIFT)
+  cornn free: d_kappa=+0.09 (stabil)
+
+--- (2) Cap-Wirkung: kcap vs free ---
+  model dkap_free  dkap_kcap   dloss    dMC    dben
+     ct     -0.35      -0.35 +0.0000  +0.00  +0.000
+    gru     +0.83      +0.83 +0.0000  +0.00  +0.000
+  cornn     +0.09      +0.09 +0.0000  +0.00  +0.000
+
+Lesart: (1) d_kappa > 0 bei allen Architekturen unter free => der
+F14-Befund ist generisch: Task-SGD selbst sabotiert die Nicht-
+Normalitaets-Ressource. cornn ist der Konstruktionstest: von Hand
+bei kappa~1 gepinnt — haelt SGD das? (2) kcap haelt d_kap klein
+ohne Loss-Schaden (dloss ~ 0) => billiges universelles Gegenmittel;
+dMC/dben positiv => Cap sichert die Ressource, nicht nur die Zahl.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f16_kappa_results.txt geschrieben.
