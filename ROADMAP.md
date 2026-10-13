@@ -173,6 +173,12 @@ Jede positive Hypothese wird zu einem eigenen F-Experiment mit Statistik-Aufstoc
 ### F18 — Geschlossenes Gesetz: Feld + Transienten-Korrektur  *(implementiert: `experiments/f18_law.py`, `.github/workflows/frontier_f18.yml` — samstags 07:00 UTC + Marker `.trigger/f18`)*
 F17-A-Eskalation: Das Feld-Gesetz (Pro-Unit-sech^2, |err| 0.172) hat EINEN systematischen Fehler — Verschätzung bei kappa>=8 durch fehlendes transientes Wachstum (F11/F13-Physik). F18 testet drei Varianten auf vergrößertem Gitter (4 Seeds, H=16/32, feineres s-Gitter im Fehlerbereich): T0 Baseline, T1 + Kreiss-Konstanten-Scharnier (log(1+K(J))), T2 + Pseudospektren-Unterschranke (Trefethen) — alpha/beta fest 0.1, kein Fitting (Kalibrierung erst nach Qualifikation). Ziel: |Fehler| < 0.1 und Vorzeichen-Einheit > 90% => GESCHLOSSENES GESETZ edge(W, Statistik) ohne Rollout, mit quantifizierter Gültigkeitsgrenze. Das wäre der Einlösung des Original-Durchbruchs-Anspruchs von F10.
 
+**F18-Befund (2026-10-13, results/f18_law_results.txt — n=96, 4 Seeds, H=16/32):** Die festen Transienten-Korrekturen sind GESCHEITERT, aber lehrreich:
+- T0 (Feld pur): |err| 0.174, Vorzeichen 73% — bleibt Best, bestaetigt F17-A auf doppeltem Gitter.
+- T1 (Kreiss, alpha fest 0.1): |err| 0.268 — dreht bei kappa>=8 in die RICHTIGE Richtung (T0-Vorhersagen dort zu negativ, T1 naeher an Benettin), ueberschiesst aber bei kappa<5. Die Korrektur ist nicht falsch, sondern UNGEKOPPELT.
+- T2 (Pseudospektrum, fest 0.1): |err| 1.302 — massives Ueberschiessen; die Unterschranke ist zu grob als additiver Term.
+- Struktur des T0-Fehlers reproduziert F17: bei kappa<5 praezise, bei kappa>=8 systematisch zu negativ. => F18b: die erlaubte Kalibrierung mit HELD-OUT-Test — Ridge auf [1, T0, log1p(K), log1p(pseudo)], gefittet auf der halben Gitters, bewertet auf der gehaltenen Haelfte. Ziel: Held-out |err| < 0.12, Vorzeichen > 85%; die gelernten Koeffizienten quantifizieren die Transienten-Kopplung (erwartet: positives Gewicht auf log1p(K)).
+
 ## Reichweite & Einordnung (Allgemeingueltigkeit der Experimente)
 
 Damit die Ergebnisse paper-fest EINORDENBAR sind, wird explizit getrennt, was generisch ist und was modellspezifisch:
