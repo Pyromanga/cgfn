@@ -140,10 +140,17 @@ def main():
         lines.append(f"Doom-Faelle: {n_doom}/{len(rows)} (Korrelation nur bei gemischtem Ausgang informativ)")
     if n_doom > 0:
         a_min_doom = min(r[3] for r in rows if r[6])
-        a_max_ok = max(r[3] for r in rows if not r[6])
-        lines.append(f"kleinstes A unter Doom: {a_min_doom:+.3f} | groesstes A ohne Doom: {a_max_ok:+.3f} "
-                     f"=> Schwellen-Kandidat in diesem Bereich" if a_min_doom <= a_max_ok else
-                     f"=> lueckenfreie Trennung! Schwellen: A > {a_max_ok:+.3f}")
+        ok_rows = [r for r in rows if not r[6]]
+        if not ok_rows:
+            lines.append(f"UNIVERSALER DOOM: alle {len(rows)} Zeilen doomed — kleinster")
+            lines.append(f"Artefakt unter Doom A={a_min_doom:+.3f} reicht bereits; KEINE Trennflaeche nach kappa/A.")
+            lines.append("=> SVD-Kurzfenster ist im Regelkreis PAUSCHAL untauglich (Saettigungs-Deckel,")
+            lines.append("nicht nur Transient-Wachstum bei kappa>>1).")
+        else:
+            a_max_ok = max(r[3] for r in ok_rows)
+            lines.append(f"kleinstes A unter Doom: {a_min_doom:+.3f} | groesstes A ohne Doom: {a_max_ok:+.3f} "
+                         f"=> Schwellen-Kandidat in diesem Bereich" if a_min_doom <= a_max_ok else
+                         f"=> lueckenfreie Trennung! Schwellen: A > {a_max_ok:+.3f}")
     lines.append("")
     lines.append(f"Benettin-Regler: {int(sum(1 for r in rows if r[9]))}/{len(rows)} doomed "
                  f"(Erwartung: 0 — artefaktfreies Messgeraet kennt keinen Phantom-Fehler)")
