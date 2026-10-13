@@ -73,17 +73,32 @@ def test_benettin_saturated_net_returns_to_subcritical():
     assert f_saturated > f_tiny
 
 
-def test_benettin_unforced_unstable_equilibrium_exact():
-    """Designed normal (kappa=1), tau*lam_max = 1.5 > 1, x = 0:
+def _designed_supercritical_model():
+    """Designed normal (kappa=1), tau*lam_max=1.5>1, U-Bias genullt.
 
-    z(t)=0 ist exakter (instabiler) Fixpunkt — RK2 erhaelt ihn exakt
-    (f(0)=0), die Tangenten sehen sech^2(0)=1 fuer immer. Benettin muss
-    den LINEAREN Wert lam_max - 1/tau = +0.25 exakt messen, deterministisch
-    und unabhaengig von Fenstergroesse/Input-Zufall. Das ist die
-    Messgeraet-Kalibrierung am analytischen Referenzwert.
+    Runde 4 (2026-10-13): OHNE Bias-Nullung war z=0 KEIN Gleichgewicht —
+    U(0) = bias != 0 wirkt wie ein konstanter Input und treibt z in den
+    gesaettigten Fixpunkt (gemessen: ungetrieben -0.057/-0.298 statt
+    +0.25, getrieben exakt die Fixpunkt-Rate -0.30). Erst mit
+    U.bias = 0 bleibt die ungetriebene Trajektorie exakt bei z=0
+    (f(0)=0, RK2 erhaelt den instabilen Fixpunkt exakt).
     """
     model = make_designed_model(8, tau=2.0, lam_max=0.75, s_nonnormal=0.0,
                                 seed=0, task_dim=0)
+    if model.U.bias is not None:
+        with torch.no_grad():
+            model.U.bias.zero_()
+    return model
+
+
+def test_benettin_unforced_unstable_equilibrium_exact():
+    """x = 0, U-Bias = 0: z(t)=0 ist exakter (instabiler) Fixpunkt —
+    RK2 erhaelt ihn exakt (f(0)=0), die Tangenten sehen sech^2(0)=1
+    fuer immer. Benettin muss den LINEAREN Wert lam_max - 1/tau = +0.25
+    exakt messen, deterministisch und unabhaengig von Fenstergroesse.
+    Messgeraet-Kalibrierung am analytischen Referenzwert.
+    """
+    model = _designed_supercritical_model()
     x = torch.zeros(2, 48, 1)
     f = benettin_ftle_max(model, x)
     assert abs(f - 0.25) < 0.05, f"erwartet +0.25, gemessen {f}"
@@ -96,14 +111,14 @@ def test_benettin_saturation_caps_driven_ftle():
     Der Input treibt z vom instabilen Gleichgewicht in den gesaettigten
     Fixpunkt (z* ~ 1.3, sech^2 ~ 0.27) — dort ist die lokale Rate
     0.75*sech^2(z*) - 1/tau ~ -0.30. Lange Fenster mitteln auf diese
-    Fixpunkt-Rate: der FTLE liegt WEIT unter dem linearen Wert +0.25
-    (den der ungetriebene Fall exakt misst, siehe Test darueber).
-    Saettigung deckelt die Superkritikalitaet — Input entscheidet,
-    ob die "kritische" Dynamik tatsaechlich chaotisch wird.
+    Fixpunkt-Rate (Debug-Lauf: -0.298 gemessen, exakt wie vorhergesagt):
+    der FTLE liegt WEIT unter dem linearen Wert +0.25 (den der
+    ungetriebene Fall exakt misst, siehe Test darueber). Saettigung
+    deckelt die Superkritikalitaet — Input entscheidet, ob die
+    "kritische" Dynamik tatsaechlich chaotisch wird.
     """
     torch.manual_seed(0)
-    model = make_designed_model(8, tau=2.0, lam_max=0.75, s_nonnormal=0.0,
-                                seed=0, task_dim=0)
+    model = _designed_supercritical_model()
     x_unforced = torch.zeros(2, 96, 1)
     f_unforced = benettin_ftle_max(model, x_unforced)
     assert abs(f_unforced - 0.25) < 0.05
