@@ -1,24 +1,27 @@
 """Smoke-Tests fuer F11 (Benettin-QR-Messgeraet + Stabilitaets-Audit).
 
-WICHTIG (Fix-Nachlese, 2026-10-13): Zwei urspruengliche Test-Prmissen waren
-physikalisch zu naiv und haben echte F11-Befunde als "Fehler" getarnt:
+WICHTIG (Fix-Nachlese, 2026-10-13, Runden 1-3): Die urspruenglichen
+Test-Praemissen waren physikalisch zu naiv und haben echte F11-Befunde
+als "Fehler" getarnt:
 
 1. W*8 => FTLE>0 war SVD-Denkweise. Benettin misst korrekt SUBKRITISCH:
    Riesen-W saettigt alle Units, sech^2(z)->0, Tangenten kontrahieren.
    Das ist die Edge-of-Chaos-Rueckkehr (F10) direkt am Messgeraet.
 
-2. "Designed supercritical + kleiner Input => FTLE ~ lam-1/tau ueber das
-   GESAMTE Fenster" ignoriert, dass die Instabilitaet z selbst aus dem
-   linearen Bereich treibt: z waechst exp(lam-1/tau), erreicht die
-   Sattigung, dort kehrt die Tangenten-Dynamik zur Kontraktion.
-   Fensterschnitt ueber t=12: +0.006 (Wachstum + Rueckkehr mitteln sich
-   weg) — der SAETTIGUNGS-DECKEL auf dem FTLE, Kern des Edge-of-Chaos.
+2. "Designed supercritical => FTLE ~ lam-1/tau" stimmt nur AUF der
+   Trajektorie z(t)=0: Dort ist z exakt im (instabilen) Gleichgewicht,
+   sech^2=1, Benettin misst exakt +0.25. JEDER Input treibt z in den
+   gesaettigten Fixpunkt (z* ~ 1.3 bei lam=0.75, tau=2), dort ist die
+   lokale Rate 0.75*sech^2(1.3) - 0.5 ~ -0.30 — die "Superkritikalitaet"
+   verschwindet auf der getriebenen Trajektorie. Debug-Messungen:
+   Langfenster je nach Input zwischen +0.006 und -0.24 — die Zeichen
+   flippen mit dem Input (marginales Regime um den Fixpunkt).
 
 Robust getestet wird jetzt:
-  - Supercritical im KURZEN Fenster (t=4): z bleibt linear (x ~2.7 nur),
-    FTLE deutlich positiv.
-  - Saettigungs-Deckel im LANGEN Fenster (t=12): FTLE wird Richtung Null
-    gedeckelt und liegt UNTER dem Kurzfenster-Wert.
+  - UNGETRIEBEN (x=0): Trajektorie bleibt exakt bei z=0 => Benettin
+    misst exakt lam - 1/tau = +0.25 (deterministisch, jede Fenstergroesse).
+  - GETRIEBEN (langes Fenster): Sattigung deckelt den FTLE weit unter
+    den linearen Wert — FTLE nahe der Fixpunkt-Rate ~ -0.3.
 """
 import torch
 
@@ -70,41 +73,49 @@ def test_benettin_saturated_net_returns_to_subcritical():
     assert f_saturated > f_tiny
 
 
-def test_benettin_supercritical_short_window_positive():
-    """Designed normal (kappa=1), tau*lam_max = 1.5 > 1, kleiner Input,
-    KURZES Fenster (T=8 => t_total=4):
+def test_benettin_unforced_unstable_equilibrium_exact():
+    """Designed normal (kappa=1), tau*lam_max = 1.5 > 1, x = 0:
 
-    z waechst nur ~e^((lam-1/tau)*4) ~ 2.7x und bleibt im linearen Bereich
-    (sech^2 ~ 1) => FTLE ~ lam_max*sech^2 - 1/tau ~ +0.1..0.2 > 0.
+    z(t)=0 ist exakter (instabiler) Fixpunkt — RK2 erhaelt ihn exakt
+    (f(0)=0), die Tangenten sehen sech^2(0)=1 fuer immer. Benettin muss
+    den LINEAREN Wert lam_max - 1/tau = +0.25 exakt messen, deterministisch
+    und unabhaengig von Fenstergroesse/Input-Zufall. Das ist die
+    Messgeraet-Kalibrierung am analytischen Referenzwert.
     """
     model = make_designed_model(8, tau=2.0, lam_max=0.75, s_nonnormal=0.0,
                                 seed=0, task_dim=0)
-    x, _ = make_continuous_batch("sinus_memory", 2, 8)
-    x = x * 0.1  # z im linearen Bereich halten (keine Saettigung im Fenster)
-    f_short = benettin_ftle_max(model, x)
-    assert f_short > 0.02, f"Kurzfenster sollte ~+0.15 sein, gemessen {f_short}"
-    assert f_short < 0.4, f"Kurzfenster sollte ~+0.15 sein, gemessen {f_short}"
+    x = torch.zeros(2, 48, 1)
+    f = benettin_ftle_max(model, x)
+    assert abs(f - 0.25) < 0.05, f"erwartet +0.25, gemessen {f}"
 
 
-def test_benettin_saturation_caps_long_window_ftle():
+def test_benettin_saturation_caps_driven_ftle():
     """DOKUMENTATIONS-TEST (Edge-of-Chaos-Kernbefund am Messgeraet):
 
-    Dasselbe superkritische Netz, LANGES Fenster (T=24 => t_total=12):
-    Die Instabilitaet treibt z in die Saettigung, sech^2 schrumpft, die
-    Tangenten-Dynamik kehrt zur Kontraktion — der Fensterschnitt wird
-    gegen Null gedeckelt und liegt UNTER dem Kurzfenster-Wert.
-    Messung vom ersten F11-Debug-Lauf: +0.006 (vs. linear +0.25).
+    Dasselbe superkritische Netz (tau*lam=1.5>1), ABER mit Input getrieben:
+    Der Input treibt z vom instabilen Gleichgewicht in den gesaettigten
+    Fixpunkt (z* ~ 1.3, sech^2 ~ 0.27) — dort ist die lokale Rate
+    0.75*sech^2(z*) - 1/tau ~ -0.30. Lange Fenster mitteln auf diese
+    Fixpunkt-Rate: der FTLE liegt WEIT unter dem linearen Wert +0.25
+    (den der ungetriebene Fall exakt misst, siehe Test darueber).
+    Saettigung deckelt die Superkritikalitaet — Input entscheidet,
+    ob die "kritische" Dynamik tatsaechlich chaotisch wird.
     """
+    torch.manual_seed(0)
     model = make_designed_model(8, tau=2.0, lam_max=0.75, s_nonnormal=0.0,
                                 seed=0, task_dim=0)
-    x8, _ = make_continuous_batch("sinus_memory", 2, 8)
-    x24, _ = make_continuous_batch("sinus_memory", 2, 24)
-    f_short = benettin_ftle_max(model, x8 * 0.1)
-    f_long = benettin_ftle_max(model, x24 * 0.1)
-    # Saettigungs-Deckel: langes Fenster deutlich gedrueckt
-    assert f_long < f_short
-    # und nahe Neutralitaet statt klar superkritisch (linearer Wert +0.25):
-    assert -0.2 < f_long < 0.15, f"Langfenster ~0 erwartet, gemessen {f_long}"
+    x_unforced = torch.zeros(2, 96, 1)
+    f_unforced = benettin_ftle_max(model, x_unforced)
+    assert abs(f_unforced - 0.25) < 0.05
+
+    x_driven, _ = make_continuous_batch("sinus_memory", 2, 96)
+    f_driven = benettin_ftle_max(model, x_driven)
+    # Saettigungs-Deckel: getrieben weit unter dem linearen Wert
+    assert f_driven < f_unforced - 0.1, (
+        f"getrieben {f_driven} sollte deutlich unter ungetrieben {f_unforced} liegen"
+    )
+    # und in der Naehe der negativen Fixpunkt-Rate (~ -0.3) statt +0.25:
+    assert -0.6 < f_driven < 0.0, f"Fixpunkt-Rate ~-0.3 erwartet, gemessen {f_driven}"
 
 
 def test_stability_audit_flags():
