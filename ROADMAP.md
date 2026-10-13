@@ -155,6 +155,14 @@ Neuheits-Recherche (2026-10-13): Nicht-Normalitaet in RNNs ist etabliert (Henneq
 - **Nebenzahlung:** dben=-0.120 beim GRU-kcap — der Cap rueckt das Netz um 0.12 subkritischer (grob Richtung k.u. Kante), MC-Nachteil minimal (-0.21 bei MC 4.2-4.7). Der Cap ist ein Stellhebel fuer die getriebene Lage, nicht nur ein Zahlenwaechter.
 - **Claim-Satz fuers Paper (Vorschlag):** "Task-SGD treibt die Nicht-Normalitaet rekurrenter Gewichte architektur- und task-abhaengig; beim GRU (und CT unter getriebenen Bit-Tasks) systematisch aufwaerts in den ressourcenschadlichen Bereich. Ein einfacher, differentierbarer kappa-Cap haelt/ senkt kappa zu praktisch keinen Task-Kosten und wirkt zusaetzlich als Anti-Forgetting-Regularisierer (F14: retentA 2.32 vs 3.25)." — Mit den benannten Grenzen: n=2 Seeds, H=32, ein Task pro Zelle; F11.2-Statistik gilt fuer F16 mit (mehr Seeds, Task-Raster, H-Skalierung).
 
+### F17 — FRONTIER-BATTERIE: hoch-entropische Suche nach dem Durchbruch  *(implementiert: `experiments/f17_battery.py`, `.github/workflows/frontier_f17.yml` — freitags 07:00 UTC + Marker `.trigger/f17`)*
+Strategie-Wechsel auf Wunsch: Inkrementelle Validierung liefert Paper-Material, aber keinen Durchbruch. F17 testet VIER unabhaengige spekulative Kandidaten parallel, jeder billig, jeder darf scheitern:
+- **(A) Geschlossenes Gesetz Runde 2 (F10-Einloesung):** selbstkonsistente FELD-Iteration (sech^2 pro Unit aus der getriebenen Trajektorie, nicht der F10-Skalar) — Vorhersage des getriebenen Benettin-FTLE aus W + Treib-Statistik OHNE Rollout. Kandidatenschwelle: mittlerer |Fehler| < 0.2 (F10-Skalar: 0.91).
+- **(B) Gradienten-Mechanismus:** drueckt der Task-Loss-Gradient systematisch den spektralen Rand Richtung Kante? corr(dlam_max, ||dW||) + kumulativer dlam ueber das Training — wenn > 0 systematisch, ist "Training -> Kante" Gradienten-Dynamik, kein Unfall.
+- **(C) kappa*(Horizont)-Dial:** MC-Optimum vs. max_lag {4,8,16,32} x s {0,0.5,1,2} — wenn s*(lag) monoton waechst, ist kappa ein Bau-Dial fuer die Task-Gedaechtnis-Laenge.
+- **(D) Kante(W, sigma):** Benettin-Kante vs. Treib-Skala-Sweep + Feld-Vorhersage daneben — ein Gesetz edge(sigma) waere die Kalibrierungs-Grundlage fuer alle Kanten-Regler.
+Jede positive Hypothese wird zu einem eigenen F-Experiment mit Statistik-Aufstockung; alle vier negativ => die Batterie schliesst Richtungen ab (Suchraum-Kontraktion ist auch Fortschritt).
+
 ## Reichweite & Einordnung (Allgemeingueltigkeit der Experimente)
 
 Damit die Ergebnisse paper-fest EINORDENBAR sind, wird explizit getrennt, was generisch ist und was modellspezifisch:
