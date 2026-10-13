@@ -170,6 +170,9 @@ Jede positive Hypothese wird zu einem eigenen F-Experiment mit Statistik-Aufstoc
 - **(D) Kante(sigma): schwaches Signal, kein Gesetz:** Benettin-Kante wandert moderat mit Treib-Skala (-0.32 -> -0.10 bei seed 0; seed 1 nicht-monoton mit Minimum bei sigma~0.2 — saettigungsgetrieben). Feld-Vorhersage traekt Richtung bei kleinem sigma, weicht bei grossem ab. Kein sauberes edge(sigma)-Gesetz auf diesem Gitter; parken bis F18 die Vorhersage schaerft.
 **Eskalation: F18 = (A) mit Transienten-Korrektur + Statistik-Aufstockung (mehr Seeds, kappa-Gitter feiner im kritischen Bereich 4-10) — das ist der Durchbruchs-Kandidat: ein geschlossenes, roll-out-freies Design-Gesetz mit quantifizierter Gueltigkeitsgrenze.**
 
+### F18 — Geschlossenes Gesetz: Feld + Transienten-Korrektur  *(implementiert: `experiments/f18_law.py`, `.github/workflows/frontier_f18.yml` — samstags 07:00 UTC + Marker `.trigger/f18`)*
+F17-A-Eskalation: Das Feld-Gesetz (Pro-Unit-sech^2, |err| 0.172) hat EINEN systematischen Fehler — Verschätzung bei kappa>=8 durch fehlendes transientes Wachstum (F11/F13-Physik). F18 testet drei Varianten auf vergrößertem Gitter (4 Seeds, H=16/32, feineres s-Gitter im Fehlerbereich): T0 Baseline, T1 + Kreiss-Konstanten-Scharnier (log(1+K(J))), T2 + Pseudospektren-Unterschranke (Trefethen) — alpha/beta fest 0.1, kein Fitting (Kalibrierung erst nach Qualifikation). Ziel: |Fehler| < 0.1 und Vorzeichen-Einheit > 90% => GESCHLOSSENES GESETZ edge(W, Statistik) ohne Rollout, mit quantifizierter Gültigkeitsgrenze. Das wäre der Einlösung des Original-Durchbruchs-Anspruchs von F10.
+
 ## Reichweite & Einordnung (Allgemeingueltigkeit der Experimente)
 
 Damit die Ergebnisse paper-fest EINORDENBAR sind, wird explizit getrennt, was generisch ist und was modellspezifisch:
