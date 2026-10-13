@@ -1,23 +1,27 @@
-.......F..........................                                       [100%]
+........F..........................                                      [100%]
 =================================== FAILURES ===================================
-______________ test_benettin_supercritical_linear_regime_positive ______________
+________________ test_benettin_saturation_caps_long_window_ftle ________________
 
-    def test_benettin_supercritical_linear_regime_positive():
-        """Designed normal (kappa=1), tau*lam_max = 1.5 > 1, kleiner Input:
+    def test_benettin_saturation_caps_long_window_ftle():
+        """DOKUMENTATIONS-TEST (Edge-of-Chaos-Kernbefund am Messgeraet):
     
-        z bleibt klein (sech^2 ~ 1) => FTLE ~ lam_max - 1/tau = +0.25 > 0.
-        Deterministische Konstruktion statt Random-W-Skalierung.
+        Dasselbe superkritische Netz, LANGES Fenster (T=24 => t_total=12):
+        Die Instabilitaet treibt z in die Saettigung, sech^2 schrumpft, die
+        Tangenten-Dynamik kehrt zur Kontraktion — der Fensterschnitt wird
+        gegen Null gedeckelt und liegt UNTER dem Kurzfenster-Wert.
+        Messung vom ersten F11-Debug-Lauf: +0.006 (vs. linear +0.25).
         """
         model = make_designed_model(8, tau=2.0, lam_max=0.75, s_nonnormal=0.0,
                                     seed=0, task_dim=0)
-        x, _ = make_continuous_batch("sinus_memory", 2, 24)
-        x = x * 0.1  # z im linearen Bereich halten (keine Saettigung)
-        f = benettin_ftle_max(model, x)
->       assert f > 0.1, f"erwartet ~ +0.25, gemessen {f}"
-E       AssertionError: erwartet ~ +0.25, gemessen 0.006090232636779547
-E       assert 0.006090232636779547 > 0.1
+        x8, _ = make_continuous_batch("sinus_memory", 2, 8)
+        x24, _ = make_continuous_batch("sinus_memory", 2, 24)
+        f_short = benettin_ftle_max(model, x8 * 0.1)
+        f_long = benettin_ftle_max(model, x24 * 0.1)
+        # Saettigungs-Deckel: langes Fenster deutlich gedrueckt
+>       assert f_long < f_short
+E       assert -0.2415919154882431 < -0.26355254650115967
 
-tests/test_f11.py:81: AssertionError
+tests/test_f11.py:105: AssertionError
 ==================================== PASSES ====================================
 =========================== short test summary info ============================
 PASSED tests/test_f10.py::test_qbar_plus_q_equals_one
@@ -27,6 +31,7 @@ PASSED tests/test_f10.py::test_ruler_without_states_qbar_defaults
 PASSED tests/test_f11.py::test_benettin_spectrum_finite_and_sorted
 PASSED tests/test_f11.py::test_benettin_decaying_net_negative
 PASSED tests/test_f11.py::test_benettin_saturated_net_returns_to_subcritical
+PASSED tests/test_f11.py::test_benettin_supercritical_short_window_positive
 PASSED tests/test_f11.py::test_stability_audit_flags
 PASSED tests/test_f11.py::test_benettin_designed_normal_net
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[sinus_memory]
@@ -53,7 +58,6 @@ PASSED tests/test_smoke.py::test_tasks_shapes
 PASSED tests/test_smoke.py::test_training_reduces_loss
 PASSED tests/test_smoke.py::test_ftle_summary_runs
 PASSED tests/test_smoke.py::test_effective_dimension_runs
-FAILED tests/test_f11.py::test_benettin_supercritical_linear_regime_positive - AssertionError: erwartet ~ +0.25, gemessen 0.006090232636779547
-assert 0.006090232636779547 > 0.1
-1 failed, 33 passed in 5.51s
+FAILED tests/test_f11.py::test_benettin_saturation_caps_long_window_ftle - assert -0.2415919154882431 < -0.26355254650115967
+1 failed, 34 passed in 5.25s
 pytest_exit=1
