@@ -50,7 +50,10 @@ def regulator_doom(model, regulator_cls, target, gain, n_updates,
     tau0 = float(model.tau)
     taus = [tau0]
     for i in range(n_updates):
-        reg.update(i, model, None)
+        # FtleRegulator misst auf states: frischer Rollout am AKTUELLEN tau
+        # (BenettinRegulator ignoriert states — einheitlicher Vertrag).
+        _, states = model(probe_x, None)
+        reg.update(i, model, states)
         taus.append(float(model.tau))
     tau_end = taus[-1]
     drift = abs(math.log(max(tau_end, 1e-9) / tau0))

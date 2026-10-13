@@ -135,7 +135,11 @@ class BenettinRegulator:
             self._ema = s * self._ema + (1.0 - s) * raw
         err = self._ema - self.target
         tau_prev = float(model.tau)
-        tau_new = tau_prev * math.exp(-self.gain * err)
+        # exp-Argument clampen: extreme targets (z.B. +1e6 im Bounds-Test)
+        # wuerden math.exp ueberlaufen lassen — nach dem Clamp regelt die
+        # tau-Schranke ohnehin; der Clamp hier ist rein numerische Hygiene.
+        exp_arg = max(-50.0, min(50.0, -self.gain * err))
+        tau_new = tau_prev * math.exp(exp_arg)
         tau_new = min(self.tau_max, max(self.tau_min, tau_new))
         model.tau = tau_new
         entry = {"step": int(step), "ftle": raw, "ftle_ema": self._ema,

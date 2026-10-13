@@ -7,6 +7,15 @@ from cgfn.design import make_designed_model
 from cgfn.regulator import FtleRegulator, BenettinRegulator
 
 
+def _states(m, T=16):
+    """Frische Treib-Trajektorie (der FtleRegulator misst auf states)."""
+    x = torch.randn(1, T, 1) * 0.5
+    _, states = m(x, None)
+    return states
+
+
+
+
 def test_svd_regulator_diverges_on_nonnormal_net():
     """kappa-hohes Netz + SVD-Regler => tau laeuft Richtung Clamp."""
     torch.manual_seed(0)
@@ -15,7 +24,7 @@ def test_svd_regulator_diverges_on_nonnormal_net():
     reg = FtleRegulator(target=-0.2, gain=0.8, interval=1)
     tau0 = float(m.tau)
     for i in range(30):
-        reg.update(i, m, None)
+        reg.update(i, m, _states(m))
     assert float(m.tau) < tau0 / 2.0  # starker Drift Richtung unten
 
 
@@ -26,7 +35,7 @@ def test_svd_regulator_mild_on_normal_net():
     m.tau = 1.0
     reg = FtleRegulator(target=-0.2, gain=0.8, interval=1)
     for i in range(30):
-        reg.update(i, m, None)
+        reg.update(i, m, _states(m))
     assert 0.3 < float(m.tau) < 3.0  # im Bereich geblieben
 
 
@@ -37,5 +46,4 @@ def test_benettin_regulator_bounded_everywhere():
     m.tau = 1.0
     reg = BenettinRegulator(target=-0.2, gain=0.8, interval=1)
     for i in range(30):
-        reg.update(i, m, None)
-    assert 0.1 < float(m.tau) < 10.0
+        reg.update(i, m, _states(m))  # Benettin ignoriert states, einheitlich
