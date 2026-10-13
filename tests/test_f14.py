@@ -40,14 +40,19 @@ def test_penalty_pulls_kappa_down():
     m = make_designed_model(16, 1.0, 0.6, 2.0, 0, task_dim=0)
     m.W.requires_grad_(True)
     k0 = kappa_of(m)
-    opt = torch.optim.Adam([m.W], lr=0.05)
-    for _ in range(50):
+    assert k0 > 2.5  # Start klar ueber dem Cap (Vorbedingung, s.o.)
+    opt = torch.optim.Adam([m.W], lr=0.1)
+    loss = None
+    for _ in range(400):
         opt.zero_grad()
         loss = kappa_cap_penalty(m, kappa_target=2.0)
+        if float(loss.detach()) < 1e-4:
+            break  # Cap erreicht — Penalty praktisch null
         loss.backward()
         opt.step()
-    assert kappa_of(m) < k0
-    assert kappa_of(m) <= 2.0 + 0.5
+    k1 = kappa_of(m)
+    assert k1 < k0, f"kappa nicht gesunken: {k0} -> {k1}"
+    assert k1 <= 2.0 + 0.5, f"Cap nicht erreicht: kappa={k1}, penalty={float(loss.detach())}"
 
 
 def test_f14_mini_smoke():

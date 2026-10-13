@@ -157,9 +157,16 @@ class ZooModel(nn.Module):
             return {"rho_W": rho, "sv_W": sv, "kappa": sv / max(rho, 1e-9),
                     "design_ok": self.core.tau * rho < 1.0}
         if self.name == "gru":
-            W = self.core.weight_hh.detach()  # (3H, H) — Standard-ESN-Maass
-            rho = torch.linalg.eigvals(W).abs().max().item()
-            sv = torch.linalg.svdvals(W)[0].item()
+            # weight_hh ist (3H, H) — gestapelt (r, z, n). Das Standard-
+            # ESN-Maass nimmt die Bloecke einzeln: rho = max Block-Spektral-
+            # radius, sv = groesster Singulaerwert des GANZEN Stacks
+            # (konservativ, wie die Praxis es am vollen W misst).
+            Whh = self.core.weight_hh.detach()
+            H = self.core.hidden_dim
+            blocks = Whh.chunk(3, dim=0)
+            rho = max(torch.linalg.eigvals(B).abs().max().item()
+                      for B in blocks)
+            sv = torch.linalg.svdvals(Whh)[0].item()
             return {"rho_W": rho, "sv_W": sv, "kappa": sv / max(rho, 1e-9),
                     "design_ok": rho < 1.0}
         # coRNN: linearisierte Schritt-Map am Ursprung auf (x, y)
