@@ -1,0 +1,50 @@
+  free    0  0.0001  0.0013   3.1202   4.07   -0.337  +2.649   2.36   7.54  1.00  True
+  kcap    0  0.0003  0.0098   2.1847   4.02   -0.400  +1.857   2.36   5.31  1.00  True
+   pin    0  0.0030  0.6831   0.5711   0.08   +0.349  +3.111   2.36   2.81  0.05 False
+  both    0  0.0060  0.6831   0.5717   0.03   +0.377  +3.069   2.36   2.30  0.05 False
+  free    1  0.0001  0.0017   3.3713   2.30   -0.361  +2.330   2.17   8.10  1.00  True
+  kcap    1  0.0005  0.0067   2.4458   3.73   -0.507  +1.835   2.17   4.68  1.00  True
+   pin    1  0.0159  0.6858   0.5806   0.02   +0.397  +3.098   2.17   2.62  0.05 False
+  both    1  0.0116  0.6858   0.5827   0.05   +0.346  +3.078   2.17   2.14  0.05 False
+========================================================================================================================
+F14 FIX-IT: Training nach Rezept (kcap/pin/both) vs. freies Training — end-to-end, W trainierbar
+arms=['free', 'kcap', 'pin', 'both'] seeds=[0, 1] steps=1000 lr=0.01 tau_init=1.0 H=32
+kappa_target=4.0 kappa_weight=0.02 pin_target=-0.2 (F12-Lektion: subkritisch, nicht 0)
+MC nach Jaeger (Ridge, disjunkt); Benettin getrieben (Standard-Messgeraet); kappa = sv_max/|lam_max|
+========================================================================================================================
+   arm seed   lossA   lossB  retentA     MC      ben     svd   kap0   kap1   tau rk2ok
+  free    0  0.0001  0.0013   3.1202   4.07   -0.337  +2.649   2.36   7.54  1.00  True
+  kcap    0  0.0003  0.0098   2.1847   4.02   -0.400  +1.857   2.36   5.31  1.00  True
+   pin    0  0.0030  0.6831   0.5711   0.08   +0.349  +3.111   2.36   2.81  0.05 False
+  both    0  0.0060  0.6831   0.5717   0.03   +0.377  +3.069   2.36   2.30  0.05 False
+  free    1  0.0001  0.0017   3.3713   2.30   -0.361  +2.330   2.17   8.10  1.00  True
+  kcap    1  0.0005  0.0067   2.4458   3.73   -0.507  +1.835   2.17   4.68  1.00  True
+   pin    1  0.0159  0.6858   0.5806   0.02   +0.397  +3.098   2.17   2.62  0.05 False
+  both    1  0.0116  0.6858   0.5827   0.05   +0.346  +3.078   2.17   2.14  0.05 False
+
+--- Aggregat (Mittel pro Arm) ---
+   arm    lossA    lossB  retentA     MC      ben   kap0   kap1
+  free   0.0001   0.0015   3.2457   3.18   -0.349   2.27   7.82
+  kcap   0.0004   0.0083   2.3153   3.88   -0.454   2.27   4.99
+   pin   0.0095   0.6844   0.5758   0.05   +0.373   2.27   2.72
+  both   0.0088   0.6844   0.5772   0.04   +0.361   2.27   2.22
+
+--- (1) kappa-Drift unter freiem Training (F12-These: SGD treibt kappa nach oben?) ---
+free: kappa 2.27 -> 7.82 (Delta +5.55)
+kcap: kappa 2.27 -> 4.99 (Cap greift: True)
+
+--- (2/3) Rezept vs. Kontrolle ---
+  kcap vs free: dlossA=+0.0003  dMC=+0.69  dBenettin=-0.104
+   pin vs free: dlossA=+0.0094  dMC=-3.14  dBenettin=+0.722
+  both vs free: dlossA=+0.0088  dMC=-3.14  dBenettin=+0.711
+
+Bestes lossA: free;  bestes MC: kcap
+
+Lesart: (1) kap1(free) >> kap0(free) => freies Training treibt kappa in den
+schaedlichen Bereich — das Issue ist TRAININGSVERHALTEN, kein Initialisierungs-
+fehler. (2) kcap haelt kappa unter dem Ziel ohne lossA-Schaden => Cap ist ein
+kostenguenstiges Bau-Rezept. (3) pin/both mit MC- oder Retention-Gewinn =>
+Kanten-Pinning subkritisch (nicht auf 0!) ist die richtige Trainings-Zielvorgabe.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f14_fix_results.txt geschrieben.
