@@ -1,0 +1,19 @@
+====================================================================================================
+F18c ZWEI-REGIME-GESETZ: T0 pur (kappa<kc) + gelernte Transienten-Korrektur (kappa>=kc)
+n=192 (train 96, held-out 96) seeds=[0, 1, 2, 3, 4, 5, 6, 7] H=[32, 16]
+kc-Grid-Search auf TRAIN; Ridge-Korrektur lernt (ben - t0) aus [1, log1p(K), log1p(pseudo)]
+====================================================================================================
+gewaehlter Schalter: kappa_c = 6.0 (train |err| 0.111, Vorzeichen 80%)
+Korrektur-Koeffizienten: bias=+0.305, log1p(K)=+0.000, log1p(pseudo)=-0.008
+
+                  Modell  |Fehler|  Vorzeichen
+         T0 pur (global)     0.164         72%
+  ZWEI-REGIME (HELD-OUT)     0.114         83%
+
+--- Held-out nach Regime ---
+A: kappa<kc: n=42 | T0 0.066 | (Regime-Modell: siehe oben)
+B: kappa>=kc: n=54 | T0 0.239 | (Regime-Modell: siehe oben)
+
+Lesart: Held-out |err| < 0.10 bei >85% Vorzeichen => GESCHLOSSEN.
+Interpretation kappa_c=6.0: (F11/F13-Transienten-Schwelle erwartet ~5-8)
+=== FERTIG ===
