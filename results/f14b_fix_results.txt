@@ -1,0 +1,42 @@
+========================================================================================================================
+F14b FIX-IT RICHTIG GEMESSEN: Benettin-Regler im Regelkreis vs. SVD-Regler (pin, F14-Fail) — direkter A/B-Beweis
+arms=['free', 'kcap', 'pin', 'pinben', 'bothben'] seeds=[0, 1] steps=1000 lr=0.01 tau_init=1.0 H=32
+kappa_target=4.0 kappa_weight=0.02 pin_target=-0.2 (subkritisch, F12-Lektion)
+Messung am Ende: MC (Jaeger), Benettin getrieben, SVD (Illusions-Kontrolle), kappa, tau, RK2-Audit
+========================================================================================================================
+     arm seed   lossA   lossB  retentA     MC      ben     svd   kap1   tau rk2ok
+    free    0  0.0001  0.0013   3.1202   4.07   -0.337  +2.649   7.54  1.00  True
+    kcap    0  0.0003  0.0098   2.1847   4.02   -0.400  +1.857   5.31  1.00  True
+     pin    0  0.0030  0.6831   0.5711   0.08   +0.349  +3.111   2.81  0.05 False
+  pinben    0  0.0001  0.0034   2.8610   3.15   -0.306  +2.606   6.00  1.18  True
+ bothben    0  0.0002  0.0207   2.1672   3.50   -0.151  +1.860   4.23  1.32  True
+    free    1  0.0001  0.0017   3.3713   2.30   -0.361  +2.330   8.10  1.00  True
+    kcap    1  0.0005  0.0067   2.4458   3.73   -0.507  +1.835   4.68  1.00  True
+     pin    1  0.0159  0.6858   0.5806   0.02   +0.397  +3.098   2.62  0.05 False
+  pinben    1  0.0001  0.0128   3.3694   3.50   -0.152  +2.475   9.29  1.64  True
+ bothben    1  0.0006  0.0687   1.6490   3.84   -0.306  +1.617   5.89  2.49  True
+
+--- Aggregat (Mittel pro Arm) ---
+     arm    lossA    lossB  retentA     MC      ben   kap1   tau
+    free   0.0001   0.0015   3.2457   3.18   -0.349   7.82  1.00
+    kcap   0.0004   0.0083   2.3153   3.88   -0.454   4.99  1.00
+     pin   0.0095   0.6844   0.5758   0.05   +0.373   2.72  0.05
+  pinben   0.0001   0.0081   3.1152   3.32   -0.229   7.64  1.41
+ bothben   0.0004   0.0447   1.9081   3.67   -0.229   5.06  1.91
+
+--- (1) Regler-Konvergenz: pin (SVD-Artefakt) vs. pinben (Benettin) ---
+pin:    tau=0.05 (F14: Clamp 0.05), Benettin-Ende=+0.373
+pinben: tau=1.41, Benettin-Ende=-0.229 (Ziel -0.2)
+pinben Ziel-Abweichung: +0.029 — KANTE GETROFFEN
+
+--- (2/3) Rezept-Arme vs. free ---
+    kcap vs free: dlossA=+0.0003  dMC=+0.69  dretentA=-0.93
+     pin vs free: dlossA=+0.0094  dMC=-3.14  dretentA=-2.67
+  pinben vs free: dlossA=+0.0000  dMC=+0.14  dretentA=-0.13
+ bothben vs free: dlossA=+0.0003  dMC=+0.49  dretentA=-1.34
+
+Lesart: pinben konvergiert (tau im sinnvollen Bereich, Benettin ~ -0.2) und
+schlaegt pin auf ALLEN Metriken => der F14-Fail war der Artefakt, nicht die
+Rezept-Idee. Gewinnt pinben/bothben gegen free/kcap (MC, Retention) => ist
+Kanten-Pinning mit richtigem Messgeraet das vollstaendige Bau-Rezept.
+=== FERTIG ===
