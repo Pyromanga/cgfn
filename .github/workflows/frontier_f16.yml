@@ -34,6 +34,7 @@ jobs:
         run: |
           set -o pipefail
           python experiments/f16_kappa.py \
+            --kappa-target 2.0 --steps 1500 \
             --out results/f16_kappa_results.txt 2>&1 | tee results/f16_run.log
       - name: Commit results and logs to repo
         if: always()
