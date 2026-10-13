@@ -1,18 +1,23 @@
-......F..........................                                        [100%]
+.......F..........................                                       [100%]
 =================================== FAILURES ===================================
-_____________________ test_benettin_unstable_net_positive ______________________
+______________ test_benettin_supercritical_linear_regime_positive ______________
 
-    def test_benettin_unstable_net_positive():
-        """Sehr grosse Kopplung => Instabilitaet => FTLE > 0."""
-        model = ContinuousRNN(task_dim=0, hidden_dim=8, tau=2.0)
-        with torch.no_grad():
-            model.W.copy_(model.W * 8.0)
+    def test_benettin_supercritical_linear_regime_positive():
+        """Designed normal (kappa=1), tau*lam_max = 1.5 > 1, kleiner Input:
+    
+        z bleibt klein (sech^2 ~ 1) => FTLE ~ lam_max - 1/tau = +0.25 > 0.
+        Deterministische Konstruktion statt Random-W-Skalierung.
+        """
+        model = make_designed_model(8, tau=2.0, lam_max=0.75, s_nonnormal=0.0,
+                                    seed=0, task_dim=0)
         x, _ = make_continuous_batch("sinus_memory", 2, 24)
->       assert benettin_ftle_max(model, x) > 0.0
-E       assert -0.27233150601387024 > 0.0
-E        +  where -0.27233150601387024 = benettin_ftle_max(ContinuousRNN(\n  (U): Linear(in_features=1, out_features=8, bias=True)\n  (readout): Linear(in_features=8, out_features=1, bias=True)\n), tensor([[[ 0.6120],\n         [ 0.8094],\n         [-0.5620],\n         [-0.8441],\n         [ 0.5099],\n         [ 0.8756]...       [ 0.9188],\n         [ 0.9242],\n         [ 0.3721],\n         [-0.4045],\n         [-0.9370],\n         [-0.9043]]]))
+        x = x * 0.1  # z im linearen Bereich halten (keine Saettigung)
+        f = benettin_ftle_max(model, x)
+>       assert f > 0.1, f"erwartet ~ +0.25, gemessen {f}"
+E       AssertionError: erwartet ~ +0.25, gemessen 0.006090232636779547
+E       assert 0.006090232636779547 > 0.1
 
-tests/test_f11.py:36: AssertionError
+tests/test_f11.py:81: AssertionError
 ==================================== PASSES ====================================
 =========================== short test summary info ============================
 PASSED tests/test_f10.py::test_qbar_plus_q_equals_one
@@ -21,6 +26,7 @@ PASSED tests/test_f10.py::test_ruler_report_qbar_prediction
 PASSED tests/test_f10.py::test_ruler_without_states_qbar_defaults
 PASSED tests/test_f11.py::test_benettin_spectrum_finite_and_sorted
 PASSED tests/test_f11.py::test_benettin_decaying_net_negative
+PASSED tests/test_f11.py::test_benettin_saturated_net_returns_to_subcritical
 PASSED tests/test_f11.py::test_stability_audit_flags
 PASSED tests/test_f11.py::test_benettin_designed_normal_net
 PASSED tests/test_f4f6.py::test_continuous_batch_shapes_and_finiteness[sinus_memory]
@@ -47,7 +53,7 @@ PASSED tests/test_smoke.py::test_tasks_shapes
 PASSED tests/test_smoke.py::test_training_reduces_loss
 PASSED tests/test_smoke.py::test_ftle_summary_runs
 PASSED tests/test_smoke.py::test_effective_dimension_runs
-FAILED tests/test_f11.py::test_benettin_unstable_net_positive - assert -0.27233150601387024 > 0.0
- +  where -0.27233150601387024 = benettin_ftle_max(ContinuousRNN(\n  (U): Linear(in_features=1, out_features=8, bias=True)\n  (readout): Linear(in_features=8, out_features=1, bias=True)\n), tensor([[[ 0.6120],\n         [ 0.8094],\n         [-0.5620],\n         [-0.8441],\n         [ 0.5099],\n         [ 0.8756]...       [ 0.9188],\n         [ 0.9242],\n         [ 0.3721],\n         [-0.4045],\n         [-0.9370],\n         [-0.9043]]]))
-1 failed, 32 passed in 5.52s
+FAILED tests/test_f11.py::test_benettin_supercritical_linear_regime_positive - AssertionError: erwartet ~ +0.25, gemessen 0.006090232636779547
+assert 0.006090232636779547 > 0.1
+1 failed, 33 passed in 5.51s
 pytest_exit=1
