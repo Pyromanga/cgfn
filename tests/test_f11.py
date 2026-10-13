@@ -1,20 +1,24 @@
-"""Smoke-Tests für F11 (Benettin-QR-Messgeraet + Stabilitaets-Audit).
+"""Smoke-Tests fuer F11 (Benettin-QR-Messgeraet + Stabilitaets-Audit).
 
-WICHTIG (2026-10-13, Fix nach erstem F11-Run): Der urspruengliche
-test_benettin_unstable_net_positive skalierte ein Random-W mit x8 und
-erwartete FTLE > 0. Das ist die SVD-Logik ("grosses sv_max => Chaos")
-auf ein Messgeraet uebertragen, das ehrlicher ist: Riesen-W saettigt
-ALLE Units (tanh -> +-1), damit wird sech^2(z) -> 0, die Jacobi-Diagonale
-verschwindet und die Tangenten-Dynamik kontrahiert mit -1/tau —
-FTLE korrekt negativ (gemessen: -0.27 bei tau=2). Benettin zeichnet
-hier genau den Edge-of-Chaos-Befund von F10 nach: jenseits der Kante
-kehrtdie Dynamik in die Subkritikalitaet zurueck. Der Test pruefte also
-das falsche Regime.
+WICHTIG (Fix-Nachlese, 2026-10-13): Zwei urspruengliche Test-Prmissen waren
+physikalisch zu naiv und haben echte F11-Befunde als "Fehler" getarnt:
 
-Statt dessen: designedes NORMALES Netz (kappa=1, s=0) mit
-lam_max = 0.75, tau = 2.0 => Eigenwert-Regel tau*lam = 1.5 > 1
-(supercritical), Input skaliert auf 10%, damit z im linearen Bereich
-bleibt (sech^2 ~ 1). Erwartung: FTLE ~ lam_max - 1/tau = +0.25.
+1. W*8 => FTLE>0 war SVD-Denkweise. Benettin misst korrekt SUBKRITISCH:
+   Riesen-W saettigt alle Units, sech^2(z)->0, Tangenten kontrahieren.
+   Das ist die Edge-of-Chaos-Rueckkehr (F10) direkt am Messgeraet.
+
+2. "Designed supercritical + kleiner Input => FTLE ~ lam-1/tau ueber das
+   GESAMTE Fenster" ignoriert, dass die Instabilitaet z selbst aus dem
+   linearen Bereich treibt: z waechst exp(lam-1/tau), erreicht die
+   Sattigung, dort kehrt die Tangenten-Dynamik zur Kontraktion.
+   Fensterschnitt ueber t=12: +0.006 (Wachstum + Rueckkehr mitteln sich
+   weg) — der SAETTIGUNGS-DECKEL auf dem FTLE, Kern des Edge-of-Chaos.
+
+Robust getestet wird jetzt:
+  - Supercritical im KURZEN Fenster (t=4): z bleibt linear (x ~2.7 nur),
+    FTLE deutlich positiv.
+  - Saettigungs-Deckel im LANGEN Fenster (t=12): FTLE wird Richtung Null
+    gedeckelt und liegt UNTER dem Kurzfenster-Wert.
 """
 import torch
 
@@ -22,7 +26,6 @@ from cgfn.benettin import benettin_ftle_max, benettin_spectrum, stability_audit
 from cgfn.continuous import make_continuous_batch
 from cgfn.design import make_designed_model
 from cgfn.model import ContinuousRNN
-from cgfn.tasks import TASKS, make_batch
 
 
 def test_benettin_spectrum_finite_and_sorted():
@@ -67,19 +70,41 @@ def test_benettin_saturated_net_returns_to_subcritical():
     assert f_saturated > f_tiny
 
 
-def test_benettin_supercritical_linear_regime_positive():
-    """Designed normal (kappa=1), tau*lam_max = 1.5 > 1, kleiner Input:
+def test_benettin_supercritical_short_window_positive():
+    """Designed normal (kappa=1), tau*lam_max = 1.5 > 1, kleiner Input,
+    KURZES Fenster (T=8 => t_total=4):
 
-    z bleibt klein (sech^2 ~ 1) => FTLE ~ lam_max - 1/tau = +0.25 > 0.
-    Deterministische Konstruktion statt Random-W-Skalierung.
+    z waechst nur ~e^((lam-1/tau)*4) ~ 2.7x und bleibt im linearen Bereich
+    (sech^2 ~ 1) => FTLE ~ lam_max*sech^2 - 1/tau ~ +0.1..0.2 > 0.
     """
     model = make_designed_model(8, tau=2.0, lam_max=0.75, s_nonnormal=0.0,
                                 seed=0, task_dim=0)
-    x, _ = make_continuous_batch("sinus_memory", 2, 24)
-    x = x * 0.1  # z im linearen Bereich halten (keine Saettigung)
-    f = benettin_ftle_max(model, x)
-    assert f > 0.1, f"erwartet ~ +0.25, gemessen {f}"
-    assert f < 0.5, f"erwartet ~ +0.25, gemessen {f}"
+    x, _ = make_continuous_batch("sinus_memory", 2, 8)
+    x = x * 0.1  # z im linearen Bereich halten (keine Saettigung im Fenster)
+    f_short = benettin_ftle_max(model, x)
+    assert f_short > 0.02, f"Kurzfenster sollte ~+0.15 sein, gemessen {f_short}"
+    assert f_short < 0.4, f"Kurzfenster sollte ~+0.15 sein, gemessen {f_short}"
+
+
+def test_benettin_saturation_caps_long_window_ftle():
+    """DOKUMENTATIONS-TEST (Edge-of-Chaos-Kernbefund am Messgeraet):
+
+    Dasselbe superkritische Netz, LANGES Fenster (T=24 => t_total=12):
+    Die Instabilitaet treibt z in die Saettigung, sech^2 schrumpft, die
+    Tangenten-Dynamik kehrt zur Kontraktion — der Fensterschnitt wird
+    gegen Null gedeckelt und liegt UNTER dem Kurzfenster-Wert.
+    Messung vom ersten F11-Debug-Lauf: +0.006 (vs. linear +0.25).
+    """
+    model = make_designed_model(8, tau=2.0, lam_max=0.75, s_nonnormal=0.0,
+                                seed=0, task_dim=0)
+    x8, _ = make_continuous_batch("sinus_memory", 2, 8)
+    x24, _ = make_continuous_batch("sinus_memory", 2, 24)
+    f_short = benettin_ftle_max(model, x8 * 0.1)
+    f_long = benettin_ftle_max(model, x24 * 0.1)
+    # Saettigungs-Deckel: langes Fenster deutlich gedrueckt
+    assert f_long < f_short
+    # und nahe Neutralitaet statt klar superkritisch (linearer Wert +0.25):
+    assert -0.2 < f_long < 0.15, f"Langfenster ~0 erwartet, gemessen {f_long}"
 
 
 def test_stability_audit_flags():
