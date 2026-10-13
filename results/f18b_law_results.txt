@@ -1,0 +1,21 @@
+====================================================================================================
+F18b GESETZ-KALIBRIERUNG (Ridge auf [1, T0, log1p(K), log1p(pseudo)]) — HELD-OUT
+n=192 (train 96, held-out 96) seeds=[0, 1, 2, 3, 4, 5, 6, 7] H=[32, 16] ridge=0.001
+====================================================================================================
+gelernte Koeffizienten (skalierte Features): bias=+0.000, T0=+0.076, log1p(K)=+0.135, log1p(pseudo)=-0.033
+
+                Modell  |Fehler|  Vorzeichen
+         T0 (Feld pur)     0.164         72%
+         Ridge (train)     0.169          --
+      Ridge (HELD-OUT)     0.163         78%
+
+--- Fehler nach kappa-Band (held-out) ---
+kappa in [1,5): n= 28 | T0 0.057 | Ridge 0.171
+kappa in [5,10): n= 31 | T0 0.160 | Ridge 0.177
+kappa in [10,99): n= 25 | T0 0.329 | Ridge 0.145
+
+Lesart: Held-out-Fehler < 0.12 bei >85% Vorzeichen-Einheit =>
+edge(W, Statistik) mit gelernter Transienten-Kopplung GESCHLOSSEN;
+die Koeffizienten quantifizieren, wie die F11-Transientenphysik in
+das Gesetz eingeht (erwartet: positives Gewicht auf log1p(K)).
+=== FERTIG ===
