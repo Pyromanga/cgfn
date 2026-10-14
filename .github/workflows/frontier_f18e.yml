@@ -1,0 +1,57 @@
+name: cgfn-frontier (F18e)
+
+# F18e — Numerische Abszisse als Gesetz-Feature (fit-frei).
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/f18e"
+  schedule:
+    - cron: "0 9 * * 6"
+
+jobs:
+  frontier-f18e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Unit tests
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 | tee results/FINAL_PYTEST_f18e.log
+      - name: Run F18e numerical abscissa law
+        run: |
+          set -o pipefail
+          python experiments/f18e_law.py \
+            --out results/f18e_law_results.txt 2>&1 | tee results/f18e_run.log
+      - name: Commit results and logs to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: F18e-Abszisse ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
+            git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontier-f18e-results
+          path: results/
+          retention-days: 30
