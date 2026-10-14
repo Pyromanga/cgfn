@@ -135,8 +135,10 @@ def main():
                 gen = torch.Generator().manual_seed(777)
                 x0 = torch.zeros(4, 48, 1)
                 xh = torch.randn(4, 48, 1, generator=gen) * 0.5
-                ben0 = benettin_ftle_max(m, x0)
-                benh = benettin_ftle_max(m, xh)
+                # Zoo-Modelle: driven_measures (der F13-Vertrag, kennt ZooModel)
+                from cgfn.driven_lyap import driven_measures
+                ben0 = driven_measures(m, x0)["lyap_ben"]
+                benh = driven_measures(m, xh)["lyap_ben"]
                 lines.append(f"{name:>8s} {phase:>7s} {seed:4d} {kap:6.2f} {ben0:+8.3f} {benh:+8.3f} {benh-ben0:+7.3f}")
 
     # ── Teil 3: Sattigung D(sigma) ──
