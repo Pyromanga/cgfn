@@ -15,7 +15,8 @@ wieder 2000 Minuten bereit — das ist der Feuerplan.
    Der AGI-relevante Showdown. Nur feuern, wenn F21 oder F22 mind. 1
    positiven Regler-Arm zeigt.
 4. **F24 (NEU, siehe docs/tiefenanalyse_2026-10-14.md): Transientes Wachstum als Memory-Ressource** (~30 Min) — MC gegen kappa bei festem lambda=-0.3. Vorhersage (Wainrib-Galtier): MC STEIGT mit kappa (Regime B = Resource). Wenn ja: kappa-Cap-Fenster-Design, F12-Optimum neu interpretierbar.
-5. **F11.2 Statistik-Aufstockung** (~40 Min) — der Artefakt-Claim
+5. **F25 (NEU, Tiefenanalyse III): Reverberating-Mass m** (~25 Min) — Avalanche/Branching-Statistik auf Aktivitätskaskaden des getriebenen CT-RNN. Ziel: m in 0.94-0.998 reproduzieren == Kortex-Konsens. Wenn ja: unsere Zelle ist ein literatur-kompatibles reverberating-Modell.
+6. **F11.2 Statistik-Aufstockung** (~40 Min) — der Artefakt-Claim
    traegt drei Paper-Saetze und braucht die n-Schaerfe.
 5. Reserven: ~1650 Min fuer Iterationen, Statistik-Haertungen wie
    gelernt (F20b-Disziplin: 4 Seeds->8 Seeds, Permutations-Test).
