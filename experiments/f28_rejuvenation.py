@@ -25,22 +25,19 @@ DESIGN (4 Arme x 4 Seeds, 10 Bloecke a 150 Steps):
   crash-Lehre beachtet).
   Nach Block 5 (Erosions-Haelfte): Arm-Intervention.
     A continue: keine
-    B random:   W += eps * N(0,1), Norm angepasst an Arm C
-    C targeted: Schur-Korrektur — kappa zurueck Richtung Startwert,
-                lam zurueck Richtung Startwert (Spektral-Renorm);
-                eps so gewaehlt, dass ||dW||_F == ||dW_B||_F
+    B random:   NUR Gauss-Stoerung auf W
+    C targeted: NUR Fenster-Restauration (Spektral-Renorm Richtung
+                kappa0/lam0), Frobenius-Norm identisch zu B
     D homeo:    ab Block 1 Homeostat-Penalty (F21-Stil, alle 50 Steps)
   Metrik: Steps bis Loss-Schwelle im jeweiligen neuen Block
   (Plastizitaet), MC nach Block 10, kappa/ben-Trajektorie.
 '''
 import argparse
-import math
 import os
 from pathlib import Path
 
 import torch
 
-from cgfn.model import ContinuousRNN
 from cgfn.continuous import make_continuous_batch
 from cgfn.benettin import benettin_ftle_max
 from cgfn.design import make_designed_model
@@ -58,18 +55,13 @@ def kappa_lam(W):
 
 def spectral_renorm(W, k_target, lam_target, step=0.5):
     '''Schiebe kappa und lam zurueck Richtung Ziel (normierende
-    Skalierung + Schur-Mischung), bleibt im gleichen Frobenius-Budget
-    nur via nachtraegliche Norm-Anpassung durch den Aufrufer).'''
+    Skalierung + Symmetrisierungs-Mischung). Die Frobenius-Norm der
+    Aenderung wird vom Aufrufer auf Arm-B-Norm genormt.'''
     k, lam = kappa_lam(W)
-    # lam-Korrektur: globale Skalierung Richtung lam_target
     scale = (lam_target / max(lam, 1e-9)) ** step
     W2 = W * scale
-    # kappa-Korrektur: mische Richtung normale Matrix (lam-anteil hoch,
-    # sv-anteil gleich) — equivalente: W2 + alpha*(W2 normalisiert)
     k2, _ = kappa_lam(W2)
     if abs(k2 - k_target) > 0.05:
-        # Mische mit Q-similarer Normal-Version (Symmetrisierung der
-        # Hauptachse) — billig: anteilige Symmetrisierung
         alpha = 0.15
         W2 = (1 - alpha) * W2 + alpha * 0.5 * (W2 + W2.T)
     return W2
@@ -122,11 +114,9 @@ def main():
             k_hist = []
             for blk in range(args.blocks):
                 task = TASKS[blk % 3]
-                # Plastizitaetsmessung: Adaptionszeit auf den Block
                 torch.manual_seed(seed + 100 * blk)
                 a = adapt_steps(m, task, args.thresh, seed + 100 * blk)
                 adapt_hist.append(a)
-                # Block-Training
                 torch.manual_seed(seed + 555 * blk)
                 for _ in range(args.steps_per_block):
                     x, y = make_continuous_batch(task, 16, 16)
@@ -138,25 +128,22 @@ def main():
                     opt.zero_grad(); loss.backward(); opt.step()
                 k_now, lam_now = kappa_lam(m.W.detach())
                 k_hist.append((k_now, lam_now))
-                # Rejuvenation NACH Block 5 (Index 4, Interventionspunkt)
+                # Intervention NACH Block 5 (Index 4): Arm B NUR Zufall,
+                # Arm C NUR Ziel-Korrektur bei IDENTISCHER Stoerungsnorm.
                 if arm in ('B', 'C') and blk == 4:
                     with torch.no_grad():
                         W = m.W
+                        dB = torch.randn_like(W) * 0.02
+                        dC = spectral_renorm(W, k0, lam0) - W
+                        nb = dB.norm()
+                        nc = dC.norm().clamp_min(1e-9)
                         if arm == 'B':
-                            dB = torch.randn_like(W) * 0.02
-                            dC = spectral_renorm(W, k0, lam0)
-                            dC = dC - W
-                            # Norm-Anpassung an B (faire Stoerstaerke)
-                            nb = dB.norm()
-                            nc = dC.norm().clamp_min(1e-9)
-                            W.add_(dB + dC * (nb / nc))
+                            W.add_(dB)
                         else:
-                            dC = spectral_renorm(W, k0, lam0) - W
-                            W.add_(dC)
+                            W.add_(dC * (nb / nc))
             ben_end = benettin_ftle_max(m, xdr)
             torch.manual_seed(seed + 9000)
             mc, _ = memory_capacity(m, max_lag=12, seq_len=64, input_scale=0.5)
-            # Plastizitaet vor/nach Intervention
             pre = sum(adapt_hist[2:5]) / 3.0
             post = sum(adapt_hist[5:8]) / 3.0
             k_end = k_hist[-1][0]
@@ -174,7 +161,7 @@ def main():
         L.append(f'Arm {arm}: adapt pre {pre:5.1f} -> post {post:5.1f} | dPlast {post-pre:+6.1f} | MC {mc:6.2f}')
 
     a = {arm: (sum(v[1] for v in agg[arm]) / len(agg[arm])) for arm in ('A', 'B', 'C', 'D')}
-    p2 = a['C'] < a['B']  # weniger Steps = plastischer
+    p2 = a['C'] < a['B']
     p3 = a['D'] < a['A']
     L.append('')
     L.append(f'P1 (Erosion): continue adapt pre {sum(v[0] for v in agg["A"])/len(agg["A"]):.1f} vs post {a["A"]:.1f}')
