@@ -1,0 +1,9 @@
+............................................................             [100%]
+=============================== warnings summary ===============================
+tests/test_f14.py::test_kappa_cap_penalty_positive_with_grad_for_nonnormal
+  /home/runner/work/cgfn/cgfn/tests/test_f14.py:32: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+  Consider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:820.)
+    assert float(pen) > 0.0
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+60 passed, 1 warning in 9.46s

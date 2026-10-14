@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/home/runner/work/cgfn/cgfn/experiments/f18d_law.py", line 166, in <module>
+    main()
+  File "/home/runner/work/cgfn/cgfn/experiments/f18d_law.py", line 138, in main
+    ben0 = benettin_ftle_max(m, x0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/src/cgfn/benettin.py", line 97, in benettin_ftle_max
+    spectrum, _ = benettin_spectrum(model, x_seq, task_vec, renorm_every)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/src/cgfn/benettin.py", line 63, in benettin_spectrum
+    H = model.hidden_dim
+        ^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1972, in __getattr__
+    raise AttributeError(
+AttributeError: 'ZooModel' object has no attribute 'hidden_dim'
