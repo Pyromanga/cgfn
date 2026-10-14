@@ -6,8 +6,6 @@ on:
   push:
     paths:
       - ".trigger/f21"
-  schedule:
-    - cron: "0 11 * * 6"
 
 jobs:
   frontier-f21:

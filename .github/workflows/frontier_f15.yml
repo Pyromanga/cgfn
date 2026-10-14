@@ -8,8 +8,6 @@ on:
   push:
     paths:
       - ".trigger/f15"
-  schedule:
-    - cron: "0 6 * * 4"  # donnerstags 06:00 UTC
 
 jobs:
   frontier-f15:

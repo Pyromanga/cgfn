@@ -6,8 +6,6 @@ on:
   push:
     paths:
       - ".trigger/f20"
-  schedule:
-    - cron: "0 10 * * 6"
 
 jobs:
   frontier-f20:

@@ -6,8 +6,6 @@ on:
   push:
     paths:
       - ".trigger/f18b"
-  schedule:
-    - cron: "30 7 * * 6"
 
 jobs:
   frontier-f18b:

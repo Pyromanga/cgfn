@@ -16,8 +16,6 @@ on:
   push:
     paths:
       - ".trigger/f11"
-  schedule:
-    - cron: "0 3 * * 2"  # dienstags 03:00 UTC
 
 jobs:
   frontier-f11:

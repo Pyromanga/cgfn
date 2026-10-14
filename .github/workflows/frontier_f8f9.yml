@@ -18,8 +18,6 @@ on:
   push:
     paths:
       - ".trigger/f8f9"
-  schedule:
-    - cron: "0 3 * * 0"  # sonntags 03:00 UTC
 
 jobs:
   frontier-f8f9:

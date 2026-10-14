@@ -8,8 +8,6 @@ on:
   push:
     paths:
       - ".trigger/f16"
-  schedule:
-    - cron: "0 6 * * 2"  # dienstags 06:00 UTC
 
 jobs:
   frontier-f16:

@@ -21,8 +21,6 @@ on:
   push:
     paths:
       - ".trigger/f4f6"
-  schedule:
-    - cron: "0 3 * * 5"  # freitags 03:00 UTC
 
 jobs:
   frontier-f4f6:

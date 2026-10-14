@@ -17,8 +17,6 @@ on:
   push:
     paths:
       - ".trigger/f10"
-  schedule:
-    - cron: "30 3 * * 0"  # sonntags 03:30 UTC
 
 jobs:
   frontier-f10:

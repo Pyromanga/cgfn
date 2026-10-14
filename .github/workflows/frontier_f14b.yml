@@ -9,8 +9,6 @@ on:
   push:
     paths:
       - ".trigger/f14b"
-  schedule:
-    - cron: "30 5 * * 1"  # montags 05:30 UTC
 
 jobs:
   frontier-f14b:

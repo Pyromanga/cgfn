@@ -17,8 +17,6 @@ on:
   push:
     paths:
       - ".trigger/f7"
-  schedule:
-    - cron: "0 3 * * 6"  # samstags 03:00 UTC
 
 jobs:
   frontier-f7:

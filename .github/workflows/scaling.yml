@@ -15,8 +15,6 @@ on:
       steps:
         description: "Trainingsschritte pro Run"
         default: "1500"
-  schedule:
-    - cron: "0 3 * * 1"  # montags 03:00 UTC
 
 jobs:
   scaling:

@@ -13,8 +13,6 @@ on:
       seeds:
         description: "Seeds"
         default: "0,1"
-  schedule:
-    - cron: "0 3 * * 4"  # donnerstags 03:00 UTC
 
 jobs:
   frontier-f2f3:
