@@ -53,11 +53,22 @@ def field_J(model, x_probe):
 
 @torch.no_grad()
 def covarianz_ftle(J, K):
-    C = torch.eye(J.shape[0])
-    I = torch.eye(J.shape[0])
+    """Kovarianz-FTLE mit Spur-Renormierung (Analogon zur Benettin-QR-Renorm):
+    C <- J C J^T + I; Akkumulation von log tr(C); C /= tr(C).
+    Fuer grosse K dominiert lam_max die Spur => FTLE ~ (1/2K) sum log tr.
+    Numerisch stabil gegen Kovarianz-Explosion (F19-Lauf-1-Crash: eigvalsh
+    auf unrenormiertem C kippte bei ~e^60 in float32)."""
+    H = J.shape[0]
+    J = J.to(torch.float64)
+    C = torch.eye(H, dtype=torch.float64)
+    I = torch.eye(H, dtype=torch.float64)
+    acc = 0.0
     for _ in range(K):
         C = J @ C @ J.T + I
-    return 0.5 * torch.log(torch.linalg.eigvalsh(C)[-1]).item() / K
+        tr = C.trace().clamp_min(1e-300)
+        acc += torch.log(tr).item()
+        C = C / tr
+    return 0.5 * acc / K
 
 
 def main():
