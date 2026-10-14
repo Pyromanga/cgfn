@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/home/runner/work/cgfn/cgfn/experiments/f19_covlaw.py", line 203, in <module>
+    main()
+  File "/home/runner/work/cgfn/cgfn/experiments/f19_covlaw.py", line 98, in main
+    covs = {K: covarianz_ftle(J, K) for K in kgrid}
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/experiments/f19_covlaw.py", line 98, in <dictcomp>
+    covs = {K: covarianz_ftle(J, K) for K in kgrid}
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/experiments/f19_covlaw.py", line 60, in covarianz_ftle
+    return 0.5 * torch.log(torch.linalg.eigvalsh(C)[-1]).item() / K
+                           ^^^^^^^^^^^^^^^^^^^^^^^^
+torch._C._LinAlgError: linalg.eigh: The algorithm failed to converge because the input matrix is ill-conditioned or has too many repeated eigenvalues (error code: 14).
