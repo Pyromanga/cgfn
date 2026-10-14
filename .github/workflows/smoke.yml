@@ -1,8 +1,10 @@
 name: cgfn-smoke
 
 on:
-  push:
   workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/smoke"
     inputs:
       seeds:
         description: "Seeds, z.B. 0,1,2,3,4"
