@@ -90,7 +90,7 @@ def main():
     # ── (1)(2)(3) Training + Endpunkte pro Task ──
     opt_dist_tasks = {}
     h2_times = {}
-    for task in ("sinus_memory", "copy"):
+    for task in ("sinus_memory", "lorenz"):
         lines.append("")
         lines.append(f"--- Task {task}: Startpunkte -> Endpunkte (1200 Steps, 8 Seeds) ---")
         lines.append(f"{'start':>7s} {'seed':>4s} {'lam0':>7s} {'lam1':>7s} {'t_half':>7s}")
