@@ -90,7 +90,7 @@ def main():
     te = [r for i, r in enumerate(rows) if i % 2 == 1]
     # Konstanten-Fit vs. linearer Fit vs. quadratisch (auf Train)
     ktr = torch.tensor([r[0] for r in tr]); rtr = torch.tensor([r[1] for r in tr])
- kte = torch.tensor([r[0] for r in te]); rte = torch.tensor([r[1] for r in te])
+    kte = torch.tensor([r[0] for r in te]); rte = torch.tensor([r[1] for r in te])
     c_const = rtr.mean().item()
     def fit(deg):
         X = torch.stack([ktr ** d for d in range(deg + 1)], dim=1)
