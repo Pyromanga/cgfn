@@ -14,7 +14,8 @@ wieder 2000 Minuten bereit — das ist der Feuerplan.
 3. **F23 Marathon** (~90 Min) — 10 Task-Bloecke, Retentions-Kurve.
    Der AGI-relevante Showdown. Nur feuern, wenn F21 oder F22 mind. 1
    positiven Regler-Arm zeigt.
-4. **F11.2 Statistik-Aufstockung** (~40 Min) — der Artefakt-Claim
+4. **F24 (NEU, siehe docs/tiefenanalyse_2026-10-14.md): Transientes Wachstum als Memory-Ressource** (~30 Min) — MC gegen kappa bei festem lambda=-0.3. Vorhersage (Wainrib-Galtier): MC STEIGT mit kappa (Regime B = Resource). Wenn ja: kappa-Cap-Fenster-Design, F12-Optimum neu interpretierbar.
+5. **F11.2 Statistik-Aufstockung** (~40 Min) — der Artefakt-Claim
    traegt drei Paper-Saetze und braucht die n-Schaerfe.
 5. Reserven: ~1650 Min fuer Iterationen, Statistik-Haertungen wie
    gelernt (F20b-Disziplin: 4 Seeds->8 Seeds, Permutations-Test).
@@ -27,5 +28,6 @@ wieder 2000 Minuten bereit — das ist der Feuerplan.
   vertretbar.
 - **Task-Namen pruefen**: kontinuierlich = sinus_memory/lorenz/ou_noise.
   (Der 'copy'-Crash war ein erfundener Task-Name — nie wieder.)
+- **F21-Auswertung**: C-vs-B prueft indirekt F24; Homeostat-Versagen bei stark rekurrenten Zellen (lam 1.2/1.4) ist HSE-erwartet, kein Bug.
 - **Push-Log sparsam**: ein Commit pro Vorhaben, Marker nur beim
   gezielten Trigger aendern (jede .trigger-Aenderung startet den Lauf!).
