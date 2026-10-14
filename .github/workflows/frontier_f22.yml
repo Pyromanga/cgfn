@@ -1,0 +1,59 @@
+name: cgfn-frontier (F22)
+
+# F22 — Homeostat v2: kontinuierlicher Regler (Gram-Proxy) vs Block-Penalty.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/f22"
+
+jobs:
+  frontier-f22:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Gate: syntax-check (20s statt Crash nach 15-55 Min)
+        run: |
+          python -m py_compile experiments/f22_homeostat_v2.py || { echo "[e] SYNTAX-FEHLER — Abbruch, Kontingent geschont"; exit 1; }
+          echo "[i] syntax ok"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Unit tests
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 | tee results/FINAL_PYTEST_f22.log
+      - name: Run F22 homeostat v2
+        run: |
+          set -o pipefail
+          python experiments/f22_homeostat_v2.py \
+            --out results/f22_homeostat_v2_results.txt 2>&1 | tee results/f22_run.log
+      - name: Commit results and logs to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: F22-Homeostat-v2 ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
+            git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontier-f22-results
+          path: results/
+          retention-days: 30

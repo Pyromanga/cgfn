@@ -20,6 +20,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Gate: syntax-check (20s statt Crash nach 15-55 Min)
+        run: |
+          python -m py_compile experiments/f16_kappa.py || { echo "[e] SYNTAX-FEHLER in experiments/f16_kappa.py — Abbruch, Kontingent geschont"; exit 1; }
+          echo "[i] syntax ok"
       - name: Install torch (CPU)
         run: pip install torch --index-url https://download.pytorch.org/whl/cpu
       - name: Install package with dev extras
