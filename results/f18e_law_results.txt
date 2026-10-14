@@ -1,0 +1,21 @@
+==============================================================================================================
+F18e NUMERISCHE ABSZISSE omega(J)=lam_max((J+J^T)/2) als Gesetz-Feature (held-out)
+n=192 (train 96, held-out 96) seeds=[0, 1, 2, 3, 4, 5, 6, 7] H=[32, 16]
+P4 = max(T0, omega) ist FIT-FREI — kein gelernter Parameter
+==============================================================================================================
+                Praediktor  |Fehler|  Vorzeichen
+      P1 T0 pur (Baseline)     0.164         72%
+              P2 omega pur     1.232         50%
+     P3 Ridge [1,T0,omega]     0.172         77%
+P4 max(T0, omega) FIT-FREI     1.232         50%
+(Ridge-Koeff.: T0 {w[1]:+.3f}, omega {w[2]:+.3f})
+
+--- Held-out nach kappa-Band: P4 vs T0 ---
+kappa [1,5): n= 28 | T0 0.057 | P4 0.643
+kappa [5,10): n= 31 | T0 0.160 | P4 1.647
+kappa [10,99): n= 25 | T0 0.329 | P4 1.926
+
+Lesart: P4 fit-frei unter 0.10/85% => GESETZ GESCHLOSSEN als max(spektral,
+numerische Abszisse): zwei Zeilen Mathematik, keine gelernten Parameter.
+P3-Koeffizienten zeigen die Kopplung (omega-Gewicht > 0 erwartet).
+=== FERTIG ===
