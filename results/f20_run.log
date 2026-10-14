@@ -1,0 +1,56 @@
+==============================================================================================================
+F20 WARUM AN DER KANTE? Mechanismus-Test: Zwang vs Selektion vs Barriere vs Optimum
+seeds=[0, 1, 2, 3] steps=400 lr=0.002 — lambda Benettin getrieben (artefaktfrei), Start beidseits der Kante
+==============================================================================================================
+
+--- H1/H3: lambda-Trajektorie pro Startpunkt (Task: sinus_memory) ---
+  start seed    lam0    lam1    dlam  loss_end
+   -0.8    0  -0.714  -0.709  +0.005    0.3458
+   -0.8    1  -0.752  -0.725  +0.026    0.3421
+   -0.8    2  -0.743  -0.743  -0.000    0.4741
+   -0.8    3  -0.799  -0.791  +0.007    0.4069
+   -0.4    0  -0.408  -0.389  +0.019    0.4465
+   -0.4    1  -0.445  -0.452  -0.007    0.3932
+   -0.4    2  -0.318  -0.347  -0.030    0.4531
+   -0.4    3  -0.388  -0.381  +0.008    0.4113
+   -0.1    0  -0.162  -0.374  -0.213    0.4804
+   -0.1    1  -0.234  -0.281  -0.047    0.4409
+   -0.1    2  +0.003  -0.166  -0.169    0.2577
+   -0.1    3  -0.267  -0.259  +0.008    0.3998
+   +0.1    0  -0.279  -0.237  +0.042    0.3835
+   +0.1    1  -0.065  -0.198  -0.134    0.3135
+   +0.1    2  -0.130  -0.137  -0.007    0.4435
+   +0.1    3  -0.295  -0.333  -0.037    0.3626
+
+--- H1: ZWANG? (dlam Richtung 0 von beiden Seiten?) ---
+start -0.8: mittel dlam +0.010 (auf 0 zu)
+start -0.4: mittel dlam -0.002 (weg von 0/diffus)
+start -0.1: mittel dlam -0.105 (weg von 0/diffus)
+start +0.1: mittel dlam -0.034 (auf 0 zu)
+Endpunkte in (-0.15, 0.15): 1/16 — Anhaeufung AT 0 => Zwang; knapp UNTER 0 => Barriere
+
+--- H2: SELEKTION? Zeit bis Loss<0.02 pro Start-lambda ---
+start -0.8: mittel Zeit   401 Schritte
+start -0.4: mittel Zeit   401 Schritte
+start -0.1: mittel Zeit   401 Schritte
+start +0.1: mittel Zeit   401 Schritte
+Minimum bei start ~ -0.1/nahe 0 => Kanten-Netze lernen schneller (Selektion moeglich)
+
+--- H4: OPTIMUM? MC vs lambda auf designed Gitter (s=0) ---
+lam 0.2: ben -0.891 | MC  1.64
+lam 0.4: ben -0.739 | MC  2.07
+lam 0.6: ben -0.593 | MC  2.39
+lam 0.8: ben -0.456 | MC  2.56
+lam 1.0: ben -0.331 | MC  2.58
+lam 1.2: ben -0.221 | MC  2.54
+lam 1.4: ben -0.156 | MC  2.49
+MC-Optimum bei ben ~ -0.331 | Trainings-Endpunkte mittel -0.408
+Koinzidenz (<0.1 Abstand) => Kante ist Ressourcen-Optimum (H4); sonst eigenstaendig
+
+Lesart: Nur EINE Hypothese sollte das Muster erklaeren. Zwang => Kante ist
+notwendig (AGI-Architekturen muessen sie halten); Selektion => Kante ist
+optimierbar weg; Barriere => Kante ist trivial (Drift-Wand); Optimum =>
+Kante ist verwechselte Ressource. Jede Antwort ist ein anderer AGI-Bauplan.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f20_edge_results.txt geschrieben.
