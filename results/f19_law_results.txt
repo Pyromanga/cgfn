@@ -1,0 +1,39 @@
+==============================================================================================================
+F19 KOVARIANZ-PROPAGATIONS-GESETZ: C <- J C J^T + I mit Feld-J (fit-frei, K aus Train)
+==============================================================================================================
+K gewaehlt auf Train: K=32 (train |err| 1.771)
+n=192 (train 96, held-out 96)
+
+                  Praediktor  |Fehler|  Vorzeichen
+        Q1 T0 pur (Baseline)     0.164         72%
+  Q2 Kovarianz (K aus Train)     1.833         30%
+       Q3 max(T0, Kovarianz)     1.833         30%
+
+--- Held-out nach kappa-Band ---
+kappa [1,5): n= 28 | T0 0.057 | Kov 1.885
+kappa [5,10): n= 31 | T0 0.160 | Kov 1.838
+kappa [10,99): n= 25 | T0 0.329 | Kov 1.681
+
+--- (a) GRU auf hohe kappa treiben (800 Steps, kappa-Drift aus F16) + Gesetz ---
+(Kovarianz-Gesetz braucht Feld-J: nur fuer CT verfuegbar — hier testen wir,
+ ob GRU mit kappa>=6 UEBERHAUPT ein Treib-Defizit D zeigt [F18d-Luecke schliessen])
+gru seed 0: kappa=3.64 (A) | ben0 -0.120 ben.5 -0.131 | D=-0.011
+gru seed 1: kappa=3.37 (A) | ben0 -0.129 ben.5 -0.153 | D=-0.024
+
+--- (b) ueberlebt das Gesetz echtes Training? designed + 300 Steps ---
+   kap      ben       T0      Kov
+  9.33   +0.347   -0.275   +1.853
+  9.47   +0.031   -0.005   +1.844
+ 11.40   -0.039   +0.076   +1.839
+ 11.27   +0.335   -0.095   +1.842
+ 10.53   +0.297   +0.044   +1.842
+ 13.20   +0.010   +0.105   +1.866
+ 11.47   +0.513   +0.237   +1.903
+ 13.17   +0.361   +0.104   +1.853
+ 14.88   +0.155   -0.014   +1.919
+nach Training: T0 |err| 0.250 | Kovarianz |err| 1.639
+
+Lesart: Q2/Q3 unter 0.10/85% => GESETZ GESCHLOSSEN als Kovarianz-
+Iteration (fit-frei ausser Fenstlaenge K). GRU-Zeilen zeigen, ob
+Regime-B-Defizit auf getriebener Praxisarchitektur existiert.
+=== FERTIG ===
