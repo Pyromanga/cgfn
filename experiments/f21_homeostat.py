@@ -1,4 +1,10 @@
 """
+LITERATUR-UPDATE (2026-10-14): ICML-2025 "Lyapunov Learning at the Onset
+of Chaos" regularisiert lambda -> 0 (Edge of Chaos). Unsere Evidenz
+(F12: MC-Optimum bei ben ~ -0.33; F20b: kein Pull zur Kante) sagt:
+subkritisch. NEUER ARM C0: Homeostat mit Target 0 (= ICML-These)
+gegen Arm C mit Target -0.3 (= unsere Ressourcen-These). Wer auf MC
+und Transfer gewinnt, gewinnt die Designfrage.
 F21 — DER HOMEOSTAT: Ein RNN, das seine eigene Stabilitaetslage
 waehrend des Trainings aktiv haelt. (Erster BAU-Vorstoss des Projekts.)
 
@@ -59,7 +65,7 @@ def kappa_penalty(model):
     return torch.nn.functional.relu(kappa - 2.0).pow(2)
 
 
-def train_arm(arm, task, steps, seed, lr=2e-3, ben_every=50):
+def train_arm(arm, task, steps, seed, lr=2e-3, ben_every=50, target=BEN_TARGET):
     torch.manual_seed(seed)
     m = ContinuousRNN(input_dim=1, task_dim=0, hidden_dim=32, tau=1.0)
     opt = torch.optim.Adam(m.parameters(), lr=lr)
@@ -73,11 +79,11 @@ def train_arm(arm, task, steps, seed, lr=2e-3, ben_every=50):
         loss = lossfn(out, y)
         if arm == "B":
             loss = loss + PENALTY_W * kappa_penalty(m)
-        if arm == "C" and (step % ben_every == 0):
+        if arm in ("C", "C0") and (step % ben_every == 0):
             # Homeostat: getriebenen Benettin messen, Penalty auf Abstand
             # zum Ziel als konstanter Zusatz-Gradient ueber den Block
             ben_now = benettin_ftle_max(m, xdr)
-            loss = loss + PENALTY_W * (ben_now - BEN_TARGET) ** 2
+            loss = loss + PENALTY_W * (ben_now - target) ** 2
         opt.zero_grad(); loss.backward(); opt.step()
         if (step + 1) % 50 == 0:
             hist.append(ben_now)
@@ -96,7 +102,7 @@ def main():
 
     lines = []
     lines.append("=" * 110)
-    lines.append("F21 DER HOMEOSTAT: RNN mit eigenem Stabilitaets-Regelkreis vs baseline vs kappa-cap")
+    lines.append("F21 DER HOMEOSTAT: Reglerkreis vs baseline vs kappa-cap vs KANTEN-Target C0 (ICML-These)")
     lines.append(f"BEN_TARGET={BEN_TARGET} PENALTY_W={PENALTY_W} seeds={seeds} steps={args.steps}")
     lines.append("=" * 110)
 
@@ -105,9 +111,10 @@ def main():
         lines.append(f"########## Task: {task} ##########")
         lines.append(f"{'arm':>6s} {'seed':>4s} {'loss_end':>9s} {'ben_end':>8s} {'MC_nach':>8s} {'ben_min':>8s} {'ben_max':>8s}")
         agg = {}
-        for arm in ("A", "B", "C"):
+        for arm in ("A", "B", "C", "C0"):
             for seed in seeds:
-                m, hist, lh = train_arm(arm, task, args.steps, seed)
+                tgt = 0.0 if arm == "C0" else BEN_TARGET
+                m, hist, lh = train_arm(arm, task, args.steps, seed, target=tgt)
                 xdr = drive_input(4, 48, 0.5)
                 ben_end = benettin_ftle_max(m, xdr)
                 torch.manual_seed(seed + 9000)
@@ -140,7 +147,7 @@ def main():
             lines.append(f"{arm:>6s} {seed:4d} {mc:9.2f}")
             agg_t.setdefault(arm, []).append(mc)
     lines.append("")
-    for arm in ("A", "B", "C"):
+    for arm in ("A", "B", "C", "C0"):
         v = agg_t[arm]
         lines.append(f"Arm {arm}: MC nach Transfer {sum(v)/len(v):.2f}")
     lines.append("")
