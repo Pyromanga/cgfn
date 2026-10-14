@@ -1,0 +1,57 @@
+name: cgfn-frontier (F20b)
+
+# F20b — Statistik-Haertung: Endpunkte vs Ressourcen-Optimum.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/f20b"
+  schedule:
+    - cron: "30 10 * * 6"
+
+jobs:
+  frontier-f20b:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Unit tests
+        run: |
+          set -o pipefail
+          python -m pytest -q 2>&1 | tee results/FINAL_PYTEST_f20b.log
+      - name: Run F20b statistical hardening
+        run: |
+          set -o pipefail
+          python experiments/f20b_edge.py \
+            --out results/f20b_edge_results.txt 2>&1 | tee results/f20b_run.log
+      - name: Commit results and logs to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: F20b-Haertung ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
+            git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontier-f20b-results
+          path: results/
+          retention-days: 30
