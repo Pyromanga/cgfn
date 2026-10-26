@@ -41,6 +41,8 @@ sequentielle Tasks, Messung der FTLE-Drift pro Task, Korrelation mit Loss-Einbru
 Ist der Sweet-Spot auch unter Eingangs-Rauschen / Distribution-Shift optimal? (Anschluss an `tau_robustness_results.txt`, aber mit systematischem Noise-Sweep.)
 Design: Training noisy (additives Gauß auf Input, sigma-Sweep), Evaluation clean — misst, ob tau*(min clean loss) mit sigma driftet (FTLE-Kalibrierung überträgt sich oder nicht).
 
+> **Paper-Radar 2026-10-26:** [arXiv:2610.31575](https://arxiv.org/abs/2610.31575) (Mato, Rigatuso, Torroba — Large-N-Theorie randomer RNNs mit zeitlich KORRELIERTEM Rauschen): Verlust lokaler linearer Stabilität und Chaos-Onset (λmax>0) sind zwei GETRENNTE Schwellen mit Zwischenregime (lokal instabil, asymptotisch stabil); endliches Rauschen kappt die tau_corr-Divergenz an der Kante (tau_corr,max ∝ 1/√D0). → F4-Erweiterung: Noise-Sweep zusaetzlich mit farbigem (OU-)Rauschen testen — die sigma-Invarianz von tau* koennte fuer KORRELIERTES Rauschen brechen (neue Hypothese). Stuetzt zudem F11/F7: "lineare Kante ≠ getriebene Lyapunov-Kante" hat jetzt ein theoretisches Pendant in der Large-N-Literatur.
+
 ### F5 — Von binary toy tasks zu kontinuierlichen Tasks  *(implementiert: `src/cgfn/continuous.py` (sinus_memory/lorenz/ou_noise), `experiments/f5_continuous.py`, Workflow s.o.)*
 Alle aktuellen Tasks sind bitbasiert. Kontinuierliche Sequenzen (Sinus-Memory, Lorenz-Vorhersage, Ornstein-Uhlenbeck — MSE statt BCE) — bleibt der Sweet Spot erhalten?
 Auswertung pro Task: tau*(min loss) vs. tau*(min |FTLE|), referenziert gegen den binary-Befund (Sweet-Spot mittleres tau, kritisch ab tau≈1).
