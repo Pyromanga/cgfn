@@ -1,135 +1,463 @@
 {
-  "n_positions": 4629,
+  "n_positions": 3809,
   "basin_sizes": {
-    "white": 1510,
-    "draw": 2594,
-    "black": 525
+    "white": 1246,
+    "draw": 2081,
+    "black": 482
   },
-  "coherence_knn_accuracy": 0.684597105206308,
-  "topo_prediction_accuracy": 0.684597105206308,
-  "baseline_depth1_accuracy": 0.9937351479801253,
+  "coherence_knn_accuracy": 0.6776056707797322,
+  "topo_prediction_accuracy": 0.6776056707797322,
+  "baseline_depth1_accuracy": 0.9936991336308743,
   "geodesic_start_to_basins": {
-    "white": 1.2432512795108537,
-    "draw": 0.7816622787316096,
-    "black": 1.0460501376645905
+    "white": 0.936725003749467,
+    "draw": 0.6970355546040168,
+    "black": 1.5954965528352445
   },
   "bootstrap_geodesic_test": {
     "draw_minus_white": {
-      "mean": -0.4612350416187788,
+      "mean": -0.2397779124052388,
       "ci95": [
-        -0.49132732271207047,
-        -0.4315042650926968
+        -0.2728321656781542,
+        -0.2053239522366733
       ],
       "p_one_sided_draw_closer": 0.0
     },
     "draw_minus_black": {
-      "mean": -0.26338280212189885,
+      "mean": -0.8977008684850052,
       "ci95": [
-        -0.3135242161098323,
-        -0.2152105820756326
+        -0.9604872002507994,
+        -0.8366336463924502
       ],
       "p_one_sided_draw_closer": 0.0
     }
   },
-  "n_contradictions": 401,
+  "n_contradictions": 330,
   "dynamics": {
-    "n_trajectories_steps": 4224,
+    "n_trajectories_steps": 3477,
     "drift": {
-      "n_steps": 3985,
-      "drift_alignment_cos_mean": 0.0017523467540740967,
+      "n_steps": 3292,
+      "drift_alignment_cos_mean": -0.001639162772335112,
       "drift_alignment_ci95": [
-        -0.005361796030774712,
-        0.010129073285497725
+        -0.010253084381110967,
+        0.00747218432370573
       ],
-      "frac_downhill": 0.5021329987452948
+      "frac_downhill": 0.49362089914945323
     },
     "draw_cause": {
       "white_wins": {
-        "n_games": 176,
-        "frac_white_was_better": 0.8920454545454546,
-        "frac_black_was_better": 0.19318181818181818,
-        "frac_left_draw_basin": 0.9772727272727273
+        "n_games": 144,
+        "frac_white_was_better": 0.8888888888888888,
+        "frac_black_was_better": 0.2222222222222222,
+        "frac_left_draw_basin": 0.9791666666666666
       },
       "black_wins": {
-        "n_games": 117,
-        "frac_white_was_better": 0.6410256410256411,
-        "frac_black_was_better": 0.7008547008547008,
-        "frac_left_draw_basin": 0.9230769230769231
+        "n_games": 99,
+        "frac_white_was_better": 0.5757575757575758,
+        "frac_black_was_better": 0.7373737373737373,
+        "frac_left_draw_basin": 0.9494949494949495
       },
       "draws": {
-        "n_games": 111,
-        "frac_white_was_better": 0.7387387387387387,
-        "frac_black_was_better": 0.2972972972972973,
-        "frac_left_draw_basin": 0.8378378378378378
+        "n_games": 88,
+        "frac_white_was_better": 0.6931818181818182,
+        "frac_black_was_better": 0.3409090909090909,
+        "frac_left_draw_basin": 0.7954545454545454
       },
       "draw_classification": {
-        "n_draws": 111,
-        "quiet_draws_pct": 16.216216216216218,
-        "white_squandered_pct": 73.87387387387388,
-        "black_squandered_pct": 29.72972972972973,
+        "n_draws": 88,
+        "quiet_draws_pct": 20.454545454545457,
+        "white_squandered_pct": 69.31818181818183,
+        "black_squandered_pct": 34.090909090909086,
         "note": "quiet = nie aus dem Remis-Becken hinausgekommen ( sampled plies); squandered = Vorsprung >= Becken-Schwelle erreicht, Partie endete 1/2-1/2"
       },
       "white_edge_conversion": {
-        "n_games_with_white_edge": 314,
-        "pct_won": 50.0,
-        "pct_draw": 26.11464968152866,
-        "pct_lost": 23.88535031847134
+        "n_games_with_white_edge": 246,
+        "pct_won": 52.03252032520326,
+        "pct_draw": 24.796747967479675,
+        "pct_lost": 23.170731707317074
       },
-      "wp_swing_mean_elo_lt2400": 0.22152154381885544,
-      "wp_swing_mean_elo_2400_2600": 0.19451903901116607
+      "wp_swing_mean_elo_lt2400": 0.22215231268647986,
+      "wp_swing_mean_elo_2400_2600": 0.1922278492533356
     },
     "tilt_examples": [
       {
         "fen": "r1b2rk1/pp2q3/2n1p1pp/6N1/2Bp1n1Q/8/PPP3PP/R2N1RK1 w - - 0 21",
         "ply": 40,
-        "d_wp": -0.5214449578598686
-      },
-      {
-        "fen": "r4rk1/ppp1qpp1/3b3p/8/3P2N1/2P5/PPB2P2/R1BQ2K1 w - - 3 23",
-        "ply": 44,
-        "d_wp": -0.4648339236629332
+        "d_wp": -0.4993668437695776
       },
       {
         "fen": "2k2b1r/ppp4p/2q1bp2/8/3rp2N/8/PPP2QPP/R1B2RK1 w - - 0 15",
         "ply": 28,
-        "d_wp": 0.42354731442140714
+        "d_wp": 0.46535835377406426
       },
       {
         "fen": "r1b1qrk1/4nppp/p1nb4/1p2p3/2ppP2N/P4QN1/BPPP1PPP/R1B2RK1 w - - 0 13",
         "ply": 24,
-        "d_wp": 0.41816595112490407
+        "d_wp": 0.4056736216639455
       },
       {
-        "fen": "2rkr3/2pn1pbp/p2p2p1/1p1P4/3N4/1BP2PP1/PP5P/3RK2R w K - 4 23",
-        "ply": 44,
-        "d_wp": -0.4113895273990592
-      },
-      {
-        "fen": "2rk3r/2p2pbp/p2p1np1/1p1P4/B7/2P2PP1/PP2N2P/3RK2R w K - 0 21",
-        "ply": 40,
-        "d_wp": 0.40862825754020304
+        "fen": "rn1q1rk1/1b1p2p1/p3pbQ1/4P3/8/1Bp1B3/PP4PP/R4R1K w - - 0 19",
+        "ply": 36,
+        "d_wp": -0.3979402039992336
       },
       {
         "fen": "r1bq1rk1/pp2npbp/4p1p1/2p5/3nPP1Q/2N2N2/PPP1B1PP/R1B2RK1 w - - 1 11",
         "ply": 20,
-        "d_wp": -0.3966484989171279
+        "d_wp": -0.387178249368333
       },
       {
-        "fen": "r1b1qr1k/pppn2b1/2n4p/4p1p1/2B3pP/2P1P1B1/PPQN1PP1/2KR3R w - - 0 17",
-        "ply": 32,
-        "d_wp": 0.3945768540296319
-      },
-      {
-        "fen": "r2qk2r/p2n1p2/1p1pp1p1/2P1n1Pp/2B1bN1P/2P1B3/P1P1QP2/R3K2R w KQkq - 0 15",
-        "ply": 28,
-        "d_wp": 0.3935059977535866
+        "fen": "r5kr/pppb4/8/3pn2B/8/8/PPP2PP1/2KR3R w - - 0 21",
+        "ply": 40,
+        "d_wp": -0.38101125817114573
       },
       {
         "fen": "2r4r/1bqk1p1p/p2p1b2/8/5P2/1P1R4/1KP1QB1P/3R4 w - - 0 23",
         "ply": 44,
-        "d_wp": 0.3785386060026301
+        "d_wp": 0.37317214617494077
+      },
+      {
+        "fen": "2r4r/1bqk1p1p/p2p1b2/8/5P2/1P1R4/1KP1QB1P/3R4 w - - 0 23",
+        "ply": 44,
+        "d_wp": 0.37290277920709647
+      },
+      {
+        "fen": "r4rk1/ppp1qpp1/3b3p/8/3P2N1/2P5/PPB2P2/R1BQ2K1 w - - 3 23",
+        "ply": 44,
+        "d_wp": -0.37215247207771224
+      },
+      {
+        "fen": "r2qk2r/p2n1p2/1p1pp1p1/2P1n1Pp/2B1bN1P/2P1B3/P1P1QP2/R3K2R w KQkq - 0 15",
+        "ply": 28,
+        "d_wp": 0.3394854592976383
       }
     ]
+  },
+  "openings": {
+    "n_games": 331,
+    "n_draws": 88,
+    "n_quiet_draws": 18,
+    "quiet_draw_games": [
+      {
+        "game_id": 7,
+        "eco": "B32",
+        "opening": "Sicilian Defense: L\u00f6wenthal Variation",
+        "first_move": "e4",
+        "elo_min": 2457,
+        "n_sampled": 7,
+        "max_wp": 0.5477213400816676,
+        "min_wp": 0.511044443209752,
+        "fen_first": "r1bqkbnr/pp1ppppp/2n5/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        "fen_last": "r3nrk1/pp1q1ppp/2np4/3bp3/2P1P3/3BQP2/PP4PP/RN3RK1 w - - 0 15"
+      },
+      {
+        "game_id": 17,
+        "eco": "C01",
+        "opening": "French Defense: Exchange Variation",
+        "first_move": "e4",
+        "elo_min": 2349,
+        "n_sampled": 12,
+        "max_wp": 0.5340066578563346,
+        "min_wp": 0.47884068475933794,
+        "fen_first": "rnbqkbnr/ppp2ppp/4p3/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3",
+        "fen_last": "1b4k1/pp4pp/2p1qpn1/3p3Q/3P4/2P3PP/PP1B1PN1/6K1 w - - 5 25"
+      },
+      {
+        "game_id": 25,
+        "eco": "D02",
+        "opening": "Queen's Pawn Game: Symmetrical Variation",
+        "first_move": "d4",
+        "elo_min": 2408,
+        "n_sampled": 12,
+        "max_wp": 0.5358387144707508,
+        "min_wp": 0.4659933421436654,
+        "fen_first": "rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 0 3",
+        "fen_last": "1r1r2k1/R4ppp/4p3/1pp1P3/p1p5/5KP1/PP2PP1P/3R4 w - - 2 25"
+      },
+      {
+        "game_id": 50,
+        "eco": "B32",
+        "opening": "Sicilian Defense: L\u00f6wenthal Variation",
+        "first_move": "e4",
+        "elo_min": 2457,
+        "n_sampled": 7,
+        "max_wp": 0.5449835205954683,
+        "min_wp": 0.5092041601288086,
+        "fen_first": "r1bqkbnr/pp1ppppp/2n5/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        "fen_last": "r3nrk1/pp1q1ppp/2np4/3bp3/2P1P3/3BQP2/PP4PP/RN3RK1 w - - 0 15"
+      },
+      {
+        "game_id": 88,
+        "eco": "C02",
+        "opening": "French Defense: Advance Variation, Extended Bishop Swap",
+        "first_move": "e4",
+        "elo_min": 2291,
+        "n_sampled": 12,
+        "max_wp": 0.5385849714102531,
+        "min_wp": 0.46416128552924907,
+        "fen_first": "rnbqkbnr/ppp2ppp/4p3/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3",
+        "fen_last": "6k1/1pq2pp1/p3p2p/n2pP3/3P2P1/5N2/PP1Q1P1P/6K1 w - - 0 25"
+      },
+      {
+        "game_id": 96,
+        "eco": "A45",
+        "opening": "Indian Defense: Accelerated London System",
+        "first_move": "d4",
+        "elo_min": 2277,
+        "n_sampled": 9,
+        "max_wp": 0.5486333135073832,
+        "min_wp": 0.5128844269647328,
+        "fen_first": "rnbqkb1r/pppppp1p/5np1/8/3P1B2/8/PPP1PPPP/RN1QKBNR w KQkq - 0 3",
+        "fen_last": "r4r2/pp3pkp/4p3/3p4/3P4/1PP2R2/1P4PP/R5K1 w - - 0 19"
+      },
+      {
+        "game_id": 137,
+        "eco": "C48",
+        "opening": "Four Knights Game: Spanish Variation, Rubinstein Variation",
+        "first_move": "e4",
+        "elo_min": 2284,
+        "n_sampled": 12,
+        "max_wp": 0.5404145195219514,
+        "min_wp": 0.48987566402915633,
+        "fen_first": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        "fen_last": "5rk1/1pq1b1p1/pN1p2Qp/P1pPp3/5r2/R6P/1PP2PP1/3R2K1 w - - 3 25"
+      },
+      {
+        "game_id": 201,
+        "eco": "A48",
+        "opening": "Queen's Pawn Game: Barry Attack",
+        "first_move": "d4",
+        "elo_min": 2434,
+        "n_sampled": 6,
+        "max_wp": 0.5248335896523929,
+        "min_wp": 0.45775702105393146,
+        "fen_first": "rnbqkb1r/pppppp1p/5np1/8/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 0 3",
+        "fen_last": "1rr3k1/3qppbp/6p1/2pp4/1p1Pn3/4PN2/PPP1BPPP/R2Q1RK1 w - - 0 13"
+      },
+      {
+        "game_id": 214,
+        "eco": "C45",
+        "opening": "Scotch Game: Schmidt Variation",
+        "first_move": "e4",
+        "elo_min": 2385,
+        "n_sampled": 9,
+        "max_wp": 0.5376698043044984,
+        "min_wp": 0.5,
+        "fen_first": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        "fen_last": "r1b2r1k/p3bp2/2pq1n2/6Q1/3p4/2NB4/PPP2PPP/R3R1K1 w - - 7 19"
+      },
+      {
+        "game_id": 220,
+        "eco": "D02",
+        "opening": "Queen's Pawn Game: Symmetrical Variation, Pseudo-Catalan",
+        "first_move": "d4",
+        "elo_min": 2374,
+        "n_sampled": 12,
+        "max_wp": 0.5449835205954683,
+        "min_wp": 0.4696601598181785,
+        "fen_first": "rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 0 3",
+        "fen_last": "1r4k1/5pp1/1p5p/3b4/4B3/P5P1/3r1PKP/RR6 w - - 4 25"
+      },
+      {
+        "game_id": 226,
+        "eco": "E11",
+        "opening": "Bogo-Indian Defense: Exchange Variation",
+        "first_move": "d4",
+        "elo_min": 2244,
+        "n_sampled": 12,
+        "max_wp": 0.5294226081270875,
+        "min_wp": 0.5027615319200139,
+        "fen_first": "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3",
+        "fen_last": "4b3/4kp2/p1n1p2p/1pq3p1/4B3/P3PN1P/1P1Q1PP1/6K1 w - - 0 25"
+      },
+      {
+        "game_id": 231,
+        "eco": "D00",
+        "opening": "Queen's Pawn Game: Accelerated London System, Steinitz Countergambit",
+        "first_move": "d4",
+        "elo_min": 2430,
+        "n_sampled": 12,
+        "max_wp": 0.5349228039541688,
+        "min_wp": 0.46416128552924907,
+        "fen_first": "rnbqkbnr/pp2pppp/8/2pp4/3P1B2/8/PPP1PPPP/RN1QKBNR w KQkq - 0 3",
+        "fen_last": "2r3k1/4bpp1/4pn1p/rq1p4/1PpP4/2P1PPBP/1P1N2P1/2Q2RK1 w - - 0 25"
+      },
+      {
+        "game_id": 277,
+        "eco": "B20",
+        "opening": "Sicilian Defense: Mengarini Variation",
+        "first_move": "e4",
+        "elo_min": 2241,
+        "n_sampled": 12,
+        "max_wp": 0.5138042910293155,
+        "min_wp": 0.45775702105393146,
+        "fen_first": "rnbqkbnr/pp2pppp/3p4/2p5/4P3/P7/1PPP1PPP/RNBQKBNR w KQkq - 0 3",
+        "fen_last": "1r1q1r1k/5ppp/1pb1pbn1/p1p1p3/P1B1P3/2NPB1Q1/1PP2PPP/2R2RK1 w - - 3 25"
+      },
+      {
+        "game_id": 298,
+        "eco": "D37",
+        "opening": "Queen's Gambit Declined: Three Knights, Vienna Variation",
+        "first_move": "d4",
+        "elo_min": 2234,
+        "n_sampled": 12,
+        "max_wp": 0.5349228039541688,
+        "min_wp": 0.47975962678773254,
+        "fen_first": "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3",
+        "fen_last": "1q1b2k1/3b1ppp/4p3/p2pP3/Pp1B1P2/1P2Q1P1/4P1BP/2r3K1 w - - 0 25"
+      },
+      {
+        "game_id": 310,
+        "eco": "C47",
+        "opening": "Four Knights Game: Scotch Variation Accepted",
+        "first_move": "e4",
+        "elo_min": 2255,
+        "n_sampled": 8,
+        "max_wp": 0.5431567852197504,
+        "min_wp": 0.47975962678773254,
+        "fen_first": "rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        "fen_last": "r2q1rk1/p1p2ppp/5n2/7b/1bB5/7P/PP2NPP1/R1BQR1K1 w - - 7 17"
+      },
+      {
+        "game_id": 316,
+        "eco": "C42",
+        "opening": "Petrov's Defense: Karklins-Martinovsky Variation",
+        "first_move": "e4",
+        "elo_min": 2279,
+        "n_sampled": 12,
+        "max_wp": 0.5349228039541688,
+        "min_wp": 0.46874313267512907,
+        "fen_first": "rnbqkb1r/pppp1ppp/5n2/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        "fen_last": "2rk4/2pn1p1p/p2p2p1/1p1Pr3/3R4/1BP2PP1/PP3K1P/7R w - - 1 25"
+      },
+      {
+        "game_id": 326,
+        "eco": "D05",
+        "opening": "Queen's Pawn Game: Colle System",
+        "first_move": "d4",
+        "elo_min": 2230,
+        "n_sampled": 10,
+        "max_wp": 0.5202403732122675,
+        "min_wp": 0.4843562675785791,
+        "fen_first": "rnbqkb1r/ppp1pppp/5n2/3p4/3P4/5N2/PPP1PPPP/RNBQKB1R w KQkq - 2 3",
+        "fen_last": "5rk1/2q2pp1/pp2pn1p/2b5/2P4Q/1P3N2/PB3PPP/3rR1K1 w - - 0 21"
+      },
+      {
+        "game_id": 330,
+        "eco": "C54",
+        "opening": "Italian Game: Classical Variation",
+        "first_move": "e4",
+        "elo_min": 2255,
+        "n_sampled": 12,
+        "max_wp": 0.545896437602999,
+        "min_wp": 0.5101243359708437,
+        "fen_first": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+        "fen_last": "r5k1/1qb2pp1/2p1bnnp/4p3/1P2P3/4NN1P/2QB1PP1/4RBK1 w - - 5 25"
+      }
+    ],
+    "n_unique_eco": 107,
+    "n_unique_openings": 171,
+    "n_unique_first_moves": 8,
+    "by_first_move": [
+      {
+        "first_move": "e4",
+        "n_games": 167,
+        "pct_draws": 26.94610778443114,
+        "n_draws": 45,
+        "n_quiet": 10,
+        "quiet_pct_of_draws": 22.22222222222222
+      },
+      {
+        "first_move": "d4",
+        "n_games": 119,
+        "pct_draws": 28.57142857142857,
+        "n_draws": 34,
+        "n_quiet": 8,
+        "quiet_pct_of_draws": 23.52941176470588
+      },
+      {
+        "first_move": "Nf3",
+        "n_games": 17,
+        "pct_draws": 5.88235294117647,
+        "n_draws": 1,
+        "n_quiet": 0,
+        "quiet_pct_of_draws": 0.0
+      },
+      {
+        "first_move": "c4",
+        "n_games": 14,
+        "pct_draws": 35.714285714285715,
+        "n_draws": 5,
+        "n_quiet": 0,
+        "quiet_pct_of_draws": 0.0
+      },
+      {
+        "first_move": "b3",
+        "n_games": 8,
+        "pct_draws": 25.0,
+        "n_draws": 2,
+        "n_quiet": 0,
+        "quiet_pct_of_draws": 0.0
+      },
+      {
+        "first_move": "g3",
+        "n_games": 3,
+        "pct_draws": 0.0,
+        "n_draws": 0,
+        "n_quiet": 0,
+        "quiet_pct_of_draws": null
+      },
+      {
+        "first_move": "f4",
+        "n_games": 2,
+        "pct_draws": 50.0,
+        "n_draws": 1,
+        "n_quiet": 0,
+        "quiet_pct_of_draws": 0.0
+      },
+      {
+        "first_move": "b4",
+        "n_games": 1,
+        "pct_draws": 0.0,
+        "n_draws": 0,
+        "n_quiet": 0,
+        "quiet_pct_of_draws": null
+      }
+    ],
+    "by_eco_group": [
+      {
+        "eco_group": "B",
+        "n_games": 116,
+        "n_draws": 26,
+        "quiet_pct_of_draws": 11.538461538461538
+      },
+      {
+        "eco_group": "A",
+        "n_games": 82,
+        "n_draws": 20,
+        "quiet_pct_of_draws": 10.0
+      },
+      {
+        "eco_group": "C",
+        "n_games": 55,
+        "n_draws": 19,
+        "quiet_pct_of_draws": 36.84210526315789
+      },
+      {
+        "eco_group": "D",
+        "n_games": 50,
+        "n_draws": 13,
+        "quiet_pct_of_draws": 38.46153846153847
+      },
+      {
+        "eco_group": "E",
+        "n_games": 28,
+        "n_draws": 10,
+        "quiet_pct_of_draws": 10.0
+      }
+    ],
+    "quiet_pct_excl_e4": 18.6046511627907,
+    "quiet_pct_excl_d4": 18.51851851851852,
+    "quiet_pct_excl_Nf3": 20.689655172413794,
+    "quiet_pct_excl_c4": 21.686746987951807
   },
   "engine_available": true
 }
