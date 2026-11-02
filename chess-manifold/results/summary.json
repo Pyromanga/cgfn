@@ -9,39 +9,39 @@
   "topo_prediction_accuracy": 0.6948268669169796,
   "baseline_depth1_accuracy": 0.9945765540258656,
   "geodesic_start_to_basins": {
-    "white": 1.0204024469662198,
-    "draw": 0.6683922846448628,
-    "black": 1.250598515682252
+    "white": 1.031726610922265,
+    "draw": 0.6636162658561123,
+    "black": 1.4160607477930267
   },
   "bootstrap_geodesic_test": {
     "draw_minus_white": {
-      "mean": -0.35212434827037475,
+      "mean": -0.36858942833421976,
       "ci95": [
-        -0.3816467028309773,
-        -0.32434368258263335
+        -0.4026864039063234,
+        -0.3351509424803566
       ],
       "p_one_sided_draw_closer": 0.0
     },
     "draw_minus_black": {
-      "mean": -0.5822711272406212,
+      "mean": -0.7524435677345148,
       "ci95": [
-        -0.6359399080215716,
-        -0.5307979634968765
+        -0.8140762466256831,
+        -0.6934044069491424
       ],
       "p_one_sided_draw_closer": 0.0
     }
   },
-  "n_contradictions": 402,
+  "n_contradictions": 406,
   "dynamics": {
     "n_trajectories_steps": 4375,
     "drift": {
       "n_steps": 4102,
-      "drift_alignment_cos_mean": 0.0007356346468441188,
+      "drift_alignment_cos_mean": 0.006837980821728706,
       "drift_alignment_ci95": [
-        -0.006627483083866536,
-        0.00861678721848875
+        -0.0008212764631025492,
+        0.013907030341215426
       ],
-      "frac_downhill": 0.499756216479766
+      "frac_downhill": 0.5119453924914675
     },
     "draw_cause": {
       "white_wins": {
@@ -583,7 +583,34 @@
     "quiet_pct_excl_e4": 16.363636363636363,
     "quiet_pct_excl_d4": 15.942028985507244,
     "quiet_pct_excl_Nf3": 18.181818181818183,
-    "quiet_pct_excl_c4": 18.867924528301888
+    "quiet_pct_excl_c4": 18.867924528301888,
+    "perfection_gradient": [
+      {
+        "elo_2200_2400": {
+          "n_games": 352,
+          "draw_rate": 25.28409090909091,
+          "quiet_pct_of_draws": 14.606741573033707,
+          "mean_wp_swing": 0.22665807984041517,
+          "frac_games_with_white_edge": 78.97727272727273,
+          "mean_game_plies": 87.32670454545455
+        }
+      },
+      {
+        "elo_2400_2600": {
+          "n_games": 66,
+          "draw_rate": 34.84848484848485,
+          "quiet_pct_of_draws": 30.434782608695656,
+          "mean_wp_swing": 0.1960592929567285,
+          "frac_games_with_white_edge": 68.18181818181817,
+          "mean_game_plies": 97.53030303030303
+        }
+      }
+    ],
+    "perfection_extrapolation": {
+      "slope_swing_per_elo": -0.00015299393441843388,
+      "elo_at_zero_swing": 3781.4840908693286,
+      "note": "wp-Swing sinkt linear mit Elo; Extrapolation auf Swing=0 gibt die 'perfekte Spielstaerke', bei der die Partie das Remis-Becken nie verlaesst (Heuristik, kleine n)"
+    }
   },
   "engine_available": true
 }

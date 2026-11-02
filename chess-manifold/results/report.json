@@ -7,175 +7,175 @@
   },
   "persistent_homology": {
     "white": {
-      "ph_dim0_num_finite": 1147,
-      "ph_dim0_total_persistence": 172.1130345574415,
-      "ph_dim0_max_persistence": 0.5928232073783875,
-      "ph_dim1_num_finite": 1284,
-      "ph_dim1_total_persistence": 12.916201457381248,
-      "ph_dim1_max_persistence": 0.09183472394943237,
+      "ph_dim0_num_finite": 1149,
+      "ph_dim0_total_persistence": 177.33301408088525,
+      "ph_dim0_max_persistence": 0.4328831136226654,
+      "ph_dim1_num_finite": 1296,
+      "ph_dim1_total_persistence": 13.443988725543022,
+      "ph_dim1_max_persistence": 0.1323797106742859,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 33,
+          "betti0": 36,
           "betti1": 9,
-          "h1_total_persistence": 12.916201457381248
+          "h1_total_persistence": 13.443988725543022
         },
         {
           "radius": 0.5,
-          "betti0": 3,
-          "betti1": 2,
-          "h1_total_persistence": 12.916201457381248
+          "betti0": 1,
+          "betti1": 0,
+          "h1_total_persistence": 13.443988725543022
         },
         {
           "radius": 0.75,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 12.916201457381248
+          "h1_total_persistence": 13.443988725543022
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 12.916201457381248
+          "h1_total_persistence": 13.443988725543022
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 12.916201457381248
+          "h1_total_persistence": 13.443988725543022
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 12.916201457381248
+          "h1_total_persistence": 13.443988725543022
         }
       ]
     },
     "draw": {
-      "ph_dim0_num_finite": 1023,
-      "ph_dim0_total_persistence": 134.1698154071526,
-      "ph_dim0_max_persistence": 0.5210530757904053,
-      "ph_dim1_num_finite": 1105,
-      "ph_dim1_total_persistence": 10.645242482423782,
-      "ph_dim1_max_persistence": 0.042220696806907654,
+      "ph_dim0_num_finite": 1022,
+      "ph_dim0_total_persistence": 139.35797511683924,
+      "ph_dim0_max_persistence": 0.3358080983161926,
+      "ph_dim1_num_finite": 1102,
+      "ph_dim1_total_persistence": 10.971914425492287,
+      "ph_dim1_max_persistence": 0.05286967754364014,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 11,
-          "betti1": 2,
-          "h1_total_persistence": 10.645242482423782
+          "betti0": 10,
+          "betti1": 3,
+          "h1_total_persistence": 10.971914425492287
         },
         {
           "radius": 0.5,
-          "betti0": 2,
+          "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 10.645242482423782
+          "h1_total_persistence": 10.971914425492287
         },
         {
           "radius": 0.75,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 10.645242482423782
+          "h1_total_persistence": 10.971914425492287
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 10.645242482423782
+          "h1_total_persistence": 10.971914425492287
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 10.645242482423782
+          "h1_total_persistence": 10.971914425492287
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 10.645242482423782
+          "h1_total_persistence": 10.971914425492287
         }
       ]
     },
     "black": {
-      "ph_dim0_num_finite": 549,
-      "ph_dim0_total_persistence": 85.7121070834132,
-      "ph_dim0_max_persistence": 0.6357238292694092,
+      "ph_dim0_num_finite": 546,
+      "ph_dim0_total_persistence": 88.54019685834646,
+      "ph_dim0_max_persistence": 0.47092118859291077,
       "ph_dim1_num_finite": 447,
-      "ph_dim1_total_persistence": 4.506381683051586,
-      "ph_dim1_max_persistence": 0.07739144563674927,
+      "ph_dim1_total_persistence": 4.498612731695175,
+      "ph_dim1_max_persistence": 0.04453510046005249,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 15,
-          "betti1": 4,
-          "h1_total_persistence": 4.506381683051586
+          "betti0": 17,
+          "betti1": 6,
+          "h1_total_persistence": 4.498612731695175
         },
         {
           "radius": 0.5,
-          "betti0": 4,
-          "betti1": 0,
-          "h1_total_persistence": 4.506381683051586
+          "betti0": 1,
+          "betti1": 1,
+          "h1_total_persistence": 4.498612731695175
         },
         {
           "radius": 0.75,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 4.506381683051586
+          "h1_total_persistence": 4.498612731695175
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 4.506381683051586
+          "h1_total_persistence": 4.498612731695175
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 4.506381683051586
+          "h1_total_persistence": 4.498612731695175
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 4.506381683051586
+          "h1_total_persistence": 4.498612731695175
         }
       ]
     }
   },
   "coherence_knn_accuracy": 0.6948268669169796,
   "geodesic_early_mean_to_basins": {
-    "white": 1.0000979934860186,
-    "draw": 0.7323556238927276,
-    "black": 1.412924712991838
+    "white": 1.0228959074048816,
+    "draw": 0.7672183020825125,
+    "black": 1.5574784526608971
   },
   "geodesic_start_to_basins": {
-    "white": 1.0204024469662198,
-    "draw": 0.6683922846448628,
-    "black": 1.250598515682252
+    "white": 1.031726610922265,
+    "draw": 0.6636162658561123,
+    "black": 1.4160607477930267
   },
   "bootstrap_geodesic_test": {
     "draw_minus_white": {
-      "mean": -0.35212434827037475,
+      "mean": -0.36858942833421976,
       "ci95": [
-        -0.3816467028309773,
-        -0.32434368258263335
+        -0.4026864039063234,
+        -0.3351509424803566
       ],
       "p_one_sided_draw_closer": 0.0
     },
     "draw_minus_black": {
-      "mean": -0.5822711272406212,
+      "mean": -0.7524435677345148,
       "ci95": [
-        -0.6359399080215716,
-        -0.5307979634968765
+        -0.8140762466256831,
+        -0.6934044069491424
       ],
       "p_one_sided_draw_closer": 0.0
     }
   },
   "topo_prediction_accuracy": 0.6948268669169796,
-  "n_contradictions": 402,
+  "n_contradictions": 406,
   "contradiction_examples": [
     {
       "fen": "2r5/pb2q1pk/1p2p2p/8/2BPpRQ1/4P3/PP4PP/6K1 w - - 1 25",
@@ -359,7 +359,7 @@
   "train_info": {
     "train_size": 4315,
     "val_size": 479,
-    "val_supcon_loss": 6.030933856964111
+    "val_supcon_loss": 5.996085166931152
   },
   "config": {
     "source": "lichess",
@@ -407,12 +407,12 @@
     "n_trajectories_steps": 4375,
     "drift": {
       "n_steps": 4102,
-      "drift_alignment_cos_mean": 0.0007356346468441188,
+      "drift_alignment_cos_mean": 0.006837980821728706,
       "drift_alignment_ci95": [
-        -0.006627483083866536,
-        0.00861678721848875
+        -0.0008212764631025492,
+        0.013907030341215426
       ],
-      "frac_downhill": 0.499756216479766
+      "frac_downhill": 0.5119453924914675
     },
     "draw_cause": {
       "white_wins": {
@@ -954,6 +954,33 @@
     "quiet_pct_excl_e4": 16.363636363636363,
     "quiet_pct_excl_d4": 15.942028985507244,
     "quiet_pct_excl_Nf3": 18.181818181818183,
-    "quiet_pct_excl_c4": 18.867924528301888
+    "quiet_pct_excl_c4": 18.867924528301888,
+    "perfection_gradient": [
+      {
+        "elo_2200_2400": {
+          "n_games": 352,
+          "draw_rate": 25.28409090909091,
+          "quiet_pct_of_draws": 14.606741573033707,
+          "mean_wp_swing": 0.22665807984041517,
+          "frac_games_with_white_edge": 78.97727272727273,
+          "mean_game_plies": 87.32670454545455
+        }
+      },
+      {
+        "elo_2400_2600": {
+          "n_games": 66,
+          "draw_rate": 34.84848484848485,
+          "quiet_pct_of_draws": 30.434782608695656,
+          "mean_wp_swing": 0.1960592929567285,
+          "frac_games_with_white_edge": 68.18181818181817,
+          "mean_game_plies": 97.53030303030303
+        }
+      }
+    ],
+    "perfection_extrapolation": {
+      "slope_swing_per_elo": -0.00015299393441843388,
+      "elo_at_zero_swing": 3781.4840908693286,
+      "note": "wp-Swing sinkt linear mit Elo; Extrapolation auf Swing=0 gibt die 'perfekte Spielstaerke', bei der die Partie das Remis-Becken nie verlaesst (Heuristik, kleine n)"
+    }
   }
 }
