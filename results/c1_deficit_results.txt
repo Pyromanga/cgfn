@@ -1,0 +1,32 @@
+C1 — Sekunden-Test der Strukturtheorie (S2: Erzwingen = Zaehlsatz)
+========================================================================
+Tilt-Positionen (Kippkandidaten): n=10, median F=5.50, min=4.00, max=16.00
+Quiet-draw-Positionen:            n=40, median F=4.50, min=0.00, max=13.00
+Trennung (min_tilt - max_quiet):  -9.00
+
+Tilt im Detail (FEN, d_wp, F):
+  d_wp=-0.521  F=  5.00  r1b2rk1/pp2q3/2n1p1pp/6N1/2Bp1n1Q/8/PPP3PP/R2N1RK1 w - - 0 21
+  d_wp=-0.457  F= 16.00  1q5r/4k3/QN1pb2b/1N2pp1p/2rn4/6PP/PP3PB1/R3K2R w KQ - 3 23
+  d_wp=+0.452  F= 11.00  2k2b1r/ppp4p/2q1bp2/8/3rp2N/8/PPP2QPP/R1B2RK1 w - - 0 15
+  d_wp=-0.403  F=  4.00  r1bq1rk1/pp2npbp/4p1p1/2p5/3nPP1Q/2N2N2/PPP1B1PP/R1B2RK1 w - - 1 11
+  d_wp=+0.397  F=  4.00  r1b1qrk1/4nppp/p1nb4/1p2p3/2ppP2N/P4QN1/BPPP1PPP/R1B2RK1 w - - 0 13
+  d_wp=+0.395  F=  6.00  r1b1qr1k/pppn2b1/2n4p/4p1p1/2B3pP/2P1P1B1/PPQN1PP1/2KR3R w - - 0 17
+  d_wp=-0.372  F=  6.00  r4rk1/ppp1qpp1/3b3p/8/3P2N1/2P5/PPB2P2/R1BQ2K1 w - - 3 23
+  d_wp=+0.360  F=  5.00  1rb2rk1/6pq/1p1bpn1p/p2p1P1R/P1pP3N/2P2B2/1PQN1PP1/2KR4 w - - 0 23
+  d_wp=+0.353  F=  4.00  2r4r/1bqk1p1p/p2p1b2/8/5P2/1P1R4/1KP1QB1P/3R4 w - - 0 23
+  d_wp=-0.340  F=  9.00  rn1q1rk1/1b1p2p1/p3pbQ1/4P3/8/1Bp1B3/PP4PP/R4R1K w - - 0 19
+
+Quiet draws im Detail (ECO, first/last, F) — Top 10 nach F:
+  D02      last   F= 13.00
+  B54      last   F= 13.00
+  C01      last   F= 12.00
+  E11      last   F= 12.00
+  C47      last   F= 10.00
+  C47      last   F= 10.00
+  E70      last   F= 10.00
+  B32      last   F=  9.00
+  B32      last   F=  9.00
+  B32      last   F=  9.00
+
+P2 NICHT BESTANDEN: Tilt-Positionen ohne erhoehtes Forcing-Potenzial.
+=> S2 in dieser Form FALSCH — Theorie begraben, Dokumentation in docs/schach_struktur_theorie.md.
