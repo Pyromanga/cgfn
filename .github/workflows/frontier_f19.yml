@@ -47,8 +47,7 @@ jobs:
             if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
             echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
             git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
-            sleep $
-((i * 10))
+            sleep $((i * 10))
           done
           echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
       - name: Upload results

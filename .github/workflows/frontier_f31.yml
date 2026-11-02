@@ -46,8 +46,7 @@ jobs:
           if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
           git commit -m "results: F31-dmft-closure ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
           for i in 1 2 3 4 5; do
-            if git push; then echo 
-"[i] push ok (Versuch $i)"; exit 0; fi
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
             echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
             git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
             sleep $((i * 10))

@@ -47,8 +47,7 @@ jobs:
           # Push-Race-Fix (siehe frontier_f11.yml): parallele Workflows
           # pushen beide nach main — rebase + retry statt rot sterben.
           for i in 1 2 3 4 5; do
-            if git push; then echo "[i] push ok (V
-ersuch $i)"; exit 0; fi
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
             echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
             git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
             sleep $((i * 10))
