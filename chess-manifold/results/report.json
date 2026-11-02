@@ -1,181 +1,181 @@
 {
-  "n_positions": 301,
+  "n_positions": 10159,
   "basin_sizes": {
-    "white": 211,
-    "draw": 37,
-    "black": 53
+    "white": 6588,
+    "draw": 1206,
+    "black": 2365
   },
   "persistent_homology": {
     "white": {
-      "ph_dim0_num_finite": 210,
-      "ph_dim0_total_persistence": 35.71204147860408,
-      "ph_dim0_max_persistence": 0.28918686509132385,
-      "ph_dim1_num_finite": 129,
-      "ph_dim1_total_persistence": 1.7816371321678162,
-      "ph_dim1_max_persistence": 0.048713862895965576,
+      "ph_dim0_num_finite": 1199,
+      "ph_dim0_total_persistence": 142.3354489915073,
+      "ph_dim0_max_persistence": 0.44894635677337646,
+      "ph_dim1_num_finite": 864,
+      "ph_dim1_total_persistence": 7.309021055698395,
+      "ph_dim1_max_persistence": 0.04579603672027588,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 11,
-          "betti1": 12,
-          "h1_total_persistence": 1.7816371321678162
+          "betti0": 12,
+          "betti1": 2,
+          "h1_total_persistence": 7.309021055698395
         },
         {
           "radius": 0.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 1.7816371321678162
+          "h1_total_persistence": 7.309021055698395
         },
         {
           "radius": 0.75,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 1.7816371321678162
+          "h1_total_persistence": 7.309021055698395
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 1.7816371321678162
+          "h1_total_persistence": 7.309021055698395
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 1.7816371321678162
+          "h1_total_persistence": 7.309021055698395
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 1.7816371321678162
+          "h1_total_persistence": 7.309021055698395
         }
       ]
     },
     "draw": {
-      "ph_dim0_num_finite": 36,
-      "ph_dim0_total_persistence": 5.46899139508605,
-      "ph_dim0_max_persistence": 0.3712753355503082,
-      "ph_dim1_num_finite": 12,
-      "ph_dim1_total_persistence": 0.15830786526203156,
-      "ph_dim1_max_persistence": 0.0465494841337204,
+      "ph_dim0_num_finite": 1195,
+      "ph_dim0_total_persistence": 118.98611326469108,
+      "ph_dim0_max_persistence": 0.7045791149139404,
+      "ph_dim1_num_finite": 833,
+      "ph_dim1_total_persistence": 5.780724681913853,
+      "ph_dim1_max_persistence": 0.0339859277009964,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 4,
-          "betti1": 3,
-          "h1_total_persistence": 0.15830786526203156
+          "betti0": 7,
+          "betti1": 0,
+          "h1_total_persistence": 5.780724681913853
         },
         {
           "radius": 0.5,
-          "betti0": 1,
+          "betti0": 2,
           "betti1": 0,
-          "h1_total_persistence": 0.15830786526203156
+          "h1_total_persistence": 5.780724681913853
         },
         {
           "radius": 0.75,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.15830786526203156
+          "h1_total_persistence": 5.780724681913853
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.15830786526203156
+          "h1_total_persistence": 5.780724681913853
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.15830786526203156
+          "h1_total_persistence": 5.780724681913853
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.15830786526203156
+          "h1_total_persistence": 5.780724681913853
         }
       ]
     },
     "black": {
-      "ph_dim0_num_finite": 52,
-      "ph_dim0_total_persistence": 11.075823061168194,
-      "ph_dim0_max_persistence": 0.442719042301178,
-      "ph_dim1_num_finite": 17,
-      "ph_dim1_total_persistence": 0.3877689987421036,
-      "ph_dim1_max_persistence": 0.06255802512168884,
+      "ph_dim0_num_finite": 1198,
+      "ph_dim0_total_persistence": 161.70383546501398,
+      "ph_dim0_max_persistence": 0.4816513955593109,
+      "ph_dim1_num_finite": 902,
+      "ph_dim1_total_persistence": 8.373921476304531,
+      "ph_dim1_max_persistence": 0.05190211534500122,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 17,
-          "betti1": 0,
-          "h1_total_persistence": 0.3877689987421036
+          "betti0": 15,
+          "betti1": 5,
+          "h1_total_persistence": 8.373921476304531
         },
         {
           "radius": 0.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.3877689987421036
+          "h1_total_persistence": 8.373921476304531
         },
         {
           "radius": 0.75,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.3877689987421036
+          "h1_total_persistence": 8.373921476304531
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.3877689987421036
+          "h1_total_persistence": 8.373921476304531
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.3877689987421036
+          "h1_total_persistence": 8.373921476304531
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 0.3877689987421036
+          "h1_total_persistence": 8.373921476304531
         }
       ]
     }
   },
-  "coherence_knn_accuracy": 0.8073089700996677,
+  "coherence_knn_accuracy": 0.8277389506841224,
   "geodesic_early_mean_to_basins": {
-    "white": 0.7818690891475616,
-    "draw": 0.5952307982561555,
-    "black": 0.8926185454906157
+    "white": 1.0481341037519705,
+    "draw": 0.8841791219492621,
+    "black": 1.5552992913186892
   },
   "geodesic_start_to_basins": {
-    "white": 0.9913206497710463,
-    "draw": 0.4129113204575874,
-    "black": 0.9647043559629962
+    "white": 1.119800134209388,
+    "draw": 0.4709960871714339,
+    "black": 1.4723799477404191
   },
   "bootstrap_geodesic_test": {
     "draw_minus_white": {
-      "mean": -0.5767687254475404,
+      "mean": -0.6487116806668876,
       "ci95": [
-        -0.6767879377473186,
-        -0.47137277601712657
+        -0.66492292767079,
+        -0.6308469895840734
       ],
       "p_one_sided_draw_closer": 0.0
     },
     "draw_minus_black": {
-      "mean": -0.5513445479392488,
+      "mean": -1.0016714327130243,
       "ci95": [
-        -0.7073619695936938,
-        -0.3980371363556952
+        -1.0302877528334191,
+        -0.9733859798850306
       ],
       "p_one_sided_draw_closer": 0.0
     }
   },
-  "topo_prediction_accuracy": 0.8073089700996677,
-  "n_contradictions": 72,
+  "topo_prediction_accuracy": 0.8277389506841224,
+  "n_contradictions": 2526,
   "contradiction_examples": [
     {
       "fen": "rnb2bnr/p1qpp1pp/4kp2/1pp5/4P3/5P1P/PPPP1KP1/RNBQ1BNR w - - 5 9",
@@ -209,7 +209,7 @@
       "fen": "rnqk3r/pp5p/3n4/2pP2p1/1P2p3/3BP1pN/2b2P1P/1R1QK2R w K - 0 17",
       "ply": 32,
       "wp_engine": 0.2092866151375503,
-      "topo_prediction": "white",
+      "topo_prediction": "black",
       "true_basin": "black"
     },
     {
@@ -328,7 +328,7 @@
       "fen": "r3kb2/pbp1p2p/3q2rn/1p1P1pp1/1P1n2PP/P3P3/R1QK1P1N/1NB2B1R w q - 0 19",
       "ply": 36,
       "wp_engine": 0.27814961942773136,
-      "topo_prediction": "white",
+      "topo_prediction": "black",
       "true_basin": "black"
     },
     {
@@ -353,16 +353,16 @@
       "true_basin": "white"
     }
   ],
-  "baseline_depth1_accuracy_all": 1.0,
-  "baseline_depth1_accuracy_masked": 1.0,
+  "baseline_depth1_accuracy_all": 0.9974406929815927,
+  "baseline_depth1_accuracy_masked": 0.9974406929815927,
   "engine_available": true,
   "train_info": {
-    "train_size": 271,
-    "val_size": 30,
-    "val_supcon_loss": 3.7897896766662598
+    "train_size": 9144,
+    "val_size": 1015,
+    "val_supcon_loss": 6.298220634460449
   },
   "config": {
-    "n_games": 25,
+    "n_games": 850,
     "plies_per_game": 12,
     "max_game_plies": 160,
     "seed": 42,
@@ -377,13 +377,13 @@
     "wp_black": 0.45,
     "emb_dim": 16,
     "hidden": 256,
-    "epochs": 20,
+    "epochs": 40,
     "batch_size": 256,
     "temperature": 0.07,
     "supcon_bins": 6,
     "lr": 0.001,
     "maxdim": 1,
-    "ph_subsample": 500,
+    "ph_subsample": 1200,
     "betti_radii": [
       0.25,
       0.5,

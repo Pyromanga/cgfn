@@ -1,36 +1,36 @@
 {
-  "n_positions": 301,
+  "n_positions": 10159,
   "basin_sizes": {
-    "white": 211,
-    "draw": 37,
-    "black": 53
+    "white": 6588,
+    "draw": 1206,
+    "black": 2365
   },
-  "coherence_knn_accuracy": 0.8073089700996677,
-  "topo_prediction_accuracy": 0.8073089700996677,
-  "baseline_depth1_accuracy": 1.0,
+  "coherence_knn_accuracy": 0.8277389506841224,
+  "topo_prediction_accuracy": 0.8277389506841224,
+  "baseline_depth1_accuracy": 0.9974406929815927,
   "geodesic_start_to_basins": {
-    "white": 0.9913206497710463,
-    "draw": 0.4129113204575874,
-    "black": 0.9647043559629962
+    "white": 1.119800134209388,
+    "draw": 0.4709960871714339,
+    "black": 1.4723799477404191
   },
   "bootstrap_geodesic_test": {
     "draw_minus_white": {
-      "mean": -0.5767687254475404,
+      "mean": -0.6487116806668876,
       "ci95": [
-        -0.6767879377473186,
-        -0.47137277601712657
+        -0.66492292767079,
+        -0.6308469895840734
       ],
       "p_one_sided_draw_closer": 0.0
     },
     "draw_minus_black": {
-      "mean": -0.5513445479392488,
+      "mean": -1.0016714327130243,
       "ci95": [
-        -0.7073619695936938,
-        -0.3980371363556952
+        -1.0302877528334191,
+        -0.9733859798850306
       ],
       "p_one_sided_draw_closer": 0.0
     }
   },
-  "n_contradictions": 72,
+  "n_contradictions": 2526,
   "engine_available": true
 }
