@@ -3,7 +3,7 @@ F11 MESSPLATZ-VALIDIERUNG: SVD-FTLE vs. Benettin-QR — folgt die wahre Lyapunov
 seeds=[0, 1] taus=[0.5, 1.0, 2.0] lams=[1.15] g_scales=[0.8, 1.6] steps=300 hidden=32
 ====================================================================================================================
                     config   tau  kappa    svdt  benettin  agree  pEig   pSV  svJ0dt rk2ok
-   designed lam=1.15 s=0.0  0.50   1.00  +1.072   -1.0422  False False False    0.30  True
+   designed lam=1.15 s=0.0  0.50   1.00  +1.059   -1.0907  False False False    0.30  True
    designed lam=1.15 s=0.0  1.00   1.00  +0.579   -0.3520  False  True False    0.20  True
    designed lam=1.15 s=0.0  2.00   1.00  +0.123   -0.0766  False  True  True    0.15  True
    designed lam=1.15 s=3.0  0.50  14.09  +2.924   +0.7101   True  True  True    3.05 False
@@ -21,7 +21,7 @@ Vorzeichen-Einheit SVD vs. Benettin: 5/12
 Regel-Guete vs. BENETTIN-Vorzeichen: eig=7/12 (58%), sv=8/12 (67%)
 Regel-Guete vs. SVD-Vorzeichen (Replikat): eig=10/12, sv=9/12
 |FTLE_svd - FTLE_benettin|: min=0.199 median=2.294 max=2.294
-corr(kappa, |Differenz|) = +0.51  (>0: Messabweichung waechst mit Nicht-Normalitaet)
+corr(kappa, |Differenz|) = +0.50  (>0: Messabweichung waechst mit Nicht-Normalitaet)
 
 LESEAT: Wenn eig unter Benettin deutlich aufholt (und sv einbricht),
 war die SVD-Dominanz von F7/F8 ein Messartefakt — der Ruler braucht
