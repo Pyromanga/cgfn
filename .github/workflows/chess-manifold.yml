@@ -32,16 +32,20 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Stockfish installieren (apt)
+      - name: Stockfish installieren (apt, best-effort; Fallback im Code)
         run: |
-          sudo apt-get update && sudo apt-get install -y --no-install-recommends stockfish
-          echo "STOCKFISH_PATH=$(command -v stockfish)" >> "$GITHUB_ENV"
+          set -x
+          sudo apt-get update -qq || true
+          sudo apt-get install -y -qq --no-install-recommends stockfish || echo "WARN: apt stockfish fehlgeschlagen, Code-Fallback wird genutzt"
 
       - name: Abhaengigkeiten
         run: |
+          set -x
           python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
           pip install -r requirements.txt
           pip install -e .
+          pip check || true
 
       - name: Tests
         run: python -m pytest tests -q
@@ -55,6 +59,7 @@ jobs:
           fi
 
       - name: Artefakte hochladen
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: chess-manifold-results-${{ github.run_number }}
