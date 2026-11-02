@@ -121,7 +121,9 @@ def run_analysis(cfg: Config, df: pd.DataFrame, emb: np.ndarray,
     d_start = None
 
     if iso is not None:
-        graph = iso.graph_
+        graph = getattr(iso, "dist_matrix_", None)
+        if graph is None:
+            graph = iso.graph_
         d_start = shortest_path(graph, directed=False, indices=[start_idx])[0]
         if not np.all(np.isfinite(d_start)):
             eucl = np.linalg.norm(emb - emb[start_idx], axis=1)
