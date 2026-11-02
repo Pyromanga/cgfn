@@ -1,17 +1,16 @@
-<FILE>
 ## 6. Lichess-Robustheitscheck (Run #9, Profil lichess, 2026-11-02)
 
 **Setup:** Echte Turnierpartien statt Random-Selfplay — Top-25-Classical-Spieler via
 offizielle Lichess-API (Commits 2c863abe/292d5f0c), je 40 Partien, Elo >= 2200,
-Spielausgang in `positions.csv` (Spalte `outcome`) mitgespeichert.
+Spielausgang in +positions.csv+ (Spalte +outcome+) mitgespeichert.
 Run #9 gruen, Ergebnisse committet (n = 3.809 Positionen; Train 3.429 / Val 380).
-Datenquelle: `report.json` -> `config.source = "lichess"`.
+Datenquelle: +report.json+ -> +config.source = "lichess"+.
 
 **Beckengroessen** (wp-Thresholds 0.55/0.45): **Weiss 1.245 (32.7 %), Remis 2.080 (54.6 %),
 Schwarz 484 (12.7 %)** — vs. Selfplay #7 (6.588 / 1.206 / 2.365 = 64.8 % / 11.9 % / 23.3 %):
 Die Verteilung dreht sich von Weiss-Dominanz zu Remis-Dominanz, wie fuer Turnierdaten
 erwartet; der Selfplay-Weiss-Bias ist damit als Artefakt der Datenquelle bestätigt.
-*Hinweis:* positions.csv ist nicht im Repo (data/.gitignore); die Spalte `outcome`
+*Hinweis:* positions.csv ist nicht im Repo (data/.gitignore); die Spalte +outcome+
 ermoeglicht erstmals den Abgleich Becken-vs-Spielausgang — fuer den naechsten Run
 sollten die outcome-Haeufigkeiten direkt in summary.json landen.
 
@@ -57,3 +56,70 @@ Eigenwert gegenueber einer Ein-Ply-Suche ist in beiden Datenverteilungen nicht
 nachweisbar. Fuer einen fairen Test von (b) muesste die Baseline von den Engine-Labels
 entkoppelt werden (z. B. Material-only-Linearprobe oder Spielausgang als Label statt
 Engine-wp) — Datenverteilerweiterung allein (Turnierdaten) macht Kriterium (b) nicht fair.
+
+## 7. Dynamik: Drift-Alignment, Remis-Ursachen & Tilt (Run #11, Profil lichess, 2026-11-02)
+
+**Setup:** Dynamik-Schritt [4b/5] (Commits c10a2543/45773501), 4.224 Trajektorien-Schritte
+aus 404 Turnierpartien (Lichess, Elo >= 2200). Erstmals direkter Test der These
+(Jonny): *Remis ist Ergebnis eines unperfekten Moves, fuer Weiss vermeidbar.*
+
+### 7.1 Drift-Alignment (Gradientenfluss-These)
+
+Kosinus-Alignment zwischen Embedded-Drift (Spielzug-Folge) und lokalem
+Nutzengradienten-Abstieg (n = 3.985 Schritte):
+
+- cos mean = **0.0018**, 95 %-CI **[-0.0054, +0.0101]** — Null klar im CI
+- frac_downhill = **50.2 %** — exakt Zufallsniveau
+
+**Gradientenfluss-These NICHT GESTUETZT:** Spielzuege folgen *nicht* dem lokalen
+Abstieg im Einbettungsraum. Die Mannigfaltigkeit ist kein Nutzenlandscape, auf dem
+die Spieler downhill rutschen; die Dynamik ist lokal unkorreliert mit dem Gradienten
+(ordnungsgemaesses Spiel >= 2200 Elo ist lokal nahezu richtungsneutral).
+
+### 7.2 Remis-Ursachen (quiet vs. squandered, n_draws = 111)
+
+Klassifikation der 111 Remispartien nach Trajektorie (quiet = nie aus dem
+Remis-Becken herausgekommen; squandered = Becken-Schwellen-Vorsprung erreicht,
+Partie endete trotzdem 1/2-1/2):
+
+- **quiet_draws = 16.2 %** — nur ~1 von 6 Remis ist ein echtes Gleichgewichts-Remis
+- **white_squandered = 73.9 %** — ~3 von 4 Remis: Weiss hatte zeitweise einen
+  Vorsprung (>= Becken-Schwelle 0.55) und hat ihn nicht konvertiert
+- black_squandered = 29.7 % (Schwarz-Vorsprung in einem Remisspiel)
+
+Basin-Exit-Raten (Kontext): Weiss-Siege verlassen das Remis-Becken in 97.7 % der
+Faelle, Schwarz-Siege 92.3 %, Remispartien nur 83.8 %.
+
+### 7.3 Konversionsanalyse: white_edge_conversion (direkter Test der Jonny-These)
+
+Ueber alle 314 Partien, in denen Weiss mindestens einmal einen Vorsprung
+(wp >= Becken-Schwelle) erreichte:
+
+- **50.0 % gewonnen, 26.1 % remis, 23.9 % verloren**
+
+Weiss konvertiert einen einmal erreichten Vorsprung nur zur Haelfte in einen Sieg;
+in einem Viertel der Faelle verspielt es den Vorsprung so weit, dass sogar Schwarz
+gewinnt (Tilt). **Die These ist damit in den ZAHLEN REFLEKTIERT, aber nicht als
+"Becken-Dynamik" lesbar:** Remis ist hier weniger Gleichgewichtszustand als
+*Nicht-Konvertieren eines errungenen Vorsprungs* — "vermeidbar, aber teuer",
+denn die Alternative zum Nicht-Konvertieren ist keineswegs sicher Sieg
+(50 %), sondern inklusive 24 % sogar Verlust. Der wp-Swing (Mittelwert 0.22 unter
+Elo 2400, 0.19 bei 2400-2600) zeigt: Grosse Bewertungsspruenge bleiben auch bei
+hoeherem Elo die Norm — Remis entsteht typischerweise nach erratic history,
+nicht aus einem stabilen Gleichgewicht (nur 16 % quiet).
+
+### 7.4 Tilt-Beispiele (groesste wp-Spruenge, Top-3)
+
+1. ply 40, d_wp = **-0.52** — 'r1b2rk1/pp2q3/2n1p1pp/6N1/2Bp1n1Q/8/PPP3PP/R2N1RK1 w - - 0 21'
+2. ply 44, d_wp = **-0.46** — 'r4rk1/ppp1qpp1/3b3p/8/3P2N1/2P5/PPB2P2/R1BQ2K1 w - - 3 23'
+3. ply 28, d_wp = **+0.42** — '2k2b1r/ppp4p/2q1bp2/8/3rp2N/8/PPP2QPP/R1B2RK1 w - - 0 15'
+
+Morse-Kipp-Kandidaten: Einzelzuege, die die Trajektorie von einem Becken in ein
+anderes kippen (10 Beispiele in results/summary.json, |d_wp| 0.38-0.52).
+
+**Fazit Dynamik:** Die Gradientenfluss-Metapher (Remis als ATTRAKTOR, in den die
+Dynamik fliessend abgleitet) ist auf Zugebene widerlegt (Alignment ~ 0). Die Daten
+unterstuetzen eher Jonnys Lesart: Remis ist ueberwiegend *Fehlerfolge* (74 %
+white-squandered), aber "vermeidbar" nur im Sinne eines 50/50-Risikos — der Preis
+des Vermeidens ist erhebliche Varianz, nicht garantiertes Gewinnen. Nur die
+Minderheit der Remis (16 %) ist echter Gleichgewichtszustand.
