@@ -1,0 +1,36 @@
+{
+  "n_positions": 301,
+  "basin_sizes": {
+    "white": 211,
+    "draw": 37,
+    "black": 53
+  },
+  "coherence_knn_accuracy": 0.8073089700996677,
+  "topo_prediction_accuracy": 0.8073089700996677,
+  "baseline_depth1_accuracy": 1.0,
+  "geodesic_start_to_basins": {
+    "white": 0.9913206497710463,
+    "draw": 0.4129113204575874,
+    "black": 0.9647043559629962
+  },
+  "bootstrap_geodesic_test": {
+    "draw_minus_white": {
+      "mean": -0.5767687254475404,
+      "ci95": [
+        -0.6767879377473186,
+        -0.47137277601712657
+      ],
+      "p_one_sided_draw_closer": 0.0
+    },
+    "draw_minus_black": {
+      "mean": -0.5513445479392488,
+      "ci95": [
+        -0.7073619695936938,
+        -0.3980371363556952
+      ],
+      "p_one_sided_draw_closer": 0.0
+    }
+  },
+  "n_contradictions": 72,
+  "engine_available": true
+}
