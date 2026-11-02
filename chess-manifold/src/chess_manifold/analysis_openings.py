@@ -43,7 +43,8 @@ def _per_game(df: pd.DataFrame, cfg) -> pd.DataFrame:
         if "white_elo" in x else np.nan, include_groups=False)
     per["fen_first"] = g["fen"].first()
     per["fen_last"] = g["fen"].last()
-    # game_id war nur der Groupby-Index (Run #12: KeyError 'game_id') — als Spalte materialisieren
+  
+  # game_id war nur der Groupby-Index (Run #12: KeyError 'game_id') — als Spalte materialisieren
     per = per.reset_index()
     quiet = ((per["outcome"] == "1/2-1/2") & (per["max_wp"] <= cfg.wp_white)
              & (per["min_wp"] >= cfg.wp_black))
@@ -92,7 +93,8 @@ def _game_row(r) -> dict:
         "fen_first": r["fen_first"], "fen_last": r["fen_last"]}
 
 
-def opening_stats(df: pd.DataFrame, cfg) -> dict:
+def opening_stats(df: pd.DataFrame, cfg) -> d
+ict:
     """Quiet-Draws sichtbar machen + Öffnungsabdeckung + Laengen pruefen."""
     for col in ("outcome", "game_id"):
         if col not in df:
@@ -127,7 +129,8 @@ def opening_stats(df: pd.DataFrame, cfg) -> dict:
              "elo_min": int(r["elo_min"]) if not pd.isna(r["elo_min"]) else None}
             for _, r in longest.iterrows()]
         if "draw_reason" in draws and draws["draw_reason"].notna().any():
-            res["draw_reasons"] = draws["draw_reason"].value_counts().to_dict()
+   
+         res["draw_reasons"] = draws["draw_reason"].value_counts().to_dict()
             res["quiet_draw_reasons"] = q["draw_reason"].value_counts().to_dict() if len(q) else {}
     if has_opening:
         # 2) Abdeckung
@@ -141,4 +144,49 @@ def opening_stats(df: pd.DataFrame, cfg) -> dict:
             sub = draws[draws["first_move"] != mv]
             if len(sub):
                 res[f"quiet_pct_excl_{mv}"] = float(100 * sub["quiet"].mean())
+    # 5) Perfektions-Gradient (Jonny: "dann muesste man das perfekte Spiel
+    #    berechnen koennen"): Wie nahe rueckt das Spiel dem perfekten Remis,
+    #    je hoeher das Elo? Extrapolation: Bei welchem Elo geht der wp-Swing
+    #    gegen null (= perfekte Partie bleibt im Remis-Becken)?
+    if per["elo_min"].notna().any():
+        swing = d.sort_values(["game_id", "ply"]).groupby("game_id")["wp_engine"]
+        swing = (swing.max() - swing.min()).rename("wp_swing")
+        pg = per.merge(swing, left_on="game_id", right_index=True, how="left")
+        buckets = [(2200, 2400, "elo_2200_2400"), (2400, 2600, "elo_2400_2600"),
+                   (2600, 3000, "elo_ge2600")]
+        grad = []
+        for lo, hi, tag in buckets:
+            s = pg[(pg["elo_min"] >= lo) & (pg["elo_min"] < hi)]
+            if len(s) >= 10:
+                dr = s[s["outcome"] == "1/2-1/2"]
+                grad.append({
+                    tag: {
+                        "n_games": int(len(s)),
+                        "draw_rate": float(100 * np.mean(s["outcome"] == "1/2-1/2")),
+                        "quiet_pct_of_draws": float(100 * dr["quiet"].mean()) if len(dr) else None,
+                        "mean_wp_swing": float(s["wp_swing"].mean()),
+                        "frac_games_with_white_edge": float(100 * np.mean(s["max_wp"] > cfg.wp_white)),
+                        "mean_game_plies": float(s["game_plies"].mean()) if s["game_plies"].notna().any() else None,
+                    }})
+        res["perfection_gradient"] = grad
+        # Lineare Extrapolation: wp_swing -> 0 (perfekte Partie verlaesst das
+        # Remis-Becken nie). Eleganter Proxy fuer "perfektes Spiel berechenbar".
+        centers, swings = [], []
+        for lo, hi, tag in buckets:
+            s = pg[(pg["elo_min"] >= lo) & (pg["elo_min"] < hi)]
+            if len(s) >= 10:
+                centers.append((lo + hi) / 2)
+                swings.append(float(s["wp_swing"].mean()))
+        if len(centers) >= 2:
+            x = np.asarray(centers, dtype=float)
+            y = np.asarray(swings, dtype=float)
+            b1, b0 = np.polyfit(x, y, 1)
+            elo_zero = float(-b0 / b1) if abs(b1) > 1e-12 else None
+            res["perfection_extrapolation"] = {
+                "slope_swing_per_elo": float(b1),
+                "elo_at_zero_swing": elo_zero,
+                "note": ("wp-Swing sinkt linear mit Elo; Extrapolation auf Swing=0 "
+                         "gibt die 'perfekte Spielstaerke', bei der die Partie das "
+                         "Remis-Becken nie verlaesst (Heuristik, kleine n)"),
+            }
     return res
