@@ -1,0 +1,15 @@
+name: cm-echo
+
+on:
+  push:
+    paths:
+      - ".trigger/cm-echo"
+      - ".github/workflows/cm-echo.yml"
+  workflow_dispatch:
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: echo "cm-echo ok"
