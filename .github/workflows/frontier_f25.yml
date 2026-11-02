@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Gate: syntax-check (20s statt Crash nach 15-55 Min)
+      - name: "Gate: syntax-check (20s statt Crash nach 15-55 Min)"
         run: |
           python -m py_compile experiments/f25_reverberation.py || { echo "[e] SYNTAX-FEHLER in experiments/f25_reverberation.py — Abbruch, Kontingent geschont"; exit 1; }
           echo "[i] syntax ok"
@@ -47,7 +47,8 @@ jobs:
             if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
             echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
             git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
-            sleep $((i * 10))
+   
+         sleep $((i * 10))
           done
           echo "[e] push nach 5 Versuchen fehlgeschlagen" && exit 1
       - name: Upload results

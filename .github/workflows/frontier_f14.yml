@@ -21,7 +21,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Gate: syntax-check (20s statt Crash nach 15-55 Min)
+      - name: "Gate: syntax-check (20s statt Crash nach 15-55 Min)"
         run: |
           python -m py_compile experiments/f14_fix.py || { echo "[e] SYNTAX-FEHLER in experiments/f14_fix.py — Abbruch, Kontingent geschont"; exit 1; }
           echo "[i] syntax ok"
@@ -48,7 +48,8 @@ jobs:
           # pushen beide nach main — rebase + retry statt rot sterben.
           for i in 1 2 3 4 5; do
             if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
-            echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
+          
+  echo "[w] push fehlgeschlagen (Versuch $i) — rebase und erneut"
             git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
             sleep $((i * 10))
           done
