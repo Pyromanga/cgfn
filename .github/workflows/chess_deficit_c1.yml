@@ -1,0 +1,50 @@
+name: chess-deficit (C1)
+
+# C1 — Sekunden-Test der Strukturtheorie: Forcing-Potenzial an Tilt-Positionen
+# vs. quiet draws. Reines python-chess, keine Engine, Laufzeit Sekunden.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/c1"
+
+jobs:
+  chess-deficit-c1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install python-chess
+        run: pip install python-chess
+      - name: Run C1 seconds-test
+        run: |
+          set -o pipefail
+          python experiments/c1_deficit_test.py \
+            --out results/c1_deficit_results.txt 2>&1 | tee results/c1_run.log
+      - name: Commit results and logs
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: C1-Sekunden-Test ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-deficit-c1-results
+          path: results/
+          retention-days: 30
