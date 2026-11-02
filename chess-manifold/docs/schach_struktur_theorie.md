@@ -1,60 +1,32 @@
-# Schach als Hypergraph-Stabilitaet — Strukturtheorie (Entwurf I) und Sekunden-Test
 
-Jonny: "Ich kann es nicht beschreiben — ich dachte du koenntest Schach mathematisch
-uebersetzen." Antwortversuch: die Muster aussprechen, und sofort so bauen, dass
-sie in Sekunden sterben koennen, wenn sie falsch sind.
+## C1-Ergebnis (Run #2, 2026-11-02, Commit ea08c1e)
 
-## Die vier Saetze
+Datengrundlage: `results/c1_deficit_results.txt` (C1-Sekunden-Test, Run #2 auf
+Fix c8079fa9; Run #1 starb an `occupied_co[bool]`-TypeError, fix via
+piece_map()+color_at; Marker-Retry fehlte im Fix-Commit und wurde als
+Trigger-Commit 8ac9f03 nachgereicht).
 
-**S1 — Das Spielobjekt.** Schach ist eine Inzidenzgeometrie (Linien: Reihen,
-Dateien, Diagonalen; Figuren als Blocker/Projektoren) plus ein bipartiter
-Bedrohungs-Verteidigungs-Hypergraph B(x) pro Stellung x. Materiale und alle
-klassischen Konzepte sind lineare Funktionsschatten der nichtlinearen
-Interaktion dieses Graphen.
+Zahlen:
+- Tilt-Positionen (10 Kippkandidaten aus Run #11/#13): median F = 5.50
+  (min 4.00, max 16.00)
+- Quiet-draw-Positionen (40 FENs): median F = 4.50 (min 0.00, max 13.00)
+- Trennung (min_tilt − max_quiet): −9.00 (negative, d.h. Ueberlappung)
+- P2-Kriterium: 5.50 >= 2 * max(1.0, 4.50) = 9.00? Nein.
 
-**S2 — Erzwingen ist ein Zaehlsatz.** Eine erzwungene Sequenz existiert genau
-dann, wenn der Angreifer die Bedrohungszahl ueber der Verteidigungstempo-Zahl
-halten kann: Defizit d = Drohungen − parierende Tempi >= 1 UND jede Verteidigung
-erzeugt mindestens eine neue offene Drohung. Gabel, Doppelangriff, Ueberladung,
-Spiess sind derselbe Satz in verschiedenen Konstellationen.
+Urteil: **P2 NICHT BESTANDEN.** Die Tilt-Positionen zeigen kein erhoehtes
+Forcing-Potenzial gegenueber quiet draws — Median nur 1.22x statt >= 2x,
+und die Verteilungen ueberlappen stark (quiet draws reichen bis F=13,
+Tilt-Minimum liegt bei F=4). Einzelne Tilt-Spitzen (F=16, F=11) existieren,
+aber die Masse der Kippkandidaten ist vom quiet-draw-Bereich nicht getrennt.
 
-**S3 — Zugzwang ist Optionenkollaps; Endspieltheoreme sind seine Beweise.**
-Opposition = Paritaetssatz, Quadratregel = Geometriesatz, Triangulation =
-Temposatz. Endspiele sind beweisbar, weil B(x) so klein wird, dass nur Paritaet
-und Reichweiten-Geometrie uebrig bleiben. Das Mittelspiel ist derselbe
-Mechanismus mit grossem (nicht mehr lokal schliessbarem) Graphen.
-
-**S4 — Remis ist Stabilitaet, kein Attraktor.** Eine Stellung ist remis-stabil,
-wenn jede Drohung-Konstellation ihre Aufloesung schon in der Stellung traegt
-(Gegenkonstellations-Reserve). Perfekte Remispartien sind Trajektorien, auf
-denen eine Balance-Funktion ihr Einzugsgebiet nie verlaesst (Lyapunov-Kriterium
-auf B). Gewinn existiert genau dann, wenn der Angreifer eine Stellung erreicht,
-in der die Aufloesbarkeit STRUKTURELL (nicht nur zeitweise) versagt.
-Konsequenz fuer die alte Pipeline: Der Drift-Alignment ~ 0 war kein Misserfolg,
-sonst die richtige Messung am falschen Objekt — die Dynamik laeuft im
-Hypergraphen, nicht im Einbettungsraum.
-
-## Praediktionen (falsifizierbar)
-
-P1: Kippkanten (V-Wechsel) konzentrieren sich dort, wo das Bedrohungs-
-     Verteidigungs-Defizit das Vorzeichen wechselt — NICHT dort, wo Material fliesst.
-P2: Tilt-Positionen (groesste wp-Spruenge, Run #11/#13: 10 Kandidaten) zeigen
-     ein Forcing-Potenzial (Best-Drohungswert gegen unterverteidigte Ziele),
-     das mindestens doppelt so hoch ist wie in quiet-draw-Positionen.
-P3: Quiet draws zeichnen sich durch maximale Gegenkonstellations-Reserven aus
-     (Forcing-Potenzial der GEGNER konvergent null).
-
-## Der Sekunden-Test (C1)
-
-Kein Engine, keine Wahrscheinlichkeit: reines python-chess, ein Forcing-Score
-pro Stellung (Bedrohungen gegen unzureichend verteidigte Ziele, SEE-artig,
-plus Schachgebot/Matt). Vergleich: 10 Tilt-FENs (Kippkandidaten) vs. alle
-quiet-draw-FENs (erste + letzte gesampelte Stellung je Partie). Laufzeit:
-Sekunden. Urteil:
-  - P2 bestanden: median(F_tilt) >= 2 * max(1.0, median(F_quiet)) ohne grosse Ueberlappung
-  - P2 tot: Tilt-Positionen zeigen kein erhoehetes Forcing-Potenzial =>
-    S2 in dieser Form falsch (begraben, sauber dokumentiert).
-
-Das ist der Punkt von "wenn du Recht hast, brauchst du nicht viel": Wenn Erzwingen
-ein Zaehlsatz auf B(x) ist, muss er sich mit einem Blockzaehler auf den 10
-bekannten Kippstellen zeigen lassen. Wenn nicht — falsche Theorie, naechste.
+Konsequenz (ehrlich): **S2 ist in dieser Form FALSCH.** "Erzwingen als
+Bedrohungs-/Verteidigungs-Zaehlsatz" (naiver Ein-Zug-Forcing-Blockzaehler auf
+B(x)) trifft die Kippstellen nicht. Das begraben wir sauber: Entweder ist der
+Zaehlsatz zu flach (Ein-Zug-Potenzial statt erzwungener Sequenz-Tiefe —
+Defizit d koennte erst in der Abfolge sichtbar werden), oder die Kippkandidaten
+aus wp-Spruengen sind nicht die Stellungen, in denen Erzwingen strukturell
+wird, oder Erzwingen ist kein Blockzaehlsatz auf B(x) überhaupt. Was bleibt:
+S1 (Inzidenzgeometrie + Hypergraph) und S3/S4 sind von diesem Ergebnis unberuehrt
+— P1 (Kippkanten-Analyse auf Tablebase-Daten) wurde hier NICHT getestet und
+bleibt offen; aber P2 als Praediktion von S2 ist tot, und zwar durch einen
+billigen, sauberen Sekunden-Test — genau dafuer war er gebaut.
