@@ -12,6 +12,7 @@ import pandas as pd
 
 from .analysis import basin_of, run_analysis, save_report
 from .analysis_dynamics import run_dynamics
+from .analysis_openings import opening_stats
 from .config import Config
 from .data import generate_positions
 from .engine import Engine, cp_to_winprob
@@ -86,6 +87,12 @@ def main():
         report["dynamics"] = run_dynamics(cfg, df, emb)
     except Exception as e:
         report["dynamics"] = {"error": repr(e)}
+
+    print("[4c/5] Opening-Analyse (quiet draws sichtbar machen) ...")
+    try:
+        report["openings"] = opening_stats(df, cfg)
+    except Exception as e:
+        report["openings"] = {"error": repr(e)}
     save_report(report, os.path.join(cfg.out_dir, "report.json"))
 
     print("[5/5] Plots ...")
@@ -105,6 +112,7 @@ def main():
         "bootstrap_geodesic_test": report.get("bootstrap_geodesic_test"),
         "n_contradictions": report.get("n_contradictions"),
         "dynamics": report.get("dynamics"),
+        "openings": report.get("openings"),
         "engine_available": report["engine_available"],
     }
     with open(os.path.join(cfg.out_dir, "summary.json"), "w", encoding="utf-8") as f:

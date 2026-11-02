@@ -6,7 +6,6 @@ ist jede weitere Analyse exakt reproduzierbar (Seed 42 beim Sampling).
 """
 import io
 import json
-import random
 import urllib.request
 
 import chess
@@ -35,7 +34,7 @@ def fetch_elite_games(cfg: Config) -> str:
         url = (f"{API}/games/user/{u}"
                f"?max={cfg.lichess_games_per_user}"
                "&rated=true&perfType=classical"
-               "&opening=false&clocks=false&evals=false&literate=false")
+               "&opening=true&clocks=false&evals=false&literate=false")
         try:
             chunks.append(_get(url, "application/x-chess-pgn").decode("utf-8", "replace"))
         except Exception as e:  # Spieler einzeln failen lassen
@@ -46,14 +45,16 @@ def fetch_elite_games(cfg: Config) -> str:
 def generate_positions_lichess(cfg: Config):
     """Wie data.generate_positions, aber aus echten Elite-Turnierpartien.
 
-    Rueckgabe: (rows, n_games) — rows wie gehabt, plus game_id, outcome
-    (Spielausgang!) und white_elo/black_elo. Ermöglicht Trajektorien-Analyse
-    und den Remis-Ursachen-Test (squandered vs. quiet draws).
+    Rueckgabe: (rows, n_games). Pro Stellung: game_id, outcome (Spielausgang),
+    white_elo/black_elo sowie eco, opening (Eröffnungsname) und first_move
+    (SAN des ersten Zuges) — ermöglicht die Öffnungsabdeckungs-Analyse
+    (quiet vs. squandered draws je Eröffnung / erstem Zug).
     """
     pgn_text = fetch_elite_games(cfg)
     rows = [{"fen": chess.STARTING_FEN, "ply": 0, "outcome": None,
              "early_middlegame": False, "is_start": True, "game_id": None,
-             "white_elo": None, "black_elo": None}]
+             "white_elo": None, "black_elo": None,
+             "eco": None, "opening": None, "first_move": None}]
     n_games = 0
     stream = io.StringIO(pgn_text)
     while True:
@@ -70,11 +71,16 @@ def generate_positions_lichess(cfg: Config):
             welo = belo = None
         if welo is not None and belo is not None and min(welo, belo) < cfg.lichess_min_elo:
             continue
+        eco = game.headers.get("ECO")
+        opening = game.headers.get("Opening")
         gid = n_games  # game_id zaehlt nur Partien mit gesampelten Stellungen
         board = game.board()
         sampled = 0
         ply = 0
+        first_move = None
         for move in game.mainline_moves():
+            if ply == 0:
+                first_move = board.san(move)
             board.push(move)
             ply += 1
             if ply > cfg.max_game_plies:
@@ -86,6 +92,7 @@ def generate_positions_lichess(cfg: Config):
                     "early_middlegame": cfg.early_middlegame[0] <= ply <= cfg.early_middlegame[1],
                     "is_start": False, "game_id": gid,
                     "white_elo": welo, "black_elo": belo,
+                    "eco": eco, "opening": opening, "first_move": first_move,
                 })
                 sampled += 1
         if sampled:
