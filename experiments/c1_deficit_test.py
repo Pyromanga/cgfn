@@ -41,7 +41,9 @@ def forcing_potential(board: chess.Board) -> float:
         board.push(move)
         if board.is_checkmate():
             gain += 100.0
-        for sq in board.occupied_co[opp]:
+        for sq in board.piece_map():
+            if board.color_at(sq) != opp:
+                continue
             if board.attackers(color, sq):
                 attackers = board.attackers(color, sq)
                 cheapest = min(
@@ -108,6 +110,7 @@ def main():
     lines.append(f"Tilt-Positionen (Kippkandidaten): n={len(tilt_scores)}, "
                  f"median F={med_t:.2f}, min={min(tilt_scores):.2f}, max={max(tilt_scores):.2f}")
     lines.append(f"Quiet-draw-Positionen:            n={len(quiet_scores)}, "
+
                  f"median F={med_q:.2f}, min={min(quiet_scores):.2f}, max={max(quiet_scores):.2f}")
     lines.append(f"Trennung (min_tilt - max_quiet):  {sep:.2f}" if sep is not None else "Trennung: n/a")
     lines.append("")
