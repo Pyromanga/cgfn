@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/runner/work/cgfn/cgfn/experiments/c1_deficit_test.py", line 135, in <module>
+    main()
+  File "/home/runner/work/cgfn/cgfn/experiments/c1_deficit_test.py", line 85, in main
+    f_ = forcing_potential(b)
+         ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/experiments/c1_deficit_test.py", line 44, in forcing_potential
+    for sq in board.occupied_co[opp]:
+TypeError: 'int' object is not iterable
