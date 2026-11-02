@@ -14,6 +14,14 @@ import numpy as np
 import pandas as pd
 
 
+def _gid(v):
+    """game_id als int wenn moeglich, sonst unveraendert (Lichess-IDs koennen Strings sein)."""
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return v
+
+
 def _per_game(df: pd.DataFrame, cfg) -> pd.DataFrame:
     g = df.groupby("game_id")
     per = pd.DataFrame({
@@ -30,6 +38,8 @@ def _per_game(df: pd.DataFrame, cfg) -> pd.DataFrame:
         if "white_elo" in x else np.nan, include_groups=False)
     per["fen_first"] = g["fen"].first()
     per["fen_last"] = g["fen"].last()
+    # game_id war nur der Groupby-Index (Run #12: KeyError 'game_id') — als Spalte materialisieren
+    per = per.reset_index()
     quiet = ((per["outcome"] == "1/2-1/2") & (per["max_wp"] <= cfg.wp_white)
              & (per["min_wp"] >= cfg.wp_black))
     per["quiet"] = quiet
@@ -81,15 +91,17 @@ def opening_stats(df: pd.DataFrame, cfg) -> dict:
         res["skipped_openings"] = "keine ECO-Daten im Datensatz"
     # 1) Alle quiet draws einzeln (die will Jonny sehen)
     q = draws[draws["quiet"]].sort_values("game_id")
-    res["quiet_draw_games"] = [
-        {"game_id": int(r["game_id"]),
-         "eco": r.get("eco"), "opening": r.get("opening"),
-         "first_move": r.get("first_move"),
-         "elo_min": None if pd.isna(r["elo_min"]) else int(r["elo_min"]),
-         "n_sampled": int(r["n_sampled"]),
-         "max_wp": float(r["max_wp"]), "min_wp": float(r["min_wp"]),
-         "fen_first": r["fen_first"], "fen_last": r["fen_last"]}
-        for _, r in q.iterrows()]
+    quiet_games = []
+    for _, r in q.iterrows():
+        quiet_games.append({
+            "game_id": _gid(r["game_id"]),
+            "eco": r.get("eco"), "opening": r.get("opening"),
+            "first_move": r.get("first_move"),
+            "elo_min": None if pd.isna(r["elo_min"]) else int(r["elo_min"]),
+            "n_sampled": int(r["n_sampled"]),
+            "max_wp": float(r["max_wp"]), "min_wp": float(r["min_wp"]),
+            "fen_first": r["fen_first"], "fen_last": r["fen_last"]})
+    res["quiet_draw_games"] = quiet_games
     if has_opening:
         # 2) Abdeckung
         res["n_unique_eco"] = int(per["eco"].dropna().nunique())
