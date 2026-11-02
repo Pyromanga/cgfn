@@ -62,7 +62,12 @@ jobs:
       - name: Pipeline
         run: |
           set -o pipefail
-          if [ "${{ github.event_name }}" = "push" ] || [ -z "${{ inputs.profile }}" ] || [ "${{ inputs.profile }}" = "smoke" ]; then
+          PROFILE="${{ inputs.profile }}"
+          if [ "${{ github.event_name }}" = "push" ]; then
+            PROFILE="$(cat ../.trigger/chess-manifold 2>/dev/null | tr -d '[:space:]' || echo smoke)"
+          fi
+          echo "Profil: $PROFILE"
+          if [ -z "$PROFILE" ] || [ "$PROFILE" = "smoke" ]; then
             make smoke 2>&1 | tee pipeline.log
           else
             make full 2>&1 | tee pipeline.log
