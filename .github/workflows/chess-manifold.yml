@@ -4,11 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       profile:
-        description: 'Profil: smoke (~300 Stellungen) oder full (~10k)'
+        description: 'Profil: smoke | full | lichess'
         required: false
         default: 'smoke'
         type: choice
-        options: ['smoke', 'full']
+        options: ['smoke', 'full', 'lichess']
   push:
     paths:
       - ".trigger/chess-manifold"
@@ -22,7 +22,7 @@ permissions:
 jobs:
   pipeline:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 60
     defaults:
       run:
         working-directory: chess-manifold
@@ -37,7 +37,6 @@ jobs:
         run: |
           set -x
           sudo apt-get update -qq 2>&1 | tee -a apt.log || true
-          sudo apt-cache policy stockfish 2>&1 | tee -a apt.log || true
           sudo apt-get install -y -qq --no-install-recommends stockfish 2>&1 | tee -a apt.log || echo "WARN: apt stockfish fehlgeschlagen, Code-Fallback wird genutzt" | tee -a apt.log
           command -v stockfish 2>&1 | tee -a apt.log || true
 
@@ -67,11 +66,11 @@ jobs:
             PROFILE="$(cat ../.trigger/chess-manifold 2>/dev/null | tr -d '[:space:]' || echo smoke)"
           fi
           echo "Profil: $PROFILE"
-          if [ -z "$PROFILE" ] || [ "$PROFILE" = "smoke" ]; then
-            make smoke 2>&1 | tee pipeline.log
-          else
-            make full 2>&1 | tee pipeline.log
-          fi
+          case "$PROFILE" in
+            full)    make full 2>&1 | tee pipeline.log ;;
+            lichess) make lichess 2>&1 | tee pipeline.log ;;
+            *)       make smoke 2>&1 | tee pipeline.log ;;
+          esac
 
       - name: Artefakte hochladen
         if: always()

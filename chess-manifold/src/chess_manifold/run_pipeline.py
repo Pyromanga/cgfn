@@ -15,12 +15,17 @@ from .config import Config
 from .data import generate_positions
 from .engine import Engine, cp_to_winprob
 from .features import extract_features
+from .lichess import generate_positions_lichess
 from .plots import make_plots
 from .train import train_encoder
 
 
 def stage_data(cfg: Config):
-    rows = generate_positions(cfg)
+    if cfg.source == "lichess":
+        rows, n_games = generate_positions_lichess(cfg)
+        print(f"    Quelle: Lichess-API ({n_games} Partien)")
+    else:
+        rows = generate_positions(cfg)
     boards = [chess.Board(r["fen"]) for r in rows]
     keys = sorted(extract_features(boards[0]).keys())
     feats = [extract_features(b) for b in boards]
