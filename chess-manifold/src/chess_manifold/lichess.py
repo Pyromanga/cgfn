@@ -46,14 +46,13 @@ def fetch_elite_games(cfg: Config) -> str:
 def generate_positions_lichess(cfg: Config):
     """Wie data.generate_positions, aber aus echten Elite-Turnierpartien.
 
-    Rueckgabe: (rows, n_games) — rows wie gehabt, plus outcome (Spielausgang!)
-    und white_elo/black_elo. Hier ist das Remis-Becken auch am echten
-    Spielausgang pruefbar (zentrale Annahme-Schaerfung gegenueber Selfplay).
+    Rueckgabe: (rows, n_games) — rows wie gehabt, plus game_id, outcome
+    (Spielausgang!) und white_elo/black_elo. Ermöglicht Trajektorien-Analyse
+    und den Remis-Ursachen-Test (squandered vs. quiet draws).
     """
     pgn_text = fetch_elite_games(cfg)
-    rng = random.Random(cfg.seed)
     rows = [{"fen": chess.STARTING_FEN, "ply": 0, "outcome": None,
-             "early_middlegame": False, "is_start": True,
+             "early_middlegame": False, "is_start": True, "game_id": None,
              "white_elo": None, "black_elo": None}]
     n_games = 0
     stream = io.StringIO(pgn_text)
@@ -71,6 +70,7 @@ def generate_positions_lichess(cfg: Config):
             welo = belo = None
         if welo is not None and belo is not None and min(welo, belo) < cfg.lichess_min_elo:
             continue
+        gid = n_games  # game_id zaehlt nur Partien mit gesampelten Stellungen
         board = game.board()
         sampled = 0
         ply = 0
@@ -84,7 +84,7 @@ def generate_positions_lichess(cfg: Config):
                 rows.append({
                     "fen": board.fen(), "ply": ply, "outcome": res,
                     "early_middlegame": cfg.early_middlegame[0] <= ply <= cfg.early_middlegame[1],
-                    "is_start": False,
+                    "is_start": False, "game_id": gid,
                     "white_elo": welo, "black_elo": belo,
                 })
                 sampled += 1
