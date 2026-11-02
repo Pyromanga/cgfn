@@ -1,181 +1,181 @@
 {
-  "n_positions": 3809,
+  "n_positions": 4629,
   "basin_sizes": {
-    "white": 1245,
-    "draw": 2080,
-    "black": 484
+    "white": 1510,
+    "draw": 2594,
+    "black": 525
   },
   "persistent_homology": {
     "white": {
-      "ph_dim0_num_finite": 1149,
-      "ph_dim0_total_persistence": 181.66903192948007,
-      "ph_dim0_max_persistence": 0.5816823244094849,
-      "ph_dim1_num_finite": 1285,
-      "ph_dim1_total_persistence": 13.398032024502754,
-      "ph_dim1_max_persistence": 0.0796801745891571,
+      "ph_dim0_num_finite": 1151,
+      "ph_dim0_total_persistence": 168.38736974787597,
+      "ph_dim0_max_persistence": 0.7674506306648254,
+      "ph_dim1_num_finite": 1258,
+      "ph_dim1_total_persistence": 11.684611849486828,
+      "ph_dim1_max_persistence": 0.055540770292282104,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 32,
-          "betti1": 23,
-          "h1_total_persistence": 13.398032024502754
+          "betti0": 24,
+          "betti1": 5,
+          "h1_total_persistence": 11.684611849486828
         },
         {
           "radius": 0.5,
-          "betti0": 4,
+          "betti0": 2,
           "betti1": 0,
-          "h1_total_persistence": 13.398032024502754
+          "h1_total_persistence": 11.684611849486828
         },
         {
           "radius": 0.75,
-          "betti0": 1,
+          "betti0": 2,
           "betti1": 0,
-          "h1_total_persistence": 13.398032024502754
+          "h1_total_persistence": 11.684611849486828
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 13.398032024502754
+          "h1_total_persistence": 11.684611849486828
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 13.398032024502754
+          "h1_total_persistence": 11.684611849486828
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 13.398032024502754
+          "h1_total_persistence": 11.684611849486828
         }
       ]
     },
     "draw": {
-      "ph_dim0_num_finite": 1036,
-      "ph_dim0_total_persistence": 147.04428642224815,
-      "ph_dim0_max_persistence": 0.8397638201713562,
-      "ph_dim1_num_finite": 1147,
-      "ph_dim1_total_persistence": 11.726376943290234,
-      "ph_dim1_max_persistence": 0.042790427803993225,
+      "ph_dim0_num_finite": 1072,
+      "ph_dim0_total_persistence": 138.89929527633564,
+      "ph_dim0_max_persistence": 0.8521080613136292,
+      "ph_dim1_num_finite": 1162,
+      "ph_dim1_total_persistence": 10.690352529287338,
+      "ph_dim1_max_persistence": 0.03941750526428223,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 13,
-          "betti1": 11,
-          "h1_total_persistence": 11.726376943290234
+          "betti0": 10,
+          "betti1": 3,
+          "h1_total_persistence": 10.690352529287338
         },
         {
           "radius": 0.5,
           "betti0": 2,
           "betti1": 0,
-          "h1_total_persistence": 11.726376943290234
+          "h1_total_persistence": 10.690352529287338
         },
         {
           "radius": 0.75,
           "betti0": 2,
           "betti1": 0,
-          "h1_total_persistence": 11.726376943290234
+          "h1_total_persistence": 10.690352529287338
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 11.726376943290234
+          "h1_total_persistence": 10.690352529287338
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 11.726376943290234
+          "h1_total_persistence": 10.690352529287338
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 11.726376943290234
+          "h1_total_persistence": 10.690352529287338
         }
       ]
     },
     "black": {
-      "ph_dim0_num_finite": 470,
-      "ph_dim0_total_persistence": 81.20606315241855,
-      "ph_dim0_max_persistence": 0.6039979457855225,
-      "ph_dim1_num_finite": 383,
-      "ph_dim1_total_persistence": 4.395488619804382,
-      "ph_dim1_max_persistence": 0.07236519455909729,
+      "ph_dim0_num_finite": 511,
+      "ph_dim0_total_persistence": 83.35936585558098,
+      "ph_dim0_max_persistence": 0.5121685266494751,
+      "ph_dim1_num_finite": 399,
+      "ph_dim1_total_persistence": 3.9498220533132553,
+      "ph_dim1_max_persistence": 0.04191768169403076,
       "betti_curve": [
         {
           "radius": 0.25,
-          "betti0": 26,
-          "betti1": 10,
-          "h1_total_persistence": 4.395488619804382
+          "betti0": 24,
+          "betti1": 4,
+          "h1_total_persistence": 3.9498220533132553
         },
         {
           "radius": 0.5,
           "betti0": 2,
           "betti1": 0,
-          "h1_total_persistence": 4.395488619804382
+          "h1_total_persistence": 3.9498220533132553
         },
         {
           "radius": 0.75,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 4.395488619804382
+          "h1_total_persistence": 3.9498220533132553
         },
         {
           "radius": 1.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 4.395488619804382
+          "h1_total_persistence": 3.9498220533132553
         },
         {
           "radius": 1.5,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 4.395488619804382
+          "h1_total_persistence": 3.9498220533132553
         },
         {
           "radius": 2.0,
           "betti0": 1,
           "betti1": 0,
-          "h1_total_persistence": 4.395488619804382
+          "h1_total_persistence": 3.9498220533132553
         }
       ]
     }
   },
-  "coherence_knn_accuracy": 0.6841690732475716,
+  "coherence_knn_accuracy": 0.684597105206308,
   "geodesic_early_mean_to_basins": {
-    "white": 1.0730736491880344,
-    "draw": 0.7750812068959203,
-    "black": 1.4426446713912227
+    "white": 0.9942059520417282,
+    "draw": 0.7084589574116982,
+    "black": 1.3417567746017947
   },
   "geodesic_start_to_basins": {
-    "white": 1.2142282789161645,
-    "draw": 0.8507422691979127,
-    "black": 1.3108828791671179
+    "white": 1.2432512795108537,
+    "draw": 0.7816622787316096,
+    "black": 1.0460501376645905
   },
   "bootstrap_geodesic_test": {
     "draw_minus_white": {
-      "mean": -0.3628500860108496,
+      "mean": -0.4612350416187788,
       "ci95": [
-        -0.39571080695069943,
-        -0.3298678162353586
+        -0.49132732271207047,
+        -0.4315042650926968
       ],
       "p_one_sided_draw_closer": 0.0
     },
     "draw_minus_black": {
-      "mean": -0.46110034836486713,
+      "mean": -0.26338280212189885,
       "ci95": [
-        -0.5175755042857905,
-        -0.40659785232661194
+        -0.3135242161098323,
+        -0.2152105820756326
       ],
       "p_one_sided_draw_closer": 0.0
     }
   },
-  "topo_prediction_accuracy": 0.6841690732475716,
-  "n_contradictions": 333,
+  "topo_prediction_accuracy": 0.684597105206308,
+  "n_contradictions": 401,
   "contradiction_examples": [
     {
       "fen": "2r5/pb2q1pk/1p2p2p/8/2BPpRQ1/4P3/PP4PP/6K1 w - - 1 25",
@@ -297,69 +297,69 @@
       "true_basin": "black"
     },
     {
-      "fen": "r4rk1/1p1q1p2/p6p/2b2bp1/8/5B1P/PP3PP1/R2QR1K1 w - - 0 21",
-      "ply": 40,
-      "wp_engine": 0.18044508988832997,
+      "fen": "3r2k1/bb1rqp1p/p5p1/1p1p4/5N2/P2nPN1P/BP3PP1/3QR1K1 w - - 0 25",
+      "ply": 48,
+      "wp_engine": 0.2488744990616516,
       "topo_prediction": "black",
       "true_basin": "black"
     },
     {
-      "fen": "2r2rk1/5p2/p6p/2b2Rp1/8/7P/q4PP1/1R1Q2K1 w - - 0 25",
-      "ply": 48,
-      "wp_engine": 0.19852984077617208,
-      "topo_prediction": "black",
-      "true_basin": "black"
-    },
-    {
-      "fen": "r3k2r/5ppp/p3p3/Pb1q4/1R6/3PQP2/1P1B2PP/5RK1 w kq - 3 23",
-      "ply": 44,
-      "wp_engine": 0.7731409791199124,
+      "fen": "r2qk1nr/pp4pp/2n2p2/2b5/2Pp1p2/1P3B2/PB1P1PPP/R2Q1RK1 w kq - 0 13",
+      "ply": 24,
+      "wp_engine": 0.7349601640218837,
       "topo_prediction": "white",
       "true_basin": "white"
     },
     {
-      "fen": "2r1k2r/5ppp/p3p3/Pb3q2/1B1R4/3PQP2/1P4PP/5RK1 w k - 7 25",
-      "ply": 48,
-      "wp_engine": 0.837835112999932,
+      "fen": "r2qk1nr/p6p/2p2pp1/2b4Q/2Pp1p2/1P6/PB1P1PPP/R4RK1 w kq - 0 15",
+      "ply": 28,
+      "wp_engine": 0.7247978839371,
       "topo_prediction": "white",
       "true_basin": "white"
     },
     {
-      "fen": "3b1rk1/1b4pp/3qp3/p4p2/2NP4/P5P1/1P3P1P/R3R1K1 w - - 0 25",
-      "ply": 48,
-      "wp_engine": 0.7705473329662962,
+      "fen": "3rk1nr/p6p/1qpQ1pp1/8/2Pp1p2/1P6/PB1P1PPP/R4RK1 w k - 3 17",
+      "ply": 32,
+      "wp_engine": 0.7121382389811245,
       "topo_prediction": "white",
       "true_basin": "white"
     },
     {
-      "fen": "r1bqk2r/p2pb1p1/2p1p1n1/2p1p2p/2N4P/3P1N2/PPP1QPP1/R1B1K2R w KQkq - 0 11",
-      "ply": 20,
-      "wp_engine": 0.7218503805722687,
-      "topo_prediction": "white",
-      "true_basin": "white"
-    },
-    {
-      "fen": "r4q1r/pb2Nkp1/3pp3/2p3Qp/7P/3P4/PPP2PP1/R3K2R w KQ - 3 19",
+      "fen": "3r2nr/p4k1p/1q3pp1/2p5/2Pp1Q2/1P6/PB1P1PPP/4RRK1 w - - 0 19",
       "ply": 36,
-      "wp_engine": 0.8249362157271112,
+      "wp_engine": 0.7233265559941559,
       "topo_prediction": "white",
       "true_basin": "white"
     },
     {
-      "fen": "r6q/pb3kp1/3pp3/2p3Qp/7P/3P4/PPP2PP1/R3K2R w KQ - 0 21",
+      "fen": "7r/p2rnk1p/1q3pp1/2p5/2PpRQ2/1P6/PB1P1PPP/4R1K1 w - - 4 21",
       "ply": 40,
-      "wp_engine": 0.8291496060284106,
+      "wp_engine": 0.7592933013923162,
+      "topo_prediction": "white",
+      "true_basin": "white"
+    },
+    {
+      "fen": "7r/p2r1k2/1q3pp1/2p2n1p/2PpRQ1P/BP6/P2P1PP1/4R1K1 w - - 1 23",
+      "ply": 44,
+      "wp_engine": 0.7320812691889782,
+      "topo_prediction": "white",
+      "true_basin": "white"
+    },
+    {
+      "fen": "r2r1nk1/p1q2pbp/b1p3p1/4pPPn/1p2P2N/4BQ2/PPP1NRBP/R6K w - - 3 19",
+      "ply": 36,
+      "wp_engine": 0.7196270640184792,
       "topo_prediction": "white",
       "true_basin": "white"
     }
   ],
-  "baseline_depth1_accuracy_all": 0.9950118141244421,
-  "baseline_depth1_accuracy_masked": 0.9950118141244421,
+  "baseline_depth1_accuracy_all": 0.9937351479801253,
+  "baseline_depth1_accuracy_masked": 0.9937351479801253,
   "engine_available": true,
   "train_info": {
-    "train_size": 3429,
-    "val_size": 380,
-    "val_supcon_loss": 6.0742998123168945
+    "train_size": 4167,
+    "val_size": 462,
+    "val_supcon_loss": 5.960062503814697
   },
   "config": {
     "source": "lichess",
@@ -402,5 +402,104 @@
     "contra_margin": 0.35,
     "data_dir": "data",
     "out_dir": "results"
+  },
+  "dynamics": {
+    "n_trajectories_steps": 4224,
+    "drift": {
+      "n_steps": 3985,
+      "drift_alignment_cos_mean": 0.0017523467540740967,
+      "drift_alignment_ci95": [
+        -0.005361796030774712,
+        0.010129073285497725
+      ],
+      "frac_downhill": 0.5021329987452948
+    },
+    "draw_cause": {
+      "white_wins": {
+        "n_games": 176,
+        "frac_white_was_better": 0.8920454545454546,
+        "frac_black_was_better": 0.19318181818181818,
+        "frac_left_draw_basin": 0.9772727272727273
+      },
+      "black_wins": {
+        "n_games": 117,
+        "frac_white_was_better": 0.6410256410256411,
+        "frac_black_was_better": 0.7008547008547008,
+        "frac_left_draw_basin": 0.9230769230769231
+      },
+      "draws": {
+        "n_games": 111,
+        "frac_white_was_better": 0.7387387387387387,
+        "frac_black_was_better": 0.2972972972972973,
+        "frac_left_draw_basin": 0.8378378378378378
+      },
+      "draw_classification": {
+        "n_draws": 111,
+        "quiet_draws_pct": 16.216216216216218,
+        "white_squandered_pct": 73.87387387387388,
+        "black_squandered_pct": 29.72972972972973,
+        "note": "quiet = nie aus dem Remis-Becken hinausgekommen ( sampled plies); squandered = Vorsprung >= Becken-Schwelle erreicht, Partie endete 1/2-1/2"
+      },
+      "white_edge_conversion": {
+        "n_games_with_white_edge": 314,
+        "pct_won": 50.0,
+        "pct_draw": 26.11464968152866,
+        "pct_lost": 23.88535031847134
+      },
+      "wp_swing_mean_elo_lt2400": 0.22152154381885544,
+      "wp_swing_mean_elo_2400_2600": 0.19451903901116607
+    },
+    "tilt_examples": [
+      {
+        "fen": "r1b2rk1/pp2q3/2n1p1pp/6N1/2Bp1n1Q/8/PPP3PP/R2N1RK1 w - - 0 21",
+        "ply": 40,
+        "d_wp": -0.5214449578598686
+      },
+      {
+        "fen": "r4rk1/ppp1qpp1/3b3p/8/3P2N1/2P5/PPB2P2/R1BQ2K1 w - - 3 23",
+        "ply": 44,
+        "d_wp": -0.4648339236629332
+      },
+      {
+        "fen": "2k2b1r/ppp4p/2q1bp2/8/3rp2N/8/PPP2QPP/R1B2RK1 w - - 0 15",
+        "ply": 28,
+        "d_wp": 0.42354731442140714
+      },
+      {
+        "fen": "r1b1qrk1/4nppp/p1nb4/1p2p3/2ppP2N/P4QN1/BPPP1PPP/R1B2RK1 w - - 0 13",
+        "ply": 24,
+        "d_wp": 0.41816595112490407
+      },
+      {
+        "fen": "2rkr3/2pn1pbp/p2p2p1/1p1P4/3N4/1BP2PP1/PP5P/3RK2R w K - 4 23",
+        "ply": 44,
+        "d_wp": -0.4113895273990592
+      },
+      {
+        "fen": "2rk3r/2p2pbp/p2p1np1/1p1P4/B7/2P2PP1/PP2N2P/3RK2R w K - 0 21",
+        "ply": 40,
+        "d_wp": 0.40862825754020304
+      },
+      {
+        "fen": "r1bq1rk1/pp2npbp/4p1p1/2p5/3nPP1Q/2N2N2/PPP1B1PP/R1B2RK1 w - - 1 11",
+        "ply": 20,
+        "d_wp": -0.3966484989171279
+      },
+      {
+        "fen": "r1b1qr1k/pppn2b1/2n4p/4p1p1/2B3pP/2P1P1B1/PPQN1PP1/2KR3R w - - 0 17",
+        "ply": 32,
+        "d_wp": 0.3945768540296319
+      },
+      {
+        "fen": "r2qk2r/p2n1p2/1p1pp1p1/2P1n1Pp/2B1bN1P/2P1B3/P1P1QP2/R3K2R w KQkq - 0 15",
+        "ply": 28,
+        "d_wp": 0.3935059977535866
+      },
+      {
+        "fen": "2r4r/1bqk1p1p/p2p1b2/8/5P2/1P1R4/1KP1QB1P/3R4 w - - 0 23",
+        "ply": 44,
+        "d_wp": 0.3785386060026301
+      }
+    ]
   }
 }
