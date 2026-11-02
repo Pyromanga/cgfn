@@ -1,21 +1,24 @@
 """Öffnungsanalyse für Remis-Ursachen (Jonny): "Ich will die 16.2 % quiet draws
 sehen — sind ALLE Eröffnungen dabei? Allein der erste Move kann alles entscheiden."
 
-Leistet drei Dinge (auf Basis der gesampelten Plies, gleiche Aufloesung wie
+Leistet vier Dinge (auf Basis der gesampelten Plies, gleiche Aufloesung wie
 analysis_dynamics):
 1. Per-Partie-Liste aller quiet draws (game_id, ECO, Eröffnung, erster Move,
-   Elo, erste/letzte gesampelte FEN) — die 16.2 % werden sichtbar.
+   Elo, ECHTE Partielaenge game_plies, Remis-Grund, erste/letzte gesampelte FEN).
 2. Öffnungsabdeckung: wie viele Partien, ECO-Codes, erste Zuege insgesamt —
    und wie die Verteilung quiet/squandered je erstem Zug / ECO-Gruppe aussieht.
 3. Robustheit: quiet-Rate je ECO-Hauptgruppe (A/B/C/D/E) und je erstem Zug —
    ist "quiet" ein Artefakt bestimmter Eröffnungen oder stabil ueber alle?
+4. Laengen-Statistik (Jonny: "welches Opening geht am laengsten bis zum
+   quiet draw?"): Partielänge quiet vs. squandered vs. alle + Top-5 der
+   laengsten quiet draws mit Eröffnung.
 """
 import numpy as np
 import pandas as pd
 
 
 def _gid(v):
-    """game_id als int wenn moeglich, sonst unveraendert (Lichess-IDs koennen Strings sein)."""
+    """game_id als int wenn moeglich, sonst unveraendert."""
     try:
         return int(v)
     except (TypeError, ValueError):
@@ -32,6 +35,8 @@ def _per_game(df: pd.DataFrame, cfg) -> pd.DataFrame:
         "first_move": g["first_move"].first() if "first_move" in df else None,
         "eco": g["eco"].first() if "eco" in df else None,
         "opening": g["opening"].first() if "opening" in df else None,
+        "game_plies": g["game_plies"].first() if "game_plies" in df else None,
+        "draw_reason": g["draw_reason"].first() if "draw_reason" in df else None,
     })
     per["elo_min"] = g.apply(
         lambda x: np.nanmin([x["white_elo"].min(), x["black_elo"].min()])
@@ -74,8 +79,21 @@ def _eco_table(per: pd.DataFrame) -> list:
     return sorted(out, key=lambda r: -r["n_games"])
 
 
+def _game_row(r) -> dict:
+    return {
+        "game_id": _gid(r["game_id"]),
+        "eco": r.get("eco"), "opening": r.get("opening"),
+        "first_move": r.get("first_move"),
+        "elo_min": None if pd.isna(r["elo_min"]) else int(r["elo_min"]),
+        "n_sampled": int(r["n_sampled"]),
+        "game_plies": None if pd.isna(r.get("game_plies")) else int(r["game_plies"]),
+        "draw_reason": r.get("draw_reason"),
+        "max_wp": float(r["max_wp"]), "min_wp": float(r["min_wp"]),
+        "fen_first": r["fen_first"], "fen_last": r["fen_last"]}
+
+
 def opening_stats(df: pd.DataFrame, cfg) -> dict:
-    """Quiet-Draws sichtbar machen + Öffnungsabdeckung pruefen."""
+    """Quiet-Draws sichtbar machen + Öffnungsabdeckung + Laengen pruefen."""
     for col in ("outcome", "game_id"):
         if col not in df:
             return {"skipped": f"keine {col}-Spalte (Selfplay)"}
@@ -91,17 +109,26 @@ def opening_stats(df: pd.DataFrame, cfg) -> dict:
         res["skipped_openings"] = "keine ECO-Daten im Datensatz"
     # 1) Alle quiet draws einzeln (die will Jonny sehen)
     q = draws[draws["quiet"]].sort_values("game_id")
-    quiet_games = []
-    for _, r in q.iterrows():
-        quiet_games.append({
-            "game_id": _gid(r["game_id"]),
-            "eco": r.get("eco"), "opening": r.get("opening"),
-            "first_move": r.get("first_move"),
-            "elo_min": None if pd.isna(r["elo_min"]) else int(r["elo_min"]),
-            "n_sampled": int(r["n_sampled"]),
-            "max_wp": float(r["max_wp"]), "min_wp": float(r["min_wp"]),
-            "fen_first": r["fen_first"], "fen_last": r["fen_last"]})
-    res["quiet_draw_games"] = quiet_games
+    res["quiet_draw_games"] = [_game_row(r) for _, r in q.iterrows()]
+    # 4) Laengen-Statistik: wie lange gehen quiet vs. squandered draws wirklich?
+    if "game_plies" in per and per["game_plies"].notna().any():
+        sq = draws[~draws["quiet"]]
+        res["length_stats"] = {
+            "mean_plies_quiet": float(q["game_plies"].mean()) if len(q) else None,
+            "mean_plies_squandered": float(sq["game_plies"].mean()) if len(sq) else None,
+            "mean_plies_all_draws": float(draws["game_plies"].mean()) if len(draws) else None,
+            "mean_plies_all_games": float(per["game_plies"].mean()),
+            "median_plies_quiet": float(q["game_plies"].median()) if len(q) else None,
+        }
+        longest = q.sort_values("game_plies", ascending=False).head(5)
+        res["longest_quiet_draws"] = [
+            {"game_id": _gid(r["game_id"]), "eco": r["eco"], "opening": r["opening"],
+             "game_plies": int(r["game_plies"]), "draw_reason": r["draw_reason"],
+             "elo_min": int(r["elo_min"]) if not pd.isna(r["elo_min"]) else None}
+            for _, r in longest.iterrows()]
+        if "draw_reason" in draws and draws["draw_reason"].notna().any():
+            res["draw_reasons"] = draws["draw_reason"].value_counts().to_dict()
+            res["quiet_draw_reasons"] = q["draw_reason"].value_counts().to_dict() if len(q) else {}
     if has_opening:
         # 2) Abdeckung
         res["n_unique_eco"] = int(per["eco"].dropna().nunique())
@@ -110,7 +137,6 @@ def opening_stats(df: pd.DataFrame, cfg) -> dict:
         # 3) Robustheit je erstem Zug / ECO-Gruppe
         res["by_first_move"] = _first_move_table(per)
         res["by_eco_group"] = _eco_table(per)
-        # Quiet-Rate ohne die jeweiligen Top-Eroeffnungen (Stabilitaetscheck)
         for mv in ("e4", "d4", "Nf3", "c4"):
             sub = draws[draws["first_move"] != mv]
             if len(sub):

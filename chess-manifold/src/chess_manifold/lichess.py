@@ -42,19 +42,37 @@ def fetch_elite_games(cfg: Config) -> str:
     return "\n\n".join(chunks)
 
 
+def _draw_reason(end_board: chess.Board, game) -> str:
+    """Remis-Grund aus Endstellung + PGN-Header (Jonny: 'laengste' quiet draws)."""
+    term = (game.headers.get("Termination") or "").lower()
+    if end_board.is_stalemate():
+        return "stalemate"
+    if end_board.is_insufficient_material():
+        return "insufficient_material"
+    if end_board.can_claim_threefold_repetition():
+        return "threefold_repetition"
+    if end_board.can_claim_fifty_moves():
+        return "fifty_moves"
+    if "abandoned" in term or "timeout" in term:
+        return "timeout_vs_material"
+    return "agreement"
+
+
 def generate_positions_lichess(cfg: Config):
     """Wie data.generate_positions, aber aus echten Elite-Turnierpartien.
 
     Rueckgabe: (rows, n_games). Pro Stellung: game_id, outcome (Spielausgang),
-    white_elo/black_elo sowie eco, opening (Eröffnungsname) und first_move
-    (SAN des ersten Zuges) — ermöglicht die Öffnungsabdeckungs-Analyse
-    (quiet vs. squandered draws je Eröffnung / erstem Zug).
+    white_elo/black_elo, eco, opening (Eröffnungsname), first_move (SAN des
+    ersten Zuges) sowie game_plies (ECHTE Partielaenge in Halbzuegen) und
+    draw_reason (Remis-Grund: agreement/stalemate/material/repetition/50-moves)
+    — ermöglicht Laengen- und Remis-Grund-Analyse (quiet vs. squandered).
     """
     pgn_text = fetch_elite_games(cfg)
     rows = [{"fen": chess.STARTING_FEN, "ply": 0, "outcome": None,
              "early_middlegame": False, "is_start": True, "game_id": None,
              "white_elo": None, "black_elo": None,
-             "eco": None, "opening": None, "first_move": None}]
+             "eco": None, "opening": None, "first_move": None,
+             "game_plies": None, "draw_reason": None}]
     n_games = 0
     stream = io.StringIO(pgn_text)
     while True:
@@ -73,12 +91,19 @@ def generate_positions_lichess(cfg: Config):
             continue
         eco = game.headers.get("ECO")
         opening = game.headers.get("Opening")
+        moves = list(game.mainline_moves())
+        game_plies = len(moves)
+        # Endstellung fuer Remis-Grund (komplette Partie, unabhaengig vom Sampling)
+        end_board = game.board()
+        for mv in moves:
+            end_board.push(mv)
+        reason = _draw_reason(end_board, game) if res == "1/2-1/2" else None
         gid = n_games  # game_id zaehlt nur Partien mit gesampelten Stellungen
         board = game.board()
         sampled = 0
         ply = 0
         first_move = None
-        for move in game.mainline_moves():
+        for move in moves:
             if ply == 0:
                 first_move = board.san(move)
             board.push(move)
@@ -93,6 +118,7 @@ def generate_positions_lichess(cfg: Config):
                     "is_start": False, "game_id": gid,
                     "white_elo": welo, "black_elo": belo,
                     "eco": eco, "opening": opening, "first_move": first_move,
+                    "game_plies": game_plies, "draw_reason": reason,
                 })
                 sampled += 1
         if sampled:
