@@ -47,6 +47,27 @@ def recurrent_matrix(hidden_dim, lam_max, s_nonnormal=1.0, seed=0):
     return Q @ T @ Q.T
 
 
+def kappa_of(W):
+    """Nicht-Normalitaet von W: Eigenvektor-Kondition kappa_T.
+
+    Fuer diagonalisierbare Matrizen DIE Nicht-Normalitaets-Metrik
+    (Tiefenanalyse XI, kappa-Zoo). Rueckgabe: Skalar-Tensor (float64).
+    Fallback bei Defektheit (nicht diagonalisierbar): Henrici-Abweichung
+    sqrt(||W||_F^2 - sum |lam_i|^2).
+
+    Hinweis (Runde XI): kappa(W) ist NICHT die Fenster-Koordinate —
+    J = -I/tau + W diag(d) ist auch fuer diagonales W nicht-normal.
+    Aber der kappa(W)-Drift ist der F16-Befund, den F27 eroedieren soll.
+    """
+    W = W.detach().to(torch.float64)
+    try:
+        V = torch.linalg.eig(W).eigenvectors
+        return torch.linalg.cond(V)
+    except Exception:
+        lam = torch.linalg.eigvals(W)
+        return (W.norm() ** 2 - (lam.abs() ** 2).sum()).clamp_min(0).sqrt()
+
+
 def make_designed_model(hidden_dim, tau, lam_max, s_nonnormal=1.0, seed=0,
                         task_dim=0, freeze_w=True):
     """
