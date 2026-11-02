@@ -47,7 +47,7 @@ def _persistence_descriptors(pts) -> dict:
 def classical_features(board: chess.Board) -> dict:
     feats = {}
     for c, tag in ((chess.WHITE, "w"), (chess.BLACK, "b")):
-        opp = chess.not_(c)
+        opp = not c
         mat = sum(PIECE_VALUES[pt] * len(board.pieces(pt, c)) for pt in PIECE_VALUES)
         feats[f"material_{tag}"] = mat
         for pt, name in ((chess.PAWN, "p"), (chess.KNIGHT, "n"), (chess.BISHOP, "b"),
@@ -62,7 +62,7 @@ def classical_features(board: chess.Board) -> dict:
         feats[f"isolated_{tag}"] = int(sum(
             1 for f in range(8) if cnt[f] > 0
             and (f == 0 or cnt[f - 1] == 0) and (f == 7 or cnt[f + 1] == 0)))
-        # Freibauern (grob: kein gegnerischer Bauer blockt die Bahn)
+        # Freibauern (grob: kein gegnerischer Bauer blockiert die Bahn)
         passed = 0
         for sq in board.pieces(chess.PAWN, c):
             f, r = chess.square_file(sq), chess.square_rank(sq)
@@ -96,7 +96,7 @@ def classical_features(board: chess.Board) -> dict:
     # Mobilitaet
     feats["mobility_stm"] = float(board.legal_moves.count())
     b2 = board.copy(stack=False)
-    b2.turn = chess.not_(board.turn)
+    b2.turn = not board.turn
     try:
         feats["mobility_opp"] = float(len(list(b2.legal_moves)))
     except Exception:
