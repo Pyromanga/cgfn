@@ -1,0 +1,76 @@
+name: chess-manifold
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Profil: smoke (~300 Stellungen) oder full (~10k)'
+        required: false
+        default: 'smoke'
+        type: choice
+        options: ['smoke', 'full']
+  push:
+    paths:
+      - ".trigger/chess-manifold"
+      - "chess-manifold/**"
+      - ".github/workflows/chess-manifold.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: chess-manifold
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Stockfish installieren (apt)
+        run: |
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends stockfish
+          echo "STOCKFISH_PATH=$(command -v stockfish)" >> "$GITHUB_ENV"
+
+      - name: Abhaengigkeiten
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Tests
+        run: python -m pytest tests -q
+
+      - name: Pipeline
+        run: |
+          if [ "${{ github.event_name }}" = "push" ] || [ -z "${{ inputs.profile }}" ] || [ "${{ inputs.profile }}" = "smoke" ]; then
+            make smoke
+          else
+            make full
+          fi
+
+      - name: Artefakte hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-manifold-results-${{ github.run_number }}
+          path: |
+            chess-manifold/results/
+            chess-manifold/data/*.csv
+          retention-days: 30
+
+      - name: Ergebnisse zurueckcommitten
+        run: |
+          git config user.name "chess-manifold-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add results/
+          if git diff --cached --quiet; then
+            echo "Keine Ergebnis-Aenderungen."
+          else
+            git commit -m "chess-manifold: results run #${{ github.run_number }} [skip ci]"
+            git push
+          fi
