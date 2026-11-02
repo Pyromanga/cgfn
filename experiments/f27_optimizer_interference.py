@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """F27 — Optimierer-Ressourcen-Interferenz (fix #R19):
-Schneidet der SGD-Update-Schritt \"kappa(W)-Kanalrauschen\" ab? Wir messen den
+Schneidet der SGD-Update-Schritt "kappa(W)-Kanalrauschen" ab? Wir messen den
 Drift von kappa(W) (Bedingungszahl-Proxy) unter drei Optimierern
 (SGD, SGD+Momentum, Adam) bei identischer Lerngeschwindigkeit (matched dL).
 Erfahrungskurve g = <dL_t - dL_{t+1}>:  Zeigt der Adam-Lauf bei
@@ -16,7 +16,7 @@ import argparse
 import numpy as np
 import torch
 
-from src.cgfn.design import make_designed_model, kappa_of
+from cgfn.design import make_designed_model, kappa_of
 
 
 def train_with_optimizer(opt_name, lr, steps, seed, log_every=5):
@@ -77,16 +77,25 @@ def main():
         results[opt_name] = log
 
     with open(args.out, "w", encoding="utf-8") as f:
-        f.write("F27 — Optimizer-Resource-Interferenz\n")
-        f.write("=" * 60 + "\n\n")
+        f.write("F27 — Optimizer-Resource-Interferenz
+")
+        f.write("=" * 60 + "
+
+")
         for opt_name, log in results.items():
-            f.write(f"\n[{opt_name}] lr={lrs[opt_name]}\n")
+            f.write(f"
+[{opt_name}] lr={lrs[opt_name]}
+")
             for row in log:
                 f.write(f"  t={row['t']:>4}  loss={row['loss']:.6f}  "
                         f"g_sq={row['g_sq']:.6f} (ema {row['g_sq_ema']:.6f})  "
-                        f"kappa={row['kappa']:.4f}\n")
-        f.write("\nInterpretation:\n")
-        f.write("  - Wenn Adam kappa-Drift zeigt, wo SGD keinen zeigt: Ressourcen-Interferenz.\n")
+                        f"kappa={row['kappa']:.4f}
+")
+        f.write("
+Interpretation:
+")
+        f.write("  - Wenn Adam kappa-Drift zeigt, wo SGD keinen zeigt: Ressourcen-Interferenz.
+")
     print(f"[i] F27 abgeschlossen — Ergebnisse in {args.out}")
 
 
