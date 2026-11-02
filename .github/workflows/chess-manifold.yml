@@ -17,6 +17,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   pipeline:
@@ -37,6 +38,7 @@ jobs:
           set -x
           sudo apt-get update -qq || true
           sudo apt-get install -y -qq --no-install-recommends stockfish || echo "WARN: apt stockfish fehlgeschlagen, Code-Fallback wird genutzt"
+          command -v stockfish || true
 
       - name: Abhaengigkeiten
         run: |
@@ -69,6 +71,7 @@ jobs:
           retention-days: 30
 
       - name: Ergebnisse zurueckcommitten
+        if: success()
         run: |
           git config user.name "chess-manifold-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -79,3 +82,22 @@ jobs:
             git commit -m "chess-manifold: results run #${{ github.run_number }} [skip ci]"
             git push
           fi
+
+      - name: Fehler-Diagnose (Job-Log -> Issue #2)
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -x
+          RUN_ID=${{ github.run_id }}
+          JOB_ID=$(gh api repos/Pyromanga/cgfn/actions/runs/$RUN_ID/jobs --jq '.jobs[0].id' 2>/dev/null || echo "")
+          {
+            echo "Run #${{ github.run_number }} (${{ github.sha }}) fehlgeschlagen."
+            echo
+            if [ -n "$JOB_ID" ]; then
+              gh api repos/Pyromanga/cgfn/actions/jobs/$JOB_ID/logs 2>&1 | tail -n 150
+            else
+              echo "Job-ID nicht ermittelbar."
+            fi
+          } > diag.txt || true
+          gh api -X POST repos/Pyromanga/cgfn/issues/2/comments -F body=@diag.txt || echo "Kommentar-Post fehlgeschlagen"
