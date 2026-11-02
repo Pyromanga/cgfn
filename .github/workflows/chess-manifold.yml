@@ -36,28 +36,36 @@ jobs:
       - name: Stockfish installieren (apt, best-effort; Fallback im Code)
         run: |
           set -x
-          sudo apt-get update -qq || true
-          sudo apt-get install -y -qq --no-install-recommends stockfish || echo "WARN: apt stockfish fehlgeschlagen, Code-Fallback wird genutzt"
-          command -v stockfish || true
+          sudo apt-get update -qq 2>&1 | tee -a apt.log || true
+          sudo apt-cache policy stockfish 2>&1 | tee -a apt.log || true
+          sudo apt-get install -y -qq --no-install-recommends stockfish 2>&1 | tee -a apt.log || echo "WARN: apt stockfish fehlgeschlagen, Code-Fallback wird genutzt" | tee -a apt.log
+          command -v stockfish 2>&1 | tee -a apt.log || true
 
       - name: Abhaengigkeiten
         run: |
           set -x
-          python -m pip install --upgrade pip
-          pip install torch --index-url https://download.pytorch.org/whl/cpu
-          pip install -r requirements.txt
-          pip install -e .
-          pip check || true
+          python -m pip install --upgrade pip 2>&1 | tee -a dep.log || true
+          if ! pip install torch --index-url https://download.pytorch.org/whl/cpu 2>&1 | tee -a dep.log; then
+            echo "WARN: torch CPU-Index fehlgeschlagen, PyPI-Fallback" | tee -a dep.log
+            pip install torch 2>&1 | tee -a dep.log || true
+          fi
+          pip install -r requirements.txt 2>&1 | tee -a dep.log || true
+          pip install -e . 2>&1 | tee -a dep.log || true
+          pip check 2>&1 | tee -a dep.log || true
+          python -c "import chess, ripser, torch, pytorch_lightning; print('imports ok', torch.__version__)" 2>&1 | tee -a dep.log || true
 
       - name: Tests
-        run: python -m pytest tests -q
+        run: |
+          set -o pipefail
+          python -m pytest tests -q 2>&1 | tee pytest.log
 
       - name: Pipeline
         run: |
+          set -o pipefail
           if [ "${{ github.event_name }}" = "push" ] || [ -z "${{ inputs.profile }}" ] || [ "${{ inputs.profile }}" = "smoke" ]; then
-            make smoke
+            make smoke 2>&1 | tee pipeline.log
           else
-            make full
+            make full 2>&1 | tee pipeline.log
           fi
 
       - name: Artefakte hochladen
@@ -68,6 +76,10 @@ jobs:
           path: |
             chess-manifold/results/
             chess-manifold/data/*.csv
+            chess-manifold/apt.log
+            chess-manifold/dep.log
+            chess-manifold/pytest.log
+            chess-manifold/pipeline.log
           retention-days: 30
 
       - name: Ergebnisse zurueckcommitten
@@ -83,21 +95,22 @@ jobs:
             git push
           fi
 
-      - name: Fehler-Diagnose (Job-Log -> Issue #2)
+      - name: Fehler-Diagnose (Logs -> Issue #2)
         if: failure()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -x
-          RUN_ID=${{ github.run_id }}
-          JOB_ID=$(gh api repos/Pyromanga/cgfn/actions/runs/$RUN_ID/jobs --jq '.jobs[0].id' 2>/dev/null || echo "")
           {
-            echo "Run #${{ github.run_number }} (${{ github.sha }}) fehlgeschlagen."
+            echo "Run #${{ github.run_number }} (${{ github.sha }}) fehlgeschlagen. Job-Status: ${{ job.status }}"
             echo
-            if [ -n "$JOB_ID" ]; then
-              gh api repos/Pyromanga/cgfn/actions/jobs/$JOB_ID/logs 2>&1 | tail -n 150
-            else
-              echo "Job-ID nicht ermittelbar."
-            fi
-          } > diag.txt || true
+            for f in apt.log dep.log pytest.log pipeline.log; do
+              if [ -f "$f" ]; then
+                echo "===== tail -80 $f ====="
+                tail -n 80 "$f"
+                echo
+              fi
+            done
+            echo "===== gh run view --log-failed (Fallback) ====="
+            gh run view ${{ github.run_id }} --log-failed 2>&1 | tail -n 120 || true
+          } > diag.txt
           gh api -X POST repos/Pyromanga/cgfn/issues/2/comments -F body=@diag.txt || echo "Kommentar-Post fehlgeschlagen"
