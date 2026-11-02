@@ -6,12 +6,18 @@ from dataclasses import dataclass
 @dataclass
 class Config:
     # --- Daten ---
+    source: str = os.environ.get("CM_SOURCE", "selfplay")  # selfplay | lichess
     n_games: int = int(os.environ.get("CM_N_GAMES", "25"))       # Random-Selfplay-Partien
     plies_per_game: int = int(os.environ.get("CM_PLIES", "12"))  # Stellungen pro Partie
     max_game_plies: int = 160
     seed: int = int(os.environ.get("CM_SEED", "42"))
     min_ply: int = 4          # Opening-Rauschen ausschliessen
     early_middlegame: tuple = (8, 20)
+
+    # --- Lichess-API (source=lichess) ---
+    lichess_top_n: int = int(os.environ.get("CM_LICHESS_TOP_N", "25"))
+    lichess_games_per_user: int = int(os.environ.get("CM_LICHESS_GAMES_PER_USER", "40"))
+    lichess_min_elo: int = int(os.environ.get("CM_LICHESS_MIN_ELO", "2200"))
 
     # --- Engine ---
     engine_depth: int = int(os.environ.get("CM_ENGINE_DEPTH", "12"))  # Supervision
