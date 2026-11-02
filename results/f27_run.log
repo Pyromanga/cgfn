@@ -1,10 +1,4 @@
 Traceback (most recent call last):
-  File "/home/runner/work/cgfn/cgfn/experiments/f27_optimizer_interference.py", line 189, in <module>
-    main()
-  File "/home/runner/work/cgfn/cgfn/experiments/f27_optimizer_interference.py", line 142, in main
-    traj = run_training(opt_name, seed, args.steps, noise_only, lr_map)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cgfn/cgfn/experiments/f27_optimizer_interference.py", line 107, in run_training
-    g_sq = (g ** 2).mean()
-            ~~^^~~
-TypeError: unsupported operand type(s) for ** or pow(): 'NoneType' and 'int'
+  File "/home/runner/work/cgfn/cgfn/experiments/f27_optimizer_interference.py", line 19, in <module>
+    from src.cgfn.design import make_designed_model, kappa_of
+ModuleNotFoundError: No module named 'src'
