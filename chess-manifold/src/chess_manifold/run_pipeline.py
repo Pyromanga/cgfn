@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from .analysis import basin_of, run_analysis, save_report
+from .analysis_dynamics import run_dynamics
 from .config import Config
 from .data import generate_positions
 from .engine import Engine, cp_to_winprob
@@ -79,6 +80,12 @@ def main():
     report["train_info"] = train_info
     report["config"] = {k: (list(v) if isinstance(v, tuple) else v)
                         for k, v in vars(cfg).items()}
+
+    print("[4b/5] Dynamikanalyse (Trajektorien, Remis-Ursachen-Test) ...")
+    try:
+        report["dynamics"] = run_dynamics(cfg, df, emb)
+    except Exception as e:
+        report["dynamics"] = {"error": repr(e)}
     save_report(report, os.path.join(cfg.out_dir, "report.json"))
 
     print("[5/5] Plots ...")
@@ -97,6 +104,7 @@ def main():
         "geodesic_start_to_basins": report.get("geodesic_start_to_basins"),
         "bootstrap_geodesic_test": report.get("bootstrap_geodesic_test"),
         "n_contradictions": report.get("n_contradictions"),
+        "dynamics": report.get("dynamics"),
         "engine_available": report["engine_available"],
     }
     with open(os.path.join(cfg.out_dir, "summary.json"), "w", encoding="utf-8") as f:
