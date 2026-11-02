@@ -44,7 +44,7 @@ def _per_game(df: pd.DataFrame, cfg) -> pd.DataFrame:
     per["fen_first"] = g["fen"].first()
     per["fen_last"] = g["fen"].last()
   
-  # game_id war nur der Groupby-Index (Run #12: KeyError 'game_id') — als Spalte materialisieren
+    # game_id war nur der Groupby-Index (Run #12: KeyError 'game_id') — als Spalte materialisieren
     per = per.reset_index()
     quiet = ((per["outcome"] == "1/2-1/2") & (per["max_wp"] <= cfg.wp_white)
              & (per["min_wp"] >= cfg.wp_black))
@@ -93,8 +93,7 @@ def _game_row(r) -> dict:
         "fen_first": r["fen_first"], "fen_last": r["fen_last"]}
 
 
-def opening_stats(df: pd.DataFrame, cfg) -> d
-ict:
+def opening_stats(df: pd.DataFrame, cfg) -> dict:
     """Quiet-Draws sichtbar machen + Öffnungsabdeckung + Laengen pruefen."""
     for col in ("outcome", "game_id"):
         if col not in df:
@@ -129,8 +128,7 @@ ict:
              "elo_min": int(r["elo_min"]) if not pd.isna(r["elo_min"]) else None}
             for _, r in longest.iterrows()]
         if "draw_reason" in draws and draws["draw_reason"].notna().any():
-   
-         res["draw_reasons"] = draws["draw_reason"].value_counts().to_dict()
+            res["draw_reasons"] = draws["draw_reason"].value_counts().to_dict()
             res["quiet_draw_reasons"] = q["draw_reason"].value_counts().to_dict() if len(q) else {}
     if has_opening:
         # 2) Abdeckung
