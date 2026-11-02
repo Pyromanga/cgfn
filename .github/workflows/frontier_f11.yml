@@ -52,8 +52,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/ 2>/dev/null || true
           if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
-          git commit -m
- "results: F11-Benettin-Lauf ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          git commit -m "results: F11-Benettin-Lauf ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
           # FIX (2026-10-13, Push-Race debug<>f11): Parallele Workflows (z.B.
           # debug + f11 im selben Trigger-Commit) pushen beide nach main — der
           # zweite push wurde als non-fast-forward rejected und der Job lief
