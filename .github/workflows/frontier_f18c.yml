@@ -49,7 +49,7 @@ jobs:
             git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
             sleep $((i * 10))
  
-         done
+          done
           echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
       - name: Upload results
         if: always()
@@ -58,3 +58,4 @@ jobs:
           name: frontier-f18c-results
           path: results/
           retention-days: 30
+
