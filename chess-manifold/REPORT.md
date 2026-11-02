@@ -2,15 +2,15 @@
 
 **Setup:** Echte Turnierpartien statt Random-Selfplay — Top-25-Classical-Spieler via
 offizielle Lichess-API (Commits 2c863abe/292d5f0c), je 40 Partien, Elo >= 2200,
-Spielausgang in +positions.csv+ (Spalte +outcome+) mitgespeichert.
+Spielausgang in `positions.csv` (Spalte `outcome`) mitgespeichert.
 Run #9 gruen, Ergebnisse committet (n = 3.809 Positionen; Train 3.429 / Val 380).
-Datenquelle: +report.json+ -> +config.source = "lichess"+.
+Datenquelle: `report.json` -> `config.source = "lichess"`.
 
 **Beckengroessen** (wp-Thresholds 0.55/0.45): **Weiss 1.245 (32.7 %), Remis 2.080 (54.6 %),
 Schwarz 484 (12.7 %)** — vs. Selfplay #7 (6.588 / 1.206 / 2.365 = 64.8 % / 11.9 % / 23.3 %):
 Die Verteilung dreht sich von Weiss-Dominanz zu Remis-Dominanz, wie fuer Turnierdaten
 erwartet; der Selfplay-Weiss-Bias ist damit als Artefakt der Datenquelle bestätigt.
-*Hinweis:* positions.csv ist nicht im Repo (data/.gitignore); die Spalte +outcome+
+*Hinweis:* positions.csv ist nicht im Repo (data/.gitignore); die Spalte `outcome`
 ermoeglicht erstmals den Abgleich Becken-vs-Spielausgang — fuer den naechsten Run
 sollten die outcome-Haeufigkeiten direkt in summary.json landen.
 
