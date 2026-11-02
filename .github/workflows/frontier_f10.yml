@@ -2,7 +2,7 @@ name: cgfn-frontier (F10)
 
 # F10 — Saettigungs-korrigierter Spectral Ruler:
 # tau* = 1/(lam_max * d), d = <sech^2(z)> = 1-Q, self-consistent iteriert.
-# Laeuft sonntags nachts (CPU-Budget) UND per Marker-Commit (.trigger/f10).
+# Laeuft per Marker-Commit (.trigger/f10) UND per workflow_dispatch.
 # Run-Log wird IMMER nach results/ committet (Crash-Diagnose ohne Actions-UI).
 
 on:
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Gate: syntax-check (20s statt Crash nach 15-55 Min)
+      - name: "Gate: syntax-check (20s statt Crash nach 15-55 Min)"
         run: |
           python -m py_compile experiments/f10_qbar.py || { echo "[e] SYNTAX-FEHLER in experiments/f10_qbar.py — Abbruch, Kontingent geschont"; exit 1; }
           echo "[i] syntax ok"
