@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""F27 — Optimierer-Ressourcen-Interferenz (E3b-Antagonist, fix 2026-11-02).
+"""F27 — Optimierer-Ressourcen-Interferenz (E3b-Antagonist, fix 2026-11-03).
 
 Frage: Erodiert der Optimierer die Nicht-Normalitaets-Ressource?
 Wir messen den Drift von kappa(W) (Eigenvektor-Kondition kappa_T,
@@ -12,15 +12,23 @@ Fix-Historie:
   zwei weitere Todsuenen ans Licht: (a) Oktober-Bulk-Edit-Truemmer in
   den f.write-Zeilen (Syntax-Fehler), (b) kappa_of existierte NICHT in
   cgfn.design, (c) Input-Shape (1000,64,16) passte nicht zum Modell
-  (input_dim=1) und das Ziel war reines Rauschen. Dieser Rewrite fixt
-  alle drei; Aufgabe ist jetzt eine ECHTE Memory-Regression, die die
-  Ressource nutzt.
+  (input_dim=1) und das Ziel war reines Rauschen. Der Rewrite fixte
+  alle drei; Aufgabe ist jetzt eine ECHTE Memory-Regression.
+  Run 33: linalg.svd crash — ein Arm trieb W in NaN/Inf (explodierende
+  Gradienten), kappa_zoo starb statt zu melden. Dieser Fix macht
+  Divergenz MESSBAR: isfinite-Waechter pro Log-Punkt, Abbruch mit
+  DIVERGED-Marke, letzter endlicher kappa-Wert zaehlt, Aggregat
+  weist Divergenzen aus. Ein explodierter Arm ist E3b-DATENPUNKT,
+  kein Crash: der Optimierer zerlegt die Dynamik bis zur Explosion,
+  und genau das registrieren wir jetzt.
 
 Vorhersage (E3b): kappa_T(W) driftet unter Training nach oben (F16:
 +0.89 unter GRU); Adam am staerksten. Falls kein Drift: Der F16-Befund
-ist kein Optimizer-Effekt.
+ist kein Optimizer-Effekt. Zusaetzlich: Divergenz-Reihenfolge ist
+selbst ein Antagonisten-Signal (wer sprengt zuerst?).
 """
 import argparse
+import math
 import os
 from pathlib import Path
 
@@ -28,6 +36,10 @@ import torch
 
 from cgfn.design import kappa_of, make_designed_model
 from cgfn.resource import kappa_zoo
+
+
+def _params_finite(model):
+    return all(bool(torch.isfinite(p).all()) for p in model.parameters())
 
 
 def run_arm(opt_name, lr, steps, seed, hidden, T, lag, log_every):
@@ -49,19 +61,37 @@ def run_arm(opt_name, lr, steps, seed, hidden, T, lag, log_every):
     y[0, lag:] = x[0, :-lag]
 
     kz0 = kappa_zoo(model.W.detach())
+    kz_last = dict(kz0)
     log = []
+    diverged = -1
     for t in range(steps):
         opt.zero_grad()
         out, _states = model(x)
         loss = ((out[0, lag:] - y[0, lag:]) ** 2).mean()
         loss.backward()
         opt.step()
-        if t % log_every == 0 or t == steps - 1:
-            kz = kappa_zoo(model.W.detach())
-            log.append((t, loss.item(), kz['kappa_T'], kz['kappa_cond'],
-                        kz['delta_H']))
-    kz1 = kappa_zoo(model.W.detach())
-    return log, kz0, kz1, float(kappa_of(model.W.detach()))
+        lw = loss.item()
+        finite = math.isfinite(lw) and _params_finite(model)
+        if t % log_every == 0 or t == steps - 1 or not finite:
+            if finite:
+                kz = kappa_zoo(model.W.detach())
+                kz_last = kz
+                log.append((t, lw, kz['kappa_T'], kz['kappa_cond'],
+                            kz['delta_H']))
+            else:
+                # Explosion: letzter endlicher Stand + Marke.
+                log.append((t, lw, kz_last['kappa_T'],
+                            kz_last['kappa_cond'], kz_last['delta_H']))
+        if not finite:
+            diverged = t
+            break
+    if diverged < 0:
+        kz1 = kappa_zoo(model.W.detach())
+        k_final = float(kappa_of(model.W.detach()))
+    else:
+        kz1 = kz_last
+        k_final = float('nan')
+    return log, kz0, kz1, k_final, diverged
 
 
 def main():
@@ -85,43 +115,56 @@ def main():
     L.append(f'seeds={seeds} steps={args.steps} H={args.hidden} T={args.T} lag={args.lag} '
              f'lrs={lrs} designed: lam=1.0 s=0.8 tau=1.0 (W trainierbar)')
     L.append('E3b-Vorhersage: kappa_T driftet auf; Adam am staerksten. Kein Drift => F16 ist kein Optimizer-Effekt.')
+    L.append('Divergenz-Protokoll: Explosion = DIVERGED-Marke, letzter endlicher kappa zaehlt.')
     L.append('=' * 110)
 
     rows = []
     for opt_name in ('sgd', 'momentum', 'adam'):
         L.append('')
         L.append(f'########## {opt_name} (lr={lrs[opt_name]}) ##########')
-        L.append(f"{'seed':>4s} {'t':>5s} {'loss':>9s} {'kT':>8s} {'kcond':>8s} {'dH':>7s}")
+        L.append(f"{'seed':>4s} {'t':>5s} {'loss':>9s} {'kT':>8s} {'kcond':>8s} {'dH':>7s} {'note':>9s}")
         for seed in seeds:
-            log, kz0, kz1, _k = run_arm(opt_name, lrs[opt_name], args.steps,
-                                       seed, args.hidden, args.T, args.lag,
-                                       args.log_every)
+            log, kz0, kz1, _k, diverged = run_arm(opt_name, lrs[opt_name],
+                                                  args.steps, seed,
+                                                  args.hidden, args.T,
+                                                  args.lag, args.log_every)
+            note = 'DIVERGED' if diverged >= 0 else 'ok'
             for (t, loss, kT, kc, dH) in log:
-                L.append(f'{seed:4d} {t:5d} {loss:9.5f} {kT:8.3f} {kc:8.3f} {dH:7.3f}')
+                lv = f'{loss:9.5f}' if math.isfinite(loss) else '     nan'
+                L.append(f'{seed:4d} {t:5d} {lv} {kT:8.3f} {kc:8.3f} {dH:7.3f} {note:>9s}')
+            if diverged >= 0:
+                L.append(f'      [!] seed {seed}: DIVERGENZ bei t={diverged} '
+                         f'(nicht-finite Werte; kappa bis dahin: '
+                         f"kT {kz1['kappa_T']:.3f}, kcond {kz1['kappa_cond']:.3f})")
             rows.append(dict(opt=opt_name, seed=seed,
                              loss_end=log[-1][1],
                              kT0=kz0['kappa_T'], kT1=kz1['kappa_T'],
-                             kc0=kz0['kappa_cond'], kc1=kz1['kappa_cond']))
+                             kc0=kz0['kappa_cond'], kc1=kz1['kappa_cond'],
+                             diverged=diverged))
 
     L.append('')
-    L.append('--- Aggregat (Mittel ueber Seeds) ---')
-    L.append(f"{'opt':>8s} {'loss_end':>9s} {'kT_start':>9s} {'kT_end':>9s} {'dK':>7s} {'ratio':>7s} {'kc_start':>9s} {'kc_end':>9s}")
+    L.append('--- Aggregat (Mittel ueber Seeds; divergierte Arme zaehlen mit letztem endlichen kappa) ---')
+    L.append(f"{'opt':>8s} {'loss_end':>9s} {'kT_start':>9s} {'kT_end':>9s} {'dK':>7s} {'ratio':>7s} {'kc_start':>9s} {'kc_end':>9s} {'n_div':>5s}")
     for opt_name in ('sgd', 'momentum', 'adam'):
         sub = [r for r in rows if r['opt'] == opt_name]
         n = len(sub)
-        le = sum(r['loss_end'] for r in sub) / n
+        le = sum(r['loss_end'] if math.isfinite(r['loss_end']) else 0.0
+                 for r in sub) / n
         k0 = sum(r['kT0'] for r in sub) / n
         k1 = sum(r['kT1'] for r in sub) / n
         c0 = sum(r['kc0'] for r in sub) / n
         c1 = sum(r['kc1'] for r in sub) / n
+        ndiv = sum(1 for r in sub if r['diverged'] >= 0)
         L.append(f'{opt_name:>8s} {le:9.5f} {k0:9.3f} {k1:9.3f} {k1-k0:+7.3f} '
-                 f'{k1/max(k0,1e-9):7.3f} {c0:9.3f} {c1:9.3f}')
+                 f'{k1/max(k0,1e-9):7.3f} {c0:9.3f} {c1:9.3f} {ndiv:5d}')
 
     L.append('')
     L.append('LESEAT:')
     L.append('dK > 0 systematisch => Optimierer erodiert die Nicht-Normalitaets-')
     L.append('Ressource (E3b bestaetigt); Vergleich der drei Optimierer sagt, ob')
     L.append('das an Adaptivitaet (Adam) oder an der Update-Richtung selbst liegt.')
+    L.append('DIVERGED-Zaehler: Explosion ist Antagonisten-Datenpunkt — welcher')
+    L.append('Optimierer zerlegt die Dynamik als erster ist ein E3b-Signal.')
     L.append('Runde-XI-Note: die schaerfere Groesse waere g_opt (Update-Kokkyklus,')
     L.append('F31-P5) — F27 misst den klassischen kappa(W)-Drift als F16-Replikat.')
     L.append('=== FERTIG ===')
