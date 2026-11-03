@@ -12,7 +12,7 @@ on:
 jobs:
   chess-pattern-miner:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:
@@ -26,26 +26,22 @@ jobs:
           echo "[i] syntax ok"
       - name: Install python-chess
         run: pip install python-chess
-      - name: Download Syzygy 3-4-Mann Tablebases (WDL, parallel, mit Timeout)
+      - name: "Download Syzygy 3-Mann WDL-Tablebases (nur was der Miner braucht: K?vK, .rtbw)"
         run: |
           mkdir -p tablebases
-          for t in KQvK KRvK KBvK KNvK KPvK \
-                   KNvKN KNvKB KNvKP KNvKR KNvKQ \
-                   KBvKB KBvKP KBvKR KBvKQ \
-                   KPvKP KPvKR KPvKQ \
-                   KRvKN KRvKB KRvKP KRvKR KRvKQ \
-                   KQvKN KQvKB KQvKP KQvKR KQvKQ; do
-            for ext in rtbw rtbz; do
-              ( wget -q -T 30 -t 2 -O "tablebases/$t.$ext" \
-                  "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.$ext" \
-                  || echo "[w] $t.$ext fehlt" ) &
-            done
-            # max. 8 parallele Downloads
-            while [ "$(jobs -r | wc -l)" -ge 8 ]; do sleep 1; done
+          for t in KQvK KRvK KBvK KNvK KPvK; do
+            ( wget -q -T 30 -t 2 -O "tablebases/$t.rtbw" \
+                "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.rtbw" \
+                || echo "[w] $t.rtbw fehlt" ) &
           done
           wait
-          du -sh tablebases/
-          ls tablebases/ | wc -l
+          ls -la tablebases/
+          # Frueh-Warnung: leere/fehlende Dateien sind die klassische stille Todesursache
+          for t in KQvK KRvK KBvK KNvK KPvK; do
+            if [ ! -s "tablebases/$t.rtbw" ]; then
+              echo "[e] $t.rtbw fehlt oder ist leer — probe_wdl wird fuer diese Klasse nichts liefern"
+            fi
+          done
       - name: Run C3 pattern miner
         run: |
           set -o pipefail
@@ -61,7 +57,7 @@ jobs:
           git commit -m "results: C3-Muster-Miner ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
           for i in 1 2 3 4 5; do
             if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
-            git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
             sleep $((i * 10))
           done
           echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
