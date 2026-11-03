@@ -1,0 +1,36 @@
+name: chess-pattern-proofs (C4)
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.trigger/c4'
+      - 'experiments/c4_pattern_proofs.py'
+      - '.github/workflows/chess_pattern_proofs_c4.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: c4-proofs
+  cancel-in-progress: true
+jobs:
+  prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install python-chess
+      - run: python -m py_compile experiments/c4_pattern_proofs.py
+      - run: mkdir -p results
+      - run: python experiments/c4_pattern_proofs.py 2>&1 | tee results/c4_run.log
+      - name: commit results
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/c4_pattern_proof_results.txt results/c4_run.log || true
+          git commit -m "results: C4-Muster-Beweise $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]" || true
+          git pull --rebase --autostash || true
+          git push || true
