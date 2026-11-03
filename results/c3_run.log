@@ -1,28 +1,43 @@
-=== KQvK <- https://tablebase.sesse.net/syzygy/3-4-5/kqvk.rtbw
-curl: (60) SSL: no alternative certificate subject name matches target hostname 'tablebase.sesse.net'
-More details here: https://curl.se/docs/sslcerts.html
+=== KQvK <- http://tablebase.sesse.net/syzygy/3-4-5/KQvK.rtbw
+--- rc=0 size=272
+=== KRvK <- http://tablebase.sesse.net/syzygy/3-4-5/KRvK.rtbw
+--- rc=0 size=208
+=== KBvK <- http://tablebase.sesse.net/syzygy/3-4-5/KBvK.rtbw
+--- rc=0 size=80
+HTTP/1.1 200 OK
+Date: Tue, 03 Nov 2026 18:50:30 GMT
+Server: Apache/2.4.69 (Debian)
+Last-Modified: Sat, 07 Dec 2013 02:14:03 GMT
+ETag: "50-4ece8510d2ada"
+Accept-Ranges: bytes
+Content-Length: 80
+Connection: close
+Content-Type: application/octet-stream
 
-curl failed to verify the legitimacy of the server and therefore could not
-establish a secure connection to it. To learn more about this situation and
-how to fix it, please visit the webpage mentioned above.
---- rc=0 size=0
---- HEADERS:
-=== KQvK <- https://tablebase.sesse.net/syzygy/3-4-5/KQvK.rtbw
-curl: (60) SSL: no alternative certificate subject name matches target hostname 'tablebase.sesse.net'
-More details here: https://curl.se/docs/sslcerts.html
+=== KBvK <- https://tablebase.lichess.ovh/tables/standard/3-4-5-wdl/KBvK.rtbw
+--- rc=0 size=80
+HTTP/2 200 
+server: nginx
+date: Tue, 03 Nov 2026 18:50:30 GMT
+content-type: application/octet-stream
+content-length: 80
+last-modified: Sat, 07 Dec 2013 02:14:03 GMT
+etag: "52a2846b-50"
+expires: Tue, 17 Nov 2026 18:50:30 GMT
+cache-control: max-age=1209600
+access-control-allow-origin: *
+access-control-allow-methods: GET, HEAD
+access-control-allow-headers: Accept,If-Modified-Since,Cache-Control,X-Requested-With
+cache-control: public
+x-frame-options: DENY
+accept-ranges: bytes
 
-curl failed to verify the legitimacy of the server and therefore could not
-establish a secure connection to it. To learn more about this situation and
-how to fix it, please visit the webpage mentioned above.
---- rc=0 size=0
---- HEADERS:
-=== KQvK <- https://tablebase.lichess.ovh/tables/standard/3-4-5/KQvK.rtbw
+=== KBvK <- https://tablebase.lichess.ovh/tables/standard/3-4-5/KBvK.rtbw
 curl: (22) The requested URL returned error: 404
---- rc=0 size=0
---- HEADERS:
+--- rc=22 size=0
 HTTP/2 404 
 server: nginx
-date: Tue, 03 Nov 2026 18:49:24 GMT
+date: Tue, 03 Nov 2026 18:50:31 GMT
 content-type: text/html; charset=utf-8
 content-length: 146
 access-control-allow-origin: *
@@ -30,4 +45,4 @@ access-control-allow-methods: GET, HEAD
 access-control-allow-headers: Accept,If-Modified-Since,Cache-Control,X-Requested-With
 x-frame-options: DENY
 
-[e] KQvK: KEIN Mirror lieferte Daten — Abbruch (Diagnose in results/c3_run.log)
+[e] KBvK: KEIN Mirror lieferte Daten — Abbruch (Diagnose in results/c3_run.log)
