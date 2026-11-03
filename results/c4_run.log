@@ -1,0 +1,97 @@
+=== KQvK <- http://tablebase.sesse.net/syzygy/3-4-5/KQvK.rtbw
+--- rc=0 size=272
+=== KRvK <- http://tablebase.sesse.net/syzygy/3-4-5/KRvK.rtbw
+--- rc=0 size=208
+=== KBvK <- http://tablebase.sesse.net/syzygy/3-4-5/KBvK.rtbw
+--- rc=0 size=80
+=== KNvK <- http://tablebase.sesse.net/syzygy/3-4-5/KNvK.rtbw
+--- rc=0 size=80
+=== KPvK <- http://tablebase.sesse.net/syzygy/3-4-5/KPvK.rtbw
+--- rc=0 size=7824
+[i] alle Tablebases:
+total 32
+drwxr-xr-x  2 runner runner 4096 Nov  3 22:46 .
+drwxr-xr-x 12 runner runner 4096 Nov  3 22:46 ..
+-rw-r--r--  1 runner runner   80 Nov  3 22:46 KBvK.rtbw
+-rw-r--r--  1 runner runner   80 Nov  3 22:46 KNvK.rtbw
+-rw-r--r--  1 runner runner 7824 Nov  3 22:46 KPvK.rtbw
+-rw-r--r--  1 runner runner  272 Nov  3 22:46 KQvK.rtbw
+-rw-r--r--  1 runner runner  208 Nov  3 22:46 KRvK.rtbw
+C4 Muster-Beweis-Abdeckung -- gestartet 2026-11-03T22:46:57.512942Z
+These: Schach = Handvoll endlicher Mustergruppen mit konstantem Wert.
+Test: a-priori Muster-Praedikate vs. exakte Syzygy-Werte, ALLE legalen Positionen.
+Sanity ok: alle 5 Klassen probe-bar.
+
+=== Klasse KQvK ===
+Positionen (legal, beide Zugrechte): 368452  [25.1s]
+Wahre Werte: WIN 345404 / DRAW 23048 / LOSS 0
+Abdeckung durch Muster: 100.0%
+Praezision auf abgedeckten: 93.74%
+Konflikte (Muster widersprechen sich): 0
+BEWEISBAR GELÖST (korrekt gedeckt / alle): 93.74%
+Unabgedeckt: 0 (0.0%)
+  Praedikat dominance_win: gefeuert 368452, Praezision 93.74%
+
+=== Klasse KRvK ===
+Positionen (legal, beide Zugrechte): 399112  [23.0s]
+Wahre Werte: WIN 376868 / DRAW 22244 / LOSS 0
+Abdeckung durch Muster: 100.0%
+Praezision auf abgedeckten: 94.43%
+Konflikte (Muster widersprechen sich): 0
+BEWEISBAR GELÖST (korrekt gedeckt / alle): 94.43%
+Unabgedeckt: 0 (0.0%)
+  Praedikat dominance_win: gefeuert 399112, Praezision 94.43%
+
+=== Klasse KNvK ===
+Positionen (legal, beide Zugrechte): 429440  [14.5s]
+Wahre Werte: WIN 0 / DRAW 429440 / LOSS 0
+Abdeckung durch Muster: 100.0%
+Praezision auf abgedeckten: 100.0%
+Konflikte (Muster widersprechen sich): 0
+BEWEISBAR GELÖST (korrekt gedeckt / alle): 100.0%
+Unabgedeckt: 0 (0.0%)
+  Praedikat insufficient_material_draw: gefeuert 429440, Praezision 100.0%
+
+=== Klasse KBvK ===
+Positionen (legal, beide Zugrechte): 417228  [14.5s]
+Wahre Werte: WIN 0 / DRAW 417228 / LOSS 0
+Abdeckung durch Muster: 100.0%
+Praezision auf abgedeckten: 100.0%
+Konflikte (Muster widersprechen sich): 0
+BEWEISBAR GELÖST (korrekt gedeckt / alle): 100.0%
+Unabgedeckt: 0 (0.0%)
+  Praedikat insufficient_material_draw: gefeuert 417228, Praezision 100.0%
+
+=== Klasse KPvK ===
+Positionen (legal, beide Zugrechte): 331352  [23.5s]
+Wahre Werte: WIN 222564 / DRAW 108788 / LOSS 0
+Abdeckung durch Muster: 4.69%
+Praezision auf abgedeckten: 95.43%
+Konflikte (Muster widersprechen sich): 28
+BEWEISBAR GELÖST (korrekt gedeckt / alle): 4.48%
+Unabgedeckt: 315804 (95.31%)
+  Praedikat opposition_draw: gefeuert 96, Praezision 93.75%
+  Praedikat rook_pawn_zone_draw: gefeuert 5014, Praezision 100.0%
+  Praedikat wk_front_black_to_move_win: gefeuert 2698, Praezision 89.03%
+  Praedikat key_squares_win: gefeuert 7776, Praezision 94.75%
+  Beispiel unabgedeckt: 8/8/8/8/8/8/P7/K1k5 w - - 0 1 -> WIN
+  Beispiel unabgedeckt: 8/8/8/8/8/8/P7/K1k5 b - - 0 1 -> WIN
+  Beispiel unabgedeckt: 8/8/8/8/8/P7/8/K1k5 w - - 0 1 -> WIN
+  Beispiel unabgedeckt: 8/8/8/8/8/P7/8/K1k5 b - - 0 1 -> WIN
+  Beispiel unabgedeckt: 8/8/8/8/P7/8/8/K1k5 w - - 0 1 -> WIN
+  Beispiel unabgedeckt: 8/8/8/8/P7/8/8/K1k5 b - - 0 1 -> WIN
+  Beispiel unabgedeckt: 8/8/8/P7/8/8/8/K1k5 w - - 0 1 -> WIN
+  Beispiel unabgedeckt: 8/8/8/P7/8/8/8/K1k5 b - - 0 1 -> WIN
+
+=== Skalierungstabelle (Jonny-These: bleibt die Regelzahl klein?) ===
+Klasse   | n        | Coverage | Praezision | beweisbar geloest
+KQvK     |   368452 |   100.0% |      93.7% |  93.7%
+KRvK     |   399112 |   100.0% |      94.4% |  94.4%
+KNvK     |   429440 |   100.0% |     100.0% | 100.0%
+KBvK     |   417228 |   100.0% |     100.0% | 100.0%
+KPvK     |   331352 |     4.7% |      95.4% |   4.5%
+
+Leseart: 100% beweisbar geloest = Klasse ohne Bruteforce GELÖST.
+Luecken = dort, wo die klassische Musterlehre unvollstaendig ist;
+sie sind der naive Naechste-Schritt der Muster-Expansion.
+Ergebnis geschrieben: results/c4_pattern_proof_results.txt
