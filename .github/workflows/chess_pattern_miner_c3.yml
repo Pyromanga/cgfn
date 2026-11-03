@@ -26,27 +26,55 @@ jobs:
           echo "[i] syntax ok"
       - name: Install python-chess
         run: pip install python-chess
-      - name: "Download Syzygy 3-Mann WDL-Tablebases (nur was der Miner braucht: K?vK, .rtbw)"
+      - name: "Download Syzygy 3-Mann WDL-Tablebases (5 Klassen, Mirror-Fallback, harte Pruefung)"
         run: |
           mkdir -p tablebases
           for t in KQvK KRvK KBvK KNvK KPvK; do
-            ( wget -q -T 30 -t 2 -O "tablebases/$t.rtbw" \
-                "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.rtbw" \
-                || echo "[w] $t.rtbw fehlt" ) &
+            ok=0
+            for url in "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.rtbw" \
+                       "https://tablebase.sesse.net/syzygy/3-4-5/$t.rtbw"; do
+              if wget -q -T 30 -t 2 -O "tablebases/$t.rtbw" "$url"; then ok=1; break; fi
+              echo "[w] $t.rtbw fehl auf $url"
+            done
+            [ "$ok" -eq 1 ] || { echo "[e] $t.rtbw: KEIN Mirror erreichbar"; }
           done
-          wait
           ls -la tablebases/
-          # Frueh-Warnung: leere/fehlende Dateien sind die klassische stille Todesursache
           for t in KQvK KRvK KBvK KNvK KPvK; do
-            if [ ! -s "tablebases/$t.rtbw" ]; then
-              echo "[e] $t.rtbw fehlt oder ist leer — probe_wdl wird fuer diese Klasse nichts liefern"
-            fi
+            [ -s "tablebases/$t.rtbw" ] || { echo "[e] $t.rtbw fehlt/leer — KEINE Muster geschaufert ohne Wahrheit"; exit 1; }
           done
+      - name: "Sanity-Check: probe_wdl muss liefern (Run 5 schaufelte 0 Stellungen mit leeren Dateien)"
+        run: |
+          python - <<'EOF'
+          import chess, chess.syzygy, random
+          tb = chess.syzygy.open_tablebase("tablebases")
+          rng = random.Random(0)
+          good = 0
+          for _ in range(50):
+              b = chess.Board(None)
+              wk, bk, q = rng.randrange(64), rng.randrange(64), rng.randrange(64)
+              if max(abs(wk//8-bk//8), abs(wk%8-bk%8)) < 2 or q in (wk, bk):
+                  continue
+              b.set_piece_at(wk, chess.Piece(chess.KING, chess.WHITE))
+              b.set_piece_at(bk, chess.Piece(chess.KING, chess.BLACK))
+              b.set_piece_at(q, chess.Piece(chess.QUEEN, chess.WHITE))
+              b.turn = chess.WHITE
+              try:
+                  tb.probe_wdl(b)
+                  good += 1
+              except Exception as e:
+                  print("[w] probe fehlgeschlagen:", e)
+          print(f"[i] KQvK-Sanity: {good}/50 Proben ok")
+          assert good >= 1, "[e] probe_wdl liefert nichts — Tablebase unbrauchbar, Abbruch"
+          EOF
       - name: Run C3 pattern miner
         run: |
           set -o pipefail
           python experiments/c3_pattern_miner.py \
             --out results/c3_pattern_mining_results.txt 2>&1 | tee results/c3_run.log
+      - name: "Gate: Ergebnis darf nicht leer sein"
+        run: |
+          grep -q "REGEL-BAUM" results/c3_pattern_mining_results.txt \
+            || { echo "[e] keine Regelbaeume im Ergebnis — Abbruch statt Fake-Commit"; exit 1; }
       - name: Commit results and logs
         if: always()
         run: |
