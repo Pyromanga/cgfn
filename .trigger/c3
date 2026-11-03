@@ -1,1 +1,1 @@
-c3 re-fire #7: Diagnose-Log brachte die Wahrheit — sesse.net-Zertifikat deckt Hostnamen nicht (http:// statt https://, laut Index/Repology verfuegbar), lichess-Pfad war 404 (WDL-Verzeichnis heisst 3-4-5-wdl). — 2026-11-03
+c3 re-fire #8: Downloads klappen jetzt (http-sesse echt, KBvK.rtbw ist WIRKLICH 80 Bytes — >100-Schwelle war zu gross und warf echte Dateien weg). Schwelle auf >0, Sanity auf alle 5 Klassen erweitert. — 2026-11-03

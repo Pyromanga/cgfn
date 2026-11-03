@@ -26,55 +26,68 @@ jobs:
           echo "[i] syntax ok"
       - name: Install python-chess
         run: pip install python-chess
-      - name: "Download Syzygy 3-Mann WDL-Tablebases (http-sesse + lichess 3-4-5-wdl)"
+      - name: "Download Syzygy 3-Mann WDL-Tablebases (KBvK.rtbw ist WIRKLICH nur 80 Bytes gross)"
         run: |
           mkdir -p tablebases results
           : > results/c3_run.log
           for t in KQvK KRvK KBvK KNvK KPvK; do
             ok=0
             for url in "http://tablebase.sesse.net/syzygy/3-4-5/$t.rtbw" \
-                       "https://tablebase.lichess.ovh/tables/standard/3-4-5-wdl/$t.rtbw" \
-                       "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.rtbw"; do
+                       "https://tablebase.lichess.ovh/tables/standard/3-4-5-wdl/$t.rtbw"; do
               echo "=== $t <- $url" | tee -a results/c3_run.log
               curl -fsSL --retry 2 --max-time 90 -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" \
                 -o "tablebases/$t.rtbw" "$url" 2>&1 | tee -a results/c3_run.log
               rc=${PIPESTATUS[0]}
               sz=$(stat -c%s "tablebases/$t.rtbw" 2>/dev/null || echo 0)
               echo "--- rc=$rc size=$sz" | tee -a results/c3_run.log
-              if [ "$rc" -eq 0 ] && [ "$sz" -gt 100 ]; then ok=1; break; fi
-              curl -sIL --max-time 30 -A "Mozilla/5.0" "$url" 2>&1 | head -25 | tee -a results/c3_run.log
+              # Achtung: KBvK.rtbw ist ein echter 80-Byte-Syzygy — nur Nicht-Leere verlangen
+              if [ "$rc" -eq 0 ] && [ "$sz" -gt 0 ]; then ok=1; break; fi
               rm -f "tablebases/$t.rtbw"
             done
             if [ "$ok" -ne 1 ]; then
-              echo "[e] $t: KEIN Mirror lieferte Daten — Abbruch (Diagnose in results/c3_run.log)" | tee -a results/c3_run.log
+              echo "[e] $t: KEIN Mirror lieferte Daten — Abbruch" | tee -a results/c3_run.log
               exit 1
             fi
           done
           echo "[i] alle Tablebases:" | tee -a results/c3_run.log
           ls -la tablebases/ | tee -a results/c3_run.log
-      - name: "Sanity-Check: probe_wdl muss liefern (Run 5 schaufelte 0 Stellungen)"
+      - name: "Sanity-Check: probe_wdl fuer ALLE 5 Klassen (KBvK=80B ist echt, aber probe muss gehen)"
         run: |
           python - <<'EOF'
           import chess, chess.syzygy, random
           tb = chess.syzygy.open_tablebase("tablebases")
           rng = random.Random(0)
-          good = 0
-          for _ in range(50):
-              b = chess.Board(None)
-              wk, bk, q = rng.randrange(64), rng.randrange(64), rng.randrange(64)
-              if max(abs(wk//8-bk//8), abs(wk%8-bk%8)) < 2 or q in (wk, bk):
-                  continue
-              b.set_piece_at(wk, chess.Piece(chess.KING, chess.WHITE))
-              b.set_piece_at(bk, chess.Piece(chess.KING, chess.BLACK))
-              b.set_piece_at(q, chess.Piece(chess.QUEEN, chess.WHITE))
-              b.turn = chess.WHITE
-              try:
-                  tb.probe_wdl(b)
-                  good += 1
-              except Exception as e:
-                  print("[w] probe fehlgeschlagen:", e)
-          print(f"[i] KQvK-Sanity: {good}/50 Proben ok")
-          assert good >= 1, "[e] probe_wdl liefert nichts — Tablebase unbrauchbar, Abbruch"
+          classes = {
+              "KQvK": chess.QUEEN,
+              "KRvK": chess.ROOK,
+              "KBvK": chess.BISHOP,
+              "KNvK": chess.KNIGHT,
+              "KPvK": chess.PAWN,
+          }
+          fails = []
+          for name, ptype in classes.items():
+              good = 0
+              for _ in range(200):
+                  b = chess.Board(None)
+                  wk, bk, p = rng.randrange(64), rng.randrange(64), rng.randrange(64)
+                  if max(abs(wk//8-bk//8), abs(wk%8-bk%8)) < 2 or p in (wk, bk):
+                      continue
+                  b.set_piece_at(wk, chess.Piece(chess.KING, chess.WHITE))
+                  b.set_piece_at(bk, chess.Piece(chess.KING, chess.BLACK))
+                  b.set_piece_at(p, chess.Piece(ptype, chess.WHITE))
+                  if ptype == chess.PAWN and p // 8 in (0, 7):
+                      continue
+                  b.turn = chess.WHITE
+                  try:
+                      tb.probe_wdl(b)
+                      good += 1
+                  except Exception as e:
+                      pass
+              print(f"[i] {name}-Sanity: {good}/200 Proben ok")
+              if good < 1:
+                  fails.append(name)
+          assert not fails, f"[e] probe_wdl versagt fuer: {fails} — Abbruch"
+          print("[i] Sanity ok fuer alle Klassen")
           EOF
       - name: Run C3 pattern miner
         run: |
