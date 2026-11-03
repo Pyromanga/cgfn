@@ -9,8 +9,8 @@ P4 Exzess E=TrS/TrS_norm vs kappa-Zoo | P5 g_opt(beta) Heavy-Ball-Kompagnon
   lam seed     ben    open    dmft    dgap   h2emp   h2pre  MCmes  MCpre      E      g    t*   kcon     kT     dH     kK   it  ok
  0.60    0  -0.620  -0.549  -0.411  +0.008  +3.145  +3.001   2.26   4.90   1.11   1.00   0.0   3.68   1.04   0.04 130118777.94   11 YES
  0.60    1  -0.578  -0.534  -0.407  +0.013  +2.325  +2.639   2.21   4.82   0.99   1.00   0.0   3.74   1.04   0.03 175587282.65   11 YES
- 1.00    0  -0.438  -0.393        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
- 1.00    1  -0.324  -0.287        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.00    0  -0.438  -0.393  -0.059  +0.080  +3.573  +5.134   2.59   5.34   1.35   1.00   0.0  31.22   1.07   0.10 702149206.64   14 YES
+ 1.00    1  -0.324  -0.287  -0.029  +0.038  +2.484  +4.300   2.67   5.22   1.22   1.00   0.0  64.57   1.05   0.07 1716884452.05   14 YES
  1.40    0  -0.273  -0.196        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
  1.40    1  -0.170  -0.168        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
  1.80    0  -0.173  -0.142        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
@@ -39,23 +39,23 @@ P4 Exzess E=TrS/TrS_norm vs kappa-Zoo | P5 g_opt(beta) Heavy-Ball-Kompagnon
  1.80    1  +0.407  +0.048        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
 
 ================================================================================================================================
-AUSWERTUNG (4 DMFT-ok Konfigurationen, 20 ohne stabilen Fixpunkt)
-P1 Schluss-d: mean d_gap = 0.1890, max = 0.3891
-  s=0.0: mean d_gap = 0.0105
+AUSWERTUNG (6 DMFT-ok Konfigurationen, 18 ohne stabilen Fixpunkt)
+P1 Schluss-d: mean d_gap = 0.1458, max = 0.3891
+  s=0.0: mean d_gap = 0.0349
   s=0.8: mean d_gap = 0.3675
-P2 Schluss-lambda: |dmft-ben| mean +0.1221 vs |open-ben| mean +0.1219 | DMFT besser in 2/4
+P2 Schluss-lambda: |dmft-ben| mean +0.1937 vs |open-ben| mean +0.0948 | DMFT besser in 2/6
    (Kill bei Gegenteil: d_emp enthaelt jenseits-MF-Information — DMFT falsch herum lesen)
-P3 MC-Konsistenz: corr(MC_opt_linear, MC_gemessen) = +0.966 (>= 0.8 noetig), mean ratio = 0.451
-   Tr(Sigma)-Schluss: corr(h2_emp, h2_dmft) = +0.892, mean ratio = 0.575
+P3 MC-Konsistenz: corr(MC_opt_linear, MC_gemessen) = +0.936 (>= 0.8 noetig), mean ratio = 0.467
+   Tr(Sigma)-Schluss: corr(h2_emp, h2_dmft) = +0.891, mean ratio = 0.595
    (Hinweis: Konsistenz-Test des linearen Regimes — KEINE Evidenz fuer die These; die lebt mit F30)
-P4 Exzess s=0.0: mean E = 1.053
+P4 Exzess s=0.0: mean E = 1.170
 P4 Exzess s=0.8: mean E = 9.700
-   corr(log E, MC)    = +0.856
-   corr(log E, log g) = +0.986
-   corr(log kappa_cond, log E) = +0.999
-   corr(log kappa_T, log E) = +0.903
-   corr(log delta_H, log E) = +0.974
-   corr(log kreiss_lb, log E) = +0.873
+   corr(log E, MC)    = +0.821
+   corr(log E, log g) = +0.984
+   corr(log kappa_cond, log E) = +0.841
+   corr(log kappa_T, log E) = +0.920
+   corr(log delta_H, log E) = +0.977
+   corr(log kreiss_lb, log E) = +0.587
 
 --- Lag-Profil Anker (lam=0.6, s=0.8, seed=0) ---
  lag  r2_gemes   theorie
