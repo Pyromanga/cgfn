@@ -1,0 +1,65 @@
+name: chess-pattern-miner (C3)
+
+# C3 — Muster-Bergwerk: Regelmining gegen exakte Syzygy-Tablebase-Werte.
+# Jonny: "Es gibt nicht unendlich Muster — du muesstest es berechnen koennen."
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/c3"
+
+jobs:
+  chess-pattern-miner:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install python-chess
+        run: pip install python-chess
+      - name: Download Syzygy 3-4-Mann Tablebases (WDL)
+        run: |
+          mkdir -p tablebases
+          for t in KQvK KRvK KBvK KNvK KPvK \
+                   KNvKN KNvKB KNvKP KNvKR KNvKQ \
+                   KBvKB KBvKP KBvKR KBvKQ \
+                   KPvKP KPvKR KPvKQ \
+                   KRvKN KRvKB KRvKP KRvKR KRvKQ \
+                   KQvKN KQvKB KQvKP KQvKR KQvKQ; do
+            for ext in rtbw rtbz; do
+              wget -q -O "tablebases/$t.$ext" \
+                "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.$ext" || echo "[w] $t.$ext fehlt"
+            done
+          done
+          ls -la tablebases/ | head -20
+      - name: Run C3 pattern miner
+        run: |
+          set -o pipefail
+          python experiments/c3_pattern_miner.py \
+            --out results/c3_pattern_mining_results.txt 2>&1 | tee results/c3_run.log
+      - name: Commit results and logs
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: C3-Muster-Miner ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            git pull --rebase --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chess-pattern-miner-results
+          path: results/
+          retention-days: 30
