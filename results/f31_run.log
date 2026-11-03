@@ -1,10 +1,98 @@
-Traceback (most recent call last):
-  File "/home/runner/work/cgfn/cgfn/experiments/f31_dmft_closure.py", line 231, in <module>
-    main()
-  File "/home/runner/work/cgfn/cgfn/experiments/f31_dmft_closure.py", line 207, in main
-    g_opt = update_cocycle_growth(h, eta=0.019, beta=beta, t_max=600, n_probe=4)
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cgfn/cgfn/src/cgfn/resource.py", line 268, in update_cocycle_growth
-    cur = M @ cur
-          ~~^~~~~
-RuntimeError: addmv input tensors must have the same dtype, but got Float, Double, and Float
+================================================================================================================================
+F31 RESSOURCEN-KERN: DMFT-Selbstschluss (d<->Sigma), H2/MC-Theorie, Kappa-Zoo, Optimierer-Kokkyklus
+lam=[0.6, 1.0, 1.4, 1.8] s=[0.0, 0.8, 1.6] seeds=[0, 1] H=32 T=2500 max_lag=16 input_scale=0.5
+P1 d-Schluss | P2 lambda-Schluss (DMFT vs offen, Benettin als Wahrheit) | P3 MC/H2-Konsistenz |
+P4 Exzess E=TrS/TrS_norm vs kappa-Zoo | P5 g_opt(beta) Heavy-Ball-Kompagnon
+================================================================================================================================
+
+########## s (kappa-Regler) = 0.0 ##########
+  lam seed     ben    open    dmft    dgap   h2emp   h2pre  MCmes  MCpre      E      g    t*   kcon     kT     dH     kK   it  ok
+ 0.60    0  -0.620  -0.549  -0.411  +0.008  +3.145  +3.001   2.26   4.90   1.11   1.00   0.0   3.68   1.04   0.04 130118777.94   11 YES
+ 0.60    1  -0.578  -0.534  -0.407  +0.013  +2.325  +2.639   2.21   4.82   0.99   1.00   0.0   3.74   1.04   0.03 175587282.65   11 YES
+ 1.00    0  -0.438  -0.393        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.00    1  -0.324  -0.287        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.40    0  -0.273  -0.196        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.40    1  -0.170  -0.168        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.80    0  -0.173  -0.142        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.80    1  -0.097  -0.095        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+
+########## s (kappa-Regler) = 0.8 ##########
+  lam seed     ben    open    dmft    dgap   h2emp   h2pre  MCmes  MCpre      E      g    t*   kcon     kT     dH     kK   it  ok
+ 0.60    0  -0.186  -0.452  -0.169  +0.346  +3.369 +22.862   3.50   7.46   6.42   5.68   4.1 119.47 4259.86   8.97 339442130.09   17 YES
+ 0.60    1  -0.184  -0.290  -0.093  +0.389  +8.776 +39.555   3.02   7.27  12.98   6.70   5.4 413.37 457.27   8.86 5030663664.00   18 YES
+ 1.00    0  -0.148  -0.349        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.00    1  -0.070  -0.247        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.40    0  +0.081  -0.243        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.40    1  +0.001  -0.143        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.80    0  +0.067  -0.163        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.80    1  -0.001  -0.223        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+
+########## s (kappa-Regler) = 1.6 ##########
+  lam seed     ben    open    dmft    dgap   h2emp   h2pre  MCmes  MCpre      E      g    t*   kcon     kT     dH     kK   it  ok
+ 0.60    0  +0.188  -0.332        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 0.60    1  +0.031  -0.299        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.00    0  +0.358  -0.288        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.00    1  +0.170  -0.122        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.40    0  +0.480  -0.283        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.40    1  +0.452  +0.059        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.80    0  +0.471  -0.280        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+ 1.80    1  +0.407  +0.048        -   -    -    -    -    -    -    -     -    -    -    -    -    -    -  0   NO
+
+================================================================================================================================
+AUSWERTUNG (4 DMFT-ok Konfigurationen, 20 ohne stabilen Fixpunkt)
+P1 Schluss-d: mean d_gap = 0.1890, max = 0.3891
+  s=0.0: mean d_gap = 0.0105
+  s=0.8: mean d_gap = 0.3675
+P2 Schluss-lambda: |dmft-ben| mean +0.1221 vs |open-ben| mean +0.1219 | DMFT besser in 2/4
+   (Kill bei Gegenteil: d_emp enthaelt jenseits-MF-Information — DMFT falsch herum lesen)
+P3 MC-Konsistenz: corr(MC_opt_linear, MC_gemessen) = +0.966 (>= 0.8 noetig), mean ratio = 0.451
+   Tr(Sigma)-Schluss: corr(h2_emp, h2_dmft) = +0.892, mean ratio = 0.575
+   (Hinweis: Konsistenz-Test des linearen Regimes — KEINE Evidenz fuer die These; die lebt mit F30)
+P4 Exzess s=0.0: mean E = 1.053
+P4 Exzess s=0.8: mean E = 9.700
+   corr(log E, MC)    = +0.856
+   corr(log E, log g) = +0.986
+   corr(log kappa_cond, log E) = +0.999
+   corr(log kappa_T, log E) = +0.903
+   corr(log delta_H, log E) = +0.974
+   corr(log kreiss_lb, log E) = +0.873
+
+--- Lag-Profil Anker (lam=0.6, s=0.8, seed=0) ---
+ lag  r2_gemes   theorie
+   1    0.7517    0.9999
+   2    0.4370    0.9937
+   3    0.3989    0.9055
+   4    0.3413    0.6242
+   5    0.2612    0.5006
+   6    0.2286    0.4522
+   7    0.2293    0.4059
+   8    0.1842    0.3572
+   9    0.1479    0.3469
+  10    0.1305    0.3149
+  11    0.0993    0.2904
+  12    0.0745    0.2825
+  13    0.0796    0.2678
+  14    0.0617    0.2481
+  15    0.0403    0.2368
+  16    0.0326    0.2310
+
+=== P1-P4 GESICHERT (Snapshot vor P5) ===
+
+--- P5: Optimierer-Kokkyklus (Heavy-Ball-Kompagnon, quadratisches Demo) ---
+Hessian-Spread: 1.0..100.0 (log-spaced, n=16), eta=0.019
+beta=0.00: g_opt = 1.030
+beta=0.50: g_opt = 1.561
+beta=0.90: g_opt = 3.338
+beta=0.99: g_opt = 4.867
+P5 monoton in beta: JA (EoS-Sharpness ist Fixpunkt des Update-Operators, kein Landschafts-Eigentum)
+
+LESEAT:
+P1 ok => DMFT-Schluss tragfaehig, d_gap ist das Nichtlinearitaets-Meter.
+P2 ok => Homeostat darf lambda_dmft regeln (geschlossenes Modell);
+     P2 faellt => offenes Feld NICHT durch DMFT ersetzen — Fluktuationen tragen Information.
+P3 ok => lineare Theorie beschreibt das Reservoir; E/h2 sind kontrollierte Koordinaten.
+P4 ok => Exzess E ist die messbare kappa-Achse (SSM: E=1 strukturell).
+P5 ok => Optimierer-Antagonist ist der Kompagnon-Kokkyklus (g_opt), nicht das Hessian.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f31_dmft_results.txt geschrieben.
