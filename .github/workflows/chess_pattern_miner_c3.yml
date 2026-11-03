@@ -26,32 +26,33 @@ jobs:
           echo "[i] syntax ok"
       - name: Install python-chess
         run: pip install python-chess
-      - name: "Download Syzygy 3-Mann WDL-Tablebases (5 Klassen, Groessenpruefung PRO Mirror)"
+      - name: "Download Syzygy 3-Mann WDL-Tablebases (curl, Diagnose-Log nach results/c3_run.log)"
         run: |
-          mkdir -p tablebases
+          mkdir -p tablebases results
+          set +e
+          : > results/c3_run.log
           for t in KQvK KRvK KBvK KNvK KPvK; do
             ok=0
-            for url in "https://tablebase.sesse.net/syzygy/3-4-5/$t.rtbw" \
+            for url in "https://tablebase.sesse.net/syzygy/3-4-5/${t,,}.rtbw" \
+                       "https://tablebase.sesse.net/syzygy/3-4-5/$t.rtbw" \
                        "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.rtbw"; do
+              echo "=== $t <- $url" | tee -a results/c3_run.log
+              curl -fsSL --retry 2 --max-time 90 -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" -o "tablebases/$t.rtbw" "$url" 2>&1 | tee -a results/c3_run.log
+              rc=$?
+              sz=$(stat -c%s "tablebases/$t.rtbw" 2>/dev/null || echo 0)
+              echo "--- rc=$rc size=$sz" | tee -a results/c3_run.log
+              if [ "$rc" -eq 0 ] && [ "$sz" -gt 100 ]; then ok=1; break; fi
+              echo "--- HEADERS:" | tee -a results/c3_run.log
+              curl -sIL --max-time 30 -A "Mozilla/5.0" "$url" 2>&1 | head -25 | tee -a results/c3_run.log
               rm -f "tablebases/$t.rtbw"
-              if wget -q -T 30 -t 2 -O "tablebases/$t.rtbw" "$url"; then
-                if [ -s "tablebases/$t.rtbw" ]; then
-                  ok=1
-                  echo "[i] $t.rtbw: $(stat -c%s "tablebases/$t.rtbw") bytes von $url"
-                  break
-                fi
-                echo "[w] $t.rtbw: $url lieferte 200 aber LEERE Datei — naechster Mirror"
-              else
-                echo "[w] $t.rtbw: wget fehlgeschlagen auf $url"
-              fi
             done
             if [ "$ok" -ne 1 ]; then
-              echo "[e] $t.rtbw: KEIN Mirror lieferte Daten — Abbruch"
+              echo "[e] $t: KEIN Mirror lieferte Daten — Abbruch (Diagnose in results/c3_run.log)" | tee -a results/c3_run.log
               exit 1
             fi
           done
-          echo "[i] alle Tablebases:"
-          ls -la tablebases/
+          echo "[i] alle Tablebases:" | tee -a results/c3_run.log
+          ls -la tablebases/ | tee -a results/c3_run.log
       - name: "Sanity-Check: probe_wdl muss liefern (Run 5 schaufelte 0 Stellungen)"
         run: |
           python - <<'EOF'
@@ -80,7 +81,7 @@ jobs:
         run: |
           set -o pipefail
           python experiments/c3_pattern_miner.py \
-            --out results/c3_pattern_mining_results.txt 2>&1 | tee results/c3_run.log
+            --out results/c3_pattern_mining_results.txt 2>&1 | tee -a results/c3_run.log
       - name: "Gate: Ergebnis darf nicht leer sein"
         run: |
           grep -q "REGEL-BAUM" results/c3_pattern_mining_results.txt \

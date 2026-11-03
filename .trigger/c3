@@ -1,1 +1,1 @@
-c3 re-fire #5: Run 6 fiel am Download-Gate — lichess.ovh lieferte 200-mit-leerem-Koerper, wget galt als Erfolg, Mirror wurde nie probiert. Fix: Groessenpruefung PRO Mirror (leer = naechster), sesse.net zuerst. — 2026-11-03
+c3 re-fire #6: Run 6+7 fielen am Download-Gate (26 s). Umstellung auf curl mit Browser-UA + Header-Diagnose, Fehlerprotokoll wird ab jetzt via if:always committet. — 2026-11-03
