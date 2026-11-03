@@ -1,15 +1,31 @@
 C3 — Muster-Bergwerk: Regeln gegen EXAKTE Tablebase-Werte (3-4 Mann)
 ==========================================================================
 
-[KQvK] nur 0 gueltige Stellungen — uebersprungen
+[KQvK] n=4000, Gewinnrate=0.405
+  Mehrheits-Baseline: 0.5952   REGEL-BAUM: 1.0000  (Tiefe 3, ~2 Regeln)
+    WENN mover_is_strong <= 0                                         DANN REMIS/VERLUST (p=0.000, n=2381)
+    WENN mover_is_strong > 0                                          DANN GEWINN (p=1.000, n=1619)
 
-[KRvK] nur 0 gueltige Stellungen — uebersprungen
+[KRvK] n=4000, Gewinnrate=0.423
+  Mehrheits-Baseline: 0.5770   REGEL-BAUM: 1.0000  (Tiefe 3, ~2 Regeln)
+    WENN mover_is_strong <= 0                                         DANN REMIS/VERLUST (p=0.000, n=2308)
+    WENN mover_is_strong > 0                                          DANN GEWINN (p=1.000, n=1692)
 
-[KBvK] nur 0 gueltige Stellungen — uebersprungen
+[KBvK] n=4000, Gewinnrate=0.000
+  Mehrheits-Baseline: 1.0000   REGEL-BAUM: 1.0000  (Tiefe 3, ~1 Regeln)
+    WENN                                                              DANN REMIS/VERLUST (p=0.000, n=4000)
 
-[KNvK] nur 0 gueltige Stellungen — uebersprungen
+[KNvK] n=4000, Gewinnrate=0.000
+  Mehrheits-Baseline: 1.0000   REGEL-BAUM: 1.0000  (Tiefe 3, ~1 Regeln)
+    WENN                                                              DANN REMIS/VERLUST (p=0.000, n=4000)
 
-[KPvK] nur 0 gueltige Stellungen — uebersprungen
+[KPvK] n=4000, Gewinnrate=0.380
+  Mehrheits-Baseline: 0.6198   REGEL-BAUM: 0.9093  (Tiefe 3, ~5 Regeln)
+    WENN mover_is_strong <= 0                                         DANN REMIS/VERLUST (p=0.000, n=1990)
+    WENN mover_is_strong > 0 UND dist_weak_king_promo <= 4 UND weak_king_before_pawn <= 0 DANN GEWINN (p=0.813, n=347)
+    WENN mover_is_strong > 0 UND dist_weak_king_promo <= 4 UND weak_king_before_pawn > 0 DANN REMIS/VERLUST (p=0.401, n=636)
+    WENN mover_is_strong > 0 UND dist_weak_king_promo > 4 UND pawn_rank <= 2 DANN GEWINN (p=0.867, n=324)
+    WENN mover_is_strong > 0 UND dist_weak_king_promo > 4 UND pawn_rank > 2 DANN GEWINN (p=1.000, n=703)
 
 Lesart: Reproduziert ein flacher Regelbaum die exakten Werte nahezu perfekt,
 ist die Wertefunktion endlich beschreibbar (Jonnys These). Fuer KPvK
