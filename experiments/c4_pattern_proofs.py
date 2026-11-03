@@ -8,20 +8,26 @@ der Spielwert konstant ist. Wenn Muster + Beweis 100% Abdeckung mit 100%
 Praezision erreichen, ist die Klasse OHNE Enumerations-Bruteforce geloest.
 
 Methode: klassische Muster-Theoreme (Key Squares, Opposition/Paritaet,
-Turmbauer-Zone, Dominanz) werden als reine Praedikate codiert und gegen
-EXAKTE Syzygy-WDL-Werte ueber ALLE legalen Positionen jeder 3-Mann-Klasse
-getestet. Kein Lernen, kein Fitten: a-priori-Regeln.
+Turmbauer-Zone, Dominanz) als reine Praedikate gegen EXAKTE Syzygy-WDL-Werte
+ueber ALLE legalen Positionen jeder 3-Mann-Klasse. Kein Lernen, kein Fitten.
 
 Vereinfachung (dokumentiert): 50-Zuege-Regel ignoriert; Syzygy ±1 (cursed)
 zaehlt als Sieg/Niederlage, wie in der klassischen Theorie.
+
+Fix 2026-11-03 (Run 1-3 waren fake-gruen in 14-21s):
+- Mirror-Downloads wie C3 (sesse.net zuerst, lichess 3-4-5-wdl als Fallback,
+  Nicht-Leer-Gate pro Datei; KBvK.rtbw ist WIRKLICH nur ~80 Bytes gross).
+- Sanity-Gate: jede Klasse muss probe-bar sein, sonst LAUT rot enden statt
+  gruenem Fake-Commit ohne Zahlen.
 """
 import os
+import sys
 import datetime
 import chess
 import chess.syzygy
 
-RESULTS = "results/c4_pattern_proof_results.txt"
-TB_DIR = "results/tb345"
+RESULTS = os.environ.get("C4_RESULTS", "results/c4_pattern_proof_results.txt")
+TB_DIR = os.environ.get("C4_TB_DIR", "tablebases")
 WIN, DRAW, LOSS = "WIN", "DRAW", "LOSS"
 LINES = []
 
@@ -31,37 +37,94 @@ def log(msg):
     LINES.append(msg)
 
 
+PTMAP = {
+    "KQvK": chess.QUEEN,
+    "KRvK": chess.ROOK,
+    "KNvK": chess.KNIGHT,
+    "KBvK": chess.BISHOP,
+    "KPvK": chess.PAWN,
+}
+
+MIRRORS = [
+    "http://tablebase.sesse.net/syzygy/3-4-5/{name}.rtbw",
+    "https://tablebase.lichess.ovh/tables/standard/3-4-5-wdl/{name}.rtbw",
+]
+
+
+def write_results():
+    with open(RESULTS, "w") as f:
+        f.write("\n".join(LINES) + "\n")
+
+
 def download_tables():
     os.makedirs(TB_DIR, exist_ok=True)
     import urllib.request
     from concurrent.futures import ThreadPoolExecutor
-    names = ["KQvK", "KRvK", "KPvK", "KNvK", "KBvK"]
+    names = list(PTMAP.keys())
 
     def dl(name):
         p = os.path.join(TB_DIR, name + ".rtbw")
         if os.path.exists(p) and os.path.getsize(p) > 0:
             return True
-        url = "https://tablebase.lichess.ovh/tables/standard/3-4-5/" + name + ".rtbw"
-        try:
-            with urllib.request.urlopen(url, timeout=30) as r, open(p, "wb") as f:
-                while True:
-                    chunk = r.read(65536)
-                    if not chunk:
-                        break
-                    f.write(chunk)
-            log("table ok: " + name + " (" + str(os.path.getsize(p)) + " bytes)")
-            return True
-        except Exception as e:
-            log("table FAILED: " + name + " " + str(e))
-            return False
+        for mirror in MIRRORS:
+            url = mirror.replace("{name}", name)
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"})
+                with urllib.request.urlopen(req, timeout=30) as r, open(p, "wb") as f:
+                    while True:
+                        chunk = r.read(65536)
+                        if not chunk:
+                            break
+                        f.write(chunk)
+                if os.path.getsize(p) > 0:
+                    log("table ok: " + name + " <- " + url + " (" + str(os.path.getsize(p)) + " bytes)")
+                    return True
+                os.remove(p)
+                log("leerer Body von " + url + " — naechster Mirror")
+            except Exception as e:
+                log("table FAILED: " + name + " <- " + url + " " + str(e))
+        return False
 
     with ThreadPoolExecutor(5) as ex:
         oks = list(ex.map(dl, names))
     return all(oks)
 
 
-PTMAP = {"KQvK": chess.QUEEN, "KRvK": chess.ROOK, "KNvK": chess.KNIGHT,
-         "KBvK": chess.BISHOP, "KPvK": chess.PAWN}
+def sanity(tb):
+    """Lautes Scheitern statt Fake-Gruen: jede Klasse muss probe-bar sein."""
+    import random
+    rng = random.Random(0)
+    fails = []
+    for cls, pt in PTMAP.items():
+        ok = 0
+        for _ in range(200):
+            b = chess.Board(None)
+            wk = rng.randrange(64)
+            bk = rng.randrange(64)
+            ps = rng.randrange(64)
+            if wk == bk or chess.square_distance(wk, bk) < 2 or ps in (wk, bk):
+                continue
+            if pt == chess.PAWN and ps // 8 in (0, 7):
+                continue
+            b.set_piece_at(wk, chess.Piece(chess.KING, chess.WHITE))
+            b.set_piece_at(bk, chess.Piece(chess.KING, chess.BLACK))
+            b.set_piece_at(ps, chess.Piece(pt, chess.WHITE))
+            b.turn = chess.WHITE
+            try:
+                tb.probe_wdl(b)
+                ok += 1
+            except Exception:
+                pass
+            if ok >= 5:
+                break
+        if ok < 1:
+            fails.append(cls)
+    if fails:
+        log("SANITY FEHLGESCHLAGEN fuer " + ", ".join(fails) +
+            " — Tablebase defekt/leer. LAUTER ABRRUCH, kein Fake-Commit.")
+        return False
+    log("Sanity ok: alle 5 Klassen probe-bar.")
+    return True
 
 
 def gen_positions(cls):
@@ -198,19 +261,25 @@ def main():
     log("Test: a-priori Muster-Praedikate vs. exakte Syzygy-Werte, ALLE legalen Positionen.")
     if not download_tables():
         log("ABBRUCH: Tablebase-Download fehlgeschlagen.")
+        write_results()
         raise SystemExit(1)
     tb = chess.syzygy.open_tablebase(TB_DIR)
+    if not sanity(tb):
+        write_results()
+        raise SystemExit(1)
     results = []
-    for cls in ["KQvK", "KRvK", "KPvK", "KNvK", "KBvK"]:
+    for cls in list(PTMAP.keys()):
         try:
             results.append(analyze(cls, tb))
         except Exception as e:
-            # Fix 2026-11-03: blankes except verschluckte Run-1-Ursache
-            # (Run 1: gruen nach 14s, ohne Ergebnis-Commit im Repo).
-            import traceback
             log("Klasse " + cls + " FEHLER: " + str(e))
+            import traceback
             log(traceback.format_exc())
     tb.close()
+    if not results:
+        log("KEINE Klasse analysiert — LAUT ROT statt Fake-Gruen.")
+        write_results()
+        raise SystemExit(1)
     log("")
     log("=== Skalierungstabelle (Jonny-These: bleibt die Regelzahl klein?) ===")
     log("Klasse   | n        | Coverage | Praezision | beweisbar geloest")
@@ -222,9 +291,8 @@ def main():
     log("")
     log("Leseart: 100% beweisbar geloest = Klasse ohne Bruteforce GELÖST.")
     log("Luecken = dort, wo die klassische Musterlehre unvollstaendig ist;")
-    log("sie sind der naive Naechste-Baeume-Schritt der Muster-Expansion.")
-    with open(RESULTS, "w") as f:
-        f.write("\n".join(LINES) + "\n")
+    log("sie sind der naive Naechste-Schritt der Muster-Expansion.")
+    write_results()
     log("Ergebnis geschrieben: " + RESULTS)
 
 

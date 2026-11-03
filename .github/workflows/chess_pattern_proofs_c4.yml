@@ -1,44 +1,80 @@
 name: chess-pattern-proofs (C4)
+
+# C4 — Muster-Beweis-Abdeckung: a-priori-Muster-Praedikate gegen exakte
+# Syzygy-Werte ueber ALLE legalen 3-Mann-Positionen. Jonny: 'Handvoll
+# Mustergruppen mit konstantem Wert'.
+
 on:
+  workflow_dispatch:
   push:
-    branches: [main]
     paths:
-      - '.trigger/c4'
-      - 'experiments/c4_pattern_proofs.py'
-      - '.github/workflows/chess_pattern_proofs_c4.yml'
-  workflow_dispatch: {}
-permissions:
-  contents: write
-concurrency:
-  group: c4-proofs
-  cancel-in-progress: true
+      - ".trigger/c4"
+
 jobs:
   prove:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-      - run: pip install python-chess
-      - run: python -m py_compile experiments/c4_pattern_proofs.py
-      - run: mkdir -p results
-      - run: python experiments/c4_pattern_proofs.py 2>&1 | tee results/c4_run.log
-      - name: commit results
+          python-version: "3.11"
+      - name: "Gate: syntax-check (Kontingent schonen)"
+        run: |
+          python -m py_compile experiments/c4_pattern_proofs.py || { echo "[e] SYNTAX-FEHLER — Abbruch"; exit 1; }
+          echo "[i] syntax ok"
+      - name: Install python-chess
+        run: pip install python-chess
+      - name: "Download Syzygy 3-Mann WDL-Tablebases (KBvK.rtbw ist WIRKLICH nur ~80 Bytes gross)"
+        run: |
+          mkdir -p tablebases results
+          : > results/c4_run.log
+          for t in KQvK KRvK KBvK KNvK KPvK; do
+            ok=0
+            for url in "http://tablebase.sesse.net/syzygy/3-4-5/$t.rtbw" \
+                       "https://tablebase.lichess.ovh/tables/standard/3-4-5-wdl/$t.rtbw"; do
+              echo "=== $t <- $url" | tee -a results/c4_run.log
+              curl -fsSL --retry 2 --max-time 90 -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" \
+                -o "tablebases/$t.rtbw" "$url" 2>&1 | tee -a results/c4_run.log
+              rc=${PIPESTATUS[0]}
+              sz=$(stat -c%s "tablebases/$t.rtbw" 2>/dev/null || echo 0)
+              echo "--- rc=$rc size=$sz" | tee -a results/c4_run.log
+              # Achtung: KBvK.rtbw ist ein echter 80-Byte-Syzygy — nur Nicht-Leere verlangen
+              if [ "$rc" -eq 0 ] && [ "$sz" -gt 0 ]; then ok=1; break; fi
+              rm -f "tablebases/$t.rtbw"
+            done
+            if [ "$ok" -ne 1 ]; then
+              echo "[e] $t: KEIN Mirror lieferte Daten — Abbruch" | tee -a results/c4_run.log
+              exit 1
+            fi
+          done
+          echo "[i] alle Tablebases:" | tee -a results/c4_run.log
+          ls -la tablebases/ | tee -a results/c4_run.log
+      - name: Run C4 pattern proofs
+        run: |
+          set -o pipefail
+          python experiments/c4_pattern_proofs.py 2>&1 | tee -a results/c4_run.log
+      - name: "Gate: Skalierungstabelle muss existieren"
+        run: |
+          grep -q "Skalierungstabelle" results/c4_pattern_proof_results.txt \
+            || { echo "[e] keine Skalierungstabelle im Ergebnis — Abbruch statt Fake-Commit"; exit 1; }
+      - name: Commit results and logs
         if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add results/c4_pattern_proof_results.txt results/c4_run.log || true
+          mkdir -p results
+          git add results/ 2>/dev/null || true
           if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
-          git commit -m "results: C4-Muster-Beweise ${GITHUB_RUN_NUMBER} ($(date -u '+%Y-%m-%d %H:%M') UTC) [skip ci]"
+          git commit -m "results: C4-Muster-Beweise ${GITHUB_RUN_NUMBER} ($(date -u +%F %H:%M) UTC) [skip ci]"
           for i in 1 2 3 4 5; do
             if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
             git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
             sleep $((i * 10))
           done
-          echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
+          echo "[e] push nach 5 Versuchen fehlgeschlagen" ; exit 1
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4
