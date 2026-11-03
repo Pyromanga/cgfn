@@ -1,1 +1,1 @@
-F30 v2 fire 2026-11-03 (Re-Feuerung nach Billing-Ausfall am 02.11. 19:00)
+F30 v2 Re-Feuerung 2026-11-03 nach Push-Race in Run 26 (Ergebnisse waren da, Commit starb am rebase). Workflow-Retry jetzt mit --autostash.
