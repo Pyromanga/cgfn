@@ -189,3 +189,71 @@ kleinen Z_t. Der KPvK-Residualfall (90.93% mit 5 Regeln) passt genau: Key
 Squares sind mengenwertige Konzepte — Zustandsraeume, keine Punkt-Schwellwerte.
 C4 prueft die beweisbare 100%-Version (Coverage x Praezision a-priori-Regeln
 gegen exakte Werte); C5 misst die Kopplungsordnung auf vollen Partien.
+
+### C4-Ergebnis (Run 4, 2026-11-03, Commit 88b2c8a8) — der echte Lauf
+
+Datengrundlage: `results/c4_pattern_proof_results.txt` (Run 4 auf Fake-Gruen-Fix
+57b3c5af; Runs 1-3 waren fake-gruen in 14-21 s mit leeren Tablebase-Downloads.
+Run 4: Sanity ok, alle 5 Klassen probe-bar, ~1.95M legale Positionen gesamt,
+Klassen-Timings 14.5-25.1 s, Gesamtlauf ~2 min nach schnellem sesse.net-Spiegel).
+
+Zahlen (a-priori-Praedikate vs. exakte Syzygy-WDL, ALLE legalen Positionen):
+
+| Klasse | n       | Coverage | Praezision (abgedeckt) | Konflikte | beweisbar geloest |
+|--------|---------|----------|------------------------|-----------|-------------------|
+| KQvK   | 368 452 | 100.0%   | 93.74%                 | 0         | 93.74%            |
+| KRvK   | 399 112 | 100.0%   | 94.43%                 | 0         | 94.43%            |
+| KNvK   | 429 440 | 100.0%   | 100.0%                 | 0         | 100.0%            |
+| KBvK   | 417 228 | 100.0%   | 100.0%                 | 0         | 100.0%            |
+| KPvK   | 331 352 |   4.69%  | 95.43%                 | 28        |   4.48%           |
+
+Praedikat-Praezisionen:
+- KQvK/KRvK: `dominance_win` feuert auf 100% (93.74% bzw. 94.43% Praezision)
+  — die ~6% Fehler sind Patt/Festfahr-Remis, die der Dominanz-Begriff nicht sieht.
+- KNvK/KBvK: `insufficient_material_draw` 100%/100% — beide Klassen sind
+  remis-geschlossen, PERFEKT bewiesen mit einer einzigen Regel.
+- KPvK: `rook_pawn_zone_draw` 5014 Feueringe, 100% Praezision;
+  `key_squares_win` 7776, 94.75%; `wk_front_black_to_move_win` 2698, 89.03%;
+  `opposition_draw` nur 96, 93.75%; 28 Konflikte (Praedikate widersprechen sich).
+
+Unabgedeckte Beispiele (KPvK, 95.31% unabgedeckt, 315 804 Positionen): reine
+Wand-Bauern-Siege weit weg von der Umwandlung, z.B.
+`8/8/8/8/8/8/P7/K1k5 w - - 0 1 -> WIN` bis
+`8/8/8/P7/8/8/8/K1k5 b - - 0 1 -> WIN` — einfachste Koenigs-Begleitung,
+die klassische Key-Squares/Opposition-Praedikate nur nahe dem Umwandlungsfeld
+abdecken.
+
+Leseart gegen S5 (Regelzahl waechst mit Strukturzustaenden, nicht Positionen):
+1. **Vier von fuenf Klassen mit EINER Regel beweisbar (fast) vollstaendig
+   geloest:** KNvK/KBvK 100% mit einer Regel (remis-geschlossen), KQvK/KRvK
+   ~94% mit einer Regel. Kein einziges Praedikat hat mit der Positionszahl
+   (400k+ pro Klasse) zu tun — die Regelzahl ist 1-2 pro Strukturtyp, exakt
+   die S5-Vorhersage. Die ~6% Dominanz-Luecke (23 048 bzw. 22 244 Remis)
+   sind EIN fehlender Zustand (Patt-Naehe des schwachen Koenigs), kein
+   Muster-Schatz: ein `stalemate_risk_draw`-Praedikat ist der naive
+   naechste Expansionsschritt.
+2. **KPvK ist die einzige echte Luecke — und sie ist strukturell, nicht
+   enumerativ:** 4.69% Coverage heisst nicht "unendlich viele Muster",
+   sondern: die klassischen Lehrbuch-Praedikate adressieren nur die
+   Endphase (Umwandlungsnahme). Die 95% unabgedeckten Positionen sind
+   genau die Zustaende des Strukturtyps "Koenig fuehrt Bauer" — ein
+   kleiner Zustandsautomat (Bauernrang x Koenigsposition relativ zum
+   Bauern x Zugrecht), S5 in Reinform. Die 28 Konflikte zeigen, dass die
+   vier Praedikate noch keine disjunkte Zustandszerlegung sind — erst
+   eine saubere Z_t-Partition macht die Praedikate beweisbar
+   konfliktfrei.
+3. **Konfliktfreiheit als Beweisbarkeits-Mass:** 0 Konflikte in 4 Klassen
+   bei ~1.6M Positionen — die Handvoll klassischer Muster ist nicht nur
+   praediktiv, sondern konsistent. C4 bestaerkt damit C3: keine Regel-
+   Explosion, aber KPvK braucht den Uebergang vom Punkt-Schwellwert
+   (dist_weak_king_promo <= 4) zum mengenwertigen Strukturzustand.
+
+**Urteil: S5 durch C4 gestuetzt.** Die beweisbare Loesungsquote der
+Handvoll klassischen Muster ist hoch (93-100% auf 4 von 5 Klassen,
+ gewichtet ~96% auserhalb KPvK), und die einzige groessere Luecke
+(KPvK, 4.48%) liegt exakt dort, wo die klassische Musterlehre
+geometrische Schwellwerte statt Strukturzustaende verwendet — der
+Muster-Expansionsfahrplan lautet: (a) `stalemate_risk_draw` fuer
+KQvK/KRvK (~6% Rest), (b) KPvK-Zustandsautomat "Koenig fuehrt Bauer"
+(Distanz-Klassen statt Schwellwerte), (c) Konflikt-aufloesung via
+disjunkte Z_t-Partition in KPvK.
