@@ -1,4 +1,13 @@
 Traceback (most recent call last):
-  File "/home/runner/work/cgfn/cgfn/experiments/f27_optimizer_interference.py", line 19, in <module>
-    from src.cgfn.design import make_designed_model, kappa_of
-ModuleNotFoundError: No module named 'src'
+  File "/home/runner/work/cgfn/cgfn/experiments/f27_optimizer_interference.py", line 135, in <module>
+    main()
+  File "/home/runner/work/cgfn/cgfn/experiments/f27_optimizer_interference.py", line 96, in main
+    log, kz0, kz1, _k = run_arm(opt_name, lrs[opt_name], args.steps,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/experiments/f27_optimizer_interference.py", line 60, in run_arm
+    kz = kappa_zoo(model.W.detach())
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/src/cgfn/resource.py", line 188, in kappa_zoo
+    sv = torch.linalg.svdvals(J)
+         ^^^^^^^^^^^^^^^^^^^^^^^
+torch._C._LinAlgError: linalg.svd: The algorithm failed to converge because the input matrix contained non-finite values.
