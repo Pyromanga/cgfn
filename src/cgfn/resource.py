@@ -99,14 +99,24 @@ def dmft_fixed_point(model, input_scale=0.5, damp=0.5, tol=1e-4,
     Sigma = None
     converged = False
     it = 0
-    for it in range(max_iter):
+    n_shrink = 0
+    # Run-22-Lehre: Start bei d=1 ist supra-linear, aber der getriebene
+    # SAETTIGUNGS-Fixpunkt liegt bei kleinerem d (driven Benettin < 0!).
+    # Bei Instabilitaet: d verkleinern und weitersuchen statt aufgeben.
+    for it in range(max_iter + 80):
         J = -eye / float(model.tau) + W * d.unsqueeze(0)
-        if torch.linalg.eigvals(J).real.max().item() >= -1e-6:
-            return None
-        try:
-            Sigma = _lyapunov_ct(J, Q)
-        except Exception:
-            return None
+        unstable = (torch.linalg.eigvals(J).real.max().item() >= -1e-6)
+        if not unstable:
+            try:
+                Sigma = _lyapunov_ct(J, Q)
+            except Exception:
+                unstable = True
+        if unstable:
+            if n_shrink >= 40:
+                return None  # kein stabiler MF-Fixpunkt (chaotisch getrieben)
+            n_shrink += 1
+            d = d * 0.75
+            continue
         var = torch.diagonal(Sigma).clamp_min(0.0)
         d_new = sech2_gauss_moment(var).to(dtype)
         if (d_new - d).abs().max().item() < tol:
@@ -114,6 +124,8 @@ def dmft_fixed_point(model, input_scale=0.5, damp=0.5, tol=1e-4,
             converged = True
             break
         d = damp * d + (1.0 - damp) * d_new
+    if not converged:
+        return None  # Oszillation ohne Konvergenz = kein MF-Fixpunkt
     J = -eye / float(model.tau) + W * d.unsqueeze(0)
     lam_field = torch.linalg.eigvals(J).real.max().item()
     return {
