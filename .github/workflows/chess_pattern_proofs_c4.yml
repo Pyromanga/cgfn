@@ -31,6 +31,18 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/c4_pattern_proof_results.txt results/c4_run.log || true
-          git commit -m "results: C4-Muster-Beweise $(date -u '+%Y-%m-%d %H:%M UTC') [skip ci]" || true
-          git pull --rebase --autostash || true
-          git push || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: C4-Muster-Beweise ${GITHUB_RUN_NUMBER} ($(date -u '+%Y-%m-%d %H:%M') UTC) [skip ci]"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen"; exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c4-pattern-proof-results
+          path: results/
+          retention-days: 30

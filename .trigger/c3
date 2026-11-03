@@ -1,1 +1,1 @@
-c3 re-fire #3: Marker ohne Skip-Token in der Nachricht (beide Refires wurden vom Skip-Keyword unterdrueckt); Workflow: 30-min-Timeout + 5 rtbw-Downloads — 2026-11-03
+c3 re-fire #4: Endlosschleifen-Fix (is_insufficient_material raus aus dem Sampler-Gate) — Miner terminiert jetzt auch fuer KBvK/KNvK — 2026-11-03

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """C3 — Muster-Bergwerk: Ist die Wertefunktion endlich beschreibbar?
 
-Jonnys These: "Es gibt nicht unendlich Muster — du muesstest es berechnen koennen."
+Jonnys These: "Es gibt nicht unendlich Muster — du muesstes es berechnen koennen."
 Test auf exakter Wahrheit (Syzygy-Tablebase, 3-4 Mann): Sample zufaellige
 Stellungen bekannter Materialklassen, hole den EXAKTEN Wert V(x) aus der
 Tablebase, berechne strukturelle Features (Kantenbudget-Geometrie: Koenigs-
@@ -54,7 +54,11 @@ def random_position(rng, piece_type):
         b.turn = rng.choice((chess.WHITE, chess.BLACK))
         if not b.is_valid():
             continue
-        if b.is_checkmate() or b.is_stalemate() or b.is_insufficient_material():
+        # Fix 2026-11-03: is_insufficient_material() ist fuer KBvK/KNvK IMMER
+        # True (Laeufer/Springer allein erzwingen kein Matt) — der Sampler
+        # lief dadurch in eine Endlosschleife und tötete die Runs im Timeout.
+        # Diese Positionen sind genau die Remis-Faelle, die wir sampeln wollen.
+        if b.is_checkmate() or b.is_stalemate():
             continue
         return b
 
