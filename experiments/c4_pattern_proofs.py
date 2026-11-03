@@ -186,7 +186,7 @@ def analyze(cls, tb):
     log("Unabgedeckt: " + str(uncovered) + " (" + str(round(100.0 * uncovered / max(n, 1), 2)) + "%)")
     for name in per_pred:
         fired, corr = per_pred[name]
-        log("  Praedikat " + name + ": ge feuert " + str(fired) + ", Praezision " + str(round(100.0 * corr / max(fired, 1), 2)) + "%")
+        log("  Praedikat " + name + ": gefeuert " + str(fired) + ", Praezision " + str(round(100.0 * corr / max(fired, 1), 2)) + "%")
     for fen, truth in uncovered_ex:
         log("  Beispiel unabgedeckt: " + fen + " -> " + truth)
     return {"cls": cls, "n": n, "coverage": cov, "precision_cov": acc_cov, "solved": solved}
@@ -205,7 +205,11 @@ def main():
         try:
             results.append(analyze(cls, tb))
         except Exception as e:
+            # Fix 2026-11-03: blankes except verschluckte Run-1-Ursache
+            # (Run 1: gruen nach 14s, ohne Ergebnis-Commit im Repo).
+            import traceback
             log("Klasse " + cls + " FEHLER: " + str(e))
+            log(traceback.format_exc())
     tb.close()
     log("")
     log("=== Skalierungstabelle (Jonny-These: bleibt die Regelzahl klein?) ===")
@@ -218,7 +222,7 @@ def main():
     log("")
     log("Leseart: 100% beweisbar geloest = Klasse ohne Bruteforce GELÖST.")
     log("Luecken = dort, wo die klassische Musterlehre unvollstaendig ist;")
-    log("sie sind der naive Naechste-Baueme-Schritt der Muster-Expansion.")
+    log("sie sind der naive Naechste-Baeume-Schritt der Muster-Expansion.")
     with open(RESULTS, "w") as f:
         f.write("\n".join(LINES) + "\n")
     log("Ergebnis geschrieben: " + RESULTS)
