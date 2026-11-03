@@ -1,1 +1,1 @@
-c3 re-fire #2: [skip ci] im Fix-Commit unterdrueckte den Push-Trigger — Marker ohne skip ci; Workflow hat jetzt 30-min-Timeout + 5 rtbw-Downloads — 2026-11-03
+c3 re-fire #3: Marker ohne Skip-Token in der Nachricht (beide Refires wurden vom Skip-Keyword unterdrueckt); Workflow: 30-min-Timeout + 5 rtbw-Downloads — 2026-11-03
