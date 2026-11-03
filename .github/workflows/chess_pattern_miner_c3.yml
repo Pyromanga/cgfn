@@ -1,7 +1,7 @@
 name: chess-pattern-miner (C3)
 
 # C3 — Muster-Bergwerk: Regelmining gegen exakte Syzygy-Tablebase-Werte.
-# Jonny: "Es gibt nicht unendlich Muster — du muesstest es berechnen koennen."
+# Jonny: "Es gibt nicht unendlich Muster — du muesstes es berechnen koennen."
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ on:
 jobs:
   chess-pattern-miner:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
     permissions:
       contents: write
     steps:
@@ -20,9 +20,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: "Gate: syntax-check (Kontingent schonen)"
+        run: |
+          python -m py_compile experiments/c3_pattern_miner.py || { echo "[e] SYNTAX-FEHLER — Abbruch"; exit 1; }
+          echo "[i] syntax ok"
       - name: Install python-chess
         run: pip install python-chess
-      - name: Download Syzygy 3-4-Mann Tablebases (WDL)
+      - name: Download Syzygy 3-4-Mann Tablebases (WDL, parallel, mit Timeout)
         run: |
           mkdir -p tablebases
           for t in KQvK KRvK KBvK KNvK KPvK \
@@ -32,11 +36,16 @@ jobs:
                    KRvKN KRvKB KRvKP KRvKR KRvKQ \
                    KQvKN KQvKB KQvKP KQvKR KQvKQ; do
             for ext in rtbw rtbz; do
-              wget -q -O "tablebases/$t.$ext" \
-                "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.$ext" || echo "[w] $t.$ext fehlt"
+              ( wget -q -T 30 -t 2 -O "tablebases/$t.$ext" \
+                  "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.$ext" \
+                  || echo "[w] $t.$ext fehlt" ) &
             done
+            # max. 8 parallele Downloads
+            while [ "$(jobs -r | wc -l)" -ge 8 ]; do sleep 1; done
           done
-          ls -la tablebases/ | head -20
+          wait
+          du -sh tablebases/
+          ls tablebases/ | wc -l
       - name: Run C3 pattern miner
         run: |
           set -o pipefail
