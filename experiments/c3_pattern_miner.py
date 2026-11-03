@@ -2,7 +2,7 @@
 """C3 — Muster-Bergwerk: Ist die Wertefunktion endlich beschreibbar?
 
 Jonnys These: "Es gibt nicht unendlich Muster — du muesstest es berechnen koennen."
-Test auf exakter Wahrheit (Syzygy-Tablebase, 3-4-Mann): Sample zufaellige
+Test auf exakter Wahrheit (Syzygy-Tablebase, 3-4 Mann): Sample zufaellige
 Stellungen bekannter Materialklassen, hole den EXAKTEN Wert V(x) aus der
 Tablebase, berechne strukturelle Features (Kantenbudget-Geometrie: Koenigs-
 Distanzen, Opposition/Paritaet, Bauer-Rang) und schuerfe mit einem
@@ -169,16 +169,14 @@ def main():
                 y = 1.0 if v == 2 else 0.0
                 rows.append({"x": features(b), "y": y})
             if len(rows) < 500:
-                lines.append(f"
-[{name}] nur {len(rows)} gueltige Stellungen — uebersprungen")
+                lines.append(f"\n[{name}] nur {len(rows)} gueltige Stellungen — uebersprungen")
                 continue
             base = max(sum(r["y"] for r in rows), len(rows) - sum(r["y"] for r in rows)) / len(rows)
             tree = grow_tree(rows, 0, args.max_depth, 200)
             n_rules = len([r for r in rules_from_tree(tree) if r[1] >= 0.5]) + \
                       len([r for r in rules_from_tree(tree) if r[1] < 0.5])
             acc = sum(1 for r in rows if (predict(tree, r["x"]) >= 0.5) == (r["y"] == 1)) / len(rows)
-            lines.append(f"
-[{name}] n={len(rows)}, Gewinnrate={sum(r['y'] for r in rows)/len(rows):.3f}")
+            lines.append(f"\n[{name}] n={len(rows)}, Gewinnrate={sum(r['y'] for r in rows)/len(rows):.3f}")
             lines.append(f"  Mehrheits-Baseline: {base:.4f}   REGEL-BAUM: {acc:.4f}  (Tiefe {args.max_depth}, ~{n_rules} Regeln)")
             for conds, p, n in rules_from_tree(tree):
                 if n < 50:
