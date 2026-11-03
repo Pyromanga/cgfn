@@ -1,31 +1,32 @@
 #!/usr/bin/env python
-"""F27 — Optimierer-Ressourcen-Interferenz (E3b-Antagonist, fix 2026-11-03).
+"""F27 — Optimierer-Ressourcen-Interferenz (E3b-Antagonist, Run-35-Fassung).
 
 Frage: Erodiert der Optimierer die Nicht-Normalitaets-Ressource?
-Wir messen den Drift von kappa(W) (Eigenvektor-Kondition kappa_T,
-Tiefenanalyse XI) unter drei Optimierern (SGD, SGD+Momentum, Adam)
-auf einer Memory-Regression (Ziel: um 'lag' verzoegerte weisse
-Eingabe), multi-seed, W trainierbar (freeze_w=False).
+Drift von kappa(W) (kappa_T, Tiefenanalyse XI) unter SGD, SGD+Momentum,
+Adam auf einer Memory-Regression, multi-seed, W trainierbar.
 
 Fix-Historie:
-  Run 29/31: ModuleNotFoundError 'src' (import gefixt) — DANACH kamen
-  zwei weitere Todsuenen ans Licht: (a) Oktober-Bulk-Edit-Truemmer in
-  den f.write-Zeilen (Syntax-Fehler), (b) kappa_of existierte NICHT in
-  cgfn.design, (c) Input-Shape (1000,64,16) passte nicht zum Modell
-  (input_dim=1) und das Ziel war reines Rauschen. Der Rewrite fixte
-  alle drei; Aufgabe ist jetzt eine ECHTE Memory-Regression.
-  Run 33: linalg.svd crash — ein Arm trieb W in NaN/Inf (explodierende
-  Gradienten), kappa_zoo starb statt zu melden. Dieser Fix macht
-  Divergenz MESSBAR: isfinite-Waechter pro Log-Punkt, Abbruch mit
-  DIVERGED-Marke, letzter endlicher kappa-Wert zaehlt, Aggregat
-  weist Divergenzen aus. Ein explodierter Arm ist E3b-DATENPUNKT,
-  kein Crash: der Optimierer zerlegt die Dynamik bis zur Explosion,
-  und genau das registrieren wir jetzt.
+  Run 29/31: Import-/Syntax-/kappa_of-Todsuenen, Rauschen als Ziel —
+  Rewrite mit ECHTER Memory-Regression.
+  Run 33: linalg.svd-Crash bei NaN-W — isfinite-Waechter, DIVERGED-
+  Marke, letzter endlicher kappa zaehlt.
+  Run 34: SGD/Momentum (lr=0.05) divergierten in 4-7 Schritten — die
+  Arme waren lr-vergiftet, kein fairer Vergleich. Korrektur meines
+  eigenen Fehlablesens: die scheinbar 'kaputte' kT_start-Spalte war
+  KORREKT (kz0 wird VOR dem ersten Schritt gemessen; designed
+  startet bei kT ~6.5e7 und der ERSTE Schritt kollabiert es auf
+  ~1.6e3). Run 35: lr-Sweep pro Optimierer bis unter die Divergenz-
+  kante, 5 Seeds, t=-1-Zeile (kappa vor Schritt 1), Phase-2-Statistik
+  (kT-Minimum, dessen Zeitpunkt, Verhaeltnis Ende/Minimum).
 
-Vorhersage (E3b): kappa_T(W) driftet unter Training nach oben (F16:
-+0.89 unter GRU); Adam am staerksten. Falls kein Drift: Der F16-Befund
-ist kein Optimizer-Effekt. Zusaetzlich: Divergenz-Reihenfolge ist
-selbst ein Antagonisten-Signal (wer sprengt zuerst?).
+Run-34-Vorab (Adam, 3 Seeds): zweiphasig — Phase 1 Erosion (kT
+stuerzt ab), Phase 2 spaeter Wiederanstieg bei weiter fallendem Loss
+(Seed 2: kcond 1307 -> 5163 ab t~240). Run 35 testet, ob der Knick
+robust ist und ob er auch unter SGD/Momentum auftritt (dann waere er
+Update-Richtung, nicht Adaptivitaet).
+Vorhersage (E3b-Original): kappa_T driftet monoton auf, Adam am
+staerksten. Run 34: GEFALLEN (statt monotonem Drift: Erosion dann
+Wiederaufbau). Run 35 entscheidet, ob das stabil ist.
 """
 import argparse
 import math
@@ -62,7 +63,10 @@ def run_arm(opt_name, lr, steps, seed, hidden, T, lag, log_every):
 
     kz0 = kappa_zoo(model.W.detach())
     kz_last = dict(kz0)
-    log = []
+    # t=-1-Zeile: kappa VOR dem ersten Schritt (Run-34-Lehre:
+    # designed startet bei kT ~1e7; der erste Schritt kollabiert es).
+    log = [(-1, float('nan'), float(kz0['kappa_T']),
+            float(kz0['kappa_cond']), float(kz0['delta_H']))]
     diverged = -1
     for t in range(steps):
         opt.zero_grad()
@@ -76,12 +80,13 @@ def run_arm(opt_name, lr, steps, seed, hidden, T, lag, log_every):
             if finite:
                 kz = kappa_zoo(model.W.detach())
                 kz_last = kz
-                log.append((t, lw, kz['kappa_T'], kz['kappa_cond'],
-                            kz['delta_H']))
+                log.append((t, lw, float(kz['kappa_T']),
+                            float(kz['kappa_cond']),
+                            float(kz['delta_H'])))
             else:
-                # Explosion: letzter endlicher Stand + Marke.
-                log.append((t, lw, kz_last['kappa_T'],
-                            kz_last['kappa_cond'], kz_last['delta_H']))
+                log.append((t, lw, float(kz_last['kappa_T']),
+                            float(kz_last['kappa_cond']),
+                            float(kz_last['delta_H'])))
         if not finite:
             diverged = t
             break
@@ -94,29 +99,69 @@ def run_arm(opt_name, lr, steps, seed, hidden, T, lag, log_every):
     return log, kz0, kz1, k_final, diverged
 
 
+def _survives(opt_name, lr, steps, seeds, hidden, T, lag):
+    """Probe: ueberlebt der Optimierer 'steps' Schritte auf ALLEN Seeds?"""
+    for seed in seeds:
+        _log, _kz0, _kz1, _k, diverged = run_arm(
+            opt_name, lr, steps, seed, hidden, T, lag, steps + 1)
+        if diverged >= 0:
+            return False
+    return True
+
+
 def main():
     p = argparse.ArgumentParser(description='F27 optimizer interference')
-    p.add_argument('--seeds', default='0,1,2')
+    p.add_argument('--seeds', default='0,1,2,3,4')
     p.add_argument('--steps', type=int, default=300)
     p.add_argument('--hidden', type=int, default=32)
     p.add_argument('--T', type=int, default=64)
     p.add_argument('--lag', type=int, default=8)
     p.add_argument('--log-every', type=int, default=10)
+    p.add_argument('--probe-steps', type=int, default=100)
     p.add_argument('--out', default='results/f27_optimizer_interference_results.txt')
     args = p.parse_args()
 
     seeds = [int(v) for v in args.seeds.split(',')]
-    lrs = {'sgd': 0.05, 'momentum': 0.05, 'adam': 0.01}
     os.makedirs(os.path.dirname(args.out) or '.', exist_ok=True)
 
+    # lr-Kandidaten pro Optimierer (fallend). Gewaehlt wird die groesste
+    # lr, die die Probe (probe_steps) auf allen Seeds uebersteht.
+    candidates = {
+        'sgd': [0.05, 0.01, 0.005, 0.002, 0.001, 0.0005],
+        'momentum': [0.05, 0.01, 0.005, 0.002, 0.001, 0.0005],
+        'adam': [0.01],
+    }
+    lrs = {}
+    sweep_log = []
+    for opt_name in ('sgd', 'momentum', 'adam'):
+        chosen = None
+        for lr in candidates[opt_name]:
+            ok = _survives(opt_name, lr, args.probe_steps, seeds,
+                           args.hidden, args.T, args.lag)
+            sweep_log.append((opt_name, lr, 'OK' if ok else 'DIVERGED'))
+            if ok:
+                chosen = lr
+                break
+        if chosen is None:
+            chosen = candidates[opt_name][-1]  # letzte Chance; wird divergieren
+        lrs[opt_name] = chosen
+
     L = []
-    L.append('=' * 110)
-    L.append('F27 OPTIMIERER-RESSOURCEN-INTERFERENZ: kappa(W)-Drift unter SGD/Momentum/Adam auf Memory-Regression')
+    L.append('=' * 118)
+    L.append('F27 OPTIMIERER-RESSOURCEN-INTERFERENZ (Run 35): lr-Sweep, kappa(W)-Drift, Phase-2-Statistik')
     L.append(f'seeds={seeds} steps={args.steps} H={args.hidden} T={args.T} lag={args.lag} '
-             f'lrs={lrs} designed: lam=1.0 s=0.8 tau=1.0 (W trainierbar)')
-    L.append('E3b-Vorhersage: kappa_T driftet auf; Adam am staerksten. Kein Drift => F16 ist kein Optimizer-Effekt.')
-    L.append('Divergenz-Protokoll: Explosion = DIVERGED-Marke, letzter endlicher kappa zaehlt.')
-    L.append('=' * 110)
+             f'probe_steps={args.probe_steps} designed: lam=1.0 s=0.8 tau=1.0 (W trainierbar)')
+    L.append('t=-1-Zeile: kappa VOR dem ersten Schritt (designed startet bei kT ~1e7).')
+    L.append('')
+    L.append('--- lr-Sweep (groesste ueberlebende lr gewinnt) ---')
+    for (o, lr, st) in sweep_log:
+        L.append(f'  {o:>9s} lr={lr:<8g} probe: {st}')
+    L.append(f'gewaehlt: {lrs}')
+    L.append('')
+    L.append('Run-34-Vorab: Adam zweiphasig (Erosion, dann Wiederanstieg bei fallendem Loss).')
+    L.append('E3b-Original-Vorhersage (monotoner Aufwaertsdrift, Adam am staerksten): Run 34 GEFALLEN.')
+    L.append('Run 35 testet: Robustheit des Phase-2-Knicks und ob er Update-Richtung oder Adam-Eigentum ist.')
+    L.append('=' * 118)
 
     rows = []
     for opt_name in ('sgd', 'momentum', 'adam'):
@@ -130,21 +175,31 @@ def main():
                                                   args.lag, args.log_every)
             note = 'DIVERGED' if diverged >= 0 else 'ok'
             for (t, loss, kT, kc, dH) in log:
-                lv = f'{loss:9.5f}' if math.isfinite(loss) else '     nan'
+                lv = (f'{loss:9.5f}' if math.isfinite(loss)
+                      else '      --')
                 L.append(f'{seed:4d} {t:5d} {lv} {kT:8.3f} {kc:8.3f} {dH:7.3f} {note:>9s}')
+            # Phase-2-Statistik: Minimum ueber endliche Log-Punkte t>=0.
+            pts = [(t, kT) for (t, _l, kT, _kc, _dH) in log
+                   if t >= 0 and math.isfinite(kT)]
             if diverged >= 0:
                 L.append(f'      [!] seed {seed}: DIVERGENZ bei t={diverged} '
-                         f'(nicht-finite Werte; kappa bis dahin: '
+                         f'(letzter endlicher kappa: '
                          f"kT {kz1['kappa_T']:.3f}, kcond {kz1['kappa_cond']:.3f})")
+            if pts:
+                tmin, kmin = min(pts, key=lambda p: p[1])
+                kend = pts[-1][1]
+                ratio = kend / max(kmin, 1e-9)
+                L.append(f'      [p2] seed {seed}: kT_min={kmin:.3f} bei '
+                         f't={tmin}, kT_end={kend:.3f}, ende/min={ratio:.3f}')
             rows.append(dict(opt=opt_name, seed=seed,
                              loss_end=log[-1][1],
-                             kT0=kz0['kappa_T'], kT1=kz1['kappa_T'],
-                             kc0=kz0['kappa_cond'], kc1=kz1['kappa_cond'],
+                             kT0=float(kz0['kappa_T']), kT1=float(kz1['kappa_T']),
+                             kc0=float(kz0['kappa_cond']), kc1=float(kz1['kappa_cond']),
                              diverged=diverged))
 
     L.append('')
     L.append('--- Aggregat (Mittel ueber Seeds; divergierte Arme zaehlen mit letztem endlichen kappa) ---')
-    L.append(f"{'opt':>8s} {'loss_end':>9s} {'kT_start':>9s} {'kT_end':>9s} {'dK':>7s} {'ratio':>7s} {'kc_start':>9s} {'kc_end':>9s} {'n_div':>5s}")
+    L.append(f"{'opt':>8s} {'loss_end':>9s} {'kT_start':>10s} {'kT_end':>9s} {'dK':>7s} {'ratio':>7s} {'kc_start':>10s} {'kc_end':>9s} {'n_div':>5s}")
     for opt_name in ('sgd', 'momentum', 'adam'):
         sub = [r for r in rows if r['opt'] == opt_name]
         n = len(sub)
@@ -155,18 +210,22 @@ def main():
         c0 = sum(r['kc0'] for r in sub) / n
         c1 = sum(r['kc1'] for r in sub) / n
         ndiv = sum(1 for r in sub if r['diverged'] >= 0)
-        L.append(f'{opt_name:>8s} {le:9.5f} {k0:9.3f} {k1:9.3f} {k1-k0:+7.3f} '
-                 f'{k1/max(k0,1e-9):7.3f} {c0:9.3f} {c1:9.3f} {ndiv:5d}')
+        L.append(f'{opt_name:>8s} {le:9.5f} {k0:10.3f} {k1:9.3f} {k1-k0:+7.3f} '
+                 f'{k1/max(k0,1e-9):7.3f} {c0:10.3f} {c1:9.3f} {ndiv:5d}')
+    L.append('(Hinweis: kT_start ist VOR dem ersten Schritt — identisch fuer alle')
+    L.append(' Optimierer, da dieselben designed-Matrizen; der ERSTE Schritt')
+    L.append(' kollabiert kT bereits um Groessenordnungen.)')
 
     L.append('')
     L.append('LESEAT:')
-    L.append('dK > 0 systematisch => Optimierer erodiert die Nicht-Normalitaets-')
-    L.append('Ressource (E3b bestaetigt); Vergleich der drei Optimierer sagt, ob')
-    L.append('das an Adaptivitaet (Adam) oder an der Update-Richtung selbst liegt.')
-    L.append('DIVERGED-Zaehler: Explosion ist Antagonisten-Datenpunkt — welcher')
-    L.append('Optimierer zerlegt die Dynamik als erster ist ein E3b-Signal.')
-    L.append('Runde-XI-Note: die schaerfere Groesse waere g_opt (Update-Kokkyklus,')
-    L.append('F31-P5) — F27 misst den klassischen kappa(W)-Drift als F16-Replikat.')
+    L.append('Phase 1 (Erosion): kT stuerzt in den ersten Schritten ab — der')
+    L.append(' Optimierer normalisiert die Nicht-Normalitaet zuerst weg.')
+    L.append('Phase 2 (Wiederaufbau): ende/min > 1 systematisch => Betriebs-')
+    L.append(' zustand hat EIGENE Dynamik, entkoppelt vom Loss (Kernthese).')
+    L.append(' Tritt Phase 2 auch unter SGD/Momentum auf, ist es Update-')
+    L.append(' Richtung; nur unter Adam: Adaptivitaets-Eigentum.')
+    L.append('DIVERGED-Zaehler: Explosion ist Antagonisten-Datenpunkt.')
+    L.append('Runde-XI-Note: schaerfere Groesse waere g_opt (F31-P5).')
     L.append('=== FERTIG ===')
     out = '\n'.join(L) + '\n'
     Path(args.out).write_text(out, encoding='utf-8')
