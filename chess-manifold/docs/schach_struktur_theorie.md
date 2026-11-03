@@ -33,7 +33,8 @@ billigen, sauberen Sekunden-Test — genau dafuer war er gebaut.
 ## C3+C4 — Muster-Bergwerk & Muster-Beweise (angestossen 2026-11-03, C3-Zahlen seit Run 10 da)
 
 These: "Schach = eine Handvoll endlicher Mustergruppen mit konstantem Wert."
-Zwei komplementaere Tests dagegen, beide gegen EXAKTE Syzygy-WDL-Werte
+Zwei kompleme
+ntaere Tests dagegen, beide gegen EXAKTE Syzygy-WDL-Werte
 (3-Mann, KQvK/KRvK/KBvK/KNvK/KPvK):
 
 - **C3 — Muster-Miner** (`experiments/c3_pattern_miner.py` →
@@ -64,7 +65,8 @@ Run-Stand (2026-11-03, C3-Ernte in Run 10):
   `/tables/standard/3-4-5-wdl/`, und KBvK.rtbw ist ein ECHTER 80-Byte-
   Syzygy, den die >100-Bytes-Schwelle wegwarf. Run 10: durchgelaufen,
   echtes Ergebnis, Commit 6a872f53 ("results: C3-Muster-Miner 10").
-- C4: Run 1 meldete gruen nach nur 14 s — ohne Ergebnis-Commit (Commit-Step
+- C4: Run 1 meldete gruen nach nu
+r 14 s — ohne Ergebnis-Commit (Commit-Step
   verschluckte Push-Fehler per `|| true`, vermutlich geschluckte Exceptions
   pro Klasse). Fixes gepusht (Push-Retry, Traceback pro Klasse,
   Artifact-Upload), Marker re-fired. **Ergebnis noch ausstehend.**
@@ -99,7 +101,8 @@ Geschuerfte Regeln:
 
 **Hat der Miner Key Squares/Opposition unbelehrt wiedergefunden? Ja, im
 Kern.** `dist_weak_king_promo` (Distanz des verteidigenden Koenigs zum
-Umwandlungsfeld) IST das Key-Square-Kriterium in Reinform: Ist der
+Umwandlungsfeld) IST das Key-Square-Kriteriu
+m in Reinform: Ist der
 Verteidigungskoenig weit weg (>4), gewinnt der Angreifer quasi immer —
 p=1.000, sobald der Bauer die Mitte passiert hat (pawn_rank > 2). Und
 `weak_king_before_pawn` (steht der verteidigende Koenig vor dem Bauern?)
@@ -133,4 +136,56 @@ Die These wird von C3 GESTUETZT, mit einem praezisen Vorbehalt:
 
 C4-Zahlen (Coverage × Praezision je Klasse, Praedikat-Praezisionen,
 unabgedeckte Beispiele) werden nachgetragen, sobald der re-fired C4-Run
-ein Ergebnis-Commit liefert.
+ein Ergebnis-Com
+mit liefert.
+
+## S5 — Strukturzustaende: die Regelzahl waechst mit Strukturzustaenden, nicht mit Positionen (2026-11-03)
+
+Kernaussage (Jonny): Schach ist nicht `Wert(Stellung)` ueber ~10^44 Stellungen,
+sondern `Wert = Kombination ueber Strukturwerte`. Eine Struktur ist eine
+zusammenhaengende Interaktionskomponente von B(x) (S1) plus eine
+Potentialfunktion (Lyapunov invers zu S4: Gewinn = strikt fallendes
+Potential entlang optimalen Spiels bis zur Terminalmenge, Remis = Potential,
+das nicht faellt). Jeder Strukturtyp t hat einen kleinen Zustandsraum Z_t,
+der von der Partie unabhaengig ist: Bauernkette ~20 Zustaende, Freibauer ~6,
+Turm-auf-Linie ~8. Die Anzahl der Regeln, die Schach vollstaendig bestimmen,
+skaliert mit SUM |Z_t| plus Kopplungstermen — nicht mit der Anzahl der
+Positionen. Regelzahl << Positionszahl ist der Behauptungskern: Unter S5
+ist Schach ein Regelbuch (Groessenordnung 10^3-10^4 Strukturzustaende samt
+Uebergangsgraph), kein Enumerationsproblem. AlphaZero-Gewichte waeren dann
+eine implizite, kleine Strukturzustands-Tabelle.
+
+Erstbeispiele (aus der Diskussion):
+- Bauernkette (3 Bauern nebeneinander): kleine Formklasse; solange die Basis
+  gedeckt ist, ist das Kette-Potential stabil — bricht die Basis, kippt die
+  ganze Komponente auf einmal. Deshalb sind Strukturen prognostisch: wenige
+  Zustaende pro Komponente, jeder Zustand mit Wert.
+- Turm + Freibauer: zwei Strukturen mit Kopplung. Lucena = der Turm liefert
+  die Potentialdifferenz (Bruecke = eine Hilfskante, die das S2-Tempo-Defizit
+  schliesst); Philidor = eine dritte Struktur (Deckel) friert das Potential.
+- Ladder of Shame: erzwungener Pfad im Hypergraphen — jede Parade erzeugt das
+  naechste Defizit, das Potential faellt Schritt fuer Schritt strikt.
+  Extremfall maximaler Kopplung; die 3-fach-Wiederholung ist das andere
+  Extrem (flaches Potential, entkoppelter Zyklus). Kopplungsstaerke ist die
+  eigentliche Achse zwischen Jonnys zwei Symmetrie-Extremen.
+
+Zwei offene Kernfragen (entscheiden S5, mit Falsifikationskriterien):
+1. Kopplungsordnung: Genuegt Wert = Summe der Strukturwerte + Paarkopplungen?
+   Wenn Tripel- und hoehere Kopplungen mit dem Material wachsen, kommt die
+   Exponentialwand zurueck. Messbar (C5-Design: Struktur-Extraktion auf
+   Lichess-Partien — Bauernketten, Freibauer, Turmlinien, Zwangspfade —,
+   Strukturwerte einzeln gegen den Ausgang, dann Restvarianz von Paar- vs.
+   Tripel-Termen).
+2. Tempo in den Uebergangen: Strukturzustands-Aenderungen kosten Tempi; das
+   Regelbuch ist ein Zustandsautomat (Zustand, Zugrecht, Tempo-Defizit) ->
+   Wert. Hier leben S2/S3: Zugzwang = Uebergangskosten, Defizit =
+   Kantenbewertung auf dem Uebergangsgraph.
+
+Verhaeltnis zu C3/C4: C3 (Run 10) stuetzt die Endlichkeit direkt — keine
+3-Mann-Klasse braucht mehr als 5 flache Regeln, 4 von 5 sind mit 1-2 Regeln
+perfekt, und der Miner hat Key Squares/Opposition UNBELEHRT wiedergefunden.
+S5 sagt, WARUM das skalieren koennte: Endspielklassen sind Strukturtypen mit
+kleinen Z_t. Der KPvK-Residualfall (90.93% mit 5 Regeln) passt genau: Key
+Squares sind mengenwertige Konzepte — Zustandsraeume, keine Punkt-Schwellwerte.
+C4 prueft die beweisbare 100%-Version (Coverage x Praezision a-priori-Regeln
+gegen exakte Werte); C5 misst die Kopplungsordnung auf vollen Partien.
