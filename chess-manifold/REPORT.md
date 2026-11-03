@@ -1,3 +1,37 @@
+## 3. Struktur: Becken, Kohaerenz und topologische Signaturen (Smoke-Run #18, Profil smoke/Selfplay, 2026-11-03)
+
+**Setup:** Erster erfolgreicher Run nach dem Actions-Ausfall (Billing/Kontingent, siehe Issue #2). Profil smoke (Selfplay, Seed 42), 25 Partien, n = 301 Positionen (Train 271 / Val 30), Stockfish verfuegbar (depth 12 fuer Labels, wp-Thresholds 0.55/0.45). Ergebnisse via Result-Commit `f2468d9` (Bot).
+
+**Beckengroessen** (wp-Thresholds 0.55/0.45): **Weiss 211 (70.1 %), Schwarz 53 (17.6 %), Remis 37 (12.3 %)**. Das Selfplay-Weiss-Dominanz-Muster (vgl. Run #7: 64.8 % Weiss) reproduziert sich auch im kleinen Smoke-Sample — der Weiss-Bias ist ein Artefakt der Random-Selfplay-Datenquelle, nicht der Einbettung ( bestaetigt durch Lichess-Gegenprobe in Abschnitt 6).
+
+**Kohaerenz vs. Literatur:** k-NN-Becken-Accuracy = **81.4 %** (0.814) — unter dem Literaturreferenzwert **0.917**, aber bei n=301 und einem 16-dim-Embedding mit nur 20 Trainings-Epochen klar ueber Zufallsniveau (33 %). Rueckstand zur Literatur plausibel durch Tiny-Sample und reduzierte Trainingszeit des Smoke-Profils (Full-Profil: mehr Partien/Epochen).
+
+**Topologische Signaturen (PH, je Becken):** Remis ist das kompakteste Becken — H1-Gesamtpersistenz **0.101** vs. Schwarz 0.252 und Weiss 2.102; H1-max: Remis 0.029 < Weiss 0.046 < Schwarz 0.065; Betti0 @ 0.25: Remis **6** < Weiss/Schwarz je 11. Das Muster \"Remis-Becken am wenigsten fragmentiert\" ist auch hier klar sichtbar.
+
+**Gegenbeispiele (n_contradictions = 72, 23.9 %):** Ueberwiegend Weiss-Positionen, die topologisch korrekt klassifiziert werden (Fehlerkonzentration bei weissen Vorstossen wie ply 8, FEN `rnbqkb1r/2ppppp1/pp3n2/4N2p/8/P2P4/1PP1PPPP/RNBQKB1R w KQkq - 0 5`). Die wenigen echten Fehlklassifikationen sind Kipp-Positionen mit grossem wp-Schwund, z. B. ply 40 `r3kb2/p1p4p/2bqp1rn/1p1P1Qp1/1P1n2PP/P2KP3/R4P1N/1NB2B1R w q - 0 21` (wp 0.19, topo sagt Weiss, wahr: Schwarz) — Positionen auf der Geodaeten-Grenze zwischen Becken. Vollstaendige Liste: results/report.json -> contradiction_examples.
+
+## 4. Hypothesentest: Geodaeten, Bootstrap und Vorhersagekraft vs. Baseline (Run #18)
+
+**Geodaeten Start -> Becken (Isomap-k-NN, k=10):** d(Start, Remis) = **0.448** < d(Start, Schwarz) = 0.874 < d(Start, Weiss) = 0.970. Fruehes Mittelspiel (Ply 8-20): Remis 0.572 < Weiss 0.769 < Schwarz 0.883 — konsistent.
+
+**Bootstrap-Test (2.000 Resamples, einseitig, n=301):**
+
+- d(Start,Remis) - d(Start,Weiss) (`draw_minus_white`): mean = **-0.521**, 95 %-CI **[-0.611, -0.425]**, p = 0.000
+- d(Start,Remis) - d(Start,Schwarz) (`draw_minus_black`): mean = **-0.426**, 95 %-CI **[-0.543, -0.303]**, p = 0.000
+
+Beide 95 %-CIs strikt negativ, p < 0.001: **Kriterium (a) ERFUELLT** — die Startstellung liegt signifikant naeher am Remis-Becken als an beiden Sieger-Becken.
+
+**Topologische Genauigkeit vs. depth-1-Baseline (Kriterium b):**
+
+- Topologische k-NN-Genauigkeit: **81.4 %**
+- Stockfish-depth-1-Baseline: **100.0 %** (all und masked)
+
+**Kriterium (b) NICHT ERFUELLT** — die Ein-Ply-Baseline liegt ~19 Prozentpunkte ueber der topologischen Vorhersage. Grund (wie in Abschnitt 6 analysiert): Die Beckenlabels stammen aus depth-12-Evals derselben Engine, deren depth-1-Ansicht fast perfekt damit korreliert; die ~100 %-Baseline ist durch Stellungsverteilung allein nicht entzauberbar.
+
+**Urteil nach der vorregistrierten Entscheidungsregel (Run #18):** Nur gestuetzt, wenn beide Bootstrap-CIs negativ UND topologische Genauigkeit > Baseline. CIs: erfuellt; Genauigkeit: **nicht** erfuellt (81.4 % < 100 %).
+
+-> **Hypothese H1 NICHT GESTUETZT (widerlegt im praediktiven Kriterium).** Der strukturelle Befund (Remis-Becken signifikant am naechsten zur Startstellung, kompakte Remis-PH-Signatur) ist robust ueber Smoke- und Lichess-Daten; der praediktive Eigenwert der Topologie gegenueber einer simplen depth-1-Engine-Baseline ist nicht nachweisbar.
+
 ## 6. Lichess-Robustheitscheck (Run #9, Profil lichess, 2026-11-02)
 
 **Setup:** Echte Turnierpartien statt Random-Selfplay — Top-25-Classical-Spieler via offizielle Lichess-API (Commits 2c863abe/292d5f0c), je 40 Partien, Elo >= 2200, Spielausgang in `positions.csv` (Spalte `outcome`) mitgespeichert. Run #9 gruen, Ergebnisse committet (n = 3.809 Positionen; Train 3.429 / Val 380). Datenquelle: `report.json` -> `config.source = "lichess"`.
