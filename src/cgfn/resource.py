@@ -261,7 +261,7 @@ def update_cocycle_growth(h, eta, beta, t_max=600, n_probe=4, seed=0):
     gen = torch.Generator().manual_seed(seed)
     g_opt = 1.0
     for _ in range(n_probe):
-        delta = torch.randn(2 * n, generator=gen)
+        delta = torch.randn(2 * n, generator=gen, dtype=torch.float64)
         delta = delta / delta.norm()
         cur = delta.clone()
         for _ in range(t_max):

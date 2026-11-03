@@ -197,20 +197,28 @@ def main():
     else:
         L.append('[w] keine DMFT-ok Konfigurationen — Gitter liegt supra-linear? lam-Grid senken.')
 
+    # Run-21-Lehre: P5-Crash frass die komplette P1-P4-Auswertung.
+    # Snapshot VOR P5 sichern, P5 in try/except.
     L.append('')
-    L.append('--- P5: Optimierer-Kokkyklus (Heavy-Ball-Kompagnon, quadratisches Demo) ---')
-    h = torch.logspace(0, 2, 16)
-    L.append(f'Hessian-Spread: {h[0].item():.1f}..{h[-1].item():.1f} (log-spaced, n=16), eta=0.019')
-    g_prev = None
-    mono = True
-    for beta in [0.0, 0.5, 0.9, 0.99]:
-        g_opt = update_cocycle_growth(h, eta=0.019, beta=beta, t_max=600, n_probe=4)
-        if g_prev is not None and g_opt < g_prev - 1e-9:
-            mono = False
-        L.append(f'beta={beta:4.2f}: g_opt = {g_opt:.3f}')
-        g_prev = g_opt
-    L.append(f'P5 monoton in beta: {"JA" if mono else "NEIN"} '
-             '(EoS-Sharpness ist Fixpunkt des Update-Operators, kein Landschafts-Eigentum)')
+    L.append('=== P1-P4 GESICHERT (Snapshot vor P5) ===')
+    Path(args.out).write_text('\n'.join(L) + '\n', encoding='utf-8')
+    try:
+        L.append('')
+        L.append('--- P5: Optimierer-Kokkyklus (Heavy-Ball-Kompagnon, quadratisches Demo) ---')
+        h = torch.logspace(0, 2, 16)
+        L.append(f'Hessian-Spread: {h[0].item():.1f}..{h[-1].item():.1f} (log-spaced, n=16), eta=0.019')
+        g_prev = None
+        mono = True
+        for beta in [0.0, 0.5, 0.9, 0.99]:
+            g_opt = update_cocycle_growth(h, eta=0.019, beta=beta, t_max=600, n_probe=4)
+            if g_prev is not None and g_opt < g_prev - 1e-9:
+                mono = False
+            L.append(f'beta={beta:4.2f}: g_opt = {g_opt:.3f}')
+            g_prev = g_opt
+        L.append(f'P5 monoton in beta: {"JA" if mono else "NEIN"} '
+                 '(EoS-Sharpness ist Fixpunkt des Update-Operators, kein Landschafts-Eigentum)')
+    except Exception as exc:
+        L.append(f'[w] P5 gescheitert (P1-P4 sind gesichert): {exc}')
 
     L.append('')
     L.append('LESEAT:')
