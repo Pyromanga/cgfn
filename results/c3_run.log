@@ -1,4 +1,0 @@
-  File "/home/runner/work/cgfn/cgfn/experiments/c3_pattern_miner.py", line 172
-    lines.append(f"
-                 ^
-SyntaxError: unterminated string literal (detected at line 172)
