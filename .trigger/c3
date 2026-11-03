@@ -1,1 +1,1 @@
-c3 re-fire #6: Run 6+7 fielen am Download-Gate (26 s). Umstellung auf curl mit Browser-UA + Header-Diagnose, Fehlerprotokoll wird ab jetzt via if:always committet. — 2026-11-03
+c3 re-fire #7: Diagnose-Log brachte die Wahrheit — sesse.net-Zertifikat deckt Hostnamen nicht (http:// statt https://, laut Index/Repology verfuegbar), lichess-Pfad war 404 (WDL-Verzeichnis heisst 3-4-5-wdl). — 2026-11-03

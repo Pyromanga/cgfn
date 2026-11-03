@@ -26,23 +26,22 @@ jobs:
           echo "[i] syntax ok"
       - name: Install python-chess
         run: pip install python-chess
-      - name: "Download Syzygy 3-Mann WDL-Tablebases (curl, Diagnose-Log nach results/c3_run.log)"
+      - name: "Download Syzygy 3-Mann WDL-Tablebases (http-sesse + lichess 3-4-5-wdl)"
         run: |
           mkdir -p tablebases results
-          set +e
           : > results/c3_run.log
           for t in KQvK KRvK KBvK KNvK KPvK; do
             ok=0
-            for url in "https://tablebase.sesse.net/syzygy/3-4-5/${t,,}.rtbw" \
-                       "https://tablebase.sesse.net/syzygy/3-4-5/$t.rtbw" \
+            for url in "http://tablebase.sesse.net/syzygy/3-4-5/$t.rtbw" \
+                       "https://tablebase.lichess.ovh/tables/standard/3-4-5-wdl/$t.rtbw" \
                        "https://tablebase.lichess.ovh/tables/standard/3-4-5/$t.rtbw"; do
               echo "=== $t <- $url" | tee -a results/c3_run.log
-              curl -fsSL --retry 2 --max-time 90 -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" -o "tablebases/$t.rtbw" "$url" 2>&1 | tee -a results/c3_run.log
-              rc=$?
+              curl -fsSL --retry 2 --max-time 90 -A "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36" \
+                -o "tablebases/$t.rtbw" "$url" 2>&1 | tee -a results/c3_run.log
+              rc=${PIPESTATUS[0]}
               sz=$(stat -c%s "tablebases/$t.rtbw" 2>/dev/null || echo 0)
               echo "--- rc=$rc size=$sz" | tee -a results/c3_run.log
               if [ "$rc" -eq 0 ] && [ "$sz" -gt 100 ]; then ok=1; break; fi
-              echo "--- HEADERS:" | tee -a results/c3_run.log
               curl -sIL --max-time 30 -A "Mozilla/5.0" "$url" 2>&1 | head -25 | tee -a results/c3_run.log
               rm -f "tablebases/$t.rtbw"
             done
