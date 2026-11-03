@@ -1,16 +1,33 @@
-C3 — Muster-Bergwerk: Regeln gegen EXAKTE Tablebase-Werte (3-4 Mann)
-==========================================================================
+=== KQvK <- https://tablebase.sesse.net/syzygy/3-4-5/kqvk.rtbw
+curl: (60) SSL: no alternative certificate subject name matches target hostname 'tablebase.sesse.net'
+More details here: https://curl.se/docs/sslcerts.html
 
-[KQvK] nur 0 gueltige Stellungen — uebersprungen
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the webpage mentioned above.
+--- rc=0 size=0
+--- HEADERS:
+=== KQvK <- https://tablebase.sesse.net/syzygy/3-4-5/KQvK.rtbw
+curl: (60) SSL: no alternative certificate subject name matches target hostname 'tablebase.sesse.net'
+More details here: https://curl.se/docs/sslcerts.html
 
-[KRvK] nur 0 gueltige Stellungen — uebersprungen
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the webpage mentioned above.
+--- rc=0 size=0
+--- HEADERS:
+=== KQvK <- https://tablebase.lichess.ovh/tables/standard/3-4-5/KQvK.rtbw
+curl: (22) The requested URL returned error: 404
+--- rc=0 size=0
+--- HEADERS:
+HTTP/2 404 
+server: nginx
+date: Tue, 03 Nov 2026 18:49:24 GMT
+content-type: text/html; charset=utf-8
+content-length: 146
+access-control-allow-origin: *
+access-control-allow-methods: GET, HEAD
+access-control-allow-headers: Accept,If-Modified-Since,Cache-Control,X-Requested-With
+x-frame-options: DENY
 
-[KBvK] nur 0 gueltige Stellungen — uebersprungen
-
-[KNvK] nur 0 gueltige Stellungen — uebersprungen
-
-[KPvK] nur 0 gueltige Stellungen — uebersprungen
-
-Lesart: Reproduziert ein flacher Regelbaum die exakten Werte nahezu perfekt,
-ist die Wertefunktion endlich beschreibbar (Jonnys These). Fuer KPvK
-erwartet man die Wiederentdeckung von Key Squares/Opposition — unbelehrte Regeln statt Buchwissen. Wenn nicht: Die Muster sind tiefer als Geometrie-Features — dann C4 mit Hypergraph-Defizit-Features.
+[e] KQvK: KEIN Mirror lieferte Daten — Abbruch (Diagnose in results/c3_run.log)
