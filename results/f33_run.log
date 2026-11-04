@@ -1,0 +1,79 @@
+======================================================================================================================
+F33 FTLE-SPEKTRUM ALS BETRIEBSZUSTAND (Tiefenanalyse XIV, registrierter Neustart)
+PRIMAER: top25 (obere 25% der Exponenten) | Kontrolle: ben1, MC | Freeze: keine Nachverhandlung
+H=32: Bisektion auf ben=-0.3 | H=256: Sweep + Band-Selektion (-0.45, -0.15)
+Verdikt: >=3 gueltige Zellen -> PASS falls >=3 Treffer (corr >= +0.4 UND > ben1), sonst KILL
+======================================================================================================================
+
+########## Zelle H=32 sinus (Bisektion ben=-0.3) ##########
+   s seed   lam*    ben1   top25    mean    std  fedge    MC  TASK_R2
+ 0.0    0  1.328  -0.300  -0.524  -1.015  0.401  0.000  2.64   +0.340
+ 0.0    1  1.046  -0.300  -0.579  -0.968  0.313  0.000  2.69   +0.394
+ 0.0    2  0.963  -0.300  -0.550  -0.952  0.316  0.000  2.89   +0.488
+ 0.0    3  1.564  -0.300  -0.452  -1.025  0.443  0.000  2.65   +0.423
+ 0.8    0  0.446  -0.300  -0.563  -1.001  0.348  0.000  3.72   +0.711
+ 0.8    1  0.458  -0.300  -0.539  -0.989  0.330  0.000  3.12   +0.485
+ 0.8    2  0.520  -0.300  -0.494  -1.011  0.418  0.000  3.45   +0.697
+ 0.8    3  0.510  -0.300  -0.533  -1.009  0.378  0.000  3.35   +0.759
+ 1.6    0  0.240  -0.302  -0.556  -0.998  0.342  0.000  3.78   +0.714
+ 1.6    1  0.246  -0.298  -0.560  -0.998  0.329  0.000  3.29   +0.503
+ 1.6    2  0.287  -0.300  -0.522  -1.023  0.417  0.000  3.32   +0.703
+ 1.6    3  0.263  -0.302  -0.550  -1.014  0.369  0.000  3.59   +0.713
+--- Zelle H=32 sinus: n=12, deckelfrei=JA, gueltig=NEIN (n>=15 und Deckel noetig)
+Zelle H=32 sinus: PRIMAER corr(top25, TASK_R2) = -0.097   (>= +0.4 noetig)
+Zelle H=32 sinus: Kontrolle corr(ben1, TASK_R2)  = -0.446   (top25 muss schlagen)
+Zelle H=32 sinus: deskriptiv corr(mean_spec, TASK_R2) = -0.317
+Zelle H=32 sinus: deskriptiv corr(std_spec, TASK_R2) = +0.131
+Zelle H=32 sinus: deskriptiv corr(frac_edge, TASK_R2) = +nan
+Zelle H=32 sinus: Kontrolle corr(MC, TASK_R2)     = +0.897
+Zelle H=32 sinus: Treffer = NEIN
+
+########## Zelle H=256 sinus (Sweep, Band (-0.45, -0.15)) ##########
+  lam    s seed    ben1   top25    mean    std  fedge    MC  TASK_R2
+ 0.90  0.0    0  -0.431  -0.633  -1.002  0.284  0.000  2.52   +0.530
+ 0.90  0.0    1  -0.378  -0.610  -0.998  0.291  0.000  2.63   +0.532
+ 0.90  0.0    2  -0.435  -0.589  -0.978  0.301  0.000  1.96   +0.589
+--- Zelle H=256 sinus: n=3, deckelfrei=JA, gueltig=NEIN (n>=15 und Deckel noetig)
+Zelle H=256 sinus: zu wenige Konfigs fuer Korrelationen.
+
+########## Zelle H=32 narma (Bisektion ben=-0.3) ##########
+   s seed   lam*    ben1   top25    mean    std  fedge    MC  TASK_R2
+ 0.0    0  1.328  -0.300  -0.524  -1.015  0.401  0.000  2.64   +0.540
+ 0.0    1  1.046  -0.300  -0.579  -0.968  0.313  0.000  2.69   +0.512
+ 0.0    2  0.963  -0.300  -0.550  -0.952  0.316  0.000  2.89   +0.526
+ 0.0    3  1.564  -0.300  -0.452  -1.025  0.443  0.000  2.65   +0.507
+ 0.8    0  0.446  -0.300  -0.563  -1.001  0.348  0.000  3.72   +0.584
+ 0.8    1  0.458  -0.300  -0.539  -0.989  0.330  0.000  3.12   +0.564
+ 0.8    2  0.520  -0.300  -0.494  -1.011  0.418  0.000  3.45   +0.571
+ 0.8    3  0.510  -0.300  -0.533  -1.009  0.378  0.000  3.35   +0.543
+ 1.6    0  0.240  -0.302  -0.556  -0.998  0.342  0.000  3.78   +0.594
+ 1.6    1  0.246  -0.298  -0.560  -0.998  0.329  0.000  3.29   +0.568
+ 1.6    2  0.287  -0.300  -0.522  -1.023  0.417  0.000  3.32   +0.575
+ 1.6    3  0.263  -0.302  -0.550  -1.014  0.369  0.000  3.59   +0.556
+--- Zelle H=32 narma: n=12, deckelfrei=JA, gueltig=NEIN (n>=15 und Deckel noetig)
+Zelle H=32 narma: PRIMAER corr(top25, TASK_R2) = -0.275   (>= +0.4 noetig)
+Zelle H=32 narma: Kontrolle corr(ben1, TASK_R2)  = -0.241   (top25 muss schlagen)
+Zelle H=32 narma: deskriptiv corr(mean_spec, TASK_R2) = -0.267
+Zelle H=32 narma: deskriptiv corr(std_spec, TASK_R2) = -0.072
+Zelle H=32 narma: deskriptiv corr(frac_edge, TASK_R2) = +nan
+Zelle H=32 narma: Kontrolle corr(MC, TASK_R2)     = +0.864
+Zelle H=32 narma: Treffer = NEIN
+
+########## Zelle H=256 narma (Sweep, Band (-0.45, -0.15)) ##########
+  lam    s seed    ben1   top25    mean    std  fedge    MC  TASK_R2
+ 0.90  0.0    0  -0.431  -0.633  -1.002  0.284  0.000  2.52   +0.535
+ 0.90  0.0    1  -0.378  -0.610  -0.998  0.291  0.000  2.63   +0.524
+ 0.90  0.0    2  -0.435  -0.589  -0.978  0.301  0.000  1.96   +0.527
+--- Zelle H=256 narma: n=3, deckelfrei=NEIN, gueltig=NEIN (n>=15 und Deckel noetig)
+Zelle H=256 narma: zu wenige Konfigs fuer Korrelationen.
+
+--- F33-VERDICT (vorab genagelt, keine Nachverhandlung) ---
+Zelle H=32 sinus: n=12, gueltig=NEIN, corr(top25)=-0.097, Treffer=NEIN
+Zelle H=256 sinus: n=3, gueltig=NEIN, corr(top25)=  n/a, Treffer=NEIN
+Zelle H=32 narma: n=12, gueltig=NEIN, corr(top25)=-0.275, Treffer=NEIN
+Zelle H=256 narma: n=3, gueltig=NEIN, corr(top25)=  n/a, Treffer=NEIN
+
+VERDICT: UNENTSCHEIDEN — weniger als 3 gueltige Zellen (Design-Problem: Band zu eng / Deckel). Schwelle bleibt, Anpassung nur am Design.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f33_ftle_spectrum_results.txt geschrieben.
