@@ -1,0 +1,87 @@
+======================================================================================================================
+F34 PHASE 1 — EXPLORATION (kein Verdikt, keine Schwelle; Phase 2 bestaetigt separat)
+Gitter: H in {32,128} x s=[0.0, 0.4, 0.8, 1.2, 1.6] x seeds=[0, 1, 2, 3], Bisektion auf ben=-0.3
+25 Observablen x 5 Aufgaben x 2 H. ALLES hier ist Explorationsmaterial.
+======================================================================================================================
+
+########## H=32 ##########
+H=32 s=0.0 seed=0 lam*=1.326 ben1=-0.301 MC=2.63 E=2.68 sinus=+0.340 narma=+0.543 wdelay8=+0.137 prod=+0.026 trend=+0.903
+H=32 s=0.0 seed=1 lam*=1.045 ben1=-0.301 MC=2.69 E=0.93 sinus=+0.395 narma=+0.511 wdelay8=+0.120 prod=+0.026 trend=+0.900
+H=32 s=0.0 seed=2 lam*=0.965 ben1=-0.299 MC=2.89 E=0.89 sinus=+0.488 narma=+0.525 wdelay8=+0.154 prod=+0.005 trend=+0.910
+H=32 s=0.0 seed=3 lam*=1.565 ben1=-0.300 MC=2.67 E=1193497947405.40 sinus=+0.425 narma=+0.507 wdelay8=+0.155 prod=+0.039 trend=+0.921
+H=32 s=0.4 seed=0 lam*=0.773 ben1=-0.302 MC=3.61 E=4.56 sinus=+0.683 narma=+0.584 wdelay8=+0.196 prod=+0.045 trend=+0.937
+H=32 s=0.4 seed=1 lam*=0.768 ben1=-0.301 MC=2.89 E=16.94 sinus=+0.454 narma=+0.551 wdelay8=+0.149 prod=+0.038 trend=+0.910
+H=32 s=0.4 seed=2 lam*=0.834 ben1=-0.301 MC=3.53 E=6.24 sinus=+0.648 narma=+0.577 wdelay8=+0.197 prod=+0.034 trend=+0.933
+H=32 s=0.4 seed=3 lam*=0.834 ben1=-0.299 MC=3.40 E=2.53 sinus=+0.724 narma=+0.532 wdelay8=+0.223 prod=+0.040 trend=+0.947
+H=32 s=0.8 seed=0 lam*=0.445 ben1=-0.305 MC=3.72 E=3.02 sinus=+0.710 narma=+0.583 wdelay8=+0.196 prod=+0.073 trend=+0.941
+H=32 s=0.8 seed=1 lam*=0.459 ben1=-0.299 MC=3.12 E=12.85 sinus=+0.485 narma=+0.561 wdelay8=+0.178 prod=+0.050 trend=+0.918
+H=32 s=0.8 seed=2 lam*=0.520 ben1=-0.300 MC=3.45 E=5.59 sinus=+0.697 narma=+0.572 wdelay8=+0.199 prod=+0.041 trend=+0.935
+H=32 s=0.8 seed=3 lam*=0.510 ben1=-0.299 MC=3.34 E=2.05 sinus=+0.758 narma=+0.544 wdelay8=+0.230 prod=+0.063 trend=+0.948
+H=32 s=1.2 seed=0 lam*=0.309 ben1=-0.305 MC=3.71 E=3.17 sinus=+0.703 narma=+0.592 wdelay8=+0.197 prod=+0.069 trend=+0.941
+H=32 s=1.2 seed=1 lam*=0.313 ben1=-0.306 MC=3.23 E=10.07 sinus=+0.493 narma=+0.566 wdelay8=+0.185 prod=+0.058 trend=+0.921
+H=32 s=1.2 seed=2 lam*=0.379 ben1=-0.304 MC=3.32 E=5.36 sinus=+0.698 narma=+0.573 wdelay8=+0.188 prod=+0.040 trend=+0.932
+H=32 s=1.2 seed=3 lam*=0.355 ben1=-0.287 MC=3.50 E=1.96 sinus=+0.726 narma=+0.556 wdelay8=+0.238 prod=+0.071 trend=+0.948
+H=32 s=1.6 seed=0 lam*=0.238 ben1=-0.308 MC=3.77 E=3.43 sinus=+0.713 narma=+0.594 wdelay8=+0.201 prod=+0.061 trend=+0.941
+H=32 s=1.6 seed=1 lam*=0.248 ben1=-0.293 MC=3.29 E=12.84 sinus=+0.504 narma=+0.569 wdelay8=+0.190 prod=+0.061 trend=+0.922
+H=32 s=1.6 seed=2 lam*=0.285 ben1=-0.307 MC=3.34 E=5.17 sinus=+0.704 narma=+0.574 wdelay8=+0.185 prod=+0.039 trend=+0.933
+H=32 s=1.6 seed=3 lam*=0.262 ben1=-0.313 MC=3.60 E=1.92 sinus=+0.713 narma=+0.555 wdelay8=+0.243 prod=+0.073 trend=+0.949
+
+########## H=128 ##########
+H=128 s=0.0 seed=0 lam*=1.138 ben1=-0.300 MC=2.38 E=1.32 sinus=+0.517 narma=+0.555 wdelay8=+0.176 prod=+0.025 trend=+0.921
+H=128 s=0.0 seed=1 lam*=1.110 ben1=-0.300 MC=2.04 E=0.80 sinus=+0.534 narma=+0.526 wdelay8=+0.160 prod=+0.045 trend=+0.914
+H=128 s=0.0 seed=2 lam*=1.246 ben1=-0.300 MC=1.42 E=0.73 sinus=+0.586 narma=+0.499 wdelay8=+0.169 prod=+0.029 trend=+0.919
+H=128 s=0.0 seed=3 lam*=1.068 ben1=-0.301 MC=2.74 E=1.23 sinus=+0.509 narma=+0.518 wdelay8=+0.201 prod=+0.048 trend=+0.931
+H=128 s=0.4 seed=0 lam*=0.421 ben1=-0.301 MC=2.68 E=4.54 sinus=+0.833 narma=+0.612 wdelay8=+0.221 prod=+0.103 trend=+0.941
+H=128 s=0.4 seed=1 lam*=0.393 ben1=-0.303 MC=3.39 E=1.93 sinus=+0.859 narma=+0.586 wdelay8=+0.231 prod=+0.120 trend=+0.944
+H=128 s=0.4 seed=2 lam*=0.398 ben1=-0.299 MC=2.85 E=2.79 sinus=+0.825 narma=+0.568 wdelay8=+0.194 prod=+0.114 trend=+0.942
+H=128 s=0.4 seed=3 lam*=0.407 ben1=-0.299 MC=2.64 E=3.04 sinus=+0.845 narma=+0.579 wdelay8=+0.259 prod=+0.154 trend=+0.952
+H=128 s=0.8 seed=0 lam*=0.220 ben1=-0.295 MC=2.19 E=4.23 sinus=+0.825 narma=+0.615 wdelay8=+0.221 prod=+0.109 trend=+0.941
+H=128 s=0.8 seed=1 lam*=0.196 ben1=-0.307 MC=3.13 E=1.77 sinus=+0.851 narma=+0.578 wdelay8=+0.238 prod=+0.129 trend=+0.944
+H=128 s=0.8 seed=2 lam*=0.215 ben1=-0.301 MC=3.19 E=3.41 sinus=+0.845 narma=+0.562 wdelay8=+0.229 prod=+0.145 trend=+0.945
+H=128 s=0.8 seed=3 lam*=0.215 ben1=-0.303 MC=3.11 E=3.32 sinus=+0.853 narma=+0.575 wdelay8=+0.267 prod=+0.170 trend=+0.953
+H=128 s=1.2 seed=0 lam*=0.145 ben1=-0.304 MC=3.05 E=4.07 sinus=+0.828 narma=+0.560 wdelay8=+0.219 prod=+0.107 trend=+0.941
+H=128 s=1.2 seed=1 lam*=0.130 ben1=-0.309 MC=3.44 E=1.92 sinus=+0.853 narma=+0.589 wdelay8=+0.237 prod=+0.132 trend=+0.944
+H=128 s=1.2 seed=2 lam*=0.149 ben1=-0.301 MC=2.65 E=3.84 sinus=+0.848 narma=+0.592 wdelay8=+0.231 prod=+0.145 trend=+0.946
+H=128 s=1.2 seed=3 lam*=0.145 ben1=-0.304 MC=2.05 E=3.43 sinus=+0.853 narma=+0.556 wdelay8=+0.263 prod=+0.160 trend=+0.953
+H=128 s=1.6 seed=0 lam*=0.107 ben1=-0.311 MC=2.51 E=3.89 sinus=+0.823 narma=+0.595 wdelay8=+0.219 prod=+0.106 trend=+0.941
+H=128 s=1.6 seed=1 lam*=0.102 ben1=-0.280 MC=3.13 E=2.06 sinus=+0.860 narma=+0.590 wdelay8=+0.242 prod=+0.136 trend=+0.945
+H=128 s=1.6 seed=2 lam*=0.116 ben1=-0.295 MC=3.19 E=4.86 sinus=+0.851 narma=+0.597 wdelay8=+0.233 prod=+0.145 trend=+0.946
+H=128 s=1.6 seed=3 lam*=0.112 ben1=-0.285 MC=3.06 E=3.61 sinus=+0.859 narma=+0.584 wdelay8=+0.268 prod=+0.166 trend=+0.953
+
+--- Korrelations-Ranking pro Zelle (deskriptiv, KEIN Verdikt in Phase 1) ---
+Zelle H=32 sinus: TOP5 MC: +0.884 | NLM: +0.757 | delta_H: +0.742 | t_star: -0.704 | spread: +0.655
+Zelle H=32 narma: TOP5 MC: +0.806 | delta_H: +0.728 | lam: -0.727 | NLM: +0.727 | part_ratio: +0.654
+Zelle H=32 wdelay8: TOP5 MC: +0.802 | NLM: +0.741 | delta_H: +0.734 | t_star: -0.679 | lam: -0.628
+Zelle H=32 prod: TOP5 MC: +0.688 | NLM: +0.680 | lam: -0.680 | delta_H: +0.633 | part_ratio: +0.481
+Zelle H=32 trend: TOP5 MC: +0.859 | NLM: +0.708 | delta_H: +0.691 | t_star: -0.619 | spread: +0.573
+Zelle H=128 sinus: TOP5 t_star: -0.990 | delta_H: +0.983 | lam: -0.949 | NLM: +0.860 | top25: -0.843
+Zelle H=128 narma: TOP5 part_ratio: +0.823 | delta_H: +0.806 | t_star: -0.803 | lam: -0.773 | tr_S: +0.756
+Zelle H=128 wdelay8: TOP5 lam: -0.801 | t_star: -0.787 | delta_H: +0.787 | top25: -0.728 | mean_spec: -0.708
+Zelle H=128 prod: TOP5 delta_H: +0.900 | lam: -0.892 | t_star: -0.888 | NLM: +0.817 | top25: -0.763
+Zelle H=128 trend: TOP5 delta_H: +0.903 | t_star: -0.901 | lam: -0.884 | top25: -0.804 | NLM: +0.747
+
+--- Gemittelt ueber 10 Zellen (|corr|-Ranking, deskriptiv) ---
+     delta_H: mean corr +0.790  (min +0.633, max +0.983, n_cells=10)
+         lam: mean corr -0.752  (min -0.949, max -0.558, n_cells=10)
+      t_star: mean corr -0.742  (min -0.990, max -0.402, n_cells=10)
+         NLM: mean corr +0.724  (min +0.597, max +0.860, n_cells=10)
+          MC: mean corr +0.679  (min +0.500, max +0.884, n_cells=10)
+  part_ratio: mean corr +0.613  (min +0.468, max +0.828, n_cells=10)
+     kappa_T: mean corr +0.527  (min +0.129, max +0.772, n_cells=10)
+   mean_spec: mean corr -0.522  (min -0.708, max -0.251, n_cells=10)
+       top25: mean corr -0.443  (min -0.843, max +0.036, n_cells=10)
+      spread: mean corr +0.415  (min +0.205, max +0.655, n_cells=10)
+           g: mean corr -0.354  (min -0.573, max -0.108, n_cells=10)
+        tr_S: mean corr +0.333  (min -0.053, max +0.756, n_cells=10)
+       top10: mean corr -0.327  (min -0.631, max +0.024, n_cells=10)
+   kreiss_lb: mean corr +0.321  (min -0.052, max +0.580, n_cells=10)
+    std_spec: mean corr -0.249  (min -0.817, max +0.282, n_cells=10)
+    sv_max_S: mean corr +0.220  (min -0.152, max +0.562, n_cells=10)
+         q75: mean corr +0.215  (min -0.159, max +0.682, n_cells=10)
+  kappa_cond: mean corr +0.208  (min +0.060, max +0.338, n_cells=10)
+           E: mean corr +0.193  (min -0.483, max +0.705, n_cells=10)
+        ben1: mean corr -0.013  (min -0.310, max +0.165, n_cells=10)
+
+PHASE 1 FERTIG. Phase 2: top-K Observablen VOR dem Lauf registrieren,
+Bestaetigung auf FRISCHEN Seeds/Gittern mit nagelbarer Schwelle.
+=== FERTIG ===
