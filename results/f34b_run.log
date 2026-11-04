@@ -1,0 +1,92 @@
+======================================================================================================================
+F34 PHASE 2 — BESTAETIGUNG (registriert: delta_H PRIMAER >= +0.4 in >= 8/10 Zellen;
+SEKUNDAER MC/NLM >= 6/10; Manipulations-Check ben1 < 0.4 ueberall; frische Seeds)
+Gitter: H in {32,128} x s=[0.0, 0.4, 0.8, 1.2, 1.6] x seeds=[4, 5, 6, 7, 8, 9] (frisch), Bisektion auf ben=-0.3
+======================================================================================================================
+
+########## H=32 ##########
+H=32 s=0.0 seed=4 lam*=1.335 ben1=-0.300 dH=0.000 MC=2.43 NLM=+0.049 sinus=+0.378 narma=+0.535 wdelay8=+0.125 prod=+0.025 trend=+0.904
+H=32 s=0.0 seed=5 lam*=0.829 ben1=-0.301 dH=0.000 MC=2.74 NLM=+0.031 sinus=+0.412 narma=+0.533 wdelay8=+0.142 prod=+0.024 trend=+0.909
+H=32 s=0.0 seed=6 lam*=1.354 ben1=-0.299 dH=0.000 MC=2.59 NLM=+0.075 sinus=+0.493 narma=+0.522 wdelay8=+0.117 prod=+0.024 trend=+0.894
+H=32 s=0.0 seed=7 lam*=2.207 ben1=-0.300 dH=0.000 MC=1.71 NLM=+0.057 sinus=+0.349 narma=+0.523 wdelay8=+0.147 prod=+0.034 trend=+0.912
+H=32 s=0.0 seed=8 lam*=1.270 ben1=-0.300 dH=0.000 MC=2.74 NLM=+0.056 sinus=+0.506 narma=+0.501 wdelay8=+0.152 prod=+0.021 trend=+0.906
+H=32 s=0.0 seed=9 lam*=1.077 ben1=-0.301 dH=0.000 MC=2.58 NLM=+0.057 sinus=+0.405 narma=+0.499 wdelay8=+0.145 prod=+0.010 trend=+0.911
+H=32 s=0.4 seed=4 lam*=0.782 ben1=-0.301 dH=6.597 MC=3.08 NLM=+0.056 sinus=+0.614 narma=+0.575 wdelay8=+0.171 prod=+0.055 trend=+0.926
+H=32 s=0.4 seed=5 lam*=1.138 ben1=-0.301 dH=9.869 MC=3.45 NLM=+0.068 sinus=+0.780 narma=+0.578 wdelay8=+0.182 prod=+0.073 trend=+0.940
+H=32 s=0.4 seed=6 lam*=0.857 ben1=-0.300 dH=7.819 MC=3.53 NLM=+0.094 sinus=+0.730 narma=+0.554 wdelay8=+0.181 prod=+0.066 trend=+0.935
+H=32 s=0.4 seed=7 lam*=0.674 ben1=-0.301 dH=6.181 MC=3.66 NLM=+0.061 sinus=+0.700 narma=+0.560 wdelay8=+0.215 prod=+0.046 trend=+0.943
+H=32 s=0.4 seed=8 lam*=0.909 ben1=-0.299 dH=7.981 MC=3.18 NLM=+0.075 sinus=+0.625 narma=+0.543 wdelay8=+0.186 prod=+0.048 trend=+0.928
+H=32 s=0.4 seed=9 lam*=1.359 ben1=-0.300 dH=11.787 MC=2.55 NLM=+0.046 sinus=+0.676 narma=+0.536 wdelay8=+0.210 prod=+0.024 trend=+0.944
+H=32 s=0.8 seed=4 lam*=0.604 ben1=-0.301 dH=10.166 MC=3.26 NLM=+0.044 sinus=+0.621 narma=+0.598 wdelay8=+0.184 prod=+0.062 trend=+0.931
+H=32 s=0.8 seed=5 lam*=0.895 ben1=-0.299 dH=15.438 MC=3.13 NLM=-0.006 sinus=+0.715 narma=+0.615 wdelay8=+0.134 prod=+0.032 trend=+0.940
+H=32 s=0.8 seed=6 lam*=0.562 ben1=-0.300 dH=10.218 MC=4.04 NLM=+0.114 sinus=+0.743 narma=+0.582 wdelay8=+0.208 prod=+0.092 trend=+0.940
+H=32 s=0.8 seed=7 lam*=0.435 ben1=-0.299 dH=7.953 MC=3.66 NLM=+0.057 sinus=+0.731 narma=+0.579 wdelay8=+0.222 prod=+0.037 trend=+0.943
+H=32 s=0.8 seed=8 lam*=0.618 ben1=-0.301 dH=10.835 MC=2.80 NLM=+0.085 sinus=+0.594 narma=+0.544 wdelay8=+0.189 prod=+0.031 trend=+0.926
+H=32 s=0.8 seed=9 lam*=0.698 ben1=-0.298 dH=12.088 MC=3.24 NLM=+0.070 sinus=+0.659 narma=+0.558 wdelay8=+0.212 prod=+0.039 trend=+0.939
+H=32 s=1.2 seed=4 lam*=0.384 ben1=-0.302 dH=9.663 MC=3.26 NLM=+0.039 sinus=+0.641 narma=+0.594 wdelay8=+0.183 prod=+0.059 trend=+0.931
+H=32 s=1.2 seed=5 lam*=0.618 ben1=-0.302 dH=15.986 MC=3.30 NLM=+0.008 sinus=+0.693 narma=+0.624 wdelay8=+0.180 prod=-0.084 trend=+0.785
+H=32 s=1.2 seed=6 lam*=0.374 ben1=-0.303 dH=10.168 MC=4.06 NLM=+0.116 sinus=+0.752 narma=+0.581 wdelay8=+0.212 prod=+0.085 trend=+0.941
+H=32 s=1.2 seed=7 lam*=0.318 ben1=-0.299 dH=8.695 MC=3.57 NLM=+0.055 sinus=+0.721 narma=+0.577 wdelay8=+0.224 prod=+0.036 trend=+0.944
+H=32 s=1.2 seed=8 lam*=0.670 ben1=-0.300 dH=17.563 MC=2.17 NLM=+0.022 sinus=+0.570 narma=+0.574 wdelay8=+0.166 prod=-0.004 trend=+0.932
+H=32 s=1.2 seed=9 lam*=0.501 ben1=-0.303 dH=12.996 MC=3.26 NLM=+0.052 sinus=+0.656 narma=+0.607 wdelay8=+0.215 prod=+0.044 trend=+0.938
+H=32 s=1.6 seed=4 lam*=0.285 ben1=-0.303 dH=9.558 MC=3.29 NLM=+0.037 sinus=+0.653 narma=+0.594 wdelay8=+0.182 prod=+0.059 trend=+0.932
+H=32 s=1.6 seed=5 lam*=0.463 ben1=-0.296 dH=15.945 MC=3.30 NLM=+0.021 sinus=+0.693 narma=+0.630 wdelay8=+0.200 prod=+0.035 trend=+0.939
+H=32 s=1.6 seed=6 lam*=0.285 ben1=-0.300 dH=10.330 MC=4.01 NLM=+0.112 sinus=+0.752 narma=+0.577 wdelay8=+0.214 prod=+0.081 trend=+0.941
+H=32 s=1.6 seed=7 lam*=0.257 ben1=-0.298 dH=9.372 MC=3.51 NLM=+0.058 sinus=+0.709 narma=+0.576 wdelay8=+0.225 prod=+0.034 trend=+0.945
+H=32 s=1.6 seed=8 lam*=0.318 ben1=-0.299 dH=11.103 MC=3.02 NLM=+0.098 sinus=+0.617 narma=+0.545 wdelay8=+0.208 prod=+0.059 trend=+0.932
+H=32 s=1.6 seed=9 lam*=0.370 ben1=-0.309 dH=12.779 MC=3.36 NLM=+0.055 sinus=+0.674 narma=+0.604 wdelay8=+0.210 prod=+0.046 trend=+0.939
+
+########## H=128 ##########
+H=128 s=0.0 seed=4 lam*=1.120 ben1=-0.301 dH=0.000 MC=2.37 NLM=+0.072 sinus=+0.585 narma=+0.557 wdelay8=+0.166 prod=+0.044 trend=+0.923
+H=128 s=0.0 seed=5 lam*=1.110 ben1=-0.299 dH=0.000 MC=2.33 NLM=+0.080 sinus=+0.556 narma=+0.544 wdelay8=+0.173 prod=+0.046 trend=+0.921
+H=128 s=0.0 seed=6 lam*=1.077 ben1=-0.300 dH=0.000 MC=2.92 NLM=+0.096 sinus=+0.603 narma=+0.533 wdelay8=+0.151 prod=+0.039 trend=+0.913
+H=128 s=0.0 seed=7 lam*=1.237 ben1=-0.299 dH=0.000 MC=1.78 NLM=+0.086 sinus=+0.624 narma=+0.530 wdelay8=+0.200 prod=+0.052 trend=+0.933
+H=128 s=0.0 seed=8 lam*=1.120 ben1=-0.300 dH=0.000 MC=1.65 NLM=+0.089 sinus=+0.585 narma=+0.505 wdelay8=+0.169 prod=+0.036 trend=+0.914
+H=128 s=0.0 seed=9 lam*=1.115 ben1=-0.301 dH=0.000 MC=2.49 NLM=+0.086 sinus=+0.583 narma=+0.517 wdelay8=+0.188 prod=+0.034 trend=+0.928
+H=128 s=0.4 seed=4 lam*=0.440 ben1=-0.299 dH=15.656 MC=2.19 NLM=+0.162 sinus=+0.905 narma=+0.367 wdelay8=+0.241 prod=+0.185 trend=+0.946
+H=128 s=0.4 seed=5 lam*=0.426 ben1=-0.300 dH=15.264 MC=3.45 NLM=+0.137 sinus=+0.896 narma=-4.490 wdelay8=+0.238 prod=+0.122 trend=+0.944
+H=128 s=0.4 seed=6 lam*=0.426 ben1=-0.297 dH=15.407 MC=2.32 NLM=+0.130 sinus=+0.884 narma=+0.565 wdelay8=+0.198 prod=+0.113 trend=+0.939
+H=128 s=0.4 seed=7 lam*=0.426 ben1=-0.296 dH=15.267 MC=2.43 NLM=+0.148 sinus=+0.893 narma=+0.584 wdelay8=-14.889 prod=+0.123 trend=+0.947
+H=128 s=0.4 seed=8 lam*=0.435 ben1=-0.301 dH=15.447 MC=3.13 NLM=+0.175 sinus=+0.898 narma=+0.569 wdelay8=+0.244 prod=+0.136 trend=+0.944
+H=128 s=0.4 seed=9 lam*=0.398 ben1=-0.297 dH=14.213 MC=2.61 NLM=+0.144 sinus=+0.821 narma=+0.507 wdelay8=+0.245 prod=+0.083 trend=+0.949
+H=128 s=0.8 seed=4 lam*=0.229 ben1=-0.302 dH=16.248 MC=1.77 NLM=+0.168 sinus=+0.908 narma=+0.623 wdelay8=+0.242 prod=+0.186 trend=+0.946
+H=128 s=0.8 seed=5 lam*=0.229 ben1=-0.296 dH=16.352 MC=2.54 NLM=+0.138 sinus=+0.906 narma=+0.588 wdelay8=+0.241 prod=+0.130 trend=+0.945
+H=128 s=0.8 seed=6 lam*=0.229 ben1=-0.300 dH=16.507 MC=2.04 NLM=+0.127 sinus=+0.883 narma=+0.555 wdelay8=+0.206 prod=+0.120 trend=+0.939
+H=128 s=0.8 seed=7 lam*=0.229 ben1=-0.298 dH=16.343 MC=2.48 NLM=+0.147 sinus=+0.906 narma=+0.572 wdelay8=+0.200 prod=-0.023 trend=+0.947
+H=128 s=0.8 seed=8 lam*=0.238 ben1=-0.304 dH=16.860 MC=3.13 NLM=+0.188 sinus=+0.899 narma=+0.515 wdelay8=+0.253 prod=+0.142 trend=+0.945
+H=128 s=0.8 seed=9 lam*=0.220 ben1=-0.302 dH=15.637 MC=1.93 NLM=+0.143 sinus=+0.844 narma=+0.580 wdelay8=+0.247 prod=+0.106 trend=+0.949
+H=128 s=1.2 seed=4 lam*=0.149 ben1=-0.306 dH=15.875 MC=2.81 NLM=+0.169 sinus=+0.899 narma=-0.252 wdelay8=+0.234 prod=+0.181 trend=+0.946
+H=128 s=1.2 seed=5 lam*=0.154 ben1=-0.302 dH=16.481 MC=2.92 NLM=+0.138 sinus=+0.904 narma=+0.616 wdelay8=+0.239 prod=+0.128 trend=+0.944
+H=128 s=1.2 seed=6 lam*=0.154 ben1=-0.297 dH=16.633 MC=2.06 NLM=+0.132 sinus=+0.888 narma=+0.550 wdelay8=+0.207 prod=+0.120 trend=+0.939
+H=128 s=1.2 seed=7 lam*=0.154 ben1=-0.308 dH=16.470 MC=2.33 NLM=+0.147 sinus=+0.898 narma=+0.510 wdelay8=+0.258 prod=+0.124 trend=+0.947
+H=128 s=1.2 seed=8 lam*=0.163 ben1=-0.300 dH=17.316 MC=3.09 NLM=+0.190 sinus=+0.896 narma=+0.581 wdelay8=+0.252 prod=+0.153 trend=+0.944
+H=128 s=1.2 seed=9 lam*=0.154 ben1=-0.299 dH=16.429 MC=2.05 NLM=+0.142 sinus=+0.853 narma=+0.578 wdelay8=+0.255 prod=+0.105 trend=+0.950
+H=128 s=1.6 seed=4 lam*=0.112 ben1=-0.303 dH=15.843 MC=2.62 NLM=+0.168 sinus=+0.900 narma=+0.218 wdelay8=+0.235 prod=+0.184 trend=+0.946
+H=128 s=1.6 seed=5 lam*=0.116 ben1=-0.302 dH=16.606 MC=2.23 NLM=+0.137 sinus=+0.901 narma=+0.601 wdelay8=+0.236 prod=+0.126 trend=+0.944
+H=128 s=1.6 seed=6 lam*=0.116 ben1=-0.295 dH=16.768 MC=1.29 NLM=+0.133 sinus=+0.894 narma=+0.519 wdelay8=+0.207 prod=+0.113 trend=+0.940
+H=128 s=1.6 seed=7 lam*=0.116 ben1=-0.310 dH=16.597 MC=2.57 NLM=+0.145 sinus=+0.902 narma=+0.485 wdelay8=+0.259 prod=+0.114 trend=+0.948
+H=128 s=1.6 seed=8 lam*=0.121 ben1=-0.308 dH=17.113 MC=2.87 NLM=+0.191 sinus=+0.898 narma=+0.584 wdelay8=+0.250 prod=+0.153 trend=+0.944
+H=128 s=1.6 seed=9 lam*=0.116 ben1=-0.296 dH=16.554 MC=1.98 NLM=+0.143 sinus=+0.857 narma=+0.582 wdelay8=-1.982 prod=-58.796 trend=-14.007
+
+--- PHASE-2-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 sinus: corr(delta_H)=+0.712 corr(MC)=+0.837 corr(NLM)=+0.201 corr(ben1)=-0.028
+Zelle H=32 narma: corr(delta_H)=+0.791 corr(MC)=+0.545 corr(NLM)=-0.327 corr(ben1)=-0.204
+Zelle H=32 wdelay8: corr(delta_H)=+0.540 corr(MC)=+0.675 corr(NLM)=+0.356 corr(ben1)=-0.056
+Zelle H=32 prod: corr(delta_H)=-0.051 corr(MC)=+0.476 corr(NLM)=+0.644 corr(ben1)=-0.046
+Zelle H=32 trend: corr(delta_H)=+0.118 corr(MC)=+0.265 corr(NLM)=+0.330 corr(ben1)=+0.104
+Zelle H=128 sinus: corr(delta_H)=+0.986 corr(MC)=+0.188 corr(NLM)=+0.850 corr(ben1)=-0.141
+Zelle H=128 narma: corr(delta_H)=-0.074 corr(MC)=-0.416 corr(NLM)=-0.023 corr(ben1)=+0.029
+Zelle H=128 wdelay8: corr(delta_H)=-0.073 corr(MC)=+0.019 corr(NLM)=-0.051 corr(ben1)=-0.247
+Zelle H=128 prod: corr(delta_H)=-0.100 corr(MC)=+0.165 corr(NLM)=-0.025 corr(ben1)=-0.237
+Zelle H=128 trend: corr(delta_H)=-0.100 corr(MC)=+0.164 corr(NLM)=-0.025 corr(ben1)=-0.236
+
+PRIMAER delta_H: 4/10 Zellen >= +0.4   (>= 8 noetig)
+SEKUNDAER MC:   4/10 Zellen >= +0.4   (>= 6 noetig)
+SEKUNDAER NLM:  2/10 Zellen >= +0.4   (>= 6 noetig)
+MANIPULATIONS-CHECK: ben1 ueberall < 0.4 — Matching haelt.
+deskriptiv: mean corr delta_H=+0.275, MC=+0.292, NLM=+0.193
+
+VERDICT: TEIL-PASS — delta_H generalisiert schwaecher als in Phase 1. Fundament zu duenn fuer Regler-Bau; nur dokumentieren.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f34_confirmation_results.txt und results/f34_confirmation_table.csv geschrieben.
