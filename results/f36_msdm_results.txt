@@ -1,0 +1,60 @@
+======================================================================================================================
+F36 — MODEN-SUPPLY-DEMAND-MATCH (registriert: MSDM >= +0.6 in >= 7/10 Zellen = PASS,
+sonst KILL dieses Ansatzes; Numerik-Gate NaN>25% je Zelle; Manipulations-Check ben1 < 0.4)
+Gitter: H in {32,128} x band=[1, 8] x s=[0.6, 1.6] x seeds=[20, 21, 22, 23], Bisektion auf ben=-0.3
+======================================================================================================================
+
+########## H=32 ##########
+H=32 b=1 s=0.6 seed=20 lam*=1.156 ben1=-0.197 dH=3.529 MC=2.78 MSDM[sinus=+0.145 narma=+0.219 wdelay8=+0.145 prod=+0.073 trend=-0.003]
+H=32 b=1 s=0.6 seed=21 lam*=1.204 ben1=-0.275 dH=3.481 MC=3.01 MSDM[sinus=+0.053 narma=+0.054 wdelay8=+0.053 prod=+0.014 trend=-0.015]
+H=32 b=1 s=0.6 seed=22 lam*=1.272 ben1=-0.316 dH=4.860 MC=3.29 MSDM[sinus=+0.020 narma=+0.023 wdelay8=+0.020 prod=+0.007 trend=-0.007]
+H=32 b=1 s=0.6 seed=23 lam*=1.175 ben1=-0.224 dH=4.927 MC=3.21 MSDM[sinus=-0.022 narma=-0.022 wdelay8=-0.022 prod=-0.005 trend=+0.005]
+H=32 b=1 s=1.6 seed=20 lam*=0.671 ben1=-0.436 dH=5.368 MC=3.42 MSDM[sinus=-0.727 narma=-0.741 wdelay8=-0.727 prod=-0.193 trend=+0.208]
+H=32 b=1 s=1.6 seed=21 lam*=0.894 ben1=-0.354 dH=6.818 MC=3.41 MSDM[sinus=-0.162 narma=-0.145 wdelay8=-0.162 prod=-0.030 trend=+0.045]
+H=32 b=1 s=1.6 seed=22 lam*=0.962 ben1=-0.135 dH=9.402 MC=3.08 MSDM[sinus=-0.243 narma=-0.278 wdelay8=-0.243 prod=-0.079 trend=+0.058]
+H=32 b=1 s=1.6 seed=23 lam*=0.560 ben1=-0.437 dH=6.030 MC=3.73 MSDM[sinus=-0.710 narma=-0.783 wdelay8=-0.710 prod=-0.217 trend=+0.176]
+H=32 b=8 s=0.6 seed=20 lam*=0.952 ben1=+0.033 dH=8.799 MC=2.81 MSDM[sinus=-0.094 narma=-0.014 wdelay8=-0.094 prod=+0.018 trend=+0.076]
+H=32 b=8 s=0.6 seed=21 lam*=1.122 ben1=-0.046 dH=9.469 MC=3.28 MSDM[sinus=-0.026 narma=-0.030 wdelay8=-0.026 prod=-0.009 trend=+0.009]
+H=32 b=8 s=0.6 seed=22 lam*=0.967 ben1=-0.363 dH=8.476 MC=3.10 MSDM[sinus=+0.032 narma=+0.071 wdelay8=+0.032 prod=+0.028 trend=+0.007]
+H=32 b=8 s=0.6 seed=23 lam*=0.865 ben1=-0.217 dH=7.968 MC=3.55 MSDM[sinus=-0.596 narma=-0.621 wdelay8=-0.596 prod=-0.166 trend=+0.164]
+H=32 b=8 s=1.6 seed=20 lam*=0.337 ben1=-0.107 dH=8.241 MC=3.30 MSDM[sinus=-0.292 narma=-0.302 wdelay8=-0.292 prod=-0.077 trend=+0.081]
+H=32 b=8 s=1.6 seed=21 lam*=0.952 ben1=+0.026 dH=21.214 MC=1.53 MSDM[sinus=-0.264 narma=-0.295 wdelay8=-0.264 prod=-0.067 trend=+0.016]
+H=32 b=8 s=1.6 seed=22 lam*=0.391 ben1=-0.436 dH=9.042 MC=3.48 MSDM[sinus=+0.123 narma=+0.117 wdelay8=+0.123 prod=+0.027 trend=-0.032]
+H=32 b=8 s=1.6 seed=23 lam*=0.391 ben1=-0.214 dH=9.489 MC=3.36 MSDM[sinus=-0.088 narma=-0.102 wdelay8=-0.088 prod=-0.026 trend=+0.010]
+
+########## H=128 ##########
+H=128 b=1 s=0.6 seed=20 lam*=1.141 ben1=-0.278 dH=8.038 MC=2.03 MSDM[sinus=-0.630 narma=-0.666 wdelay8=-0.630 prod=-0.182 trend=+0.181]
+H=128 b=1 s=0.6 seed=21 lam*=1.127 ben1=-0.282 dH=7.694 MC=2.57 MSDM[sinus=-0.276 narma=-0.326 wdelay8=-0.276 prod=-0.095 trend=+0.059]
+H=128 b=1 s=0.6 seed=22 lam*=1.074 ben1=-0.314 dH=7.438 MC=2.54 MSDM[sinus=-0.097 narma=-0.100 wdelay8=-0.097 prod=-0.026 trend=+0.026]
+H=128 b=1 s=0.6 seed=23 lam*=1.044 ben1=-0.318 dH=7.297 MC=1.94 MSDM[sinus=-0.435 narma=-0.523 wdelay8=-0.435 prod=-0.148 trend=+0.063]
+H=128 b=1 s=1.6 seed=20 lam*=0.662 ben1=-0.359 dH=11.454 MC=2.71 MSDM[sinus=-0.693 narma=-0.811 wdelay8=-0.693 prod=-0.244 trend=+0.187]
+H=128 b=1 s=1.6 seed=21 lam*=0.686 ben1=-0.340 dH=11.288 MC=2.08 MSDM[sinus=+0.137 narma=+0.191 wdelay8=+0.137 prod=+0.075 trend=-0.057]
+H=128 b=1 s=1.6 seed=22 lam*=0.642 ben1=-0.286 dH=11.098 MC=3.14 MSDM[sinus=+0.333 narma=+0.349 wdelay8=+0.333 prod=+0.083 trend=-0.037]
+H=128 b=1 s=1.6 seed=23 lam*=0.628 ben1=-0.330 dH=10.896 MC=1.41 MSDM[sinus=+0.414 narma=+0.421 wdelay8=+0.414 prod=+0.108 trend=-0.113]
+H=128 b=8 s=0.6 seed=20 lam*=0.662 ben1=-0.275 dH=11.437 MC=3.57 MSDM[sinus=-0.397 narma=-0.397 wdelay8=-0.397 prod=-0.098 trend=+0.088]
+H=128 b=8 s=0.6 seed=21 lam*=0.710 ben1=-0.241 dH=12.217 MC=2.17 MSDM[sinus=+0.279 narma=+0.354 wdelay8=+0.279 prod=+0.112 trend=-0.060]
+H=128 b=8 s=0.6 seed=22 lam*=0.618 ben1=-0.356 dH=10.760 MC=3.05 MSDM[sinus=+0.336 narma=+0.364 wdelay8=+0.336 prod=+0.099 trend=-0.083]
+H=128 b=8 s=0.6 seed=23 lam*=0.604 ben1=-0.236 dH=10.312 MC=3.21 MSDM[sinus=-0.177 narma=-0.269 wdelay8=-0.177 prod=-0.093 trend=+0.018]
+H=128 b=8 s=1.6 seed=20 lam*=0.274 ben1=-0.268 dH=12.375 MC=3.90 MSDM[sinus=-0.084 narma=-0.095 wdelay8=-0.084 prod=-0.026 trend=+0.017]
+H=128 b=8 s=1.6 seed=21 lam*=0.303 ben1=-0.270 dH=13.671 MC=2.80 MSDM[sinus=-0.243 narma=-0.245 wdelay8=-0.243 prod=-0.067 trend=+0.091]
+H=128 b=8 s=1.6 seed=22 lam*=0.269 ben1=-0.301 dH=12.195 MC=3.13 MSDM[sinus=-0.116 narma=-0.121 wdelay8=-0.116 prod=-0.031 trend=+0.024]
+H=128 b=8 s=1.6 seed=23 lam*=0.255 ben1=-0.303 dH=11.394 MC=3.32 MSDM[sinus=-0.104 narma=-0.130 wdelay8=-0.104 prod=-0.041 trend=+0.022]
+
+--- F36-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 sinus: corr(MSDM)=-0.358 [delta_H=-0.566, MC=+0.926 deskriptiv] corr(ben1)=-0.468
+Zelle H=32 narma: corr(MSDM)=-0.045 [delta_H=-0.579, MC=+0.867 deskriptiv] corr(ben1)=-0.366
+Zelle H=32 wdelay8: corr(MSDM)=-0.026 [delta_H=-0.649, MC=+0.946 deskriptiv] corr(ben1)=-0.617
+Zelle H=32 prod: corr(MSDM)=-0.071 [delta_H=-0.413, MC=+0.696 deskriptiv] corr(ben1)=-0.608
+Zelle H=32 trend: corr(MSDM)=+0.204 [delta_H=-0.766, MC=+0.964 deskriptiv] corr(ben1)=-0.563
+Zelle H=128 sinus: corr(MSDM)=+0.154 [delta_H=+0.902, MC=+0.431 deskriptiv] corr(ben1)=+0.242
+Zelle H=128 narma: corr(MSDM)=-0.063 [delta_H=+0.198, MC=-0.075 deskriptiv] corr(ben1)=+0.190
+Zelle H=128 wdelay8: corr(MSDM)=+0.213 [delta_H=+0.903, MC=+0.543 deskriptiv] corr(ben1)=+0.097
+Zelle H=128 prod: corr(MSDM)=+0.414 [delta_H=+0.582, MC=+0.362 deskriptiv] corr(ben1)=+0.027
+Zelle H=128 trend: corr(MSDM)=-0.181 [delta_H=+0.755, MC=+0.387 deskriptiv] corr(ben1)=+0.079
+
+PRIMAER MSDM: 0/10 gueltige Zellen >= +0.6   (>= 7 noetig)
+Numerik-Gate: 0 Zellen ungueltig (> 5 => UNENTSCHEIDEN)
+MANIPULATIONS-CHECK VERLETZT: H=32 sinus: -0.468; H=32 wdelay8: -0.617; H=32 prod: -0.608; H=32 trend: -0.563
+
+VERDICT: UNENTSCHEIDEN — Stabilitaets-Matching durchbrochen.
+=== FERTIG ===
