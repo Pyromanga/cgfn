@@ -1,0 +1,89 @@
+======================================================================================================================
+F37 — SAUBERER ANKER, LETZTER STEIN (registriert: delta_H >= +0.4 in >= 8/10 gueltigen
+Zellen = PASS, sonst FINALER KILL; Akzeptanz-Gate |ben+0.30| <= 0.05; Zelle gueltig bei >= 15/30)
+Gitter: H in {32,128} x band=[1, 4, 8] x s=[0.6, 1.6] x seeds=[30, 31, 32, 33, 34]
+======================================================================================================================
+
+########## H=32 ##########
+H=32 b=1 s=0.6 seed=30 lam*=1.411 ben1=-0.267 dH=5.433 MC=2.97 sinus=+0.619 narma=+0.536 wdelay8=+0.169 prod=+0.019 trend=+0.922
+H=32 b=1 s=0.6 seed=31 lam*=1.097 ben1=-0.287 dH=4.534 MC=2.88 sinus=+0.555 narma=+0.552 wdelay8=+0.161 prod=+0.022 trend=+0.920
+H=32 b=1 s=0.6 seed=32 lam*=1.805 ben1=-0.163 UNGUELTIG (|ben+0.30|=0.137 > 0.05)
+H=32 b=1 s=0.6 seed=33 lam*=1.523 ben1=-0.129 UNGUELTIG (|ben+0.30|=0.171 > 0.05)
+H=32 b=1 s=0.6 seed=34 lam*=1.159 ben1=-0.197 UNGUELTIG (|ben+0.30|=0.103 > 0.05)
+H=32 b=1 s=1.6 seed=30 lam*=0.732 ben1=-0.243 UNGUELTIG (|ben+0.30|=0.057 > 0.05)
+H=32 b=1 s=1.6 seed=31 lam*=1.205 ben1=-0.245 UNGUELTIG (|ben+0.30|=0.055 > 0.05)
+H=32 b=1 s=1.6 seed=32 lam*=1.205 ben1=-0.070 UNGUELTIG (|ben+0.30|=0.230 > 0.05)
+H=32 b=1 s=1.6 seed=33 lam*=0.746 ben1=-0.321 dH=7.225 MC=3.92 sinus=+0.833 narma=+0.589 wdelay8=+0.217 prod=+0.059 trend=+0.940
+H=32 b=1 s=1.6 seed=34 lam*=0.903 ben1=-0.176 UNGUELTIG (|ben+0.30|=0.124 > 0.05)
+H=32 b=4 s=0.6 seed=30 lam*=0.779 ben1=-0.324 dH=5.471 MC=3.19 sinus=+0.653 narma=+0.553 wdelay8=+0.196 prod=+0.039 trend=+0.933
+H=32 b=4 s=0.6 seed=31 lam*=0.803 ben1=-0.327 dH=5.787 MC=2.94 sinus=+0.532 narma=+0.564 wdelay8=+0.185 prod=+0.032 trend=+0.927
+H=32 b=4 s=0.6 seed=32 lam*=1.280 ben1=-0.378 UNGUELTIG (|ben+0.30|=0.078 > 0.05)
+H=32 b=4 s=0.6 seed=33 lam*=1.280 ben1=-0.330 dH=8.582 MC=3.02 sinus=+0.600 narma=+0.563 wdelay8=+0.172 prod=+0.078 trend=+0.934
+H=32 b=4 s=0.6 seed=34 lam*=1.280 ben1=-0.082 UNGUELTIG (|ben+0.30|=0.218 > 0.05)
+H=32 b=4 s=1.6 seed=30 lam*=0.368 ben1=-0.286 dH=6.727 MC=3.54 sinus=+0.725 narma=+0.580 wdelay8=+0.216 prod=+0.034 trend=+0.943
+H=32 b=4 s=1.6 seed=31 lam*=0.285 ben1=-0.501 UNGUELTIG (|ben+0.30|=0.201 > 0.05)
+H=32 b=4 s=1.6 seed=32 lam*=0.526 ben1=-0.422 UNGUELTIG (|ben+0.30|=0.122 > 0.05)
+H=32 b=4 s=1.6 seed=33 lam*=0.447 ben1=-0.328 dH=7.775 MC=3.01 sinus=+0.577 narma=-1.405 wdelay8=+0.166 prod=+0.052 trend=+0.922
+H=32 b=4 s=1.6 seed=34 lam*=0.474 ben1=-0.181 UNGUELTIG (|ben+0.30|=0.119 > 0.05)
+H=32 b=8 s=0.6 seed=30 lam*=0.727 ben1=-0.402 UNGUELTIG (|ben+0.30|=0.102 > 0.05)
+H=32 b=8 s=0.6 seed=31 lam*=0.573 ben1=-0.339 dH=5.214 MC=3.53 sinus=+0.605 narma=+0.582 wdelay8=+0.198 prod=+0.047 trend=+0.934
+H=32 b=8 s=0.6 seed=32 lam*=0.866 ben1=-0.151 UNGUELTIG (|ben+0.30|=0.149 > 0.05)
+H=32 b=8 s=0.6 seed=33 lam*=0.866 ben1=-0.265 dH=7.523 MC=3.45 sinus=+0.699 narma=+0.561 wdelay8=+0.184 prod=+0.078 trend=+0.936
+H=32 b=8 s=0.6 seed=34 lam*=0.737 ben1=-0.223 UNGUELTIG (|ben+0.30|=0.077 > 0.05)
+H=32 b=8 s=1.6 seed=30 lam*=0.395 ben1=-0.292 dH=9.899 MC=3.56 sinus=+0.713 narma=+0.571 wdelay8=+0.219 prod=+0.054 trend=+0.944
+H=32 b=8 s=1.6 seed=31 lam*=0.249 ben1=-0.450 UNGUELTIG (|ben+0.30|=0.150 > 0.05)
+H=32 b=8 s=1.6 seed=32 lam*=0.502 ben1=-0.110 UNGUELTIG (|ben+0.30|=0.190 > 0.05)
+H=32 b=8 s=1.6 seed=33 lam*=0.502 ben1=-0.122 UNGUELTIG (|ben+0.30|=0.178 > 0.05)
+H=32 b=8 s=1.6 seed=34 lam*=0.405 ben1=-0.223 UNGUELTIG (|ben+0.30|=0.077 > 0.05)
+
+########## H=128 ##########
+H=128 b=1 s=0.6 seed=30 lam*=1.205 ben1=-0.201 UNGUELTIG (|ben+0.30|=0.099 > 0.05)
+H=128 b=1 s=0.6 seed=31 lam*=1.084 ben1=-0.236 UNGUELTIG (|ben+0.30|=0.064 > 0.05)
+H=128 b=1 s=0.6 seed=32 lam*=0.984 ben1=-0.389 UNGUELTIG (|ben+0.30|=0.089 > 0.05)
+H=128 b=1 s=0.6 seed=33 lam*=1.034 ben1=-0.273 dH=7.797 MC=1.84 sinus=+0.790 narma=+0.551 wdelay8=+0.180 prod=+0.075 trend=+0.936
+H=128 b=1 s=0.6 seed=34 lam*=1.084 ben1=-0.288 dH=7.212 MC=2.83 sinus=+0.668 narma=+0.577 wdelay8=+0.203 prod=+0.050 trend=+0.933
+H=128 b=1 s=1.6 seed=30 lam*=0.605 ben1=-0.305 dH=10.035 MC=3.29 sinus=+0.853 narma=+0.565 wdelay8=+0.217 prod=+0.125 trend=+0.944
+H=128 b=1 s=1.6 seed=31 lam*=0.662 ben1=-0.302 dH=11.224 MC=1.83 sinus=+0.812 narma=+0.585 wdelay8=+0.182 prod=+0.028 trend=+0.916
+H=128 b=1 s=1.6 seed=32 lam*=0.676 ben1=-0.280 dH=12.570 MC=3.01 sinus=+0.907 narma=+0.601 wdelay8=+0.229 prod=+0.132 trend=+0.945
+H=128 b=1 s=1.6 seed=33 lam*=0.615 ben1=-0.212 UNGUELTIG (|ben+0.30|=0.088 > 0.05)
+H=128 b=1 s=1.6 seed=34 lam*=0.751 ben1=-0.281 dH=11.948 MC=3.23 sinus=+0.898 narma=+0.572 wdelay8=+0.258 prod=+0.127 trend=+0.945
+H=128 b=4 s=0.6 seed=30 lam*=0.803 ben1=-0.257 dH=10.072 MC=3.29 sinus=+0.847 narma=+0.547 wdelay8=+0.223 prod=+0.127 trend=+0.945
+H=128 b=4 s=0.6 seed=31 lam*=0.828 ben1=-0.172 UNGUELTIG (|ben+0.30|=0.128 > 0.05)
+H=128 b=4 s=0.6 seed=32 lam*=0.853 ben1=-0.348 dH=11.036 MC=3.19 sinus=+0.884 narma=-0.326 wdelay8=+0.218 prod=+0.127 trend=+0.944
+H=128 b=4 s=0.6 seed=33 lam*=0.793 ben1=-0.325 dH=9.985 MC=2.57 sinus=+0.864 narma=+0.554 wdelay8=+0.206 prod=+0.098 trend=+0.941
+H=128 b=4 s=0.6 seed=34 lam*=0.859 ben1=-0.253 dH=10.777 MC=2.98 sinus=+0.805 narma=+0.599 wdelay8=+0.231 prod=+0.074 trend=+0.942
+H=128 b=4 s=1.6 seed=30 lam*=0.316 ben1=-0.371 UNGUELTIG (|ben+0.30|=0.071 > 0.05)
+H=128 b=4 s=1.6 seed=31 lam*=0.333 ben1=-0.347 dH=10.112 MC=3.16 sinus=+0.834 narma=+0.601 wdelay8=-0.116 prod=+0.014 trend=+0.941
+H=128 b=4 s=1.6 seed=32 lam*=0.368 ben1=-0.351 UNGUELTIG (|ben+0.30|=0.051 > 0.05)
+H=128 b=4 s=1.6 seed=33 lam*=0.371 ben1=-0.235 UNGUELTIG (|ben+0.30|=0.065 > 0.05)
+H=128 b=4 s=1.6 seed=34 lam*=0.399 ben1=-0.207 UNGUELTIG (|ben+0.30|=0.093 > 0.05)
+H=128 b=8 s=0.6 seed=30 lam*=0.549 ben1=-0.276 dH=9.837 MC=3.17 sinus=+0.876 narma=+0.576 wdelay8=+0.230 prod=+0.111 trend=+0.946
+H=128 b=8 s=0.6 seed=31 lam*=0.526 ben1=-0.342 dH=9.234 MC=3.86 sinus=+0.834 narma=+0.599 wdelay8=+0.224 prod=+0.076 trend=+0.945
+H=128 b=8 s=0.6 seed=32 lam*=0.657 ben1=-0.288 dH=11.949 MC=2.44 sinus=+0.906 narma=+0.557 wdelay8=+0.229 prod=+0.115 trend=+0.945
+H=128 b=8 s=0.6 seed=33 lam*=0.652 ben1=-0.321 dH=11.661 MC=3.06 sinus=+0.868 narma=+0.595 wdelay8=+0.213 prod=+0.118 trend=+0.942
+H=128 b=8 s=0.6 seed=34 lam*=0.620 ben1=-0.293 dH=11.052 MC=3.75 sinus=+0.840 narma=+0.525 wdelay8=+0.255 prod=+0.110 trend=+0.944
+H=128 b=8 s=1.6 seed=30 lam*=0.242 ben1=-0.311 dH=11.314 MC=2.28 sinus=+0.836 narma=+0.548 wdelay8=+0.232 prod=+0.107 trend=+0.945
+H=128 b=8 s=1.6 seed=31 lam*=0.227 ben1=-0.339 dH=10.398 MC=3.65 sinus=+0.859 narma=+0.525 wdelay8=+0.234 prod=+0.097 trend=+0.946
+H=128 b=8 s=1.6 seed=32 lam*=0.257 ben1=-0.300 dH=12.183 MC=3.36 sinus=+0.903 narma=-23.157 wdelay8=+0.235 prod=+0.125 trend=+0.946
+H=128 b=8 s=1.6 seed=33 lam*=0.242 ben1=-0.306 dH=11.243 MC=3.19 sinus=+0.886 narma=+0.591 wdelay8=+0.233 prod=+0.119 trend=+0.943
+H=128 b=8 s=1.6 seed=34 lam*=0.238 ben1=-0.275 dH=11.158 MC=4.05 sinus=+0.854 narma=+0.626 wdelay8=+0.266 prod=+0.110 trend=+0.946
+
+--- F37-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Modelle gesamt: 60, davon ungueltig: 28
+Zelle H=32 sinus: UNGUELTIG (nur 11/30 akzeptierte Modelle)
+Zelle H=32 narma: UNGUELTIG (nur 11/30 akzeptierte Modelle)
+Zelle H=32 wdelay8: UNGUELTIG (nur 11/30 akzeptierte Modelle)
+Zelle H=32 prod: UNGUELTIG (nur 11/30 akzeptierte Modelle)
+Zelle H=32 trend: UNGUELTIG (nur 11/30 akzeptierte Modelle)
+Zelle H=128 sinus: n=21 corr(delta_H)=+0.795 corr(MC)=+0.244 ben1-std=0.0476
+Zelle H=128 narma: n=21 corr(delta_H)=-0.270 corr(MC)=-0.123 ben1-std=0.0476
+Zelle H=128 wdelay8: n=21 corr(delta_H)=+0.222 corr(MC)=+0.162 ben1-std=0.0476
+Zelle H=128 prod: n=21 corr(delta_H)=+0.495 corr(MC)=+0.338 ben1-std=0.0476
+Zelle H=128 trend: n=21 corr(delta_H)=+0.258 corr(MC)=+0.637 ben1-std=0.0476
+
+PRIMAER delta_H: 2/5 gueltige Zellen >= +0.4   (>= 8 noetig)
+SEKUNDAER MC:   1/5 gueltige Zellen >= +0.4   (>= 6 noetig)
+Zellen: 5 gueltig, 5 ungueltig (> 5 => UNENTSCHEIDEN)
+
+VERDICT: FINALER KILL — unter sauberem Matching und dem dritten, letzten Design: delta_H traegt nicht. Betriebszustands-Programm endgueltig beendet. Kein vierter Versuch, kein Design-Fix, keine neue Schwelle. Rueckzug auf F27-Phaenomenologie.
+=== FERTIG ===
