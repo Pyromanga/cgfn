@@ -69,7 +69,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from f34_exploration import IS
 from cgfn.benettin import benettin_spectrum
 from cgfn.design import make_designed_model
-from cgfn.field import drive_input, transient_growth
+from cgfn.field import drive_input
+from cgfn.resource import transient_growth
 from cgfn.model import ContinuousRNN
 
 BEN_TARGET = -0.30
