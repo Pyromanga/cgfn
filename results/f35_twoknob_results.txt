@@ -1,0 +1,94 @@
+======================================================================================================================
+F35 — ZWEI-KNOPF-TEST (registriert: delta_H >= +0.4 in >= 6/10 Zellen = PASS,
+sonst KILL; Varianz-Gate dH-Range >= 2.0 je H; Manipulations-Check ben1 < 0.4)
+Gitter: H in {32,128} x b=[1, 2, 4, 8] x s=[0.6, 1.2] x seeds=[10, 11, 12, 13], Bisektion auf ben=-0.3
+======================================================================================================================
+
+########## H=32 ##########
+H=32 b=1 s=0.6 seed=10 lam*=1.272 ben1=-0.124 dH=4.382 MC=3.11 sinus=+0.650 narma=+0.542 wdelay8=+0.166 prod=+0.020 trend=+0.917
+H=32 b=1 s=0.6 seed=11 lam*=1.379 ben1=-0.309 dH=4.267 MC=2.79 sinus=+0.555 narma=+0.554 wdelay8=+0.184 prod=+0.037 trend=+0.928
+H=32 b=1 s=0.6 seed=12 lam*=1.432 ben1=-0.175 dH=5.044 MC=2.90 sinus=+0.548 narma=+0.562 wdelay8=+0.163 prod=+0.035 trend=+0.922
+H=32 b=1 s=0.6 seed=13 lam*=1.926 ben1=-0.300 dH=6.918 MC=2.78 sinus=+0.478 narma=+0.527 wdelay8=+0.147 prod=+0.033 trend=+0.912
+H=32 b=1 s=1.2 seed=10 lam*=0.962 ben1=-0.120 dH=6.452 MC=2.82 sinus=+0.690 narma=+0.555 wdelay8=+0.149 prod=+0.023 trend=+0.927
+H=32 b=1 s=1.2 seed=11 lam*=1.224 ben1=-0.052 dH=7.552 MC=3.04 sinus=+0.754 narma=+0.564 wdelay8=+0.181 prod=+0.025 trend=+0.932
+H=32 b=1 s=1.2 seed=12 lam*=1.882 ben1=-0.086 dH=13.184 MC=2.70 sinus=+0.442 narma=-1.044 wdelay8=+0.158 prod=+0.025 trend=+0.915
+H=32 b=1 s=1.2 seed=13 lam*=1.601 ben1=-0.144 dH=11.451 MC=1.68 sinus=+0.497 narma=+0.528 wdelay8=+0.141 prod=+0.013 trend=+0.908
+H=32 b=2 s=0.6 seed=10 lam*=0.986 ben1=-0.235 dH=4.731 MC=3.20 sinus=+0.672 narma=+0.548 wdelay8=+0.165 prod=+0.033 trend=+0.920
+H=32 b=2 s=0.6 seed=11 lam*=1.287 ben1=-0.157 dH=6.465 MC=2.84 sinus=+0.502 narma=+0.558 wdelay8=+0.176 prod=+0.019 trend=+0.926
+H=32 b=2 s=0.6 seed=12 lam*=0.948 ben1=-0.231 dH=4.688 MC=3.23 sinus=+0.606 narma=+0.566 wdelay8=+0.185 prod=+0.055 trend=+0.926
+H=32 b=2 s=0.6 seed=13 lam*=2.236 ben1=-0.475 dH=10.736 MC=2.43 sinus=+0.670 narma=+0.492 wdelay8=+0.185 prod=+0.067 trend=+0.933
+H=32 b=2 s=1.2 seed=10 lam*=0.657 ben1=-0.190 dH=6.124 MC=3.47 sinus=+0.724 narma=+0.557 wdelay8=+0.193 prod=+0.043 trend=+0.936
+H=32 b=2 s=1.2 seed=11 lam*=0.797 ben1=-0.318 dH=7.787 MC=3.41 sinus=+0.700 narma=+0.581 wdelay8=+0.224 prod=+0.034 trend=+0.944
+H=32 b=2 s=1.2 seed=12 lam*=0.618 ben1=-0.309 dH=5.883 MC=3.31 sinus=+0.637 narma=+0.575 wdelay8=+0.191 prod=+0.051 trend=+0.930
+H=32 b=2 s=1.2 seed=13 lam*=1.262 ben1=-0.510 dH=11.846 MC=2.75 sinus=+0.766 narma=+0.526 wdelay8=+0.241 prod=+0.098 trend=+0.942
+H=32 b=4 s=0.6 seed=10 lam*=0.986 ben1=-0.180 dH=6.561 MC=3.04 sinus=+0.689 narma=+0.575 wdelay8=+0.172 prod=+0.010 trend=+0.923
+H=32 b=4 s=0.6 seed=11 lam*=1.020 ben1=-0.344 dH=6.789 MC=3.53 sinus=+0.728 narma=+0.582 wdelay8=+0.217 prod=+0.038 trend=+0.946
+H=32 b=4 s=0.6 seed=12 lam*=1.030 ben1=-0.241 dH=6.213 MC=2.67 sinus=+0.534 narma=+0.572 wdelay8=+0.159 prod=+0.035 trend=+0.923
+H=32 b=4 s=0.6 seed=13 lam*=1.456 ben1=-0.088 dH=9.476 MC=3.14 sinus=+0.695 narma=+0.544 wdelay8=+0.194 prod=+0.038 trend=+0.934
+H=32 b=4 s=1.2 seed=10 lam*=0.647 ben1=-0.162 dH=8.467 MC=3.09 sinus=+0.715 narma=+0.613 wdelay8=+0.186 prod=+0.011 trend=+0.918
+H=32 b=4 s=1.2 seed=11 lam*=0.478 ben1=-0.475 dH=6.234 MC=3.54 sinus=+0.738 narma=+0.563 wdelay8=+0.213 prod=+0.044 trend=+0.946
+H=32 b=4 s=1.2 seed=12 lam*=0.575 ben1=-0.406 dH=6.783 MC=3.21 sinus=+0.638 narma=+0.585 wdelay8=+0.187 prod=+0.044 trend=+0.935
+H=32 b=4 s=1.2 seed=13 lam*=1.461 ben1=+0.050 dH=18.632 MC=0.87 sinus=+0.318 narma=+0.478 wdelay8=+0.011 prod=-0.020 trend=+0.800
+H=32 b=8 s=0.6 seed=10 lam*=0.812 ben1=-0.236 dH=7.412 MC=2.74 sinus=+0.578 narma=+0.555 wdelay8=+0.168 prod=+0.044 trend=+0.914
+H=32 b=8 s=0.6 seed=11 lam*=0.909 ben1=-0.355 dH=7.983 MC=3.08 sinus=+0.542 narma=+0.546 wdelay8=+0.202 prod=+0.052 trend=+0.937
+H=32 b=8 s=0.6 seed=12 lam*=0.638 ben1=-0.278 dH=5.313 MC=3.13 sinus=+0.557 narma=+0.579 wdelay8=+0.182 prod=+0.070 trend=+0.922
+H=32 b=8 s=0.6 seed=13 lam*=1.262 ben1=-0.152 dH=11.354 MC=2.81 sinus=+0.540 narma=+0.587 wdelay8=+0.186 prod=-0.008 trend=+0.926
+H=32 b=8 s=1.2 seed=10 lam*=0.536 ben1=+0.032 dH=9.689 MC=2.85 sinus=+0.604 narma=+0.566 wdelay8=+0.161 prod=+0.016 trend=+0.912
+H=32 b=8 s=1.2 seed=11 lam*=0.570 ben1=-0.465 dH=9.902 MC=2.62 sinus=+0.571 narma=+0.559 wdelay8=+0.212 prod=+0.044 trend=+0.940
+H=32 b=8 s=1.2 seed=12 lam*=1.262 ben1=-0.187 dH=20.761 MC=0.44 sinus=+0.307 narma=+0.457 wdelay8=+0.066 prod=+0.003 trend=+0.882
+H=32 b=8 s=1.2 seed=13 lam*=0.429 ben1=-0.290 dH=7.642 MC=3.42 sinus=+0.675 narma=+0.571 wdelay8=+0.190 prod=+0.059 trend=+0.934
+
+########## H=128 ##########
+H=128 b=1 s=0.6 seed=10 lam*=0.996 ben1=-0.305 dH=6.840 MC=2.72 sinus=+0.750 narma=+0.545 wdelay8=+0.188 prod=+0.101 trend=+0.933
+H=128 b=1 s=0.6 seed=11 lam*=1.074 ben1=-0.344 dH=6.624 MC=2.60 sinus=+0.717 narma=+0.541 wdelay8=+0.210 prod=+0.072 trend=+0.940
+H=128 b=1 s=0.6 seed=12 lam*=0.991 ben1=-0.291 dH=6.635 MC=2.67 sinus=+0.682 narma=+0.564 wdelay8=+0.195 prod=+0.061 trend=+0.933
+H=128 b=1 s=0.6 seed=13 lam*=0.948 ben1=-0.274 dH=6.628 MC=2.54 sinus=+0.731 narma=+0.555 wdelay8=+0.187 prod=+0.044 trend=+0.932
+H=128 b=1 s=1.2 seed=10 lam*=0.759 ben1=-0.288 dH=9.739 MC=2.30 sinus=+0.870 narma=+0.527 wdelay8=+0.217 prod=+0.127 trend=+0.942
+H=128 b=1 s=1.2 seed=11 lam*=0.996 ben1=-0.308 dH=11.442 MC=2.41 sinus=+0.859 narma=+0.463 wdelay8=+0.234 prod=+0.078 trend=+0.948
+H=128 b=1 s=1.2 seed=12 lam*=0.701 ben1=-0.289 dH=8.810 MC=3.06 sinus=+0.761 narma=+0.593 wdelay8=+0.206 prod=+0.074 trend=+0.940
+H=128 b=1 s=1.2 seed=13 lam*=0.701 ben1=-0.318 dH=9.220 MC=2.42 sinus=+0.787 narma=+0.568 wdelay8=+0.211 prod=+0.059 trend=+0.937
+H=128 b=2 s=0.6 seed=10 lam*=0.923 ben1=-0.299 dH=8.184 MC=2.52 sinus=+0.800 narma=+0.027 wdelay8=+0.201 prod=+0.117 trend=+0.938
+H=128 b=2 s=0.6 seed=11 lam*=1.083 ben1=-0.330 dH=8.877 MC=2.88 sinus=+0.806 narma=+0.567 wdelay8=+0.164 prod=+0.070 trend=+0.941
+H=128 b=2 s=0.6 seed=12 lam*=0.914 ben1=-0.269 dH=8.104 MC=2.43 sinus=+0.718 narma=+0.532 wdelay8=+0.197 prod=+0.043 trend=+0.936
+H=128 b=2 s=0.6 seed=13 lam*=0.919 ben1=-0.289 dH=8.353 MC=2.95 sinus=+0.811 narma=+0.074 wdelay8=+0.202 prod=+0.075 trend=+0.937
+H=128 b=2 s=1.2 seed=10 lam*=0.604 ben1=-0.240 dH=9.803 MC=3.74 sinus=+0.882 narma=+0.579 wdelay8=+0.232 prod=+0.146 trend=+0.943
+H=128 b=2 s=1.2 seed=11 lam*=0.715 ben1=-0.336 dH=10.910 MC=2.50 sinus=+0.885 narma=+0.594 wdelay8=+0.252 prod=+0.116 trend=+0.949
+H=128 b=2 s=1.2 seed=12 lam*=0.609 ben1=-0.185 dH=9.981 MC=2.37 sinus=+0.813 narma=+0.591 wdelay8=+0.214 prod=+0.073 trend=+0.942
+H=128 b=2 s=1.2 seed=13 lam*=0.647 ben1=-0.226 dH=10.775 MC=2.52 sinus=+0.854 narma=+0.573 wdelay8=+0.219 prod=+0.088 trend=+0.938
+H=128 b=4 s=0.6 seed=10 lam*=0.778 ben1=-0.214 dH=9.745 MC=2.04 sinus=+0.865 narma=+0.577 wdelay8=+0.217 prod=+0.131 trend=+0.941
+H=128 b=4 s=0.6 seed=11 lam*=0.846 ben1=-0.278 dH=10.358 MC=2.55 sinus=+0.880 narma=+0.435 wdelay8=+0.245 prod=+0.108 trend=+0.948
+H=128 b=4 s=0.6 seed=12 lam*=0.676 ben1=-0.281 dH=8.331 MC=3.23 sinus=+0.775 narma=+0.578 wdelay8=+0.200 prod=+0.064 trend=+0.940
+H=128 b=4 s=0.6 seed=13 lam*=0.797 ben1=-0.299 dH=9.830 MC=2.88 sinus=+0.863 narma=+0.548 wdelay8=+0.223 prod=+0.063 trend=+0.940
+H=128 b=4 s=1.2 seed=10 lam*=0.449 ben1=-0.255 dH=10.867 MC=3.62 sinus=+0.888 narma=+0.604 wdelay8=+0.239 prod=+0.160 trend=+0.944
+H=128 b=4 s=1.2 seed=11 lam*=0.478 ben1=-0.223 dH=11.370 MC=2.59 sinus=+0.904 narma=+0.607 wdelay8=+0.259 prod=+0.119 trend=+0.949
+H=128 b=4 s=1.2 seed=12 lam*=0.366 ben1=-0.339 dH=8.675 MC=3.13 sinus=+0.806 narma=+0.601 wdelay8=+0.212 prod=+0.080 trend=+0.943
+H=128 b=4 s=1.2 seed=13 lam*=0.449 ben1=-0.268 dH=10.635 MC=3.03 sinus=+0.893 narma=+0.598 wdelay8=+0.248 prod=+0.082 trend=+0.942
+H=128 b=8 s=0.6 seed=10 lam*=0.546 ben1=-0.264 dH=9.749 MC=3.96 sinus=+0.882 narma=+0.573 wdelay8=+0.230 prod=+0.156 trend=+0.942
+H=128 b=8 s=0.6 seed=11 lam*=0.662 ben1=-0.293 dH=11.597 MC=2.61 sinus=+0.867 narma=+0.608 wdelay8=-0.000 prod=+0.090 trend=+0.945
+H=128 b=8 s=0.6 seed=12 lam*=0.609 ben1=-0.339 dH=10.963 MC=1.50 sinus=+0.846 narma=+0.606 wdelay8=+0.218 prod=+0.088 trend=+0.944
+H=128 b=8 s=0.6 seed=13 lam*=0.609 ben1=-0.300 dH=10.637 MC=2.21 sinus=+0.869 narma=+0.588 wdelay8=+0.224 prod=+0.077 trend=+0.940
+H=128 b=8 s=1.2 seed=10 lam*=0.313 ben1=-0.223 dH=10.997 MC=3.34 sinus=+0.911 narma=+0.603 wdelay8=+0.251 prod=+0.181 trend=+0.944
+H=128 b=8 s=1.2 seed=11 lam*=0.352 ben1=-0.283 dH=12.163 MC=2.09 sinus=+0.902 narma=+0.616 wdelay8=+0.260 prod=+0.094 trend=+0.949
+H=128 b=8 s=1.2 seed=12 lam*=0.318 ben1=-0.306 dH=11.247 MC=3.13 sinus=+0.863 narma=+0.596 wdelay8=+0.142 prod=+0.088 trend=+0.944
+H=128 b=8 s=1.2 seed=13 lam*=0.376 ben1=-0.273 dH=12.916 MC=2.53 sinus=+0.909 narma=+0.470 wdelay8=-47.050 prod=-12.371 trend=-0.603
+
+--- F35-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Varianz-Gate H=32: delta_H-Range = 16.494 (>= 2.0 gefordert)
+Varianz-Gate H=128: delta_H-Range = 6.292 (>= 2.0 gefordert)
+Zelle H=32 sinus: corr(delta_H)=-0.581 corr(MC)=+0.776 corr(ben1)=-0.333
+Zelle H=32 narma: corr(delta_H)=-0.308 corr(MC)=+0.125 corr(ben1)=-0.198
+Zelle H=32 wdelay8: corr(delta_H)=-0.605 corr(MC)=+0.825 corr(ben1)=-0.603
+Zelle H=32 prod: corr(delta_H)=-0.391 corr(MC)=+0.478 corr(ben1)=-0.732
+Zelle H=32 trend: corr(delta_H)=-0.626 corr(MC)=+0.774 corr(ben1)=-0.574
+Zelle H=128 sinus: corr(delta_H)=+0.891 corr(MC)=+0.093 corr(ben1)=+0.301
+Zelle H=128 narma: corr(delta_H)=+0.236 corr(MC)=+0.048 corr(ben1)=+0.114
+Zelle H=128 wdelay8: corr(delta_H)=-0.351 corr(MC)=+0.067 corr(ben1)=-0.043
+Zelle H=128 prod: corr(delta_H)=-0.345 corr(MC)=+0.073 corr(ben1)=-0.039
+Zelle H=128 trend: corr(delta_H)=-0.339 corr(MC)=+0.066 corr(ben1)=-0.044
+
+PRIMAER delta_H: 1/10 Zellen >= +0.4   (>= 6 noetig)
+SEKUNDAER MC:   4/10 Zellen >= +0.4   (>= 6 noetig)
+MANIPULATIONS-CHECK VERLETZT: H=32 wdelay8: -0.603; H=32 prod: -0.732; H=32 trend: -0.574
+
+VERDICT: UNENTSCHEIDEN — Stabilitaets-Matching durchbrochen (Design-Problem, Schwelle unangetastet).
+=== FERTIG ===
