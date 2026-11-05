@@ -1,0 +1,68 @@
+======================================================================================================================
+G2 — SEED-RAUSCHEN-FAKTORISIERUNG (registriert: PASS nur wenn in ALLEN 4 Zellen
+std_A <= 0.5*std_C UND Treffer A >= 0.6 UND Treffer C < 0.3; Ziel -0.3+-0.05)
+Arme: A=nur-Basis, B=nur-Spektrum, Bn=nur-Rauschen(s>0), C=alles, R=Feld-ESN; Seeds=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+Kalibrierung A: knob=1.4 ben1(seed0)=-0.299
+Kalibrierung B: knob=1.6 ben1(seed0)=-0.252
+Kalibrierung Bn: knob=1.2 ben1(seed0)=-0.306
+Kalibrierung C: knob=2.0 ben1(seed0)=-0.313
+Kalibrierung R(esn): rho=0.2 ben1(seed0)=-0.448
+Arm  A (knob=1.4): std=0.0711 Treffer=2/10 mean=-0.205 ungueltig=0
+Arm  B (knob=1.6): std=0.1146 Treffer=2/10 mean=-0.193 ungueltig=0
+Arm Bn (knob=1.2): std=0.0974 Treffer=6/10 mean=-0.296 ungueltig=0
+Arm  C (knob=2.0): std=0.1191 Treffer=3/10 mean=-0.192 ungueltig=0
+Arm R  (rho=0.2): std=0.1135 Treffer=3/10 mean=-0.356 ungueltig=0
+
+########## H=32 s=0.8 ##########
+Kalibrierung A: knob=0.4 ben1(seed0)=-0.346
+Kalibrierung B: knob=0.4 ben1(seed0)=-0.332
+Kalibrierung Bn: knob=0.6 ben1(seed0)=-0.298
+Kalibrierung C: knob=1.2 ben1(seed0)=-0.304
+Kalibrierung R(esn): rho=0.4 ben1(seed0)=-0.421
+Arm  A (knob=0.4): std=0.1008 Treffer=1/10 mean=-0.443 ungueltig=0
+Arm  B (knob=0.4): std=0.0737 Treffer=3/10 mean=-0.418 ungueltig=0
+Arm Bn (knob=0.6): std=0.1257 Treffer=4/10 mean=-0.265 ungueltig=0
+Arm  C (knob=1.2): std=0.2115 Treffer=0/10 mean=-0.069 ungueltig=0
+Arm R  (rho=0.4): std=0.0710 Treffer=0/10 mean=-0.055 ungueltig=0
+
+########## H=128 s=0.0 ##########
+Kalibrierung A: knob=1.2 ben1(seed0)=-0.283
+Kalibrierung B: knob=1.2 ben1(seed0)=-0.282
+Kalibrierung Bn: knob=1.2 ben1(seed0)=-0.310
+Kalibrierung C: knob=1.0 ben1(seed0)=-0.384
+Kalibrierung R(esn): rho=0.2 ben1(seed0)=+0.079
+Arm  A (knob=1.2): std=0.0374 Treffer=6/10 mean=-0.264 ungueltig=0
+Arm  B (knob=1.2): std=0.0533 Treffer=4/10 mean=-0.237 ungueltig=0
+Arm Bn (knob=1.2): std=0.0256 Treffer=9/10 mean=-0.272 ungueltig=0
+Arm  C (knob=1.0): std=0.0304 Treffer=4/10 mean=-0.372 ungueltig=0
+Arm R  (rho=0.2): std=0.0479 Treffer=0/10 mean=+0.051 ungueltig=0
+
+########## H=128 s=0.8 ##########
+Kalibrierung A: knob=0.2 ben1(seed0)=-0.321
+Kalibrierung B: knob=0.2 ben1(seed0)=-0.381
+Kalibrierung Bn: knob=0.2 ben1(seed0)=-0.374
+Kalibrierung C: knob=0.2 ben1(seed0)=-0.406
+Kalibrierung R(esn): rho=0.2 ben1(seed0)=+0.103
+Arm  A (knob=0.2): std=0.0300 Treffer=5/10 mean=-0.346 ungueltig=0
+Arm  B (knob=0.2): std=0.0236 Treffer=1/10 mean=-0.384 ungueltig=0
+Arm Bn (knob=0.2): std=0.0494 Treffer=2/10 mean=-0.387 ungueltig=0
+Arm  C (knob=0.2): std=0.0291 Treffer=5/10 mean=-0.361 ungueltig=0
+Arm R  (rho=0.2): std=0.0397 Treffer=0/10 mean=+0.075 ungueltig=0
+
+--- G2-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 s=0.0: std_A=0.0711 vs std_C=0.1191 (<=0.5x: NEIN), Treffer A=0.20 (>=0.6), Treffer C=0.30 (<0.3) -> NICHT ERFUELLT
+Zelle H=32 s=0.8: std_A=0.1008 vs std_C=0.2115 (<=0.5x: JA), Treffer A=0.10 (>=0.6), Treffer C=0.00 (<0.3) -> NICHT ERFUELLT
+Zelle H=128 s=0.0: std_A=0.0374 vs std_C=0.0304 (<=0.5x: NEIN), Treffer A=0.60 (>=0.6), Treffer C=0.40 (<0.3) -> NICHT ERFUELLT
+Zelle H=128 s=0.8: std_A=0.0300 vs std_C=0.0291 (<=0.5x: NEIN), Treffer A=0.50 (>=0.6), Treffer C=0.50 (<0.3) -> NICHT ERFUELLT
+SEKUNDAER H=32 s=0.0: Varianz-Anteile (relativ zu C): A=0.071 B=0.115  C=0.119 R=0.113; Treffer R(esn)=3/10
+SEKUNDAER H=32 s=0.8: Varianz-Anteile (relativ zu C): A=0.101 B=0.074 Bn=0.126 C=0.212 R=0.071; Treffer R(esn)=0/10
+SEKUNDAER H=128 s=0.0: Varianz-Anteile (relativ zu C): A=0.037 B=0.053  C=0.030 R=0.048; Treffer R(esn)=0/10
+SEKUNDAER H=128 s=0.8: Varianz-Anteile (relativ zu C): A=0.030 B=0.024 Bn=0.049 C=0.029 R=0.040; Treffer R(esn)=0/10
+
+VERDICT: KILL — Basis-Geometrie ist irreduzibles Schicksal: auch bei fixem Spektrum schwankt der Exponent mit der Rotation. Konstruktion allein beendet das Lotto nicht.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/g2_seed_factorization_results.txt und results/g2_seed_factorization_table.csv geschrieben.
