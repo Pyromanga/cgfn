@@ -1,4 +1,10 @@
 Traceback (most recent call last):
-  File "/home/runner/work/cgfn/cgfn/experiments/g1_control_authority.py", line 72, in <module>
-    from cgfn.field import drive_input, transient_growth
-ImportError: cannot import name 'transient_growth' from 'cgfn.field' (/home/runner/work/cgfn/cgfn/src/cgfn/field.py)
+  File "/home/runner/work/cgfn/cgfn/experiments/g1_control_authority.py", line 256, in <module>
+    main()
+  File "/home/runner/work/cgfn/cgfn/experiments/g1_control_authority.py", line 145, in main
+    g, _t = transient_growth(J)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/src/cgfn/resource.py", line 216, in transient_growth
+    g = torch.linalg.svdvals(torch.matrix_exp(J * float(t)))[0].item()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch._C._LinAlgError: linalg.svd: The algorithm failed to converge because the input matrix contained non-finite values.

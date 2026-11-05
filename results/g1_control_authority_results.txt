@@ -1,0 +1,37 @@
+======================================================================================================================
+G1 — KONTROLL-AUTORITAET (registriert: PASS nur wenn Trefferquote normal >= 0.50,
+nicht-normale Arme < 0.25, in BEIDEN H; Ziel ben=-0.3 +- 0.05; Seeds 0-9)
+Knob-Raster: [0.2, 0.4, 0.6, 0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]
+======================================================================================================================
+
+########## H=32 ##########
+    normal knob=0.2  mean(ben1)=-0.903 std(Seed)=0.009 Treffer=0/10 ungueltig=0 mean(g)=1.00
+    normal knob=0.4  mean(ben1)=-0.760 std(Seed)=0.033 Treffer=0/10 ungueltig=0 mean(g)=1.00
+    normal knob=0.6  mean(ben1)=-0.629 std(Seed)=0.043 Treffer=0/10 ungueltig=0 mean(g)=1.00
+    normal knob=0.8  mean(ben1)=-0.482 std(Seed)=0.052 Treffer=0/10 ungueltig=0 mean(g)=1.00
+    normal knob=1    mean(ben1)=-0.396 std(Seed)=0.082 Treffer=3/10 ungueltig=0 mean(g)=1.00
+    normal knob=1.2  mean(ben1)=-0.341 std(Seed)=0.103 Treffer=4/10 ungueltig=0 mean(g)=162755.24
+    normal knob=1.4  mean(ben1)=-0.231 std(Seed)=0.114 Treffer=3/10 ungueltig=0 mean(g)=26489079956.64
+    normal knob=1.6  mean(ben1)=-0.212 std(Seed)=0.146 Treffer=3/10 ungueltig=0 mean(g)=4311238335669247.00
+    normal knob=1.8  mean(ben1)=-0.228 std(Seed)=0.113 Treffer=4/10 ungueltig=0 mean(g)=701670787992316018688.00
+    normal knob=2    mean(ben1)=-0.174 std(Seed)=0.135 Treffer=0/10 ungueltig=0 mean(g)=114200541064526521937428480.00
+   nn_s0.8 knob=0.2  mean(ben1)=-0.691 std(Seed)=0.052 Treffer=0/10 ungueltig=0 mean(g)=1.00
+   nn_s0.8 knob=0.4  mean(ben1)=-0.382 std(Seed)=0.141 Treffer=2/10 ungueltig=0 mean(g)=2.13
+   nn_s0.8 knob=0.6  mean(ben1)=-0.263 std(Seed)=0.101 Treffer=4/10 ungueltig=0 mean(g)=19.01
+   nn_s0.8 knob=0.8  mean(ben1)=-0.150 std(Seed)=0.141 Treffer=2/10 ungueltig=0 mean(g)=696.91
+   nn_s0.8 knob=1    mean(ben1)=-0.070 std(Seed)=0.190 Treffer=0/10 ungueltig=0 mean(g)=199735.26
+   nn_s0.8 knob=1.2  mean(ben1)=+0.020 std(Seed)=0.174 Treffer=0/10 ungueltig=0 mean(g)=13970383167.39
+   nn_s0.8 knob=1.4  mean(ben1)=+0.100 std(Seed)=0.082 Treffer=0/10 ungueltig=0 mean(g)=9050997968935676.00
+   nn_s0.8 knob=1.6  mean(ben1)=+0.089 std(Seed)=0.154 Treffer=1/10 ungueltig=0 mean(g)=392368877482993188864.00
+   nn_s0.8 knob=1.8  mean(ben1)=+0.219 std(Seed)=0.084 Treffer=0/10 ungueltig=0 mean(g)=73702721762524276805599232.00
+   nn_s0.8 knob=2    mean(ben1)=+0.178 std(Seed)=0.126 Treffer=0/10 ungueltig=0 mean(g)=59180460127709897219607837540352.00
+   nn_s1.6 knob=0.2  mean(ben1)=-0.463 std(Seed)=0.113 Treffer=2/10 ungueltig=0 mean(g)=1.90
+   nn_s1.6 knob=0.4  mean(ben1)=-0.170 std(Seed)=0.152 Treffer=1/10 ungueltig=0 mean(g)=70.09
+   nn_s1.6 knob=0.6  mean(ben1)=+0.049 std(Seed)=0.096 Treffer=0/10 ungueltig=0 mean(g)=6530.83
+   nn_s1.6 knob=0.8  mean(ben1)=+0.105 std(Seed)=0.120 Treffer=0/10 ungueltig=0 mean(g)=28792092.39
+   nn_s1.6 knob=1    mean(ben1)=+0.166 std(Seed)=0.149 Treffer=0/10 ungueltig=0 mean(g)=106494714603296.11
+   nn_s1.6 knob=1.2  mean(ben1)=+0.263 std(Seed)=0.235 Treffer=0/10 ungueltig=0 mean(g)=2135627887102223974400.00
+   nn_s1.6 knob=1.4  mean(ben1)=+0.203 std(Seed)=0.172 Treffer=0/10 ungueltig=0 mean(g)=2163343037276399082826744463360.00
+   nn_s1.6 knob=1.6  mean(ben1)=+0.274 std(Seed)=0.125 Treffer=0/10 ungueltig=0 mean(g)=649257050833106155232757441965850624.00
+   nn_s1.6 knob=1.8  mean(ben1)=+0.351 std(Seed)=0.169 Treffer=0/10 ungueltig=0 mean(g)=49197455609128176126660112221404902981632.00
+   nn_s1.6 knob=2    mean(ben1)=+0.238 std(Seed)=0.255 Treffer=1/10 ungueltig=0 mean(g)=61733335561331237675547018365240995080575442223104.00
