@@ -1,0 +1,48 @@
+======================================================================================================================
+F38 — EROSIONS-ANATOMIE (registriert: Adam spearman(g_k, e_k) >= +0.4 in
+>= 4/5 Seeds = PASS; Sekundaer Rekapitulation >= +0.4 in >= 3/5; Kontrast ohne Schwelle)
+seeds=[0, 1, 2, 3, 4] steps=300 H=32 T=64 lag=8
+designed: lam=1.0 s=0.8 tau=1.0 — IDENTISCH zu F27 (W trainierbar, Memory-Regression)
+
+--- lr-Sweep (F27-Rezept) ---
+        sgd lr=0.05     probe: DIVERGED
+        sgd lr=0.01     probe: OK
+   momentum lr=0.05     probe: DIVERGED
+   momentum lr=0.01     probe: OK
+       adam lr=0.01     probe: OK
+gewaehlt: {'sgd': 0.01, 'momentum': 0.01, 'adam': 0.01}
+======================================================================================================================
+
+########## adam (lr=0.01) ##########
+seed 0: t_eros=240 kT_min=105.060 S(g,e)=+0.089 R(e,r)=-0.336 loss_end=0.17677 ok
+seed 1: t_eros=10 kT_min=87.986 S(g,e)=-0.193 R(e,r)=+0.029 loss_end=0.13598 ok
+seed 2: t_eros=50 kT_min=143.044 S(g,e)=+0.104 R(e,r)=-0.297 loss_end=0.18495 ok
+seed 3: t_eros=299 kT_min=66.222 S(g,e)=-0.003 R(e,r)=+nan loss_end=0.16913 ok
+seed 4: t_eros=290 kT_min=71.632 S(g,e)=-0.246 R(e,r)=-0.379 loss_end=0.10561 ok
+
+########## sgd (lr=0.01) ##########
+seed 0: t_eros=10 kT_min=113.872 S(g,e)=+0.098 R(e,r)=-0.411 loss_end=0.17898 ok
+seed 1: t_eros=10 kT_min=421.338 S(g,e)=+0.300 R(e,r)=+nan loss_end=1.52245 DIVERGED
+seed 2: t_eros=10 kT_min=35.047 S(g,e)=-0.409 R(e,r)=+nan loss_end=215.37491 DIVERGED
+seed 3: t_eros=240 kT_min=267.516 S(g,e)=-0.129 R(e,r)=+0.168 loss_end=0.16870 ok
+seed 4: t_eros=90 kT_min=280.635 S(g,e)=-0.446 R(e,r)=-0.503 loss_end=0.13512 ok
+
+########## momentum (lr=0.01) ##########
+seed 0: t_eros=230 kT_min=75.012 S(g,e)=+0.152 R(e,r)=-0.404 loss_end=0.19826 ok
+seed 1: t_eros=10 kT_min=119.742 S(g,e)=+0.077 R(e,r)=+nan loss_end=62.86390 DIVERGED
+seed 2: t_eros=30 kT_min=87.882 S(g,e)=+0.077 R(e,r)=+nan loss_end=2.17324 DIVERGED
+seed 3: t_eros=10 kT_min=115.533 S(g,e)=+0.007 R(e,r)=+0.054 loss_end=30694226911305077828354048.00000 DIVERGED
+seed 4: t_eros=210 kT_min=79.934 S(g,e)=-0.311 R(e,r)=+0.052 loss_end=0.07325 ok
+
+--- F38-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Adam: 5/5 gueltige Seeds (>= 3 gefordert)
+PRIMAER   Gerichtetheit S(g,e) >= +0.4: 0/5 Seeds   (>= 4 noetig)
+SEKUNDAER Rekapitulation R(e,r) >= +0.4: 0/5 Seeds   (>= 3)
+Kontrast sgd: mean S(g,e)=-0.159, mean R(e,r)=-0.249 (KEINE Schwelle: Richtung dort = Update-Geometrie; nur Adam = Adaptivitaet)
+Kontrast momentum: mean S(g,e)=-0.079, mean R(e,r)=-0.176 (KEINE Schwelle: Richtung dort = Update-Geometrie; nur Adam = Adaptivitaet)
+
+VERDICT: KILL — die Erosion ist ungerichtet. kappa_T-Kollaps ist ein Beifang, keine gezielte Ressourcen-Zerstoerung. F27 bleibt phaenomenologischer Kern-Befund; wir graben nicht weiter hinter ihm.
+REKAPITULATION (nur Bericht): VERNEINT — Phase-2-Wiederaufbau nicht modengebunden (0/5 Seeds >= +0.4)
+=== FERTIG ===
+
+[i] Ergebnisse nach results/f38_erosion_anatomy_results.txt geschrieben.
