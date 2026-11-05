@@ -120,8 +120,8 @@ def demand_kernel(seqs):
             idx = torch.arange(LAGS - 1, LAGS - 1 + T) - j
             cols.append(u_pad[idx])
         F.append(torch.stack(cols, 1)); Y.append(y)
-    F = torch.cat(F, 0); Y = torch.cat(Y, 0)
-    A = F.T @ F + 1e-2 * torch.eye(LAGS)
+    F = torch.cat(F, 0).to(torch.float64); Y = torch.cat(Y, 0).to(torch.float64)
+    A = F.T @ F + 1e-2 * torch.eye(LAGS, dtype=torch.float64)
     d = torch.linalg.solve(A, F.T @ Y)
     dn = d / d.norm().clamp_min(1e-12)
     return dn
@@ -171,7 +171,7 @@ def msdm(supply, d_norm):
     for k in range(H_mat.shape[1]):
         h = H_mat[:, k]
         hn = h / h.norm().clamp_min(1e-12)
-        tot = tot + float(E[k]) * float(torch.dot(hn, d_norm))
+        tot = tot + float(E[k]) * float(torch.dot(hn, d_norm.to(hn.dtype)))
     return tot
 
 
