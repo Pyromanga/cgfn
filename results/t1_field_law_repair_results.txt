@@ -1,0 +1,31 @@
+======================================================================================================================
+T1 — FELDGESETZ-REPARATUR (registriert: PASS nur wenn P1 NC-Fehler<=0.05 UND
+P2 Spearman(N)>=0.8 in >=3/4 Zellen UND P3 alt>=2xneu auf NC; f64, 10 Seeds)
+Vorhersage: J = -I + W F diag(<sech^2(y)>) F^T (neu) vs W diag(d) alt (F17/F18)
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+Arm N: n=30 | median|neu-gem|=0.0773 median|alt-gem|=0.0773 | Spearman(neu,gem)=0.800 | std gem=0.1700 std pred=0.1698
+Arm NC: n=30 | median|neu-gem|=0.0184 median|alt-gem|=0.1716 | Spearman(neu,gem)=0.915 | std gem=0.2258 std pred=0.2702
+
+########## H=32 s=0.8 ##########
+Arm N: n=30 | median|neu-gem|=0.1047 median|alt-gem|=0.1047 | Spearman(neu,gem)=0.758 | std gem=0.2276 std pred=0.2164
+Arm NC: n=30 | median|neu-gem|=0.0856 median|alt-gem|=0.5821 | Spearman(neu,gem)=0.855 | std gem=0.1774 std pred=0.2702
+
+########## H=128 s=0.0 ##########
+Arm N: n=30 | median|neu-gem|=0.1033 median|alt-gem|=0.1033 | Spearman(neu,gem)=0.891 | std gem=0.2048 std pred=0.2014
+Arm NC: n=30 | median|neu-gem|=0.0532 median|alt-gem|=0.1584 | Spearman(neu,gem)=0.887 | std gem=0.2657 std pred=0.2965
+
+########## H=128 s=0.8 ##########
+Arm N: n=30 | median|neu-gem|=0.5382 median|alt-gem|=0.5382 | Spearman(neu,gem)=-0.010 | std gem=0.2794 std pred=0.0800
+Arm NC: n=30 | median|neu-gem|=0.1830 median|alt-gem|=2.0137 | Spearman(neu,gem)=0.903 | std gem=0.2435 std pred=0.3261
+
+--- T1-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 s=0.0: NC median|neu-gem|=0.0184 (<=0.05? JA), NC median|alt-gem|=0.1716, Spearman(N)=0.800 (>=0.8? JA)
+Zelle H=32 s=0.8: NC median|neu-gem|=0.0856 (<=0.05? NEIN), NC median|alt-gem|=0.5821, Spearman(N)=0.758 (>=0.8? NEIN)
+Zelle H=128 s=0.0: NC median|neu-gem|=0.0532 (<=0.05? NEIN), NC median|alt-gem|=0.1584, Spearman(N)=0.891 (>=0.8? JA)
+Zelle H=128 s=0.8: NC median|neu-gem|=0.1830 (<=0.05? NEIN), NC median|alt-gem|=2.0137, Spearman(N)=-0.010 (>=0.8? NEIN)
+P1 (NC-Fehler): NEIN | P2 (Lotto-Rangfolge): 2/4 | P3 (alt 0.7314 >= 2*neu 0.0850): JA
+
+VERDICT: KILL — Der Lotto laesst sich nicht auf Eigenwert-Niveau komprimieren: Er bleibt eine Trajektorien-Eigenschaft. Das gerahmte Gesetz ist bestenfalls eine Mittelwert-Naeherung.
+=== FERTIG ===
