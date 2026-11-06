@@ -217,8 +217,7 @@ def main():
             L.append('########## H=' + str(H) + ' s=' + str(s_nn) + ' ##########')
             # Instrument-Check: lokal vs. Bibliothek auf Arm N, Seed 0, lam=1.0
             dynN, modelN = make_dyn_for(H, s_nn, 0, 'N', 1.0)
-            ben_lib = float(benettin_spectrum(modelN, xdr)[0][0]) \
-                if False else float(benettin_spectrum(modelN, xdr)[0])
+            ben_lib = float(benettin_spectrum(modelN, xdr)[0][0])
             ben_loc = benettin_custom(dynN, xdr, H, 0.1, 5, 1.0)
             d_inst = abs(ben_lib - ben_loc)
             L.append('Instrument-Check Arm N (lam=1.0): Bibliothek=%.6f lokal=%.6f Delta=%.6f'
