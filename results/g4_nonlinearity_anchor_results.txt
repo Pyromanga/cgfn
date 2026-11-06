@@ -1,0 +1,59 @@
+======================================================================================================================
+G4 — NICHTLINEARITAETS-ANKER (registriert: PASS nur wenn in ALLEN 4 Zellen
+std_NC<=0.01 UND maxdev_NC<=0.05 UND std_L<=0.01 UND std_N>=0.02 UND
+std_NF>=0.5*std_N; Ziel -0.30+-0.05; Q rotiert, Spektrum fix, U=Q[:,0])
+Arme: L=linear, N=tanh absolut (=G3-A), NF=tanh fester Rahmen R0, NC=tanh mitfahrend (Q-System)
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+Instrument-Check Arm N (lam=1.0): Bibliothek=-0.408103 lokal=-0.132949 Delta=0.275154
+Kalibrierung L: lam=0.8 ben1(seed0)=-0.2655
+Kalibrierung N: lam=0.8 ben1(seed0)=-0.2923
+Kalibrierung NF: lam=1.4 ben1(seed0)=-0.6887
+Kalibrierung NC: lam=0.8 ben1(seed0)=-0.3259
+Arm L (lam=0.8): std=0.0263 maxdev=0.0751 Treffer=9/10 mean=-0.271 ungueltig=0
+Arm N (lam=0.8): std=0.0245 maxdev=0.0585 Treffer=9/10 mean=-0.287 ungueltig=0
+Arm NF (lam=1.4): std=0.0739 maxdev=0.2401 Treffer=0/10 mean=-0.581 ungueltig=0
+Arm NC (lam=0.8): std=0.0000 maxdev=0.0000 Treffer=10/10 mean=-0.326 ungueltig=0
+
+########## H=32 s=0.8 ##########
+Instrument-Check Arm N (lam=1.0): Bibliothek=0.067939 lokal=0.033147 Delta=0.034791
+Kalibrierung L: lam=0.4 ben1(seed0)=-0.3678
+Kalibrierung N: lam=1.8 ben1(seed0)=-0.2537
+Kalibrierung NF: lam=1.6 ben1(seed0)=-0.2563
+Kalibrierung NC: lam=0.8 ben1(seed0)=-0.3251
+Arm L (lam=0.4): std=0.0163 maxdev=0.0348 Treffer=1/10 mean=-0.369 ungueltig=0
+Arm N (lam=1.8): std=0.2195 maxdev=0.7918 Treffer=1/10 mean=+0.309 ungueltig=0
+Arm NF (lam=1.6): std=0.4403 maxdev=1.2692 Treffer=1/10 mean=+0.317 ungueltig=0
+Arm NC (lam=0.8): std=0.0005 maxdev=0.0014 Treffer=10/10 mean=-0.326 ungueltig=0
+
+########## H=128 s=0.0 ##########
+Instrument-Check Arm N (lam=1.0): Bibliothek=-0.360940 lokal=-0.112276 Delta=0.248664
+Kalibrierung L: lam=0.8 ben1(seed0)=-0.2931
+Kalibrierung N: lam=0.8 ben1(seed0)=-0.2977
+Kalibrierung NF: lam=2.0 ben1(seed0)=-0.6608
+Kalibrierung NC: lam=0.8 ben1(seed0)=-0.3259
+Arm L (lam=0.8): std=0.0109 maxdev=0.0189 Treffer=10/10 mean=-0.292 ungueltig=0
+Arm N (lam=0.8): std=0.0109 maxdev=0.0194 Treffer=10/10 mean=-0.296 ungueltig=0
+Arm NF (lam=2.0): std=0.0763 maxdev=0.1934 Treffer=0/10 mean=-0.600 ungueltig=0
+Arm NC (lam=0.8): std=0.0000 maxdev=0.0000 Treffer=10/10 mean=-0.326 ungueltig=0
+
+########## H=128 s=0.8 ##########
+Instrument-Check Arm N (lam=1.0): Bibliothek=0.584036 lokal=0.878180 Delta=0.294144
+Kalibrierung L: lam=0.2 ben1(seed0)=-0.3579
+Kalibrierung N: lam=0.2 ben1(seed0)=-0.3584
+Kalibrierung NF: lam=0.4 ben1(seed0)=-0.2013
+Kalibrierung NC: lam=0.4 ben1(seed0)=-0.4880
+Arm L (lam=0.2): std=0.0252 maxdev=0.0416 Treffer=3/10 mean=-0.358 ungueltig=0
+Arm N (lam=0.2): std=0.0253 maxdev=0.0445 Treffer=4/10 mean=-0.358 ungueltig=0
+Arm NF (lam=0.4): std=0.0688 maxdev=0.1913 Treffer=3/10 mean=-0.270 ungueltig=0
+Arm NC (lam=0.4): std=0.0309 maxdev=0.0611 Treffer=0/10 mean=-0.478 ungueltig=0
+
+--- G4-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 s=0.0: std_NC=0.0000(maxdev 0.0000) std_L=0.0263 std_N=0.0245 std_NF=0.0739 -> NC:JA L:NEIN N:JA NF:JA => NICHT ERFUELLT
+Zelle H=32 s=0.8: std_NC=0.0005(maxdev 0.0014) std_L=0.0163 std_N=0.2195 std_NF=0.4403 -> NC:JA L:NEIN N:JA NF:JA => NICHT ERFUELLT
+Zelle H=128 s=0.0: std_NC=0.0000(maxdev 0.0000) std_L=0.0109 std_N=0.0109 std_NF=0.0763 -> NC:JA L:NEIN N:NEIN NF:JA => NICHT ERFUELLT
+Zelle H=128 s=0.8: std_NC=0.0309(maxdev 0.0611) std_L=0.0252 std_N=0.0253 std_NF=0.0688 -> NC:NEIN L:NEIN N:JA NF:JA => NICHT ERFUELLT
+
+VERDICT: UNENTSCHEIDEN — Instrument-Check (lokal vs. Bibliothek) gefallen.
+=== FERTIG ===
