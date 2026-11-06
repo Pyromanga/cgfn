@@ -1,0 +1,36 @@
+======================================================================================================================
+G6 — TRAEGT DER ANKER-KNOPF AUFGABENLEISTUNG? (registriert: PASS nur wenn
+in ALLEN 4 Zellen std_MC_NC<=0.1*std_MC_N UND std_MC_N>=0.02 UND
+mean_MC_NC>=mean_MC_N-std_MC_N; NF-Sekundaer; lam=1.0, keine Kalibrierung)
+Arme: N=tanh absolut, NC=tanh mitfahrend, NF=tanh fester Rahmen; MC-Summe k in 1,2,4,8,16
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+Arm N: MC mean=0.9321 std=0.0389 ungueltig=0 | Seed0 je-k: k=1:0.255 k=2:0.218 k=4:0.175 k=8:0.170 k=16:0.107
+Arm NC: MC mean=0.4722 std=0.0000 ungueltig=0 | Seed0 je-k: k=1:0.114 k=2:0.134 k=4:0.120 k=8:0.094 k=16:0.010
+Arm NF: MC mean=0.9475 std=0.0326 ungueltig=0 | Seed0 je-k: k=1:0.263 k=2:0.228 k=4:0.188 k=8:0.174 k=16:0.112
+
+########## H=32 s=0.8 ##########
+Arm N: MC mean=1.2952 std=0.4425 ungueltig=0 | Seed0 je-k: k=1:0.162 k=2:0.164 k=4:0.117 k=8:0.126 k=16:0.128
+Arm NC: MC mean=0.4722 std=0.0000 ungueltig=0 | Seed0 je-k: k=1:0.114 k=2:0.134 k=4:0.120 k=8:0.094 k=16:0.010
+Arm NF: MC mean=1.7682 std=0.7909 ungueltig=0 | Seed0 je-k: k=1:0.978 k=2:0.787 k=4:0.406 k=8:0.326 k=16:0.248
+
+########## H=128 s=0.0 ##########
+Arm N: MC mean=0.7925 std=0.0090 ungueltig=0 | Seed0 je-k: k=1:0.208 k=2:0.185 k=4:0.150 k=8:0.147 k=16:0.097
+Arm NC: MC mean=0.4722 std=0.0000 ungueltig=0 | Seed0 je-k: k=1:0.114 k=2:0.134 k=4:0.120 k=8:0.094 k=16:0.010
+Arm NF: MC mean=0.7957 std=0.0092 ungueltig=0 | Seed0 je-k: k=1:0.207 k=2:0.183 k=4:0.148 k=8:0.146 k=16:0.099
+
+########## H=128 s=0.8 ##########
+Arm N: MC mean=2.3364 std=0.0697 ungueltig=0 | Seed0 je-k: k=1:0.502 k=2:0.492 k=4:0.482 k=8:0.444 k=16:0.517
+Arm NC: MC mean=0.4828 std=0.0052 ungueltig=0 | Seed0 je-k: k=1:0.118 k=2:0.137 k=4:0.123 k=8:0.095 k=16:0.012
+Arm NF: MC mean=2.3877 std=0.0967 ungueltig=0 | Seed0 je-k: k=1:0.454 k=2:0.430 k=4:0.428 k=8:0.472 k=16:0.502
+
+--- G6-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 s=0.0: std_NC=0.0000 std_N=0.0389 std_NF=0.0326 mean_N=0.9321 mean_NC=0.4722 -> NICHT ERFUELLT
+Zelle H=32 s=0.8: std_NC=0.0000 std_N=0.4425 std_NF=0.7909 mean_N=1.2952 mean_NC=0.4722 -> NICHT ERFUELLT
+Zelle H=128 s=0.0: std_NC=0.0000 std_N=0.0090 std_NF=0.0092 mean_N=0.7925 mean_NC=0.4722 -> NICHT ERFUELLT
+Zelle H=128 s=0.8: std_NC=0.0052 std_N=0.0697 std_NF=0.0967 mean_N=2.3364 mean_NC=0.4828 -> NICHT ERFUELLT
+SEKUNDAER NF-Bilanz: std_NF >= 0.5*std_N in 4/4 Zellen (>=3 Relativwinkel ok)
+
+VERDICT: KILL — Die Symmetrie kontrolliert den Exponenten, nicht die Leistung: MC-Streuung kollabiert nicht (oder nur mit Preis). Der Anker bleibt Diagnose, kein Engineering-Knopf.
+=== FERTIG ===
