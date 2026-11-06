@@ -1,0 +1,54 @@
+name: cgfn-frontier (G9 Ressourcen-Verteiler)
+
+# G9 — gleichverteilter Fehlwinkel vs Zufall vs Konzentration. Registriert, 20 Seeds.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/g9"
+
+jobs:
+  frontier-g9:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Gate syntax-check g9 + f34-Instrument
+        run: |
+          python -m py_compile experiments/g9_resource_distributor.py experiments/f34_exploration.py || { echo "[e] SYNTAX-FEHLER — Abbruch, Kontingent geschont"; exit 1; }
+          echo "[i] syntax ok"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Run G9 Ressourcen-Verteiler
+        run: |
+          set -o pipefail
+          python experiments/g9_resource_distributor.py 2>&1 | tee results/g9_run.log
+      - name: Commit results and logs to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: G9-resource-distributor ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            echo "[w] push fehlgeschlagen (Versuch $i) — rebase (autostash) und erneut"
+            git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen" && exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontier-g9-results
+          path: results/
+          retention-days: 30
