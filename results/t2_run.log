@@ -1,0 +1,27 @@
+======================================================================================================================
+T2 — TRANSFER-STEIN (registriert: PASS nur wenn P1 std(BR)>=1.5*std(B0)
+UND P2 median(AL06)>median(RND) in beiden Bias-Zellen; f64, 10 Seeds/Arm)
+Echtes Training: BPTT+Adam auf delayed-XOR, W+Readout trainiert, b fix am Init
+======================================================================================================================
+
+Arm B0_RND: n_ok=10/10 | median=0.5000 | std=0.0025 | min=0.4922 max=0.5000
+
+Arm B0_AL06: n_ok=10/10 | median=0.5000 | std=0.0060 | min=0.4863 max=0.5117
+
+Arm BR_RND: n_ok=10/10 | median=0.5000 | std=0.0012 | min=0.4961 max=0.5000
+
+Arm BR_AL06: n_ok=10/10 | median=0.5000 | std=0.0000 | min=0.5000 max=0.5000
+
+--- T2-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle B0_RND: median=0.5000 std=0.0025
+Zelle B0_AL06: median=0.5000 std=0.0060
+Zelle BR_RND: median=0.5000 std=0.0012
+Zelle BR_AL06: median=0.5000 std=0.0000
+P1 (Bias-Transfer): std(B0)=0.0042 std(BR)=0.0006 -> NEIN
+P2 (Frame-Transfer): AL06>RND in 0/2 Bias-Zellen -> NEIN
+Sanity: Gesamt-Median=0.5000 (>=0.60? NEIN), Divergenzen=0 (JA)
+
+VERDICT: UNENTSCHEIDEN — Aufgabe nicht gelernt oder zu viele Divergenzen. Design pruefen, kein Verdikt.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/t2_transfer_real_net_results.txt und results/t2_transfer_real_net_table.csv geschrieben.
