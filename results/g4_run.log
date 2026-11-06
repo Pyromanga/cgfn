@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/runner/work/cgfn/cgfn/experiments/g4_nonlinearity_anchor.py", line 322, in <module>
+    main()
+  File "/home/runner/work/cgfn/cgfn/experiments/g4_nonlinearity_anchor.py", line 221, in main
+    if False else float(benettin_spectrum(modelN, xdr)[0])
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: only one element tensors can be converted to Python scalars
