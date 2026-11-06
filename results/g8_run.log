@@ -1,0 +1,48 @@
+======================================================================================================================
+G8 — ZUFALLS-ANKER ALS KAPAZITAETS-SUBOPTIMUM (registriert: PASS nur wenn in
+BEIDEN s=0-Zellen mean_MC(0.75)>=1.05*mean_MC(0) UND std_MC(0.75)<=std_MC(0);
+s=0.8-Zellen nur Bericht; 20 Seeds, Bias genullt, float64)
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+W(w=0.00): MC mean=0.9521 std=0.0286 ungueltig=0
+W(w=0.60): MC mean=1.1058 std=0.0126 ungueltig=0
+W(w=0.75): MC mean=1.0893 std=0.0107 ungueltig=0
+W(w=0.90): MC mean=1.0162 std=0.0106 ungueltig=0
+W(w=1.00): MC mean=0.4722 std=0.0000 ungueltig=0
+
+########## H=32 s=0.8 ##########
+W(w=0.00): MC mean=1.6501 std=0.7449 ungueltig=0
+W(w=0.60): MC mean=1.8066 std=0.6396 ungueltig=0
+W(w=0.75): MC mean=1.8699 std=0.5417 ungueltig=0
+W(w=0.90): MC mean=1.8289 std=0.3238 ungueltig=0
+W(w=1.00): MC mean=0.4722 std=0.0000 ungueltig=0
+
+########## H=128 s=0.0 ##########
+W(w=0.00): MC mean=0.7913 std=0.0107 ungueltig=0
+W(w=0.60): MC mean=1.1154 std=0.0085 ungueltig=0
+W(w=0.75): MC mean=1.1023 std=0.0062 ungueltig=0
+W(w=0.90): MC mean=1.0373 std=0.0035 ungueltig=0
+W(w=1.00): MC mean=0.4722 std=0.0000 ungueltig=0
+
+########## H=128 s=0.8 ##########
+W(w=0.00): MC mean=2.3547 std=0.0691 ungueltig=0
+W(w=0.60): MC mean=2.3465 std=0.0460 ungueltig=0
+W(w=0.75): MC mean=2.3691 std=0.0922 ungueltig=0
+W(w=0.90): MC mean=2.4131 std=0.2046 ungueltig=0
+W(w=1.00): MC mean=0.4866 std=0.0025 ungueltig=0
+
+--- G8-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+PRIMAER H=32 s=0.0: mean(0.75)=1.0893 vs 1.05*mean(0)=0.9997, std(0.75)=0.0107 <= std(0)=0.0286 -> ERFUELLT
+  Peak der Kapazitaetskurve bei w=0.60 (mean=1.1058)
+SEKUNDAER H=32 s=0.8 (nur Bericht): mean(0)=1.6501 mean(0.75)=1.8699 std(0)=0.7449 std(0.75)=0.5417
+  Peak der Kapazitaetskurve bei w=0.75 (mean=1.8699)
+PRIMAER H=128 s=0.0: mean(0.75)=1.1023 vs 1.05*mean(0)=0.8309, std(0.75)=0.0062 <= std(0)=0.0107 -> ERFUELLT
+  Peak der Kapazitaetskurve bei w=0.60 (mean=1.1154)
+SEKUNDAER H=128 s=0.8 (nur Bericht): mean(0)=2.3547 mean(0.75)=2.3691 std(0)=0.0691 std(0.75)=0.0922
+  Peak der Kapazitaetskurve bei w=0.90 (mean=2.4131)
+
+VERDICT: PASS — Der Zufalls-Anker ist ein Kapazitaets-Suboptimum: Partielle Ausrichtung des Nichtlinearitaets-Rahmens an die Reservoir-Basis liefert in Normal-Zellen mehr Memory Capacity als der Feld-Standard, ohne Streuungsanstieg. Richtig bauen (Stand G1-G8): (1) Bias nullen, (2) Anker partiell ausrichten statt zufaellig, (3) Spektrum in Ruhe lassen. Der Anker ist kein Diagnose-Objekt, sondern ein Kapazitaets-Knopf.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/g8_anchor_capacity_results.txt und results/g8_anchor_capacity_table.csv geschrieben.
