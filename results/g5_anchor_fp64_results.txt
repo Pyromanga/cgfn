@@ -1,0 +1,42 @@
+======================================================================================================================
+G5 — INSTRUMENT-REPARATUR + ANKER IN FLOAT64 (registriert: PASS nur wenn in
+ALLEN 4 Zellen std_NC<=1e-4 UND std_N>=0.005 UND std_N>=100*std_NC UND
+Instrument |Delta|<=1e-6; Bias-Audit + G2-Replay nur sekundaer)
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+Instrument-Check N(seed0, lam=1.0, bias=0): Bib=-0.100161513 lokal=-0.100161513 Delta=0
+Arm NC (lam=0.8): std=2.16628e-07 Treffer=10/10 mean=-0.3259 ungueltig=0
+Arm N (lam=0.8): std=0.030424 Treffer=10/10 mean=-0.3007 ungueltig=0
+
+########## H=32 s=0.8 ##########
+Instrument-Check N(seed0, lam=1.0, bias=0): Bib=0.264996167 lokal=0.264996167 Delta=0
+Arm NC (lam=0.8): std=1.57247e-12 Treffer=10/10 mean=-0.3308 ungueltig=0
+Arm N (lam=0.6): std=0.0368989 Treffer=0/10 mean=-0.1548 ungueltig=0
+Audit A_clean (lam=0.4, bias=0): std=0.0343 Treffer=1/10 ungueltig=0
+Audit C_clean (lam=0.6, bias=0): std=0.0645 Treffer=0/10 ungueltig=0
+Audit BIAS (lam=0.6, nur U.bias lottert): std=0.1380 ungueltig=0
+
+########## H=128 s=0.0 ##########
+Instrument-Check N(seed0, lam=1.0, bias=0): Bib=-0.088021718 lokal=-0.088021718 Delta=0
+Arm NC (lam=0.8): std=3.94304e-05 Treffer=10/10 mean=-0.2860 ungueltig=0
+Arm N (lam=0.8): std=0.0228523 Treffer=10/10 mean=-0.3104 ungueltig=0
+
+########## H=128 s=0.8 ##########
+Instrument-Check N(seed0, lam=1.0, bias=0): Bib=1.038544092 lokal=1.038544092 Delta=0
+Arm NC (lam=0.8): std=2.93739e-06 Treffer=10/10 mean=-0.3308 ungueltig=0
+Arm N (lam=0.2): std=0.0238178 Treffer=2/10 mean=-0.3687 ungueltig=0
+Audit A_clean (lam=0.2, bias=0): std=0.0219 Treffer=2/10 ungueltig=0
+Audit C_clean (lam=0.2, bias=0): std=0.0260 Treffer=2/10 ungueltig=0
+Audit BIAS (lam=0.2, nur U.bias lottert): std=0.0379 ungueltig=0
+
+--- G5-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 s=0.0: std_NC=2.17e-07 std_N=0.0304 (Faktor 140444x) -> ERFUELLT
+Zelle H=32 s=0.8: std_NC=1.57e-12 std_N=0.0369 (Faktor 23465543171x) -> ERFUELLT
+Zelle H=128 s=0.0: std_NC=3.94e-05 std_N=0.0229 (Faktor 580x) -> ERFUELLT
+Zelle H=128 s=0.8: std_NC=2.94e-06 std_N=0.0238 (Faktor 8109x) -> ERFUELLT
+SEKUNDAER H=32: std_A_clean=0.0343 std_C_clean=0.0645 std_BIAS=0.1380 -> BASIS-SCHICKSAL UEBERLEBT
+SEKUNDAER H=128: std_A_clean=0.0219 std_C_clean=0.0260 std_BIAS=0.0379 -> BASIS-SCHICKSAL UEBERLEBT
+
+VERDICT: PASS — Anker-These exakt bestaetigt in float64: Das Seed-Lotto des getriebenen Reservoirs ist ein Koordinaten-Artefakt der elementweisen Nichtlinearitaet. Mitfahrende Nichtlinearitaet kollabiert es auf Rundungsniveau; G4-Zelle H=128 s=0.8 war fp32-Transienten-Fuss. Konstruktions-Knopf: rotations-aquivariante Nichtlinearitaet. Basis-Schicksal ueberlebt den Bias-Entzug — G2 bleibt auch sauber eine Geometrie-Aussage.
+=== FERTIG ===
