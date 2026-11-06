@@ -1,0 +1,48 @@
+======================================================================================================================
+G9 — ANKER ALS RESSOURCEN-VERTEILER (registriert: PASS nur wenn in >= 3/4 Zellen
+mean_UNI >= 1.05*mean_RND UND mean_UNI >= 1.05*mean_CONC; 20 Seeds, Bias null, f64)
+Arme: UNI=gleichverteilter Fehlwinkel, CONC=konzentriert (nur Modus 0), RND=Feld-Standard
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+Arm RND (theta*=0.00): MC mean=0.9521 std=0.0286 ungueltig=0
+Kalibrierung UNI: theta*=0.60 MC(seed0)=1.1272
+Arm UNI (theta*=0.60): MC mean=1.1048 std=0.0129 ungueltig=0
+Kalibrierung CONC: theta*=0.30 MC(seed0)=0.4722
+Arm CONC (theta*=0.30): MC mean=0.4722 std=0.0000 ungueltig=0
+
+########## H=32 s=0.8 ##########
+Arm RND (theta*=0.00): MC mean=1.6501 std=0.7449 ungueltig=0
+Kalibrierung UNI: theta*=1.50 MC(seed0)=2.8107
+Arm UNI (theta*=1.50): MC mean=1.5421 std=0.7309 ungueltig=0
+Kalibrierung CONC: theta*=0.30 MC(seed0)=0.4722
+Arm CONC (theta*=0.30): MC mean=0.4722 std=0.0000 ungueltig=0
+
+########## H=128 s=0.0 ##########
+Arm RND (theta*=0.00): MC mean=0.7913 std=0.0107 ungueltig=0
+Kalibrierung UNI: theta*=0.60 MC(seed0)=1.1128
+Arm UNI (theta*=0.60): MC mean=1.1143 std=0.0084 ungueltig=0
+Kalibrierung CONC: theta*=0.30 MC(seed0)=0.4722
+Arm CONC (theta*=0.30): MC mean=0.4722 std=0.0000 ungueltig=0
+
+########## H=128 s=0.8 ##########
+Arm RND (theta*=0.00): MC mean=2.3394 std=0.0540 ungueltig=0
+Kalibrierung UNI: theta*=0.60 MC(seed0)=2.4435
+Arm UNI (theta*=0.60): MC mean=2.3539 std=0.0615 ungueltig=0
+Kalibrierung CONC: theta*=0.30 MC(seed0)=0.4846
+Arm CONC (theta*=0.30): MC mean=0.4863 std=0.0039 ungueltig=0
+
+--- G9-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 s=0.0: mean_UNI=1.1048 mean_RND=0.9521 mean_CONC=0.4722 (UNI>=1.05*RND: JA, UNI>=1.05*CONC: JA) -> ERFUELLT
+  SEKUNDAER: std_UNI=0.0129 std_RND=0.0286 std_CONC=0.0000 | theta*_UNI=0.60 theta*_CONC=0.30 | CONC vs RND: CONC<RND
+Zelle H=32 s=0.8: mean_UNI=1.5421 mean_RND=1.6501 mean_CONC=0.4722 (UNI>=1.05*RND: NEIN, UNI>=1.05*CONC: JA) -> NICHT ERFUELLT
+  SEKUNDAER: std_UNI=0.7309 std_RND=0.7449 std_CONC=0.0000 | theta*_UNI=1.50 theta*_CONC=0.30 | CONC vs RND: CONC<RND
+Zelle H=128 s=0.0: mean_UNI=1.1143 mean_RND=0.7913 mean_CONC=0.4722 (UNI>=1.05*RND: JA, UNI>=1.05*CONC: JA) -> ERFUELLT
+  SEKUNDAER: std_UNI=0.0084 std_RND=0.0107 std_CONC=0.0000 | theta*_UNI=0.60 theta*_CONC=0.30 | CONC vs RND: CONC<RND
+Zelle H=128 s=0.8: mean_UNI=2.3539 mean_RND=2.3394 mean_CONC=0.4863 (UNI>=1.05*RND: NEIN, UNI>=1.05*CONC: JA) -> NICHT ERFUELLT
+  SEKUNDAER: std_UNI=0.0615 std_RND=0.0540 std_CONC=0.0039 | theta*_UNI=0.60 theta*_CONC=0.30 | CONC vs RND: CONC<RND
+
+VERDICT: KILL — Nur der mittlere Winkel zaehlt: UNI, CONC, RND unterscheiden sich bei kalibriertem theta* nicht sauber. Die Verteiler-Erzaehlung faellt; der G8-Gewinn bleibt ein Winkel-Parameter, kein Mechanismus.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/g9_resource_distributor_results.txt und results/g9_resource_distributor_table.csv geschrieben.
