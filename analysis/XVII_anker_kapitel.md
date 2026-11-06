@@ -122,3 +122,40 @@ Freiheitsgrad.
    langsame Modi), Spektrum unangetastet. Ein Skalar, kein System.
 5. Offen (naechstes Kapitel, T-Serie): Transfer der beiden Allgemein-Befunde
    (Bias-Confound, Anker-Framing) in minimale echte Netze.
+
+
+---
+
+# Nachtrag 2 (2026-11-06, Nacht): T1 — Feldgesetz-Reparatur, KILL
+
+## T1 — KILL (registriert; Start der T-Serie "Tiefgang")
+These: Das repo-eigene Feldgesetz (F17/F18, J = -I/tau + W diag(d), d =
+selbstkonsistente sech^2-Gains) ignoriert den Rahmen; die wahre Linearisierung
+ist J = -I/tau + W F diag(<sech^2(y)>) F^T mit y = F^T z. Messung: reproduziert
+das gerahmte Gesetz den Benettin-ben1 (P1) UND die Rangfolge des Seed-Lottos
+(P2) aus Eigenwerten + Einmal-Gain-Messung? Punkte H in {32,128} x s in
+{0.0,0.8} x 10 Seeds x lam, Arme N (F=I, alt==neu) und NC (F=Q).
+
+Ergebnis: P1 NEIN (nur 1/4 Zellen <= 0.05), P2 NEIN (2/4 Zellen Spearman
+>= 0.8), P3 JA (alt-Fehler 0.73 vs neu 0.085, knapp 2x auf NC aggregiert —
+die Reparatur ist real, aber nicht ausreichend).
+
+Lesart (ehrlich, zweischneidig):
+1. Die Reparatur selbst ist richtig: Auf NC schlaegt das gerahmte Gesetz das
+   alte in ALLEN 4 Zellen (z.B. H=128/s=0.8: 0.183 vs 2.01), und die
+   Rangfolgen-Korrelation auf NC ist stark (Spearman 0.855-0.915). Das Feld
+   hat seit F17 tatsaechlich am falschen Jacobianer gerechnet.
+2. Aber das registrierte Ziel war Vorhersage-Kontrolle, nicht Naeherung: In
+   den getriebenen s=0.8-Zellen liegt der Fehler bei 0.09-0.18, und die
+   Rangfolge im Standard-Arm N bricht zusammen (H=128/s=0.8: Spearman -0.010
+   bei eingeklemmter Vorhersage-Streuung, std 0.08 vs 0.27 gemessen).
+   Der Lotto ist keine Eigenwert-Eigenschaft: die Gain-Fluktuation entlang
+   der Traektorie (sech^2 ist zeitraegher und schmal) schlaegt jede
+   Einmal-Messung des Gain-Mittels. Er bleibt Trajektorien-Eigenschaft.
+3. Konsequenz fuer das Rezept: unveraendert (Bias nullen, Budget ~0.6 rad,
+   Spektrum in Ruhe). Das Feldgesetz wird in der Dokumentation als
+   Mittelwert-Naeherung mit Rahmen-Term gefuehrt, nicht als
+   Vorhersage-Instrument.
+
+Ende T1. Kein Rerun (Freeze). Naechster Kandidat T2 nur nach neuer
+registrierter These.
