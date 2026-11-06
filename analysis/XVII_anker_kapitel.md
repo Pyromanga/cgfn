@@ -87,3 +87,38 @@ Registrierung im Docstring VOR dem Lauf; Freeze; keine Nachverhandlung;
 UNENTSCHEIDEN als ehrenvoller Ausgang bei Instrument-Versagen; Bug-Beichte in
 der Konsolidierung; Recherche vor jeder "unbekannt"-Behauptung; keine
 Erzaehlung ohne Gate. Das Labor ist billig, die Messung ist es nicht.
+
+---
+
+# Nachtrag (2026-11-06, spaeter): G9 und G10, Kapitel-Anschluss
+
+## G9 — KILL (registriert), mit zwei diagnostizierten Design-Defekten
+UNI vs CONC vs RND. Defekte (ehrlich protokolliert): (D1) CONC konzentrierte
+auf den GETRIEBENEN Modus und richtete alle anderen versehentlich symmetrisch
+aus -> toter Arm (0.4722, std=0), mass "versehentliche Symmetrie" statt
+"Konzentration". (D2) Einzel-Seed-Kalibrierung in s=0.8-Zellen (std~0.74) ist
+Rauschen. In den praezisen s=0-Zellen hielt die Verteiler-Ordnung (UNI +16/+41%
+gegen RND). Verdikt unangetastet; Defekte begruendeten die erlaubte
+Design-Reparatur G10 (einmalig, wie G4->G5).
+
+## G10 — KILL (registriert als LETZTER VERSUCH, These endgueltig gefallen)
+Budget-matched (sum theta_i gleich): UNI ~ CONC2 ~ SPEC-L (Differenzen im
+Rauschen, 4 Zellen), SPEC-H durchgaengig am schlechtesten (Richtung L>H 4/4,
+als Kosten-Asymmetrie). Beifang-Erkenntnis: Die Memory Capacity ist bei
+budget-matchedem Fehlwinkel eine SKALAR-Funktion des Budgets — die
+Verteilung ist (bis auf "nicht auf schnelle Modi") kein designbarer
+Freiheitsgrad.
+
+## Endstand des Anker-Kapitels (G1-G10)
+1. Bewiesen: Seed-Lotto = Koordinaten-Artefakt der elementweisen tanh (G5,
+   exakt, float64); versteckter Bias-Lotto als Confound (G5-Audit).
+2. Positiv: Partielle Ausrichtung des Nichtlinearitaets-Rahmens (Budget ~0.6
+   rad, nicht auf schnelle Modi) schlaegt den Zufalls-Anker um +16% bis +41%
+   MC bei halbierter bis gedrittelter Streuung (G8, 20 Seeds).
+3. Negativ (endgueltig): Volle Symmetrie toetet Kapazitaet (G6); kein
+   kontinuierlicher Zuverlaessigkeits-Regler (G7); kein Verteiler-Mechanismus
+   oberhalb des Skalar-Budgets (G9/G10).
+4. Rezept final: Bias nullen, Fehlwinkel-Budget ~0.6 rad flach (oder auf
+   langsame Modi), Spektrum unangetastet. Ein Skalar, kein System.
+5. Offen (naechstes Kapitel, T-Serie): Transfer der beiden Allgemein-Befunde
+   (Bias-Confound, Anker-Framing) in minimale echte Netze.
