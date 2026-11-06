@@ -1,0 +1,49 @@
+======================================================================================================================
+G10 — RESSOURCEN-VERTEILER v2 (registriert: PASS nur wenn P1 UNI>=1.05*CONC2 in
+>=3/4 Zellen UND P2 max(SPEC-L,SPEC-H)>=1.05*UNI in >=2/4 Zellen; 20 Seeds,
+Budget-matched, Kalibrierung auf 3 Seeds, LETZTER VERSUCH DIESER THESE)
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+Kalibrierung theta*=0.60 (Seeds 0-2, UNI): MC-mittel=1.1048
+Arm UNI: MC mean=1.1048 std=0.0129 ungueltig=0
+Arm SPEC-L: MC mean=1.0830 std=0.0083 ungueltig=0
+Arm SPEC-H: MC mean=0.9975 std=0.0479 ungueltig=0
+Arm CONC2: MC mean=1.1041 std=0.0117 ungueltig=0
+
+########## H=32 s=0.8 ##########
+Kalibrierung theta*=1.20 (Seeds 0-2, UNI): MC-mittel=2.0464
+Arm UNI: MC mean=1.6191 std=0.7108 ungueltig=0
+Arm SPEC-L: MC mean=1.7104 std=0.6626 ungueltig=0
+Arm SPEC-H: MC mean=1.4782 std=0.6067 ungueltig=0
+Arm CONC2: MC mean=1.5645 std=0.6973 ungueltig=0
+
+########## H=128 s=0.0 ##########
+Kalibrierung theta*=0.60 (Seeds 0-2, UNI): MC-mittel=1.1164
+Arm UNI: MC mean=1.1143 std=0.0084 ungueltig=0
+Arm SPEC-L: MC mean=1.0838 std=0.0058 ungueltig=0
+Arm SPEC-H: MC mean=0.8946 std=0.0611 ungueltig=0
+Arm CONC2: MC mean=1.1133 std=0.0082 ungueltig=0
+
+########## H=128 s=0.8 ##########
+Kalibrierung theta*=0.60 (Seeds 0-2, UNI): MC-mittel=2.3840
+Arm UNI: MC mean=2.3539 std=0.0615 ungueltig=0
+Arm SPEC-L: MC mean=2.3550 std=0.0589 ungueltig=0
+Arm SPEC-H: MC mean=2.3371 std=0.0545 ungueltig=0
+Arm CONC2: MC mean=2.3314 std=0.0538 ungueltig=0
+
+--- G10-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 s=0.0 (theta*=0.60): UNI=1.1048 SPEC-L=1.0830 SPEC-H=0.9975 CONC2=1.1041 | P1:NEIN P2:NEIN Richtung:L>H
+  SEKUNDAER: std UNI=0.0129 SPEC-L=0.0083 SPEC-H=0.0479 CONC2=0.0117
+Zelle H=32 s=0.8 (theta*=1.20): UNI=1.6191 SPEC-L=1.7104 SPEC-H=1.4782 CONC2=1.5645 | P1:NEIN P2:JA Richtung:L>H
+  SEKUNDAER: std UNI=0.7108 SPEC-L=0.6626 SPEC-H=0.6067 CONC2=0.6973
+Zelle H=128 s=0.0 (theta*=0.60): UNI=1.1143 SPEC-L=1.0838 SPEC-H=0.8946 CONC2=1.1133 | P1:NEIN P2:NEIN Richtung:L>H
+  SEKUNDAER: std UNI=0.0084 SPEC-L=0.0058 SPEC-H=0.0611 CONC2=0.0082
+Zelle H=128 s=0.8 (theta*=0.60): UNI=2.3539 SPEC-L=2.3550 SPEC-H=2.3371 CONC2=2.3314 | P1:NEIN P2:NEIN Richtung:L>H
+  SEKUNDAER: std UNI=0.0615 SPEC-L=0.0589 SPEC-H=0.0545 CONC2=0.0538
+P1-Bilanz: 0/4 Zellen; P2-Bilanz: 1/4 Zellen; Richtung: L 4, H 0
+
+VERDICT: KILL — Verteiler-These v2 endgueltig gefallen (letzter Versuch war registriert): entweder flach ist optimal oder Konzentration schadet nicht sauber. G8 bleibt als Parameter-Befund stehen, der Mechanismus dahinter ist nicht designbar. Kapitel schliessen.
+=== FERTIG ===
+
+[i] Ergebnisse nach results/g10_resource_v2_results.txt und results/g10_resource_v2_table.csv geschrieben.
