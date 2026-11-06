@@ -1,0 +1,68 @@
+======================================================================================================================
+G7 — RICHTIG BAUEN (registriert: PASS nur wenn in ALLEN 4 Zellen
+Spearman(w,std_MC)<=-0.7 UND mean_MC(0.25)>=0.8*mean_MC(0.0) UND
+std_MC(0.25)<std_MC(0.0); Bias-Arm NB + ben-Kurve nur sekundaer)
+======================================================================================================================
+
+########## H=32 s=0.0 ##########
+W(w=0.00): MC mean=0.9475 std=0.0326 ungueltig=0
+W(w=0.25): MC mean=0.9665 std=0.0330 ungueltig=0
+W(w=0.50): MC mean=1.0734 std=0.0319 ungueltig=0
+W(w=0.75): MC mean=1.0836 std=0.0082 ungueltig=0
+W(w=1.00): MC mean=0.4722 std=0.0000 ungueltig=0
+W(w=0.00): ben1-std=0.0692 ungueltig=0
+W(w=0.50): ben1-std=0.0696 ungueltig=0
+W(w=1.00): ben1-std=0.0703 ungueltig=0
+NB (w=0 + Bias): MC mean=1.6092 std=0.0567 ungueltig=0
+Spearman(w, std_MC) = -0.900
+
+########## H=32 s=0.8 ##########
+W(w=0.00): MC mean=1.7682 std=0.7909 ungueltig=0
+W(w=0.25): MC mean=1.4446 std=0.6758 ungueltig=0
+W(w=0.50): MC mean=1.9200 std=0.7890 ungueltig=0
+W(w=0.75): MC mean=1.6918 std=0.5733 ungueltig=0
+W(w=1.00): MC mean=0.4722 std=0.0000 ungueltig=0
+W(w=0.00): ben1-std=0.3469 ungueltig=0
+W(w=0.50): ben1-std=0.3590 ungueltig=0
+W(w=1.00): ben1-std=0.3856 ungueltig=0
+NB (w=0 + Bias): MC mean=1.9226 std=0.6510 ungueltig=0
+Spearman(w, std_MC) = -0.900
+
+########## H=128 s=0.0 ##########
+W(w=0.00): MC mean=0.7957 std=0.0092 ungueltig=0
+W(w=0.25): MC mean=0.8246 std=0.0391 ungueltig=0
+W(w=0.50): MC mean=1.0689 std=0.0101 ungueltig=0
+W(w=0.75): MC mean=1.1049 std=0.0069 ungueltig=0
+W(w=1.00): MC mean=0.4722 std=0.0000 ungueltig=0
+W(w=0.00): ben1-std=0.0556 ungueltig=0
+W(w=0.50): ben1-std=0.0559 ungueltig=0
+W(w=1.00): ben1-std=0.0560 ungueltig=0
+NB (w=0 + Bias): MC mean=1.6840 std=0.0279 ungueltig=0
+Spearman(w, std_MC) = -0.700
+
+########## H=128 s=0.8 ##########
+W(w=0.00): MC mean=2.3426 std=0.0484 ungueltig=0
+W(w=0.25): MC mean=2.3398 std=0.0828 ungueltig=0
+W(w=0.50): MC mean=2.3626 std=0.0581 ungueltig=0
+W(w=0.75): MC mean=2.3188 std=0.1041 ungueltig=0
+W(w=1.00): MC mean=0.4854 std=0.0027 ungueltig=0
+W(w=0.00): ben1-std=0.1869 ungueltig=0
+W(w=0.50): ben1-std=0.1551 ungueltig=0
+W(w=1.00): ben1-std=0.2504 ungueltig=0
+NB (w=0 + Bias): MC mean=2.3667 std=0.0755 ungueltig=0
+Spearman(w, std_MC) = -0.100
+
+--- G7-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle H=32 s=0.0: Spearman=-0.900, mean_MC(0.25)=0.966 vs 0.8*mean(0)=0.758, std(0.25)=0.0330 < std(0)=0.0326 -> NICHT ERFUELLT
+Zelle H=32 s=0.8: Spearman=-0.900, mean_MC(0.25)=1.445 vs 0.8*mean(0)=1.415, std(0.25)=0.6758 < std(0)=0.7909 -> ERFUELLT
+Zelle H=128 s=0.0: Spearman=-0.700, mean_MC(0.25)=0.825 vs 0.8*mean(0)=0.637, std(0.25)=0.0391 < std(0)=0.0092 -> NICHT ERFUELLT
+Zelle H=128 s=0.8: Spearman=-0.100, mean_MC(0.25)=2.340 vs 0.8*mean(0)=1.874, std(0.25)=0.0828 < std(0)=0.0484 -> NICHT ERFUELLT
+
+SEKUNDAER (Bericht):
+  H=32 s=0.0: ben1-std w=0:0.0692 w=0.5:0.0696 w=1:0.0703 | Bias-Lehre: std_MC NB=0.0567 vs W(0)=0.0326
+  H=32 s=0.8: ben1-std w=0:0.3469 w=0.5:0.3590 w=1:0.3856 | Bias-Lehre: std_MC NB=0.6510 vs W(0)=0.7909
+  H=128 s=0.0: ben1-std w=0:0.0556 w=0.5:0.0559 w=1:0.0560 | Bias-Lehre: std_MC NB=0.0279 vs W(0)=0.0092
+  H=128 s=0.8: ben1-std w=0:0.1869 w=0.5:0.1551 w=1:0.2504 | Bias-Lehre: std_MC NB=0.0755 vs W(0)=0.0484
+
+VERDICT: KILL — Der Anker-Winkel ist kein kontinuierlicher Regler gegen Kapazitaet: Monotonie bricht oder der Preis ist diskontinuierlich. Der Anker bleibt Diagnose.
+=== FERTIG ===
