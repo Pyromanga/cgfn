@@ -1,0 +1,23 @@
+======================================================================================================================
+T4b — ANKER AUF PRODUKT, REPARATUR (registriert: PASS nur wenn
+P1 median(R2 AL06)-median(R2 RND)>=0.15 UND P2 geloest(AL06)>=0.5 und >=2x RND)
+Delay 3 (f34-Basis), 1200 Schritte, frische Seeds 30..39, f64
+======================================================================================================================
+
+Arm RND: n_ok=10/10 | median R2=-0.0006 | std=0.3079 | geloest (R2>=0.9)=0.10
+  Seeds: 30:0.0000, 31:-0.0006, 32:0.9720, 33:-0.0001, 34:-0.0005, 35:-0.0008, 36:-0.0060, 37:-0.0051, 38:-0.0015, 39:-0.0004
+
+Arm AL06: n_ok=10/10 | median R2=-0.0005 | std=0.4120 | geloest (R2>=0.9)=0.20
+  Seeds: 30:-0.0000, 31:-0.0006, 32:0.9781, 33:-0.0004, 34:0.9727, 35:-0.0005, 36:-0.0055, 37:-0.0058, 38:-0.0011, 39:-0.0004
+
+--- T4b-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+median R2(RND)=-0.0006 median R2(AL06)=-0.0005 Effekt=0.0001
+geloest-Fraktion RND=0.10 AL06=0.20
+P1 (Effekt >=0.15): NEIN | P2 (geloest>=0.5 und 2x RND): NEIN
+Sanity (korrigiert): median R2(AL06)=-0.0005 (>=0.50? NEIN), Divergenzen=0 (JA)
+
+VERDICT: UNENTSCHEIDEN — Sanity gerissen: Auch der Anker-Arm lernt die Produkt-Aufgabe nicht (R2 < 0.5) oder Divergenzen. ZWEI STRIKES: Die Produkt-Familie ist TOT. Kein dritter Versuch. Ehrliches Protokoll-Ergebnis: Regression unter BPTT ist im 40-EUR-Labor fuer diese Aufgabenklasse nicht sauber feuerbar.
+=== FERTIG ===
+
+[i] Laufzeit: 11.8 min
+[i] Ergebnisse nach results/t4b_transfer_prod_results.txt und results/t4b_transfer_prod_table.csv geschrieben.
