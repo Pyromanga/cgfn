@@ -249,3 +249,64 @@ VOR dem Lauf, frische Seeds. Kein Verdikt aus T2 ableitbar.
   Pass auf Paritaet + Pass auf zweiter Familie = Transfer
   bewiesen; Misserfolg auf zweiter Familie = Paritaets-
   Spezialfall, ehrlich verbuchen.
+
+
+---
+
+# Nachtrag 5 (2026-11-07): T4/T4b — Produkt-Familie TOT (zwei Strikes, UNENTSCHEIDEN)
+
+## T4 (Delay 8, Seeds 20..29) — UNENTSCHEIDEN (Strike 1)
+Beide Arme R2 ~ 0.000, Effekt exakt 0, keine Divergenzen.
+Diagnose: Delay 8 jenseits der bewiesenen f34-Basis (Delay 3);
+u_{t-8} nur mit ~2% Amplitude im Zustand; Produkt braucht
+zwei Faktoren multiplikativ. Signalmangel, kein
+These-Statement. Korrigiertes Sanity-Gate (T3-Lehre)
+funktionierte exakt wie beabsichtigt.
+
+## T4b (Delay 3, 1200 Schritte, Seeds 30..39) — UNENTSCHEIDEN (Strike 2)
+  RND:  median R2=-0.0006, geloest 1/10 (nur Seed 32: 0.972)
+  AL06: median R2=-0.0005, geloest 2/10 (Seeds 32, 34: ~0.97)
+Mediane bei 0, Effekt 0.0001, P1/P2 NEIN, Sanity gerissen
+(median AL06 < 0.5). Produkt-Familie per Registrierung TOT.
+
+## Lesart (explorativ, unregistriert)
+1. Auch mit f34-Basis-Delay ist das Trainingsverhalten ALL-OR-
+   NOTHING: Runs erreichen entweder ~0.97 oder exakt ~0 — die
+   Mediane beider Arme bleiben bei 0, weil die Mehrheit im
+   Optimierungs-Loch sitzt (Readout startet bei 0, MSE-Gradient
+   ueber 200 RK2-Schritte zu flach). Das ist ein OPTIMIERUNGS-
+   Phaenomen, kein Kapazitaets-Statement: Die geloesten Runs
+   beweisen, dass das Netz die Aufgabe loesen KANN.
+2. Schwaches Echo des Paritaets-Musters in der geloest-Fraktion
+   (AL06 2/10 vs RND 1/10) — nicht signifikant, kein Verdikt,
+   nur Material.
+3. Ehrliches Protokoll-Ergebnis (registriert verbucht):
+   BPTT-Regression auf Produkt-Aufgaben ist im 40-EUR-Labor
+   nicht sauber feuerbar — der Flaschenhals ist der Adam-BPTT-
+   Optimierer auf flacher MSE-Landschaft, nicht das Netz.
+
+## Stand der T-Serie nach T4b
+  T1  KILL    — Feldgesetz als Vorhersage-Tool tot; Reparatur
+                real (Rahmen-Term), Lotto bleibt Traektorien-
+                Eigenschaft. Echter negativer Tiefgang-Befund.
+  T2  2 Strikes UNENTSCHEIDEN — aber P1 (Bias-Lotto) mit
+                Faktor ~9.8x bestanden und SYMMETRIE-THEOREM
+                entdeckt: Ohne Bias ist Paritaet provabel un-
+                loesbar (ungerade Dynamik + linearer Readout).
+  T3  UNENTSCHEIDEN (Gates P1/P2 beide PASS mit grossem
+                Abstand; Sanity-Klausel war defekt und hat das
+                vorhergesagte Kontrollarm-Scheitern als Abbruch
+                gezaehlt). Evidenz-Wand: 15/20 vs 3/20 perfekt
+                (T2b+T3, 20 frische Seeds je Arm).
+  T4/T4b UNENTSCHEIDEN, Produkt-Familie TOT (Optimierungs-
+                Phaenomen, all-or-nothing).
+
+## Offene Frage, die die Serie aufwirft
+Das Paritaets-Signal ist die staerkste unveraerifizierte
+Evidenz der Serie. Zwei mal zwei Familien-Tests wurden von
+Instrument-Gates gebremst, nicht von der Natur. Die naechste
+registrierte These sollte MECHANISMUS fragen statt Familie
+wiederholen: WARUM trainiert der 0.6-rad-Anker, wo der
+Zufalls-Anker im Optimierungs-Loch bleibt (Gradient-Normen,
+Verlustkurven, Jakobi-Spektrum waehrend des Trainings) —
+oder die Serie ehrlich schliessen.
