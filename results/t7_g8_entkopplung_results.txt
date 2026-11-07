@@ -4,35 +4,35 @@ P1a MC-Peak in {B15,B30,B60} UND P1b MC(B60)>1.10*MC(B00) UND P2 MC(B60)>MC(RND)
 Reservoir-Regime, MC via Ridge, b=0, Seeds 50..59, f64
 ======================================================================================================================
 
-Arm B00 (budget=0.00): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
-  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+Arm B00 (budget=0.00): n_ok=10/10 | median MC_total=1.9363 | DM=48.000 | crash=0
+  Seeds: 50:1.9787, 51:2.0351, 52:1.9421, 53:1.9430, 54:1.9363, 55:1.8871, 56:1.8805, 57:1.9435, 58:1.8626, 59:1.9152
 
-Arm B15 (budget=0.15): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
-  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+Arm B15 (budget=0.15): n_ok=10/10 | median MC_total=1.9534 | DM=32.259 | crash=0
+  Seeds: 50:1.9716, 51:2.0552, 52:1.9567, 53:1.9534, 54:1.9740, 55:1.8882, 56:1.8923, 57:1.9580, 58:1.8629, 59:1.9135
 
-Arm B30 (budget=0.30): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
-  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+Arm B30 (budget=0.30): n_ok=10/10 | median MC_total=1.9488 | DM=23.833 | crash=0
+  Seeds: 50:1.9741, 51:2.0523, 52:1.9507, 53:1.9488, 54:1.9794, 55:1.8821, 56:1.8909, 57:1.9618, 58:1.8658, 59:1.9187
 
-Arm B60 (budget=0.60): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
-  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+Arm B60 (budget=0.60): n_ok=10/10 | median MC_total=1.9322 | DM=14.573 | crash=0
+  Seeds: 50:1.9713, 51:2.0381, 52:1.9475, 53:1.9322, 54:1.9797, 55:1.8559, 56:1.8831, 57:1.9603, 58:1.8607, 59:1.9250
 
-Arm B120 (budget=1.20): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
-  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+Arm B120 (budget=1.20): n_ok=10/10 | median MC_total=1.9241 | DM=5.868 | crash=0
+  Seeds: 50:1.9749, 51:2.0219, 52:1.9548, 53:1.9241, 54:1.9946, 55:1.8707, 56:1.8950, 57:1.9534, 58:1.8414, 59:1.9099
 
-Arm RND (budget=RND): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
-  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+Arm RND (budget=RND): n_ok=10/10 | median MC_total=1.9267 | DM=2.547 | crash=0
+  Seeds: 50:1.9411, 51:2.0557, 52:1.9429, 53:1.9338, 54:1.9945, 55:1.8724, 56:1.9166, 57:1.9267, 58:1.8649, 59:1.9146
 
 --- T7-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
-B00: median MC_total=nan DM=nan
-B15: median MC_total=nan DM=nan
-B30: median MC_total=nan DM=nan
-B60: median MC_total=nan DM=nan
-B120: median MC_total=nan DM=nan
-RND: median MC_total=nan DM=nan
-Peak-Arm: B00 (median MC_total=nan)
-P1a (Peak in {B15,B30,B60}): NEIN | P1b (MC(B60)>1.10*MC(B00)): NEIN
-P2 (MC(B60) > MC(RND)): NEIN
-Sanity: median MC_total(RND)=nan (>=1.0? NEIN), Crashes gesamt=60 (NEIN)
+B00: median MC_total=1.9363 DM=48.000
+B15: median MC_total=1.9534 DM=32.259
+B30: median MC_total=1.9488 DM=23.833
+B60: median MC_total=1.9322 DM=14.573
+B120: median MC_total=1.9241 DM=5.868
+RND: median MC_total=1.9267 DM=2.547
+Peak-Arm: B15 (median MC_total=1.9534)
+P1a (Peak in {B15,B30,B60}): JA | P1b (MC(B60)>1.10*MC(B00)): NEIN
+P2 (MC(B60) > MC(RND)): JA
+Sanity: median MC_total(RND)=1.9267 (>=1.0? JA), Crashes gesamt=0 (JA)
 
-VERDICT: UNENTSCHEIDEN — Sanity gerissen (Instrument untypisch oder Crashes). Post-Mortem, kein Verdikt.
+VERDICT: KILL — G8 war Entkopplung: Die MC-Kurve folgt dem Budget monoton fallend bzw. der Peak liegt bei voller Ausrichtung. Ehrliche ZURUECKZIEHUNG der Geometrie-Deutung von G8/G10: Die +16..41% waren Selbst-Schleifen-Masse. Einheitsgesetz: Entkopplung traegt in BEIDEN Regimen; die Anker-Geometrie hat nirgends eigene Kraft. Das Anker-Kapitel wird auf diesen Nenner gebracht.
 === FERTIG ===
