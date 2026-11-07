@@ -206,3 +206,46 @@ Naechster Schritt: T3 als NEU registrierter Stein (keine T2-
 Reparatur), Design lernt aus dem Symmetrie-Block: Bias in allen
 Armen (als Symmetrie-Brecher unentbehrlich), registrierte Tore
 VOR dem Lauf, frische Seeds. Kein Verdikt aus T2 ableitbar.
+
+
+---
+
+# Nachtrag 4 (2026-11-07): T3 — Primartoere PASS, Sanity-Klausel selbst gemurkst, formales Verdikt UNENTSCHEIDEN
+
+## T3 — Anker auf Paritaet (frische Seeds 10..19, Bias in allen Armen)
+  RND:  median 0.5215 | Perfekt-Fraktion 0.10 (nur Seed 13 perfekt)
+  AL06: median 1.0000 | Perfekt-Fraktion 0.70 (7/10 perfekt, 1x 0.72)
+  P1 (Effekt >=0.15): JA — Effekt 0.4785, dreifache Schwelle.
+  P2 (Perfekt >=0.5 und >=2x RND): JA — 0.70 vs 0.10, siebenfach.
+  Formales Verdikt: UNENTSCHEIDEN, denn die Sanity-Klausel
+  (Gesamt-Median >= 0.60) riss: median(0.5215, 1.0000) = 0.5215.
+
+## Ehrliche Fehleranalyse: DIE KLAUSEL WAR DEFERT, NICHT DER VERSUCH
+  Die Sanity-Klausel verlangte, dass das GESAMT-Netz lernt — aber
+  die These SAGT VORHER, dass der Zufalls-Anker NICHT lernt (das
+  ist in G2/G5 das Schicksal des Zufalls-Rahmens). Ein Gate, das
+  den experimentell vorhergesagten Misserfolg des Kontrollarms als
+  Abbruchkriterium zaehlt, ist ein Registration-Defekt: Das Gate
+  hat die These nicht verstanden, die es bewachen sollte. Richtig
+  waere gewesen: Sanity = AL06 lernt (median(AL06) >= 0.60),
+  RND darf scheitern (das ist das RESULTAT, nicht ein Abbruch).
+
+## Stand der Evidenz (unaufgeregt zaehlen)
+  T2b (Seeds 0..9): AL06 8/10 perfekt vs RND 2/10 (bimodal).
+  T3  (Seeds 10..19, frisch): AL06 7/10 perfekt vs RND 1/10.
+  Kombiniert 20 frische Seeds pro Arm: 15/20 vs 3/20 perfekt,
+  identisches Instrument, identisches Spektrum, nur der Rahmen
+  lottert. Das ist kein Zwanzigstel-Signal mehr — das ist eine
+  Wand. ABER: formales Verdikt bleibt UNENTSCHEIDEN, Freeze
+  gilt, keine Nachverhandlung am geschlossenen Lauf.
+
+## Konsequenz (registrierungstreue)
+  Die Anti-Steinchen-Klausel von T3 gilt: KEIN vierter Versuch
+  auf Paritaet. Der Weg nach vorn ist GENERALISIERUNG, nicht
+  Wiederholung: T4 mussel dieselbe These (Anker schlaegt
+  Zufall im echten Training) auf EINER ANDEREN nichtlinearen
+  Aufgabenfamilie mit korrigierter Sanity-Klausel (lernender
+  Arm muss lernen, Kontrollarm darf scheitern) pruefen.
+  Pass auf Paritaet + Pass auf zweiter Familie = Transfer
+  bewiesen; Misserfolg auf zweiter Familie = Paritaets-
+  Spezialfall, ehrlich verbuchen.
