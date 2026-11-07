@@ -1,0 +1,41 @@
+======================================================================================================================
+T7 — IST G8 NUR ENTKOPPLUNG? (registriert: PASS nur wenn
+P1a MC-Peak in {B15,B30,B60} UND P1b MC(B60)>1.10*MC(B00) UND P2 MC(B60)>MC(RND))
+Reservoir-Regime, MC via Ridge, b=0, Seeds 50..59, f64
+======================================================================================================================
+
+Arm B00 (budget=0.00): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
+  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+
+Arm B15 (budget=0.15): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
+  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+
+Arm B30 (budget=0.30): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
+  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+
+Arm B60 (budget=0.60): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
+  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+
+Arm B120 (budget=1.20): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
+  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+
+Arm RND (budget=RND): n_ok=0/10 | median MC_total=nan | DM=nan | crash=10
+  Seeds: 50:nan, 51:nan, 52:nan, 53:nan, 54:nan, 55:nan, 56:nan, 57:nan, 58:nan, 59:nan
+
+--- T7-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+B00: median MC_total=nan DM=nan
+B15: median MC_total=nan DM=nan
+B30: median MC_total=nan DM=nan
+B60: median MC_total=nan DM=nan
+B120: median MC_total=nan DM=nan
+RND: median MC_total=nan DM=nan
+Peak-Arm: B00 (median MC_total=nan)
+P1a (Peak in {B15,B30,B60}): NEIN | P1b (MC(B60)>1.10*MC(B00)): NEIN
+P2 (MC(B60) > MC(RND)): NEIN
+Sanity: median MC_total(RND)=nan (>=1.0? NEIN), Crashes gesamt=60 (NEIN)
+
+VERDICT: UNENTSCHEIDEN — Sanity gerissen (Instrument untypisch oder Crashes). Post-Mortem, kein Verdikt.
+=== FERTIG ===
+
+[i] Laufzeit: 0.1 min
+[i] Ergebnisse nach results/t7_g8_entkopplung_results.txt und results/t7_g8_entkopplung_table.csv geschrieben.
