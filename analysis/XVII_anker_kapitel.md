@@ -310,3 +310,60 @@ wiederholen: WARUM trainiert der 0.6-rad-Anker, wo der
 Zufalls-Anker im Optimierungs-Loch bleibt (Gradient-Normen,
 Verlustkurven, Jakobi-Spektrum waehrend des Trainings) —
 oder die Serie ehrlich schliessen.
+
+
+---
+
+# Nachtrag 6 (2026-11-07): T6 — Lernbarkeits-Spektrum, KILL: Die Geometrie ist Entkopplung
+
+## T6 — Budget-Sweep auf Paritaet (Seeds 40..49, Bias in allen Armen, Spektrum fix)
+  Budget 0.00 (exakt diagonal): P_lernt 0.70 | DM 48.0
+  Budget 0.15:                 P_lernt 0.60 | DM 31.1
+  Budget 0.30:                 P_lernt 0.60 | DM 22.6
+  Budget 0.60:                 P_lernt 0.80 | DM 13.5
+  Budget 1.20:                 P_lernt 0.30 | DM  5.5
+  RND (Zufalls-Rahmen):        P_lernt 0.10 | DM  2.6
+  Registriert: P1a (Peak B60) JA, P1b (0.60 minus 0.00 >= 0.3)
+  NEIN (Differenz 0.10, Rauschen bei n=10), P2 JA. VERDICT: KILL.
+
+## Was der Kill aufklaert (der eigentliche Ertrag)
+1. DIE NICHT-MONOTONIE-These IST TOT: Exakt diagonales W (Budget 0,
+   null Geometrie-Freiheit) trainiert bei P_lernt 0.70 — nahezu
+   so gut wie das 0.6-Budget (0.80, Rauschen). Volle Ausrichtung
+   toetet das Lernen NICHT. Die trainierte Welt kennt kein
+   G6-Echo im Fehlwinkel. Der Innen-Peak von 0.8 vs 0.7 ist
+   bei n=10 nicht von Rauschen zu trennen.
+2. DER ENTKOPPLUNGS-KONFUND IST BESTAETIGT: P_lernt folgt der
+   diag-Masse DM fast monoton (48->0.70, 31->0.60, 23->0.60,
+   13.5->0.80, 5.5->0.30, 2.6->0.10; B60 minimal ueber dem
+   DM-Trend, innerhalb des Rauschens). Die T2b/T3-Wand wird
+   von Selbst-Schleifen-Masse getragen, nicht von Anker-
+   Geometrie.
+3. RETROKLASSE: G8s Geometrie-Befund (+16..41% MC im Reservoir,
+   Ridge-Readout, fixes W) ueberlebt im trainierten Netz NICHT
+   als eigener Faktor. Die zwei Regime sind verschieden:
+   Reservoir = Geometrie-Regime, Training = Entkopplungs-
+   Regime. Das ist ein echter, publikationsfaehiger Kontrast-
+   Befund, kein Messfehler — aber er begraeibt die Transfer-
+   Hoffnung der Anker-Geometrie.
+
+## Ehrliches Ende der T-Serie (Bilanz)
+  T1   KILL — Feldgesetz als Vorhersage-Tool tot (Lotto ist
+       Traektorien-Eigenschaft). Echter negativer Befund.
+  T2b  P1 bestanden (Bias-Lotto 9.8x) + Symmetrie-Theorem
+       (ohne Bias ist Paritaet provabel unloesbar).
+  T3   Formales UNENTSCHEIDEN (eigener Gate-Defekt);
+       P1/P2 beide mit Abstand PASS — Evidenz-Wand war echt,
+       aber nach T6 als Entkopplung erklaert, nicht als
+       Geometrie.
+  T4/T4b UNENTSCHEIDEN, Produkt-Familie tot (Adam-BPTT-
+       Optimierungsphaenomen, all-or-nothing).
+  T6   KILL — Geometrie = Entkopplung; kein Innen-Peak.
+  UEberlebende echte Befunde der T-Serie:
+    (i) Symmetrie-Theorem (Bias als lern-noetiger Symmetrie-
+        Brecher auf Paritaet),
+   (ii) Bias-Lotto im trainierten Netz (9.8x),
+  (iii) Reservoir-vs-Training-Regime-Kontrast (Geometrie vs
+        Entkopplung),
+  (iv) Optimierungs-Loch: all-or-nothing-Trainierbarkeit ist
+        der Flaschenhals im 40-EUR-Labor, nicht Kapazitaet.
