@@ -141,8 +141,8 @@ def mc_total(W, seed):
 
     mcs = []
     for k in KS:
-        tgt_tr = xtr[:, WASH - k:, 0].reshape(-1)
-        tgt_te = xte[:, WASH - k:, 0].reshape(-1)
+        tgt_tr = xtr[:, WASH - k:T_SEQ - k, 0].reshape(-1)
+        tgt_te = xte[:, WASH - k:T_SEQ - k, 0].reshape(-1)
         A = str_.T @ str_ + RIDGE * torch.eye(H)
         w = torch.linalg.solve(A, str_.T @ tgt_tr)
         pred = ste @ w
