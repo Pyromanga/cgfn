@@ -1,0 +1,23 @@
+======================================================================================================================
+T3 — ANKER AUF PARITAET (registriert: PASS nur wenn
+P1 median(AL06)-median(RND)>=0.15 UND P2 Perfekt-Fraktion(AL06)>=0.5 und >=2x RND)
+Bias in allen Armen (Symmetrie-Brecher, N(0,0.1)), frische Seeds 10..19, f64
+======================================================================================================================
+
+Arm RND: n_ok=10/10 | median=0.5215 | std=0.1579 | Perfekt-Fraktion=0.10
+  Seeds: 10:0.4854, 11:0.5215, 12:0.4785, 13:1.0000, 14:0.5215, 15:0.5215, 16:0.5215, 17:0.5215, 18:0.4785, 19:0.4902
+
+Arm AL06: n_ok=10/10 | median=1.0000 | std=0.2113 | Perfekt-Fraktion=0.70
+  Seeds: 10:0.4951, 11:0.7227, 12:1.0000, 13:1.0000, 14:1.0000, 15:0.5215, 16:1.0000, 17:1.0000, 18:1.0000, 19:1.0000
+
+--- T3-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+median(RND)=0.5215 median(AL06)=1.0000 Effekt=0.4785
+Perfekt-Fraktion RND=0.10 AL06=0.70
+P1 (Effekt >=0.15): JA | P2 (Perfekt>=0.5 und 2x RND): JA
+Sanity: Median-basiert 0.5215 (>=0.60? NEIN), Divergenzen=0 (JA)
+
+VERDICT: UNENTSCHEIDEN — Sanity gerissen (nicht gelernt oder Divergenzen). Design-Post-Mortem, aber KEIN neuer Paritaets-Versuch: drei Versuche auf derselben Aufgabe waeren eine Steinchen-Serie.
+=== FERTIG ===
+
+[i] Laufzeit: 6.2 min
+[i] Ergebnisse nach results/t3_transfer_parity_results.txt und results/t3_transfer_parity_table.csv geschrieben.
