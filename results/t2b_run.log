@@ -1,0 +1,28 @@
+======================================================================================================================
+T2b — TRANSFER-STEIN, DESIGN-REPARATUR (registriert: PASS nur wenn
+P1 std(BR)>=1.5*std(B0) UND P2 median(AL06)>median(RND) in beiden Bias-Zellen)
+XOR-Delay <=19 Frames (bewiesenes Gebiet), RK2/tau=1.0/dt=0.1/substeps=5, f64
+======================================================================================================================
+
+Arm B0_RND: n_ok=10/10 | median=0.4785 | std=0.0247 | min=0.4785 max=0.5430
+
+Arm B0_AL06: n_ok=10/10 | median=0.4785 | std=0.0176 | min=0.4785 max=0.5215
+
+Arm BR_RND: n_ok=10/10 | median=0.5215 | std=0.2106 | min=0.4785 max=1.0000
+
+Arm BR_AL06: n_ok=10/10 | median=1.0000 | std=0.2032 | min=0.5146 max=1.0000
+
+--- T2b-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+Zelle B0_RND: median=0.4785 std=0.0247
+Zelle B0_AL06: median=0.4785 std=0.0176
+Zelle BR_RND: median=0.5215 std=0.2106
+Zelle BR_AL06: median=1.0000 std=0.2032
+P1 (Bias-Transfer): std(B0)=0.0212 std(BR)=0.2069 -> JA
+P2 (Frame-Transfer): AL06>RND in 1/2 Bias-Zellen -> NEIN
+Sanity: Gesamt-Median=0.4785 (>=0.60? NEIN), Divergenzen=0 (JA)
+
+VERDICT: UNENTSCHEIDEN — auch nach der Reparatur nicht gelernt oder Divergenzen. ZWEI-STRIKES-REGEL: T2 ist damit endgueltig geschlossen, KEINE dritte Reparatur. Ehrliches Protokoll-Ergebnis: Der Transfer-Stein ist im 40-EUR-Labor nicht sauber feuerbar (Aufgaben-Horizont vs. Leck-Konstante im Spannungsfeld); die Gate-Disziplin bleibt der Gewinn.
+=== FERTIG ===
+
+[i] Laufzeit: 6.9 min
+[i] Ergebnisse nach results/t2b_transfer_real_net_results.txt und results/t2b_transfer_real_net_table.csv geschrieben.
