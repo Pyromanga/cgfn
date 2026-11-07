@@ -1,0 +1,41 @@
+======================================================================================================================
+T6 — LERNBARKEITS-SPEKTRUM DES ANKER-BUDGETS (registriert: PASS nur wenn
+P1 Zwischen-Peak {0.15,0.30,0.60} UND P_lernt(0.60)-P_lernt(0.00)>=0.3
+UND P2 P_lernt(0.60) > P_lernt(RND); Seeds 40..49, f64, Bias in allen Armen)
+======================================================================================================================
+
+Arm B00 (budget=0.00): n_ok=10/10 | P_lernt=0.70 | median acc=1.0000 | DM=48.000 | div=0
+  Seeds: 40:1.0000, 41:1.0000, 42:0.5020, 43:0.4971, 44:0.5049, 45:1.0000, 46:1.0000, 47:1.0000, 48:1.0000, 49:1.0000
+
+Arm B15 (budget=0.15): n_ok=10/10 | P_lernt=0.60 | median acc=1.0000 | DM=31.109 | div=0
+  Seeds: 40:0.4785, 41:1.0000, 42:0.5020, 43:0.4980, 44:0.4785, 45:1.0000, 46:1.0000, 47:1.0000, 48:1.0000, 49:1.0000
+
+Arm B30 (budget=0.30): n_ok=10/10 | P_lernt=0.60 | median acc=1.0000 | DM=22.578 | div=0
+  Seeds: 40:0.4785, 41:1.0000, 42:0.5029, 43:0.4785, 44:0.5146, 45:1.0000, 46:1.0000, 47:1.0000, 48:1.0000, 49:1.0000
+
+Arm B60 (budget=0.60): n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | DM=13.533 | div=0
+  Seeds: 40:1.0000, 41:1.0000, 42:1.0000, 43:1.0000, 44:0.5146, 45:1.0000, 46:0.7490, 47:1.0000, 48:1.0000, 49:1.0000
+
+Arm B120 (budget=1.20): n_ok=10/10 | P_lernt=0.30 | median acc=0.5215 | DM=5.517 | div=0
+  Seeds: 40:0.4785, 41:0.5215, 42:0.4951, 43:0.5146, 44:0.5020, 45:1.0000, 46:0.5215, 47:1.0000, 48:0.5215, 49:1.0000
+
+Arm RND (budget=RND): n_ok=10/10 | P_lernt=0.10 | median acc=0.5029 | DM=2.552 | div=0
+  Seeds: 40:0.4785, 41:0.5215, 42:0.5029, 43:0.4980, 44:0.5049, 45:1.0000, 46:0.5215, 47:0.4980, 48:0.5215, 49:0.4785
+
+--- T6-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+B00: P_lernt=0.70 median=1.0000 DM=48.000
+B15: P_lernt=0.60 median=1.0000 DM=31.109
+B30: P_lernt=0.60 median=1.0000 DM=22.578
+B60: P_lernt=0.80 median=1.0000 DM=13.533
+B120: P_lernt=0.30 median=0.5215 DM=5.517
+RND: P_lernt=0.10 median=0.5029 DM=2.552
+Peak-Arm: B60 (P_lernt=0.80)
+P1a (Peak in {B15,B30,B60}): JA | P1b (P_lernt(B60)-P_lernt(B00)>=0.3): NEIN
+P2 (P_lernt(B60) > P_lernt(RND)): JA
+Sanity: bester Arm P_lernt=0.80 (>=0.5? JA), Divergenzen gesamt=0 (JA)
+
+VERDICT: KILL (Geometrie tot oder Lotto) — Peak am falschen Ende (B120/RND) oder P_lernt(B60) <= P_lernt(RND): Die T3-Wand war ein Seed-Lotto-Artefakt bzw. der Anker hat keinen Lernbarkeits-Vorteil. Ehrliches Ende der Transfer-Linie.
+=== FERTIG ===
+
+[i] Laufzeit: 19.6 min
+[i] Ergebnisse nach results/t6_budget_spectrum_results.txt und results/t6_budget_spectrum_table.csv geschrieben.
