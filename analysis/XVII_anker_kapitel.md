@@ -159,3 +159,50 @@ Lesart (ehrlich, zweischneidig):
 
 Ende T1. Kein Rerun (Freeze). Naechster Kandidat T2 nur nach neuer
 registrierter These.
+
+
+---
+
+# Nachtrag 3 (2026-11-07): T2 — Transfer-Stein, ZWEI STRIKES, UNENTSCHEIDEN (mit Explorations-Signal)
+
+## T2a — UNENTSCHEIDEN (Design-Defekt, Signalkuez)
+Delayed-XOR mit Luecken 50-90 Frames bei Leck-Halbwertszeit ~3
+Frames: alle 4 Arme exakt 0.5000, keine Divergenzen, nichts
+gelernt. Fehler des Designers (Uebermut), abgefangen vom
+Sanity-Gate. Einmalige Reparatur erlaubt (Praezedenz G4->G5).
+
+## T2b — UNENTSCHEIDEN (ZWEI STRIKES, T2 endgueltig geschlossen)
+Reparatur: XOR-Delay <=19 Frames, RK2/tau=1.0, lam_max=0.6,
+Thesen und Tore unveraendert. Ergebnis:
+  B0_RND:  median 0.4785  std 0.0247   (Chance, alle 10 Seeds)
+  B0_AL06: median 0.4785  std 0.0176   (Chance, alle 10 Seeds)
+  BR_RND:  median 0.5215  std 0.2106   (bimodal: 0.48..1.00)
+  BR_AL06: median 1.0000  std 0.2032   (mehrheitlich perfekt)
+Registrierte Auswertung: P1 (Bias-Transfer) JA — std(BR)=0.207
+>= 1.5*std(B0)=0.021 (faktor ~9.8x). P2 (Frame-Transfer) NEIN
+(1/2 Bias-Zellen). Sanity: Gesamt-Median 0.4785 < 0.60 ->
+UNENTSCHEIDEN, kein Verdikt. ZWEI-STRIKES-REGEL: T2 geschlossen.
+
+## Explorations-Befunde (UNREGISTRIERT, nur Material, kein Verdikt)
+1. SYMMETRIE-BLOCK (nachtraeglich exakt begruendbar, nicht nur
+   empirisch): Mit b=0 und z0=0 ist die Dynamik UNGERADE in
+   (x,z). Der Aufgaben-Spiegel (a,b)->(-a,-b) dreht x um, damit
+   z und damit die Logits um — aber das Label bleibt gleich.
+   Ein B0-Netz mit linearem Readout kann Paritaet daraus
+   PROVABELL nicht lernen: alle 20 B0-Runs exakt bei Chance
+   sind kein Lotto, sie sind ein Theorem. Konsequenz: Das
+   G-Rezept "Bias nullen" ist AUFGABEN-ABHAENGIG — Paritaets-
+   Aufgaben brauchen den Bias als Symmetrie-Brecher.
+2. FRAME-SIGNAL (nur in BR sichtbar): BR_AL06 median 1.0000 vs
+   BR_RND median 0.5215 — die Mehrheit der AL06-Runs loest die
+   Aufgabe PERFEKT, RND bleibt mehrheitlich Chance. Das ist
+   das staerkste Unregistrierte Signal seit G8: moeglicherweise
+   war P2 nur deshalb NEIN, weil die B0-Zellen symmetrie-
+   blockiert waren (Chance vs Chance ist kein Vergleich).
+3. P1 hat mit Faktor ~9.8x ueberlebt — der Bias-Lotto ist im
+   trainierten Netz massiv sichtbar.
+
+Naechster Schritt: T3 als NEU registrierter Stein (keine T2-
+Reparatur), Design lernt aus dem Symmetrie-Block: Bias in allen
+Armen (als Symmetrie-Brecher unentbehrlich), registrierte Tore
+VOR dem Lauf, frische Seeds. Kein Verdikt aus T2 ableitbar.
