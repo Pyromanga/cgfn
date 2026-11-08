@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/runner/work/cgfn/cgfn/experiments/t9_drive_regime.py", line 330, in <module>
+    main()
+  File "/home/runner/work/cgfn/cgfn/experiments/t9_drive_regime.py", line 246, in main
+    acc, dm = train_parity(seed, d)
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/experiments/t9_drive_regime.py", line 173, in train_parity
+    Uw = make_Uw(R, d)
+         ^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/experiments/t9_drive_regime.py", line 134, in make_Uw
+    v0 = R[:, 0:half] @ torch.ones(half) / math.sqrt(half)
+                                           ^^^^
+NameError: name 'math' is not defined. Did you mean: 'Path'?
