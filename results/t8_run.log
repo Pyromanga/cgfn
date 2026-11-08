@@ -1,0 +1,37 @@
+======================================================================================================================
+T8 — G8S MECHANISMUS IM TRAINIERTEN NETZ (registriert: PASS nur wenn
+P1 max P_lernt(0.6..0.9) - P_lernt(0.0) >= 0.3 UND P2 interior >= P_lernt(1.0))
+Framed tanh, W pro Seed fix (DM konstant), Eigenmoden-Antrieb, Seeds 60..69, f64
+======================================================================================================================
+
+Arm w=0.00: n_ok=10/10 | P_lernt=0.00 | DM=2.5463 | div=0
+  Seeds: 60:0.5215, 61:0.4785, 62:0.4785, 63:0.4785, 64:0.5215, 65:0.5215, 66:0.5215, 67:0.4785, 68:0.4785, 69:0.5215
+
+Arm w=0.60: n_ok=10/10 | P_lernt=0.00 | DM=2.5463 | div=0
+  Seeds: 60:0.4951, 61:0.5215, 62:0.4785, 63:0.4785, 64:0.5215, 65:0.5215, 66:0.5215, 67:0.4785, 68:0.4785, 69:0.5215
+
+Arm w=0.75: n_ok=10/10 | P_lernt=0.00 | DM=2.5463 | div=0
+  Seeds: 60:0.5215, 61:0.4902, 62:0.4785, 63:0.4785, 64:0.5215, 65:0.5215, 66:0.5215, 67:0.4785, 68:0.4785, 69:0.5215
+
+Arm w=0.90: n_ok=10/10 | P_lernt=0.00 | DM=2.5463 | div=0
+  Seeds: 60:0.5215, 61:0.5215, 62:0.4785, 63:0.4785, 64:0.5215, 65:0.5215, 66:0.5215, 67:0.4785, 68:0.4785, 69:0.5215
+
+Arm w=1.00: n_ok=10/10 | P_lernt=0.00 | DM=2.5463 | div=0
+  Seeds: 60:0.4785, 61:0.5215, 62:0.4785, 63:0.4785, 64:0.5215, 65:0.5215, 66:0.5215, 67:0.4785, 68:0.4785, 69:0.5215
+
+--- T8-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+w=0.00: P_lernt=0.00 DM=2.5463
+w=0.60: P_lernt=0.00 DM=2.5463
+w=0.75: P_lernt=0.00 DM=2.5463
+w=0.90: P_lernt=0.00 DM=2.5463
+w=1.00: P_lernt=0.00 DM=2.5463
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+Bester Innen-Arm: w=0.60 (P_lernt=0.00)
+P1 (Interior minus Zufall >= 0.3): NEIN | P2 (Interior >= Voll): JA
+Sanity: bester Arm P_lernt=0.00 (>=0.5? NEIN), Divergenzen gesamt=0 (JA)
+
+VERDICT: UNENTSCHEIDEN — Sanity gerissen (nichts gelernt oder Divergenzen). Post-Mortem, kein Verdikt.
+=== FERTIG ===
+
+[i] Laufzeit: 21.6 min
+[i] Ergebnisse nach results/t8_g8_training_results.txt und results/t8_g8_training_table.csv geschrieben.
