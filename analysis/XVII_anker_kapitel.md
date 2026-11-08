@@ -367,3 +367,40 @@ oder die Serie ehrlich schliessen.
         Entkopplung),
   (iv) Optimierungs-Loch: all-or-nothing-Trainierbarkeit ist
         der Flaschenhals im 40-EUR-Labor, nicht Kapazitaet.
+
+
+---
+
+# Nachtrag 7 (2026-11-08): T7 — KILL, aber mit zurueckgenommenem Verdikt-Text: MC ist im T-Bau FLAT; G8 unberuehrt
+
+## T7 (T-Bau-Budget-Sweep, Reservoir-MC, Seeds 50..59, b=0)
+  B00 1.9363 | B15 1.9534 | B30 1.9488 | B60 1.9322 | B120 1.9241
+  | RND 1.9267. DM variiert um Faktor 19 (48.0 bis 2.5), MC
+  um 1.5%. Registriert: P1b riss (1.93 vs 2.13) -> KILL.
+
+## Korrektur des eigenen Verdikt-Texts (Selbstanklage)
+  Der registrierte KILL-Text behauptete "G8 war Entkopplung"
+  und eine Rueckziehung. FALSCH. Die Daten zeigen ein
+  Drittes: MC ist im T-Bau FLAT — weder Geometrie (kein
+  Innen-Peak, B15 vorne mit 0.9% = Rauschen) NOCH Entkopplung
+  (19x DM aendert MC um 1.5%) bewegt die Kapazitaet. Der
+  T-Knopf ist fuer Reservoir-MC schlicht irrelevant.
+
+## Versoehnung mit G8 (Original-Code nachgelesen)
+  G8 rotiert NICHT Ws Eigenbasis, sondern den tanh-Rahmen:
+  W = Q T Q^T pro Seed FIX, F(w) = Q @ QR(w*I + (1-w)*P0),
+  Antrieb U = Q[:,0] (Top-Eigenmode). In G8s Bau ist DM ueber
+  das gesamte w-Gitter PER KONSTRUKTION konstant. Der
+  Entkopplungs-Angriff trifft G8 von vornherein nicht.
+  T7 testete den T-Serien-Knopf — nicht G8s Knopf.
+
+## Neue Karte (Stand nach T7)
+  T-Knopf  (Eigenbasis vs. tanh-Koordinaten): wirkt auf
+            TRAINIERBARKEIT via DM (T6), NICHT auf
+            Reservoir-MC (T7, flat).
+  G8-Knopf (tanh-Rahmen vs. Eigenbasis, W fix, DM konstant,
+            Eigenmoden-Antrieb): wirkt auf Reservoir-MC
+            (G8, +16..41%), im Training NIE getestet.
+  Offene Frage -> T8: G8s Mechanismus im trainierten Netz.
+  Da DM dort per Konstruktion konstant ist, ist jeder
+  Trainierbarkeits-Unterschied PURE Geometrie.
