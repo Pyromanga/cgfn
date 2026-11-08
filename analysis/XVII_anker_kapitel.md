@@ -1060,3 +1060,49 @@ Abnahme AUSSCHLIESSLICH am Historien-Test (known-answer):
   W1-UNENTSCHEIDEN: T15 nicht reproduzierbar; EINE Reparatur, dann tot.
 Bewahrung: Nach Abnahme keine Nachjustierung; erste Anwendung auf dem
 Stone nach T15. Kosten: 0 Runner-Minuten (Offline-Historien-Test).
+
+
+---
+
+# Nachtrag 19 (2026-11-08): W1-P1 — PASS. Der Contract-Kernel besteht den Historien-Test: T15 exakt wiedergegeben, T11-Bug angezeigt, T15-Run1-Bug verweigert.
+
+## W1-P1 (tools/lab_kernel.py, Lauf 22:29-22:32 UTC, reines Python, keine Runner-Minuten verbrannt nach Gate-Abbruch)
+VERDICT: W1-PASS. (a) Der Kernel generiert aus dem T15-Contract die
+Auswertung: KILL-A — ABSOLUTE KANTE, alle acht Arm-Zahlen identisch mit
+Commit 4d9bd4b. (b) Der T11-Contract (REF deklariert unnnormiert ~3.46) plus
+die historische Messung (0.5) schlaegt als INVARIANTEN-VERLETZUNG Alarm —
+die stille Normierung von T11 haette diesen Kernel nie passiert. (c) Die
+T15-Run-1-Struktur (doppelte REF-Keys) wird mit VERWEIGERT abgewiesen.
+Die Wette von W1 gilt als gehalten: Verdikt und Auswertung aus EINER
+deklarativen Quelle, die zwei historischen Bug-Klassen sind maschinell
+toetbar.
+
+## Bug-Protokoll des Werkzeug-Steins (ehrlich)
+- Run-1 (12s): Schreib-Artefakt — beim Push wurden \n-Zeichen im
+  String-Literal als echte Zeilenumbrueche aufgeloest (unbeendeter
+  String). Die py_compile/runpy-Gates fingen es ab Null-Kosten. Lehre:
+  Der Push-Weg ist selbst ein Instrument und braucht einen Selbst-Audit
+  (der jetzt als Vor-Push-Probe eingebaut ist).
+- Run-2 (laufend): _eval_pred rief einen bereits berechneten bool auf
+  (TypeError). Das war DIE EINE registrierte Reparatur der W1-Linie
+  (Abschnitt 4: UNENTSCHEIDEN -> EINE Reparatur, dann tot). Run-3 bestand.
+- Ironie-Bilanz: Der Bug-Fang-Kernel brauchte drei Versuche, weil ihn
+  zwei Bugs genau der Klassen trafen, gegen die er gebaut ist. Aber:
+  Beide wurden von Gates und Logbuch gefangen, keines ist still durch-
+  gegangen. Das System funktioniert — auch dort, wo es gegen mich
+  arbeitet.
+
+## Architektur-Schuld (registriert fuer P2, vor erster Kernel-Anwendung einzuloesen)
+P1 ist absichtlich Ein-Datei-Minimalbeweis: Engine, Contracts, Fixtures
+und Test-Runner liegen in tools/lab_kernel.py zusammen. Sauber ist nur die
+Trennung: Engine (tools/lab_kernel.py), Contracts (contracts/, reine
+Daten), Historien-Fixtures + Runner (tests/). Diese Bereinigung ist der
+erste P2-Schritt, BEVOR der Kernel ein echtes Experiment generiert —
+sonst bauen wir die Zwei-Quellen-Versuchung in die Ordnerstruktur
+zurueck.
+
+## Naechste Schritte (registriert in W1, Abschnitt 3)
+P2: Architektur-Split (Engine/Contracts/Tests), D-Determinismus-Diff
+(Rerun-Diff gegen letzten Result-Commit), K-Kollaps-Gate (Pre-Flight),
+N-Auto-Nachtrag (Zahlen-Skelett mit Lueckenliste). Danach: erste echte
+Kernel-Anwendung auf dem naechsten Physik-Stein.
