@@ -404,3 +404,78 @@ oder die Serie ehrlich schliessen.
   Offene Frage -> T8: G8s Mechanismus im trainierten Netz.
   Da DM dort per Konstruktion konstant ist, ist jeder
   Trainierbarkeits-Unterschied PURE Geometrie.
+
+
+---
+
+# Nachtrag 8 (2026-11-08): T8/T8b — G8-Knopf im Trainingslabor UNENTSCHEIDEN (zwei Strikes); Diagnose: Antriebs-Verhungerung
+
+## T8 (dichte Zufalls-Basis, DM 2.55, Seeds 60..69) — UNENTSCHEIDEN
+Alle 50 Runs bei Chance, P_lernt 0.00 ueberall, DM-Konstanz
+perfekt. Post-Mortem: Basis-Lernbarkeit dieser Familie ist
+laut T6 ~0.10 (RND-Punkt) — 0/50 perfekt ist bei dieser
+Basis-Rate Statistik, kein These-Statement. Reparatur erlaubt.
+
+## T8b (trainierbare T6-B60-Familie, DM 13.63, Seeds 70..79) — UNENTSCHEIDEN (Strike 2)
+Erneut ALLE 50 Runs bei Chance, P_lernt 0.00 in allen fuenf
+w-Armen, DM-Konstanz perfekt (Streuung exakt 0). ZWEI STRIKES:
+G8-Knopf-Linie im Trainingslabor geschlossen, keine dritte
+Reparatur.
+
+## Diagnose (das eigentliche Ergebnis, exakt begruendbar)
+Der G8-Mechanismus-F transferiert nicht nur den Rahmen, sondern
+auch die ANTRIEBS-KONZENTRATION: Uw = 0.5*R[:,0:2] speist beide
+Input-Kanaele NUR in die Top-2-Eigenmoden. In y-Koordinaten
+(y = z@F, w=1: F=R) wird das System sichtbar: W wird diagonal,
+der Antrieb trifft NUR die Einheiten 0 und 1 — die restlichen
+46 Einheiten sind abgekoppelt (diagonales W + lokal getriebene
+tanh: keine Kommunikation). Das funktionale Netz schrumpft auf
+~2 aktive Einheiten. Paritaet mit 2 hidden units und linearem
+Readout: Chance. Das ist kein Rahmen-Effekt, das ist
+ANTRIEBS-VERHUNGERUNG.
+Warum G8 trotzdem funktioniert: Das Reservoir-Ridge-Regime
+erntet LINEARE Moden — dort ist Konzentration auf die Top-
+Eigenmode ein VORTEIL (Signal-Rausch-Verhaeltnis). Das
+Trainingsregime braucht verteilten Antrieb, damit alle Einheiten
+am Gradienten teilnehmen. Die zwei Regime verlangen
+entgegengesetzte Antriebs-Geometrie.
+
+## Regime-Karte v2 (endgueltiger Stand)
+  RESERVOIR-RIDGE-REGIME (fixes W, Ridge, MC):
+    - Rahmen-Geometrie (G8-Knopf): WIRKT (+16..41%, G8;
+      DM dort per Konstruktion konstant — nicht Entkopplung).
+    - T-Knopf (Eigenbasis vs. Koordinaten): wirkungslos fuer
+      MC (T7, flat bei 19x DM).
+    - Antriebs-Konzentration auf Eigenmoden: vorteilhaft
+      (G8-Mechanismus).
+  TRAININGS-REGIME (BPTT, Adam):
+    - T-Knopf via DM: WIRKT (T6: Lernbarkeit folgt der
+      Selbst-Schleifen-Masse, 19x DM -> 0.10 bis 0.80).
+    - G8-Knopf (Rahmen bei fixem W): NICHT FEUERBAR mit dem
+      G8-Antriebs-Paket (T8/T8b: Verhungerung, 0/50).
+    - Antriebs-Konzentration: toedlich (T8b-Diagnose).
+  Offen, untestbar im 40-EUR-Rahmen bis jetzt: ob der Rahmen-
+  Winkel bei verteiltem Antrieb und fixem W Trainierbarkeit
+  moduliert. T8c-mit-diffusem-Antrieb waere die Frage — aber
+  dann ist es nicht mehr G8s Mechanismus, sondern ein neues
+  Design (neue These, neue Registrierung).
+
+## T-Serie: Finale Bilanz der ueberlebenden Befunde
+  1. T1 KILL: Feldgesetz ist keine Vorhersage-Maschine; der
+     Lotto ist eine Traektorien-Eigenschaft. (negativ, echt)
+  2. T2b: Bias-Lotto im trainierten Netz (std-Faktor 9.8).
+  3. T2b: SYMMETRIE-THEOREM — ohne Bias ist Paritaet provabel
+     unloesbar (ungerade Dynamik, linearer Readout, Spiegel-
+     Argument). Das G-Rezept "Bias nullen" ist aufgaben-
+     abhaengig.
+  4. T4b: All-or-nothing-Optimierung (Plateau-Loch) ist der
+     Flaschenhals im Trainingslabor, nicht Kapazitaet.
+  5. T6/T7: Zwei-Knopf-Karte — DM-Knopf wirkt auf Training,
+  nicht auf MC; Rahmen-Knopf wirkt auf MC (G8), nicht
+     nachweisbar im Training.
+  6. T8/T8b: ANTRIEBS-VERHUNGERUNG — die Regime brauchen
+     entgegengesetzte Antriebs-Geometrie (konzentriert fuer
+     Ridge-Ernte, verteilt fuer Training). Neue, eigene
+     Struktur-Variable (Antriebs-Verteilung), entdeckt als
+     Nebenprodukt des gescheiterten Transfers.
+Ende der T-Serie. Kapitel geschlossen mit der Regime-Karte v2.
