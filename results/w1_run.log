@@ -1,17 +1,30 @@
-Traceback (most recent call last):
-  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 308, in <module>
-    out = run_historien_test()
-          ^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 260, in run_historien_test
-    res = evaluate(contract_t15(), measurements_t15_run2())
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 132, in evaluate
-    if not all(_eval_pred(p, metrics) for p in rule['predicate']):
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 132, in <genexpr>
-    if not all(_eval_pred(p, metrics) for p in rule['predicate']):
-               ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 105, in _eval_pred
-    return {
-           ^
-TypeError: 'bool' object is not callable
+==============================================================================
+W1 P1 — HISTORIEN-TEST (Abnahme genagelt in analysis/W1_lab_kernel.md)
+Known-answer gegen die eigene Serie. Kein neues Experiment.
+Kernel-Umfang P1: C-Contract + A-Invarianten-Audit. Nichts weiter.
+==============================================================================
+
+TEST (a) T15-WIEDERGABE:
+  erwartet: KILL-A — ABSOLUTE KANTE | Zahlen wie Commit 4d9bd4b
+  bekommen: KILL-A — ABSOLUTE KANTE
+    R24_2.0.pf = 0.70
+    R24_3.5.pf = 0.90
+    R24_4.9.pf = 1.00
+    R96_2.0.pf = 0.10
+    R96_3.5.pf = 0.60
+    R96_4.9.pf = 0.80
+    REF24.pf = 0.80
+    REF96.pf = 1.00
+  (a) PASS
+
+TEST (b) T11-ANZEIGE (stille Normierung muss Alarm schlagen):
+  ALARM: ARM REF: INVARIANTEN-VERLETZUNG 'colnorm': gemessen 0.5, erwartet approx 3.4641016151377544 (deklarierte Konvention missachtet — T11-Bug-Klasse).
+  (b) PASS
+
+TEST (c) T15-RUN1-DOPPELKEY (Generator muss verweigern):
+  bekommen: VERWEIGERT
+  ALARM: DOPPELTE ARM-KEYS: ['REF'] — Generator verweigert (historische T15-Run1-Bug-Klasse).
+  (c) PASS
+
+VERDICT: W1-PASS — Der Kernel reproduziert T15 (a), zeigt die T11-Stille-Normierung an (b), verweigert den T15-Run1-Doppelkey (c). P1 ANGENOMMEN.
+=== FERTIG ===
