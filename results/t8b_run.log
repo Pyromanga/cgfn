@@ -1,0 +1,37 @@
+======================================================================================================================
+T8b — G8-KNOPF AN TRAINIERBARER BASIS (registriert: PASS nur wenn
+P1 max P_lernt(0.6..0.9) - P_lernt(0.0) >= 0.3 UND P2 interior >= P_lernt(1.0))
+W-Familie T6-B60 (DM~13.5, Basis-Lernbarkeit ~0.8), pro Seed fix; Seeds 70..79, f64
+======================================================================================================================
+
+Arm w=0.00: n_ok=10/10 | P_lernt=0.00 | DM=13.6258 | div=0
+  Seeds: 70:0.5215, 71:0.4785, 72:0.4785, 73:0.5215, 74:0.4785, 75:0.4570, 76:0.4785, 77:0.4785, 78:0.4785, 79:0.5215
+
+Arm w=0.60: n_ok=10/10 | P_lernt=0.00 | DM=13.6258 | div=0
+  Seeds: 70:0.5215, 71:0.4785, 72:0.4785, 73:0.5215, 74:0.4785, 75:0.5215, 76:0.4785, 77:0.4785, 78:0.4785, 79:0.5215
+
+Arm w=0.75: n_ok=10/10 | P_lernt=0.00 | DM=13.6258 | div=0
+  Seeds: 70:0.5215, 71:0.4785, 72:0.4785, 73:0.5215, 74:0.4785, 75:0.4785, 76:0.4785, 77:0.4785, 78:0.4785, 79:0.5215
+
+Arm w=0.90: n_ok=10/10 | P_lernt=0.00 | DM=13.6258 | div=0
+  Seeds: 70:0.5215, 71:0.4785, 72:0.4785, 73:0.5215, 74:0.4785, 75:0.5215, 76:0.4785, 77:0.4785, 78:0.4785, 79:0.5215
+
+Arm w=1.00: n_ok=10/10 | P_lernt=0.00 | DM=13.6258 | div=0
+  Seeds: 70:0.5215, 71:0.4785, 72:0.4785, 73:0.5215, 74:0.4785, 75:0.5215, 76:0.4785, 77:0.4785, 78:0.4785, 79:0.5215
+
+--- T8b-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+w=0.00: P_lernt=0.00 DM=13.6258
+w=0.60: P_lernt=0.00 DM=13.6258
+w=0.75: P_lernt=0.00 DM=13.6258
+w=0.90: P_lernt=0.00 DM=13.6258
+w=1.00: P_lernt=0.00 DM=13.6258
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+Bester Innen-Arm: w=0.60 (P_lernt=0.00)
+P1 (Interior minus Zufall >= 0.3): NEIN | P2 (Interior >= Voll): JA
+Sanity: bester Arm P_lernt=0.00 (>=0.5? NEIN), Divergenzen gesamt=0 (JA)
+
+VERDICT: UNENTSCHEIDEN — Sanity gerissen (Basis wider Erwarten untrainierbar oder Divergenzen). ZWEI STRIKES: Keine weitere Reparatur. Ehrliches Protokoll-Ergebnis: Der G8-Knopf ist im 40-EUR-Trainingslabor nicht sauber feuerbar.
+=== FERTIG ===
+
+[i] Laufzeit: 20.1 min
+[i] Ergebnisse nach results/t8b_g8_training_results.txt und results/t8b_g8_training_table.csv geschrieben.
