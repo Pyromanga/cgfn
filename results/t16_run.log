@@ -1,0 +1,155 @@
+======================================================================================================================
+T16 — 2D-KARTE (H x s): WIE VERSCHIEBT SICH DIE RAMPE MIT H?
+ERSTER KERNEL-GENERIERTER STEIN — Verdikt generiert von tools/lab_kernel.py
+Contract: contracts/t16.py (reine Daten) | Registrierung: XVII Nachtrag 22
+Seeds 160..169, f64, s-Raster {1.5, 2.0, 2.8, 3.5, 4.4, 5.5}, H in {24, 96}
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+
+Arm REF24 (H=24): n_ok=10/10 | P_lernt=0.90 | median acc=1.0000 | colnorm=2.4379 | DM=8.2933 | div=0
+  Parity-Seeds: 160:1.0000, 161:1.0000, 162:1.0000, 163:1.0000, 164:0.5215, 165:1.0000, 166:1.0000, 167:1.0000, 168:1.0000, 169:1.0000
+
+Arm REF96 (H=96): n_ok=10/10 | P_lernt=1.00 | median acc=1.0000 | colnorm=4.8654 | DM=20.5519 | div=0
+  Parity-Seeds: 160:1.0000, 161:1.0000, 162:1.0000, 163:1.0000, 164:1.0000, 165:1.0000, 166:1.0000, 167:1.0000, 168:1.0000, 169:1.0000
+
+Arm R24_1.5 (H=24): n_ok=10/10 | P_lernt=0.20 | median acc=0.4785 | colnorm=1.5000 | DM=8.2933 | div=0
+  Parity-Seeds: 160:0.5215, 161:0.4785, 162:0.5215, 163:1.0000, 164:1.0000, 165:0.4785, 166:0.4785, 167:0.4785, 168:0.4785, 169:0.4785
+
+Arm R24_2.0 (H=24): n_ok=10/10 | P_lernt=0.50 | median acc=0.5215 | colnorm=2.0000 | DM=8.2933 | div=0
+  Parity-Seeds: 160:0.5215, 161:0.4785, 162:1.0000, 163:0.5020, 164:1.0000, 165:0.4785, 166:1.0000, 167:1.0000, 168:1.0000, 169:0.4785
+
+Arm R24_2.8 (H=24): n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | colnorm=2.8000 | DM=8.2933 | div=0
+  Parity-Seeds: 160:1.0000, 161:0.4785, 162:1.0000, 163:1.0000, 164:1.0000, 165:1.0000, 166:1.0000, 167:1.0000, 168:1.0000, 169:0.4785
+
+Arm R24_3.5 (H=24): n_ok=10/10 | P_lernt=1.00 | median acc=1.0000 | colnorm=3.5000 | DM=8.2933 | div=0
+  Parity-Seeds: 160:1.0000, 161:1.0000, 162:1.0000, 163:1.0000, 164:1.0000, 165:1.0000, 166:1.0000, 167:1.0000, 168:1.0000, 169:1.0000
+
+Arm R24_4.4 (H=24): n_ok=10/10 | P_lernt=1.00 | median acc=1.0000 | colnorm=4.4000 | DM=8.2933 | div=0
+  Parity-Seeds: 160:1.0000, 161:1.0000, 162:1.0000, 163:1.0000, 164:1.0000, 165:1.0000, 166:1.0000, 167:1.0000, 168:1.0000, 169:1.0000
+
+Arm R24_5.5 (H=24): n_ok=10/10 | P_lernt=0.90 | median acc=1.0000 | colnorm=5.5000 | DM=8.2933 | div=0
+  Parity-Seeds: 160:1.0000, 161:1.0000, 162:1.0000, 163:1.0000, 164:1.0000, 165:1.0000, 166:0.5215, 167:1.0000, 168:1.0000, 169:1.0000
+
+Arm R96_1.5 (H=96): n_ok=10/10 | P_lernt=0.00 | median acc=0.5215 | colnorm=1.5000 | DM=20.5519 | div=0
+  Parity-Seeds: 160:0.5215, 161:0.4785, 162:0.5215, 163:0.5215, 164:0.5215, 165:0.5215, 166:0.5215, 167:0.4785, 168:0.4785, 169:0.4785
+
+Arm R96_2.0 (H=96): n_ok=10/10 | P_lernt=0.10 | median acc=0.5215 | colnorm=2.0000 | DM=20.5519 | div=0
+  Parity-Seeds: 160:0.5215, 161:0.4785, 162:0.5303, 163:0.5215, 164:1.0000, 165:0.5215, 166:0.5215, 167:0.4785, 168:0.4785, 169:0.4785
+
+Arm R96_2.8 (H=96): n_ok=10/10 | P_lernt=0.30 | median acc=0.5215 | colnorm=2.8000 | DM=20.5519 | div=0
+  Parity-Seeds: 160:0.5215, 161:1.0000, 162:0.5215, 163:1.0000, 164:1.0000, 165:0.5215, 166:0.5215, 167:0.4785, 168:0.4785, 169:0.4785
+
+Arm R96_3.5 (H=96): n_ok=10/10 | P_lernt=0.50 | median acc=0.5215 | colnorm=3.5000 | DM=20.5519 | div=0
+  Parity-Seeds: 160:1.0000, 161:1.0000, 162:0.2578, 163:1.0000, 164:1.0000, 165:0.5215, 166:0.5020, 167:0.4785, 168:1.0000, 169:0.4785
+
+Arm R96_4.4 (H=96): n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | colnorm=4.4000 | DM=20.5519 | div=0
+  Parity-Seeds: 160:1.0000, 161:1.0000, 162:0.5215, 163:1.0000, 164:1.0000, 165:1.0000, 166:1.0000, 167:1.0000, 168:1.0000, 169:0.4785
+
+Arm R96_5.5 (H=96): n_ok=10/10 | P_lernt=0.90 | median acc=1.0000 | colnorm=5.5000 | DM=20.5519 | div=0
+  Parity-Seeds: 160:1.0000, 161:1.0000, 162:1.0000, 163:1.0000, 164:1.0000, 165:1.0000, 166:1.0000, 167:1.0000, 168:0.4785, 169:1.0000
+
+--- T16-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+s50(H=24) = 2.0000 | s50(H=96) = 3.5000 | ratio50 = 1.7500
+s50/sqrt(H): H=24: 0.4082 | H=96: 0.3572 (sqrt-Kollaps-Frage, nur Bericht — kein registriertes Verdikt)
+Rampe H=24: s=1.5:0.20, s=2.0:0.50, s=2.8:0.80, s=3.5:1.00, s=4.4:1.00, s=5.5:0.90
+Rampe H=96: s=1.5:0.00, s=2.0:0.10, s=2.8:0.30, s=3.5:0.50, s=4.4:0.80, s=5.5:0.90
+
+VERDICT: PASS — P-RAMPE-SHIFT-SUBH
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 22 (2026-11-08) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: PASS — P-RAMPE-SHIFT-SUBH
+
+## Arm-Zahlen (aus dem Contract generiert)
+  REF24.pf = 0.9
+  REF24.colnorm = 2.43793
+  REF24.dmdev = 2.14191e-16
+  REF24.ndiv = 0
+  REF24.s50 = 2
+  REF24.ratio50 = 1.75
+  REF96.pf = 1
+  REF96.colnorm = 4.86541
+  REF96.dmdev = 1.72865e-16
+  REF96.ndiv = 0
+  REF96.s50 = 3.5
+  REF96.ratio50 = 1.75
+  R24_1.5.pf = 0.2
+  R24_1.5.colnorm = 1.5
+  R24_1.5.dmdev = 2.14191e-16
+  R24_1.5.ndiv = 0
+  R24_1.5.s50 = 2
+  R24_1.5.ratio50 = 1.75
+  R24_2.0.pf = 0.5
+  R24_2.0.colnorm = 2
+  R24_2.0.dmdev = 2.14191e-16
+  R24_2.0.ndiv = 0
+  R24_2.0.s50 = 2
+  R24_2.0.ratio50 = 1.75
+  R24_2.8.pf = 0.8
+  R24_2.8.colnorm = 2.8
+  R24_2.8.dmdev = 2.14191e-16
+  R24_2.8.ndiv = 0
+  R24_2.8.s50 = 2
+  R24_2.8.ratio50 = 1.75
+  R24_3.5.pf = 1
+  R24_3.5.colnorm = 3.5
+  R24_3.5.dmdev = 2.14191e-16
+  R24_3.5.ndiv = 0
+  R24_3.5.s50 = 2
+  R24_3.5.ratio50 = 1.75
+  R24_4.4.pf = 1
+  R24_4.4.colnorm = 4.4
+  R24_4.4.dmdev = 2.14191e-16
+  R24_4.4.ndiv = 0
+  R24_4.4.s50 = 2
+  R24_4.4.ratio50 = 1.75
+  R24_5.5.pf = 0.9
+  R24_5.5.colnorm = 5.5
+  R24_5.5.dmdev = 2.14191e-16
+  R24_5.5.ndiv = 0
+  R24_5.5.s50 = 2
+  R24_5.5.ratio50 = 1.75
+  R96_1.5.pf = 0
+  R96_1.5.colnorm = 1.5
+  R96_1.5.dmdev = 1.72865e-16
+  R96_1.5.ndiv = 0
+  R96_1.5.s50 = 3.5
+  R96_1.5.ratio50 = 1.75
+  R96_2.0.pf = 0.1
+  R96_2.0.colnorm = 2
+  R96_2.0.dmdev = 1.72865e-16
+  R96_2.0.ndiv = 0
+  R96_2.0.s50 = 3.5
+  R96_2.0.ratio50 = 1.75
+  R96_2.8.pf = 0.3
+  R96_2.8.colnorm = 2.8
+  R96_2.8.dmdev = 1.72865e-16
+  R96_2.8.ndiv = 0
+  R96_2.8.s50 = 3.5
+  R96_2.8.ratio50 = 1.75
+  R96_3.5.pf = 0.5
+  R96_3.5.colnorm = 3.5
+  R96_3.5.dmdev = 1.72865e-16
+  R96_3.5.ndiv = 0
+  R96_3.5.s50 = 3.5
+  R96_3.5.ratio50 = 1.75
+  R96_4.4.pf = 0.8
+  R96_4.4.colnorm = 4.4
+  R96_4.4.dmdev = 1.72865e-16
+  R96_4.4.ndiv = 0
+  R96_4.4.s50 = 3.5
+  R96_4.4.ratio50 = 1.75
+  R96_5.5.pf = 0.9
+  R96_5.5.colnorm = 5.5
+  R96_5.5.dmdev = 1.72865e-16
+  R96_5.5.ndiv = 0
+  R96_5.5.s50 = 3.5
+  R96_5.5.ratio50 = 1.75
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
+
+[i] Laufzeit: 32.5 min
+[i] Ergebnisse: results/t16_2d_karte_results.txt | results/t16_2d_karte_table.csv | results/t16_measurements.json (D-Diff-Snapshot)
