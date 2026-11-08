@@ -1,0 +1,42 @@
+======================================================================================================================
+T14 — MECHANISMUS-BEWIES-VERSUCH: NICHTLINEARITAET NOTWENDIG
+(registriert: Sanity REF>=0.5, T3.5>=0.5, T1.0=0; PASS wenn ID3.5=0, ID10=0, R3.5>=0.5;
+KILL-A wenn ein ID-Arm >=0.3; KILL-B wenn ID ok aber R3.5=0; Seeds 140..149, f64)
+======================================================================================================================
+
+Arm REF: n_ok=10/10 | P_lernt=1.00 | median acc=1.0000 | median MC=1.1579 | DM=13.9473 | NL-Auslastung=0.231 | div=0
+  Parity-Seeds: 140:1.0000, 141:1.0000, 142:1.0000, 143:1.0000, 144:1.0000, 145:1.0000, 146:1.0000, 147:1.0000, 148:1.0000, 149:1.0000
+
+Arm T3.5: n_ok=10/10 | P_lernt=0.60 | median acc=1.0000 | median MC=1.7198 | DM=13.9473 | NL-Auslastung=0.083 | div=0
+  Parity-Seeds: 140:1.0000, 141:1.0000, 142:0.4785, 143:1.0000, 144:0.4785, 145:1.0000, 146:0.5215, 147:1.0000, 148:0.4951, 149:1.0000
+
+Arm T1.0: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.7965 | DM=13.9473 | NL-Auslastung=0.000 | div=0
+  Parity-Seeds: 140:0.5215, 141:0.4785, 142:0.5020, 143:0.5215, 144:0.4785, 145:0.4785, 146:0.5215, 147:0.5215, 148:0.4785, 149:0.4785
+
+Arm ID3.5: n_ok=10/10 | P_lernt=0.00 | median acc=0.4951 | median MC=1.9448 | DM=13.9473 | NL-Auslastung=0.000 | div=0
+  Parity-Seeds: 140:0.5215, 141:0.4785, 142:0.4980, 143:0.5020, 144:0.4785, 145:0.4785, 146:0.5098, 147:0.5215, 148:0.4951, 149:0.4785
+
+Arm ID10: n_ok=10/10 | P_lernt=0.00 | median acc=0.5020 | median MC=2.0610 | DM=13.9473 | NL-Auslastung=0.029 | div=0
+  Parity-Seeds: 140:0.5215, 141:0.4785, 142:0.4785, 143:0.5020, 144:0.4785, 145:0.5068, 146:0.5215, 147:0.5020, 148:0.5029, 149:0.4785
+
+Arm R3.5: n_ok=10/10 | P_lernt=1.00 | median acc=1.0000 | median MC=1.1288 | DM=13.9473 | NL-Auslastung=0.154 | div=0
+  Parity-Seeds: 140:1.0000, 141:1.0000, 142:1.0000, 143:1.0000, 144:1.0000, 145:1.0000, 146:1.0000, 147:1.0000, 148:1.0000, 149:1.0000
+
+--- T14-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+REF: P_lernt=1.00 median acc=1.0000 median MC=1.1579 DM=13.9473 NL=0.231
+T3.5: P_lernt=0.60 median acc=1.0000 median MC=1.7198 DM=13.9473 NL=0.083
+T1.0: P_lernt=0.00 median acc=0.4785 median MC=1.7965 DM=13.9473 NL=0.000
+ID3.5: P_lernt=0.00 median acc=0.4951 median MC=1.9448 DM=13.9473 NL=0.000
+ID10: P_lernt=0.00 median acc=0.5020 median MC=2.0610 DM=13.9473 NL=0.029
+R3.5: P_lernt=1.00 median acc=1.0000 median MC=1.1288 DM=13.9473 NL=0.154
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+SANITY: REF=1.00 (>=0.5? JA), T3.5=0.60 (>=0.5? JA), T1.0=0.00 (=0? JA)
+KERN: P_lernt(ID3.5)=0.00, P_lernt(ID10)=0.00, P_lernt(R3.5)=1.00
+NL-Auslastung (sekundaer): T1.0=0.000, T3.5=0.083, REF=0.231
+Sanity: Divergenzen gesamt=0 (JA)
+
+VERDICT: PASS — P-MECH BEWIESEN: Das rein lineare RNN (Identity) lernt die Paritaet bei KEINER Antriebs-Energie (ID3.5=0, ID10=0), RELU lernt (R3.5 >= 0.5). Die Energie-Kante ist der Eintritt ins nichtlineare Regime; die tanh-Form ist nicht spezifisch. Die Energie-Story der Serie ist MECHANISTISCH geschlossen: sub-Kante = linear = Paritaet unloesbar (T2b-Linie).
+=== FERTIG ===
+
+[i] Laufzeit: 9.9 min
+[i] Ergebnisse nach results/t14_mechanismus_results.txt und results/t14_mechanismus_table.csv geschrieben.
