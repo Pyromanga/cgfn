@@ -1,45 +1,33 @@
 #!/usr/bin/env python
-'''W1 P1 — LAB-KERNEL: Contract-Generator + Invarianten-Audit
-(Registrierung: analysis/W1_lab_kernel.md, Abschnitt 4; P1-Umfang: C+A)
+'''W1 P2 — LAB-KERNEL ENGINE: C-Contract-Generator, A-Invarianten-Audit,
+K-Kollaps-Gate, D-Determinismus-Diff, N-Auto-Nachtrag.
+(Registrierung: analysis/W1_lab_kernel.md Abschnitt 2/3; P2-Abnahme
+genagelt in XVII Nachtrag 20. Architektur-Split aus Nachtrag 19 hier
+eingeloest: Engine in tools/, Contracts in contracts/ (reine Daten),
+Historien-Fixtures + Runner in tests/.)
 
-PROTOKOLL: Run-1-Crash (12s, Schreib-Artefakt: aufgeloeste \n im
-String-Literal — Gates fingen es, kein Design-Schaeden). Run-2-Crash
-(laufend): _eval_pred rief einen bereits berechneten bool auf
-("TypeError: bool object is not callable") — DIE EINE registrierte
-Reparatur der W1-Linie (W1-Abschnitt 4: UNENTSCHEIDEN -> EINE Reparatur,
-dann tot). Fix: () hinter dem Dict-Lookup entfernt. Design, Contract,
-Test, Registrierung unveraendert. Run-3 ist der letzte Versuch.
+DIE WETTE VON W1 (unveraendert seit P0): Wenn Registrierung, Auswertung
+und Verdikt aus EINEM deklarativen Contract GENERIERT werden, stirbt die
+Bug-Klasse "Code weicht von Registrierung ab" strukturell (T11: stille
+Normierung; T15-Run1: Readout-Doppelschluessel).
 
-ALTER PROTOTOKOLL-TEXT (Run-1): Der Run-1-Push enthielt im
-Datei-Inhalt zwei aufgeloeste \n-Zeichen innerhalb von String-Literalen
-(return '\n'.join(L), fh.write(out + '\n')) — Schreib-Artefakt des Push-
-Wegs, kein Design-Defekt. Die py_compile-Gates fingen es ab (0 verbrannte
-Runner-Minuten). EINZIGE Aenderung Run-2: korrektes \n in den beiden
-Zeilen. Design, Contract, Test, Registrierung unveraendert.
+P2-NEU gegenueber P1:
+  K — preflight_gate: verweigert Contracts mit doppelten Arm-Keys,
+      Praedikaten auf unbekannte Arme oder UNREGISTRIERTE Masse
+      (operationalisierte "scharf"-Klasse), Regeln ohne id/Praedikat,
+      Armen ohne Invarianten-Deklaration.
+      EHRLICHE GRENZE: Freitext-Begriffe ohne messbare Operationalisierung
+      prueft keine Maschine; K prueft die datenfassbare Variante, der
+      Rest bleibt Menschenpflicht.
+  K-Laufzeit — evaluate schlaegt NICHT-GEMESSEN-Alarm, wenn eine
+      registrierte Groesse im Mess-Input fehlt (kein stilles Loch).
+  D — determinismus_diff: Rerun gegen letzten Result-Commit; leer bei
+      identisch, je Abweichung ein Flag (Umwelt-Bug-Verdacht).
+  N — auto_nachtrag: Zahlen-Skelett mit Verdikt und LUECKENLISTE.
 
-DIE WETTE VON W1: Wenn Registrierung, Auswertung und Verdikt aus EINEM
-deklarativen Contract GENERIERT werden, stirbt die Bug-Klasse
-"Code weicht von Registrierung ab" strukturell (T11: stille Normierung;
-T15-Run1: Readout-Doppelschluessel).
-
-ABNAHME AUSSCHLIESSLICH AM HISTORIEN-TEST (known-answer, genagelt):
-  W1-PASS (a): T15-Contract + Run-2-Zahlen (Commit 4d9bd4b) ->
-               generierte Auswertung liefert KILL-A, identische Zahlen.
-  W1-PASS (b): T11-Contract (REF unnnormiert deklariert) + historische
-               T11-Messung (REF-Spaltennorm 0.5 statt ~3.46) ->
-               INVARIANTEN-ALARM, kein stiller Durchlauf.
-  W1-PASS (c): Contract mit doppeltem Arm-Key -> Generator VERWEIGERT.
-  W1-KILL: nur mit Hardcodes erreichbar, oder (b)/(c) unpruefbar.
-  W1-UNENTSCHEIDEN: T15 nicht reproduzierbar; EINE Reparatur, dann tot.
-
-EHRLICHKEITS-NOTIZ zu den Audit-Eingabewerten: Die historischen Laeufe
-massen KEINE Spaltennormen (genau das ist die T11-Blindstelle). Fuer den
-Known-Answer-Test werden die fehlenden Audit-Groessen daher als
-REKONSTRUIERTE Werte im Rahmen der deklarierten Konvention angesetzt
-und als solche markiert. Kuenftige, kernel-generierte Laeufe muessen diese
-Groessen SELBST messen und ausgeben — das ist der A-Modul-Standard.
+PROTOKOLL-HINWEIS P1 (Nachtrag 19): Historien-Test nach zwei gefangenen
+Eigene-Bugs (Schreib-Artefakt, bool-Aufruf) im dritten Versuch PASS.
 '''
-import os
 
 
 def validate_contract(contract):
@@ -66,9 +54,40 @@ def validate_contract(contract):
     return errors
 
 
+def preflight_gate(contract):
+    '''K — KOLLAPS-GATE (Pre-Flight beim Feuern): verweigert den Start,
+    wenn der Contract selbst schon unmoeglich ist. Getestet wird alles,
+    was Daten fassen koennen: doppelte Arm-Keys, Praedikate auf
+    unbekannte Arme, Praedikate auf unregistrierte Masse (die
+    operationalisierte "scharf"-Klasse: Registrierung verlangt eine
+    Messung, die kein Gate liefern kann).'''
+    errors = validate_contract(contract)
+    arm_names = {a['name'] for a in contract['arms']}
+    measures = set(contract.get('measures', []))
+    if not measures:
+        errors.append('Contract ohne registrierte Masse — nichts messbar.')
+    for rule in contract.get('sanity', []) + contract.get('verdict', []):
+        for p in rule.get('predicate', []):
+            m = p['metric']
+            if '.' not in m:
+                errors.append('Praedikat-Metrik %r ohne Arm-Trenner '
+                              '(Format <arm>.<groesse>).' % m)
+                continue
+            arm, g = m.rsplit('.', 1)
+            if arm not in arm_names:
+                errors.append('Praedikat %r referenziert UNBEKANNTEN Arm %r.'
+                              % (m, arm))
+            if g not in measures:
+                errors.append('Praedikat %r referenziert UNREGISTRIERTES '
+                              'Mass %r — Registrierung verlangt eine '
+                              'Messung, die kein Gate liefern kann '
+                              '(Kollaps-Verletzung).' % (m, g))
+    return errors
+
+
 def audit_arm(arm, measurements):
     '''A — INVARIANTEN-AUDIT: Das Instrument MISST, es vertraut nicht.
-    Messwerte kommen aus dem Lauf (oder — hier im Historien-Test — als
+    Messwerte kommen aus dem Lauf (oder — im Historien-Test — als
     rekonstruierte Eingabe); geprueft wird gegen die DEKLARIERTE
     Konvention. Verletzung -> Alarm, kein stiller Durchlauf
     (T11-Bug-Klasse stirbt hier).'''
@@ -122,31 +141,48 @@ def _eval_pred(pred, metrics):
 
 def evaluate(contract, measurements):
     '''Generator-Kern: Auswertung + Verdikt ausschliesslich aus dem
-    Contract. Sanity-Kette zuerst, dann die genagelte Verdikt-Reihenfolge.
-    Audit-Alarm schlaegt alles: UNENTSCHEIDEN (Crash-Klasse).'''
-    errs = validate_contract(contract)
+    Contract. K-Pre-Flight zuerst, dann Invarianten-Audit und
+    Mess-Abdeckung (K-Laufzeit), Sanity-Kette, genagelte Verdikt-
+    Reihenfolge. Jede Verletzung schlaegt Alarm — nichts laeuft still.'''
+    errs = preflight_gate(contract)
     if errs:
         return dict(verdict='VERWEIGERT', alarms=errs, metrics={})
     metrics = {}
     alarms = []
     for a in contract['arms']:
         row = measurements.get(a['name'], {})
+        if not row:
+            alarms.append('ARM %s: KEINE Messwerte — Lauf unvollstaendig '
+                          '(Kollaps-Verletzung).' % a['name'])
         alarms += audit_arm(a, row)
-        for g in contract.get('measures', []):
-            if row.get(g) is not None:
+        for g in contract['measures']:
+            if row.get(g) is None:
+                alarms.append('ARM %s: registrierte Groesse %r NICHT '
+                              'GEMESSEN (Kollaps-Verletzung).'
+                              % (a['name'], g))
+            else:
                 metrics['%s.%s' % (a['name'], g)] = row[g]
-    sanity_ok = True
-    for rule in contract.get('sanity', []):
-        if not all(_eval_pred(p, metrics) for p in rule['predicate']):
-            sanity_ok = False
+
+    def rule_ok(rule):
+        ok = True
+        for p in rule['predicate']:
+            try:
+                if not _eval_pred(p, metrics):
+                    ok = False
+            except KeyError as e:
+                alarms.append('PRAEDIKAT %r: %s' % (p['metric'], e))
+                ok = False
+        return ok
+
+    sanity_ok = all(rule_ok(r) for r in contract.get('sanity', []))
     hit = None
     for rule in contract.get('verdict', []):
-        if all(_eval_pred(p, metrics) for p in rule['predicate']):
+        if rule_ok(rule):
             hit = rule
             break
     if alarms:
         return dict(verdict='UNENTSCHEIDEN (Crash-Klasse) — Invarianten-'
-                    'Audit: deklarierte Konvention verletzt',
+                    'Audit/Kollaps-Gate: deklarierte Konvention verletzt',
                     alarms=alarms, metrics=metrics)
     if not sanity_ok:
         return dict(verdict='UNENTSCHEIDEN — SANITY GERICHT',
@@ -158,162 +194,52 @@ def evaluate(contract, measurements):
                 metrics=metrics)
 
 
-def contract_t15():
-    '''T15-Contract, wortgetreu aus der T15-Registrierung (Nachtrag 15).
-    Lektion im Schluessel-Design: REF-Arme heissen REF24/REF96 — der
-    historische Run-1-Bug (beide unter 'REF') ist genau das, was der
-    Validator in Test (c) verweigert.'''
-    return dict(
-        measures=['pf'],
-        arms=[
-            dict(name='REF24', H=24, invariants=[
-                dict(metric='colnorm', op='approx', expect=0.5 * 24 ** 0.5),
-                dict(metric='dm', op='eq', expect=7.5793, tol=1e-3)]),
-            dict(name='REF96', H=96, invariants=[
-                dict(metric='colnorm', op='approx', expect=0.5 * 96 ** 0.5),
-                dict(metric='dm', op='eq', expect=20.6678, tol=1e-3)]),
-        ] + [dict(name='R24_%s' % s, H=24, invariants=[
-                dict(metric='colnorm', op='eq', expect=float(s)),
-                dict(metric='dm', op='eq', expect=7.5793, tol=1e-3)])
-             for s in ('2.0', '3.5', '4.9')]
-          + [dict(name='R96_%s' % s, H=96, invariants=[
-                dict(metric='colnorm', op='eq', expect=float(s)),
-                dict(metric='dm', op='eq', expect=20.6678, tol=1e-3)])
-             for s in ('2.0', '3.5', '4.9')],
-        sanity=[dict(id='sanity', text='REF24 und REF96 lernen',
-                     predicate=[dict(metric='REF24.pf', op='ge', value=0.5),
-                                dict(metric='REF96.pf', op='ge', value=0.5)])],
-        verdict=[
-            dict(id='PASS — P-SQRT', text='Kante folgt 0.5*sqrt(H)',
-                 predicate=[dict(metric='R24_2.0.pf', op='eq', value=0.0),
-                            dict(metric='R24_3.5.pf', op='ge', value=0.5),
-                            dict(metric='R96_3.5.pf', op='eq', value=0.0),
-                            dict(metric='R96_4.9.pf', op='ge', value=0.5)]),
-            dict(id='KILL-A — ABSOLUTE KANTE',
-                 text='Kante ~3.5 unabhaengig von H',
-                 predicate=[dict(metric='R96_3.5.pf', op='ge', value=0.5)]),
-            dict(id='KILL-B — H=24-KANTE HOEHER',
-                 text='Kante zwischen 3.5 und 4.9 auch bei H=24',
-                 predicate=[dict(metric='R24_3.5.pf', op='eq', value=0.0),
-                            dict(metric='R24_4.9.pf', op='ge', value=0.5)]),
-        ])
+def determinismus_diff(current, previous):
+    '''D — DETERMINISMUS-DIFF: Rerun gegen den letzten Result-Commit.
+    Leer = deterministisch reproduziert. JEDE Abweichung wird geflaggt
+    (Umwelt-Bug-Verdacht: Runner-Image, torch-Version) — geflaggt, nicht
+    verwurstet. Macht die Determinismus-Annahme zur messbaren Groesse.'''
+    diffs = []
+    for arm in sorted(set(current) | set(previous)):
+        c = current.get(arm) or {}
+        p = previous.get(arm) or {}
+        for g in sorted(set(c) | set(p)):
+            cv, pv = c.get(g), p.get(g)
+            if cv is None or pv is None or abs(cv - pv) > 1e-9:
+                diffs.append('ARM %s, %s: Rerun %r vs Commit %r — '
+                             'Abweichung ohne Crash = Umwelt-Bug-Verdacht.'
+                             % (arm, g, cv, pv))
+    return diffs
 
 
-def measurements_t15_run2():
-    '''Run-2-Zahlen (Commit 4d9bd4b, Ergebnis-Datei): pf je Arm gemessen.
-    colnorm/dm: REKONSTRUIERTE Audit-Werte — die exakt normierten Arme
-    trugen ihre Norm per Konstruktion (dm wurde gemessen), die REF-Arme
-    liegen im unnnormierten Konventionsrahmen. Kuenftige kernel-generierte
-    Laeufe muessen colnorm SELBST messen (A-Standard).'''
-    return {
-        'REF24': dict(pf=0.80, colnorm=2.5129, dm=7.5793),
-        'REF96': dict(pf=1.00, colnorm=4.9044, dm=20.6678),
-        'R24_2.0': dict(pf=0.70, colnorm=2.0, dm=7.5793),
-        'R24_3.5': dict(pf=0.90, colnorm=3.5, dm=7.5793),
-        'R24_4.9': dict(pf=1.00, colnorm=4.9, dm=7.5793),
-        'R96_2.0': dict(pf=0.10, colnorm=2.0, dm=20.6678),
-        'R96_3.5': dict(pf=0.60, colnorm=3.5, dm=20.6678),
-        'R96_4.9': dict(pf=0.80, colnorm=4.9, dm=20.6678),
-    }
-
-
-def contract_t11():
-    '''T11-Contract NUR fuer den Audit-Test (b): REF deklariert UNNORMIERT
-    (bewaehrte Konvention, Spaltennorm ~ 0.5*sqrt(48) ~ 3.46), genau wie in
-    der historischen T11-Registrierung. Der historische Lauf mass
-    stattdessen 0.5 (stille Normierung — der Kern-Mea-culpa-Bug).'''
-    return dict(
-        measures=['pf'],
-        arms=[
-            dict(name='REF', H=48, invariants=[
-                dict(metric='colnorm', op='approx', expect=0.5 * 48 ** 0.5)]),
-            dict(name='AMPNEG', H=48, invariants=[
-                dict(metric='colnorm', op='eq', expect=0.5)]),
-        ],
-        sanity=[dict(id='sanity', text='REF lernt',
-                     predicate=[dict(metric='REF.pf', op='ge', value=0.5)])],
-        verdict=[])
-
-
-def measurements_t11_historisch():
-    '''Historische T11-Messung: REF verhungerte (pf 0.00), Spaltennorm 0.5
-    statt ~3.46 (nachtraeglich diagnostiziert, Nachtrag 12).'''
-    return {
-        'REF': dict(pf=0.00, colnorm=0.5),
-        'AMPNEG': dict(pf=0.00, colnorm=0.5),
-    }
-
-
-def contract_t15_run1_bug():
-    '''Test (c): die historische T15-Run-1-Struktur — beide REF-Arme unter
-    EINEM Key 'REF'. Der Generator MUSS verweigern (doppelte Arm-Keys).'''
-    c = contract_t15()
-    bug_arms = [dict(name='REF', H=24, invariants=[
-                    dict(metric='colnorm', op='approx', expect=0.5 * 24 ** 0.5)]),
-                dict(name='REF', H=96, invariants=[
-                    dict(metric='colnorm', op='approx', expect=0.5 * 96 ** 0.5)])]
-    c['arms'] = bug_arms + c['arms'][2:]
-    return c
-
-
-def run_historien_test():
+def auto_nachtrag(contract, result, nummer, datum):
+    '''N — AUTO-NACHTRAG: Skelett aus Contract + Result. Zahlen und
+    Verdikt maschinell; die Lesart (XVII-Urteil) bleibt handgeschrieben.
+    LUECKENLISTE: registrierte Groessen, die im Result fehlen.'''
     L = []
-    L.append('=' * 78)
-    L.append('W1 P1 — HISTORIEN-TEST (Abnahme genagelt in analysis/W1_lab_kernel.md)')
-    L.append('Known-answer gegen die eigene Serie. Kein neues Experiment.')
-    L.append('Kernel-Umfang P1: C-Contract + A-Invarianten-Audit. Nichts weiter.')
-    L.append('=' * 78)
-    ok_a = ok_b = ok_c = False
-
-    res = evaluate(contract_t15(), measurements_t15_run2())
+    L.append('# Nachtrag %s (%s) — AUTO-SKELETT (N-Modul; Lesart '
+             'handzuschreiben)' % (nummer, datum))
     L.append('')
-    L.append('TEST (a) T15-WIEDERGABE:')
-    L.append('  erwartet: KILL-A — ABSOLUTE KANTE | Zahlen wie Commit 4d9bd4b')
-    L.append('  bekommen: %s' % res['verdict'])
-    for k in sorted(res['metrics']):
-        L.append('    %s = %.2f' % (k, res['metrics'][k]))
-    ok_a = (res['verdict'].startswith('KILL-A')
-            and abs(res['metrics']['REF24.pf'] - 0.80) < 1e-12
-            and abs(res['metrics']['R96_3.5.pf'] - 0.60) < 1e-12
-            and not res['alarms'])
-    L.append('  (a) %s' % ('PASS' if ok_a else 'FAIL'))
-
-    res_b = evaluate(contract_t11(), measurements_t11_historisch())
+    L.append('VERDICT: %s' % result['verdict'])
+    for al in result.get('alarms', []):
+        L.append('ALARM: %s' % al)
     L.append('')
-    L.append('TEST (b) T11-ANZEIGE (stille Normierung muss Alarm schlagen):')
-    for al in res_b['alarms']:
-        L.append('  ALARM: %s' % al)
-    ok_b = bool(res_b['alarms']) and res_b['verdict'].startswith('UNENTSCHEIDEN')
-    L.append('  (b) %s' % ('PASS' if ok_b else 'FAIL'))
-
-    res_c = evaluate(contract_t15_run1_bug(), measurements_t15_run2())
+    L.append('## Arm-Zahlen (aus dem Contract generiert)')
+    fehlen = []
+    for a in contract['arms']:
+        for g in contract['measures']:
+            key = '%s.%s' % (a['name'], g)
+            v = result['metrics'].get(key)
+            if v is None:
+                L.append('  %s = FEHLT' % key)
+                fehlen.append(key)
+            else:
+                L.append('  %s = %s'
+                         % (key, '%g' % v if isinstance(v, float) else v))
     L.append('')
-    L.append('TEST (c) T15-RUN1-DOPPELKEY (Generator muss verweigern):')
-    L.append('  bekommen: %s' % res_c['verdict'])
-    for al in res_c['alarms']:
-        L.append('  ALARM: %s' % al)
-    ok_c = (res_c['verdict'] == 'VERWEIGERT'
-            and any('DOPPELTE' in a for a in res_c['alarms']))
-    L.append('  (c) %s' % ('PASS' if ok_c else 'FAIL'))
-
-    L.append('')
-    if ok_a and ok_b and ok_c:
-        verdict = ('W1-PASS — Der Kernel reproduziert T15 (a), zeigt die '
-                   'T11-Stille-Normierung an (b), verweigert den '
-                   'T15-Run1-Doppelkey (c). P1 ANGENOMMEN.')
+    if fehlen:
+        L.append('## LUECKENLISTE: %s' % ', '.join(fehlen))
     else:
-        parts = [p for p, ok in (('a', ok_a), ('b', ok_b), ('c', ok_c)) if not ok]
-        verdict = ('W1-UNENTSCHEIDEN — Historien-Test nicht bestanden '
-                   '(%s). EINE Reparatur erlaubt, dann W1-Linie tot.'
-                   % '/'.join(parts))
-    L.append('VERDICT: ' + verdict)
-    L.append('=== FERTIG ===')
+        L.append('## LUECKENLISTE: KEINE — alle registrierten Groessen '
+                 'gemessen.')
     return '\n'.join(L)
-
-
-if __name__ == '__main__':
-    os.makedirs('results', exist_ok=True)
-    out = run_historien_test()
-    print(out)
-    with open('results/w1_kernel_historien_test.txt', 'w', encoding='utf-8') as fh:
-        fh.write(out + '\n')

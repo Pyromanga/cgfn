@@ -1,9 +1,8 @@
-name: cgfn-w1 (Lab-Kernel P1 Historien-Test)
+name: cgfn-w1 (Lab-Kernel P2 Historien-Test)
 
-# W1-P1 — Abnahme des Contract-Kernels AUSSCHLIESSLICH am Historien-Test
-# (T15-Wiedergabe, T11-Anzeige, T15-Run1-Doppelkey-Verweigerung).
-# Registrierung: analysis/W1_lab_kernel.md Abschnitt 4. Kein torch noetig —
-# reines Python, wenige Sekunden Laufzeit, Kontingent geschont.
+# W1-P2 — Vollausbau D/K/N + Architektur-Split (XVII Nachtrag 20).
+# Abnahme: Regression a/b/c + D-Diff + K-Gate + N-Skelett, alles
+# known-answer. Reines Python, Sekunden, Kontingent unberuehrt.
 on:
   workflow_dispatch:
   push:
@@ -21,18 +20,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Gate syntax-check kernel
+      - name: Gate syntax-check (Engine, Contracts, Tests)
         run: |
-          python -m py_compile tools/lab_kernel.py || { echo "[e] SYNTAX-FEHLER — Abbruch"; exit 1; }
+          python -m py_compile tools/lab_kernel.py contracts/t15.py contracts/t11.py tests/fixtures.py tests/run_historien_test.py || { echo "[e] SYNTAX-FEHLER — Abbruch"; exit 1; }
           echo "[i] syntax ok"
-      - name: Gate import-check kernel (runpy)
+      - name: Gate import-check Runner (runpy laedt Engine+Contracts+Fixtures)
         run: |
-          python -c "import runpy; runpy.run_path('tools/lab_kernel.py', run_name='not_main')" || { echo "[e] IMPORT/LOAD-FEHLER — Abbruch"; exit 1; }
+          python -c "import runpy; runpy.run_path('tests/run_historien_test.py', run_name='not_main')" || { echo "[e] IMPORT/LOAD-FEHLER — Abbruch"; exit 1; }
           echo "[i] import ok"
-      - name: Run W1 Historien-Test
+      - name: Run W1 P2 Historien-Test
         run: |
           set -o pipefail
-          python tools/lab_kernel.py 2>&1 | tee results/w1_run.log
+          python tests/run_historien_test.py 2>&1 | tee results/w1_run.log
       - name: Commit results to repo
         if: always()
         run: |
