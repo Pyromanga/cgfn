@@ -479,3 +479,20 @@ entgegengesetzte Antriebs-Geometrie.
      Struktur-Variable (Antriebs-Verteilung), entdeckt als
      Nebenprodukt des gescheiterten Transfers.
 Ende der T-Serie. Kapitel geschlossen mit der Regime-Karte v2.
+
+
+---
+
+# Nachtrag 9 (2026-11-08): T9 — UNENTSCHEIDEN (Sanity gerissen); Instrument-Diagnose: kohaerenter Moden-Antrieb verhungert bei JEDEM d
+
+## T9 (Antriebs-Rang d in {2,4,8,16,48}, Seeds 80..89, W=T6-B60-Familie fix, DM 13.8515 exakt konstant)
+Alle 5 Arme: P_lernt = 0.00, Paritaet bei Chance (0.4785/0.5215), 0 Divergenzen, DM-Streuung exakt 0. VERDICT: UNENTSCHEIDEN — Sanity gerissen (auch d=48 lernt nicht, Instrument defekt gegenueber T6-Basis). Registriert: EINE Reparatur erlaubt (neue Linie) — angetreten als T9b. Laufzeit 12.4 min, Run-Protokoll sauber (Run-1-Crash: NameError math vor Fix; Run-2: Infra-Tod vor Script-Start, kein Log; Run-3 sauber).
+
+## Sekundaer, aber scharf: die MC-Kurve
+MC steigt STRICT MONOTON mit d: 0.7775 (d=2), 0.8976 (4), 1.3535 (8), 1.6526 (16), 1.7047 (48) — bei konstantem DM und konstanter Energie pro Kanal. Im Reservoir-Ridge-Regime ist breite Moden-Abdeckung ALSO GUT: P2 (MC(2) >= 0.90*MC(48)) verfehlt klar (0.78 < 1.53). Erste direkte Evidenz RICHTUNG KILL-B: Diffusion ist auch fuer die Ridge-Ernte gut — der G8-Konzentrations-Vorteil (U=Q[:,0]) ist im weissen 2-Kanal-Antrieb nicht reproduzierbar.
+
+## Instrument-Diagnose (der eigentliche Ertrag)
+T9 vergass den T6-Referenzpunkt im selben Lauf: T6 lernt mit Koordinaten-Zufalls-Antrieb (Uw = 0.5*randn(H,2), beide Kanaele ueber alle 48 Einheiten, Phasen zufaellig) bei P_lernt 0.70-0.80. T9s Antrieb v_c = R[:,subset] @ ones/sqrt ist pro Kanal RANG-1 in die Eigenbasis, Kanaele mod-getrennt (Kanal 0 -> erste, Kanal 1 -> letzte d/2 Moden), Phasen kohaerent. Selbst d=48 ist KEINE Diffusion im T6-Sinn: keine Phasenmischung, kein Kanal-Overlap, keine Kopplung an den Koordinaten-Anker der tanh. Der Knopf drehte an der Moden-ZAHL, aber die Lernbarkeit haengt vermutlich an RICHTUNG/PHASE. Testbar in einem Lauf.
+
+## T9b (Reparatur-Linie, registriert VOR dem Lauf)
+Arme: REF (exaktes T6-Instrument: Uw = 0.5*randn(H,2)) als Lernbarkeits-Sanity + die T9-d-Familie UNVERAENDERT (W T6-B60 pro Seed fix, Spektrum fix, b = 0.1*randn fix, Energie pro Kanal 0.5). SANITY: P_lernt(REF) >= 0.5, sonst UNENTSCHEIDEN und Serie-Post-Mortem (KEINE weitere Paritaets-Reparatur). PRIMAER: P1 P_lernt(48)-P_lernt(2) >= 0.3; P2 MC(2) >= 0.90*MC(48). PASS = Sanity UND P1 UND P2 (Doppeldissoziation: Training braucht Moden-Abdeckung, Ridge braucht sie nicht). KILL-A: P_lernt(2) >= 0.5 (Konzentration trainiert, Verhungerungs-Story falsch). KILL-B: P1 UND nicht P2 (auch Reservoir leidet — Diffusion universell; T9-MC-Kurve deutet hierher). KILL-C (NEU, die Phasen-Wette): Sanity JA, P1 NEIN — Lernbarkeit ist KEINE Funktion der Moden-Abdeckung; ist zusaetzlich P_lernt(48) = 0, verhungert JEDE kohaerente Eigenmoden-Summe: Es ist die RICHTUNG, nicht die ZAHL (Verhungerungs-These verfeinert, T8/T8b vollstaendig erklaert). Sekundaer: MC(REF) vs MC(d)-Kurve, DM, Laufzeit. Seeds 90..99. Workflow-Gate erweitert: Import-Check via runpy (run_name != __main__) nach pip, schliesst die py_compile-Blindstelle (fehlende Imports).
