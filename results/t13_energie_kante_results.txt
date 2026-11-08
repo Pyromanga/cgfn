@@ -1,0 +1,45 @@
+======================================================================================================================
+T13 — ENERGIE-KANTE: NORMEN-SWEEP x GEOMETRIE
+(registriert: Sanity P_lernt(REF)>=0.5; P1 Kante (REFGEOM 1.0=0, 3.5>=0.5);
+P2 Geometrie-frei (Diff <= 0.3 fuer alle s); PASS = Sanity UND P1 UND P2;
+KILL-A = P2 verletzt; KILL-B = keine scharfe Kante; Seeds 130..139, f64)
+======================================================================================================================
+
+Arm REF: n_ok=10/10 | P_lernt=0.50 | median acc=0.5215 | median MC=1.6927 | DM=13.8110 | div=0
+  Parity-Seeds: 130:0.5215, 131:0.5020, 132:0.5215, 133:1.0000, 134:1.0000, 135:1.0000, 136:0.4854, 137:0.4785, 138:1.0000, 139:1.0000
+
+Arm REFGEOM_1.0: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.7299 | DM=13.8110 | div=0
+  Parity-Seeds: 130:0.5215, 131:0.5215, 132:0.5215, 133:0.4785, 134:0.5020, 135:0.4785, 136:0.4971, 137:0.4785, 138:0.4785, 139:0.4785
+
+Arm REFGEOM_2.0: n_ok=10/10 | P_lernt=0.00 | median acc=0.5020 | median MC=1.7459 | DM=13.8110 | div=0
+  Parity-Seeds: 130:0.5215, 131:0.5098, 132:0.5215, 133:0.4980, 134:0.4854, 135:0.4785, 136:0.5215, 137:0.4785, 138:0.5020, 139:0.5146
+
+Arm REFGEOM_3.5: n_ok=10/10 | P_lernt=0.70 | median acc=1.0000 | median MC=1.7319 | DM=13.8110 | div=0
+  Parity-Seeds: 130:1.0000, 131:0.4854, 132:1.0000, 133:0.4980, 134:1.0000, 135:1.0000, 136:1.0000, 137:0.4785, 138:1.0000, 139:1.0000
+
+Arm KOHGEOM_1.0: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.7183 | DM=13.8110 | div=0
+  Parity-Seeds: 130:0.5215, 131:0.5215, 132:0.5215, 133:0.4785, 134:0.5020, 135:0.4785, 136:0.4785, 137:0.4785, 138:0.5195, 139:0.4785
+
+Arm KOHGEOM_2.0: n_ok=10/10 | P_lernt=0.10 | median acc=0.4980 | median MC=1.7150 | DM=13.8110 | div=0
+  Parity-Seeds: 130:0.5215, 131:0.4785, 132:0.5215, 133:0.4980, 134:0.5029, 135:0.4785, 136:1.0000, 137:0.4785, 138:0.4980, 139:0.4980
+
+Arm KOHGEOM_3.5: n_ok=10/10 | P_lernt=0.50 | median acc=0.5215 | median MC=1.6949 | DM=13.8110 | div=0
+  Parity-Seeds: 130:0.5215, 131:1.0000, 132:0.5215, 133:1.0000, 134:1.0000, 135:0.4785, 136:1.0000, 137:0.4785, 138:0.4980, 139:1.0000
+
+--- T13-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+REF: P_lernt=0.50 median acc=0.5215 median MC=1.6927 DM=13.8110
+REFGEOM_1.0: P_lernt=0.00 median acc=0.4785 median MC=1.7299 DM=13.8110
+REFGEOM_2.0: P_lernt=0.00 median acc=0.5020 median MC=1.7459 DM=13.8110
+REFGEOM_3.5: P_lernt=0.70 median acc=1.0000 median MC=1.7319 DM=13.8110
+KOHGEOM_1.0: P_lernt=0.00 median acc=0.4785 median MC=1.7183 DM=13.8110
+KOHGEOM_2.0: P_lernt=0.10 median acc=0.4980 median MC=1.7150 DM=13.8110
+KOHGEOM_3.5: P_lernt=0.50 median acc=0.5215 median MC=1.6949 DM=13.8110
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+SANITY (REF lernt, P_lernt(REF)=0.50 >= 0.5?): JA
+P1 (Kante): P_lernt(REFGEOM,1.0)=0.00 (=0?) und P_lernt(REFGEOM,3.5)=0.70 (>=0.5?)
+P2 (Geometrie-frei): Diffs je s: s=1.0: 0.00, s=2.0: 0.10, s=3.5: 0.20 (max=0.20 <= 0.3?)
+Uebergang s=2.0: REFGEOM=0.00 KOHGEOM=0.10 (weicher Zwischenbereich 0.2-0.5?)
+Sanity: Divergenzen gesamt=0 (JA)
+
+VERDICT: PASS — ENERGIE-KANTE BEWIESEN: Eine gemeinsame scharfe Kante in der Antriebsnorm trennt tot von lernbar, und die Geometrie (iid vs kohaerent) verschiebt sie nicht (max. Diff 0.20). Energie ist DER Trainings-Knopf dieser Serie; oberhalb der Kante ist die Antriebs-Geometrie gleichgueltig. Uebergangspunkt s=2.0: REFGEOM 0.00, KOHGEOM 0.10.
+=== FERTIG ===
