@@ -694,3 +694,81 @@ REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
   SEKUNDAER: P_lernt der CHANSEP/CHANOVLP/ENTROP-E-Arme (T11-Frage bei
     richtiger Energie), MC je Arm, median acc, DM, Laufzeit.
   Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
+
+
+---
+
+# Nachtrag 13 (2026-11-08): T12 — PASS (P-ENERGIE). Die Verhungerungs-Story war die ENERGIE. Groesste Selbstkorrektur der Serie. Literatur-Einordnung. T13-Registrierung (Energie-Kante).
+
+## T12 (REF / AMPNEG / KOH48E / CHANSEP-E / CHANOVLP-E / ENTROP-E, Seeds 120..129, DM 13.3764 exakt konstant)
+SANITY: REF 0.80. AMPNEG (E=0.25): 0.00 — Negativkontrolle sitzt exakt. KOH48E
+(kohaerente 48-Moden-Konstruktion auf REF-Energie E~12): P_lernt 0.80 — DIE
+KOHAERENTE RICHTUNG LERNT. CHANSEP-E 0.70, CHANOVLP-E 1.00, ENTROP-E 0.60:
+Bei voller Energie lernen ALLE Geometrien. VERDICT: PASS — P-ENERGIE.
+
+## Was faellt und was bleibt
+- GEFALLEN: Die Richtungs-Story von Nachtrag 10/11 (T9b KILL-C, T10 KILL-B) ist
+  als Energie-Konfund entlarvt (E=0.25 vs E=12 lief seit T9b ungewollt
+  nebeneinander). T8/T8b (G8-Transfer, 0/50) sind jetzt Ebenfalls
+  energie-verdaechtig (deren Antrieb hatte ebenfalls Spaltennorm 0.5).
+- UNANGREIFBAR: (1) MC-Moden-Abdeckungs-Kurve (T9/T9b: Energie dort KONSTANT
+  0.25 ueber alle d-Arme — die Monotonie 0.78->1.70 ist echt). (2) MC ist
+  energie-robust (T12: AMPNEG-MC 1.67 vs REF-MC 1.69 bei 48x Energie-
+  unterschied) UND richtungs-robust (T10: Spread < 3%). MC zaehlt Moden, egal
+  wie hart man sie treibt. (3) DM-Knopf (T6), Budget-Kurve (T6),
+  Symmetrie-Theorem (T2b), Bias-Lotto (T2b). (4) Neue Karte: TRAINING haengt
+  an der Antriebs-ENERGIE (Kante zwischen tot und lernbar, Faktor ~7 in der
+  Norm gemessen: 0.5 tot, 3.46 lernt), Geometrie oberhalb der Kante fast egal.
+
+## Mechanismus-Hypothese (testbar, verknuepft mit eigenem T2b-Theorem)
+Bei kleiner Antriebsenergie bleibt tanh(z+b) im linearen Regime -> das Netz
+ist effektiv linear -> mit linearem Readout ist Paritaet provabel unloesbar
+(T2b-Symmetrie-Theorem). Die Energie-Kante ist vermutlich die Kante zwischen
+linearem und nichtlinearem Betrieb (tanh-Saettigung ab ~z=1...3).
+
+## Literatur-Einordnung (Recherche 2026-11-08, ehrliche Einbettung)
+- Input-Scaling ist bekanntes Folklore im Reservoir-Computing: Lukosevicius
+  (Practical Guide to ESNs) nennt Input-Skalierung als wichtigen getunten
+  Hyperparameter; Hyperparameter-Studien (Matzner 2022) behandeln input
+  scale als wirksamen Knopf.
+- Die Echo-State-Eigenschaft ist an die Input-Staerke gekoppelt: Manjunath &
+  Jaeger (Neural Computation 25(3), 2013) leiten ein 0-1-Gesetz her, das die
+  ESP direkt an statistische Eigenschaften des treibenden Inputs bindet.
+- MC haengt an der Input-Skala (Barancok & Farkas, ICANN 2014).
+- NICHT gefunden (und damit unser eigener Zusatz): die quantitative
+  Dissoziation "scharfe Trainierbarkeits-Kante bei konstantem W, Geometrie
+  oberhalb der Kante gleichgueltig (kohaerent vs iid vs Vorzeichen)" und die
+  Verknpfung an ein Symmetrie-Unloesbarkeits-Theorem als Mechanismus.
+  Einordnung: Quantisierung und Verschaerfung bekannten Folklores ("drive
+  muss die Nichtlinearitaet wecken"), kein grundsaetzlich neues Gesetz —
+  aber die Geometrie-Freiheit oberhalb der Kante ist ein eigenstaendiger
+  scharfer Befund.
+- Verwandte grosse Literatur-Linie ausserhalb des Reservoir-Kontexts:
+  lazy/kernel- vs feature-learning-Regime (muP, Yang et al.): Skalen-
+  Kanten zwischen "nichts lernen" und "Struktur lernen" sind auch dort
+  zentral. Unsere Kante ist ein dynamisches Pendant auf der Antriebsseite.
+
+## T13 (ENERGIE-KANTE, registriert VOR dem Lauf)
+Sieben Arme, W T6-B60 pro Seed fix (DM exakt konstant), b=0.1*randn fix,
+Seeds 130..139 (frisch), f64, Masse identisch T3/T7/T12.
+  REF: 0.5*randn(H,2) UNNORMIERT — SANITY (P_lernt >= 0.5, sonst
+    UNENTSCHEIDEN, Serie-Post-Mortem).
+  Sechs Sweep-Arme: Spaltennorm s in {1.0, 2.0, 3.5} x Geometrie
+  {REFGEOM (iid Gauss, exakt auf s normiert), KOHGEOM (kohaerente
+    48-Moden-Summen, exakt auf s normiert)}.
+REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
+  P1 (KANTE): P_lernt(REFGEOM, s=1.0) = 0 UND P_lernt(REFGEOM, s=3.5) >= 0.5
+    (Schwellverhalten in der iid-Familie; Randpunkte aus T12 erwartet).
+  P2 (GEOMETRIE-FREI): |P_lernt(KOHGEOM, s) - P_lernt(REFGEOM, s)| <= 0.3
+    fuer ALLE s in {1.0, 2.0, 3.5}.
+  PASS (ENERGIE-KANTE): Sanity UND P1 UND P2: Eine gemeinsame, scharfe Kante;
+    Geometrie verschiebt sie nicht (Energie ist DER Trainings-Knopf).
+  KILL-A (2D-KARTE NOETIG): P2 verletzt — die Geometrie verschiebt die Kante.
+  KILL-B (KEINE KANTE): P1 verletzt ausserhalb der erwarteten Randpunkte
+    (z.B. REFGEOM bei s=3.5 < 0.5, Serie-Inkonsistenz) ODER der Uebergang
+    ist weich: P_lernt(s=2.0) fuer BEIDE Geometrien im 0.2-0.5-Zwischen-
+    bereich ohne scharfen Sprung — dann ist es eine Kurve, kein Schalter.
+  UNENTSCHEIDEN: Sanity gerissen, >3/10 Divergenzen, DM-Verletzung.
+  SEKUNDAER: MC je Arm (erwartet flach ~1.6-1.8 — MC bleibt energie-robust),
+    median acc, DM, Laufzeit.
+  Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
