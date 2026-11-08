@@ -1,0 +1,31 @@
+======================================================================================================================
+T11 — KANAL-STRUKTUR-ZERLEGUNG: OVERLAP, TRAEGER, VORZEICHEN
+(registriert: Sanity P_lernt(REF)>=0.5; PASS wenn CHANOVLP>=0.5 und CHANSEP=0;
+KILL-A wenn CHANSEP>=0.5; KILL-B wenn ENTROP>=0.5 und CHANSEP=CHANOVLP=0;
+KILL-C wenn alle drei <0.5; Seeds 110..119, f64)
+======================================================================================================================
+
+Arm REF: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.7227 | DM=13.4848 | div=0
+  Parity-Seeds: 110:0.5215, 111:0.5215, 112:0.4785, 113:0.5215, 114:0.5215, 115:0.4785, 116:0.5215, 117:0.4785, 118:0.4785, 119:0.4785
+
+Arm CHANSEP: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.7072 | DM=13.4848 | div=0
+  Parity-Seeds: 110:0.5215, 111:0.5215, 112:0.4785, 113:0.5215, 114:0.5215, 115:0.4785, 116:0.5215, 117:0.4785, 118:0.4785, 119:0.4785
+
+Arm CHANOVLP: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.6621 | DM=13.4848 | div=0
+  Parity-Seeds: 110:0.5215, 111:0.5215, 112:0.4785, 113:0.5215, 114:0.5215, 115:0.4785, 116:0.5215, 117:0.4785, 118:0.4785, 119:0.4785
+
+Arm ENTROP: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.7185 | DM=13.4848 | div=0
+  Parity-Seeds: 110:0.5215, 111:0.5215, 112:0.4785, 113:0.5215, 114:0.5215, 115:0.4785, 116:0.5215, 117:0.4785, 118:0.4785, 119:0.4785
+
+--- T11-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+REF: P_lernt=0.00 median acc=0.4785 median MC=1.7227 DM=13.4848
+CHANSEP: P_lernt=0.00 median acc=0.4785 median MC=1.7072 DM=13.4848
+CHANOVLP: P_lernt=0.00 median acc=0.4785 median MC=1.6621 DM=13.4848
+ENTROP: P_lernt=0.00 median acc=0.4785 median MC=1.7185 DM=13.4848
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+SANITY (REF lernt, P_lernt(REF)=0.00 >= 0.5?): NEIN
+P_lernt(CHANSEP)=0.00 | P_lernt(CHANOVLP)=0.00 | P_lernt(ENTROP)=0.00
+Sanity: Divergenzen gesamt=0 (JA)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT (P_lernt(REF) < 0.5): Serie-Post-Mortem; KEINE weitere Paritaets-Reparatur dieser Linie.
+=== FERTIG ===
