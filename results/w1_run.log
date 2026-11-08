@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 308, in <module>
+    out = run_historien_test()
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 260, in run_historien_test
+    res = evaluate(contract_t15(), measurements_t15_run2())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 132, in evaluate
+    if not all(_eval_pred(p, metrics) for p in rule['predicate']):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 132, in <genexpr>
+    if not all(_eval_pred(p, metrics) for p in rule['predicate']):
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/cgfn/cgfn/tools/lab_kernel.py", line 105, in _eval_pred
+    return {
+           ^
+TypeError: 'bool' object is not callable
