@@ -622,3 +622,75 @@ REGISTRIERUNG (GENAGELT):
   UNENTSCHEIDEN: Sanity gerissen, >3/10 Divergenzen, DM-Verletzung.
   SEKUNDAER: MC je Arm, median acc, DM, Laufzeit.
   Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
+
+
+---
+
+# Nachtrag 12 (2026-11-08): T11 — UNENTSCHEIDEN durch MEINEN Instrument-Bug (unregistrierte Amplituden-Aenderung am REF). Nebenbefund: Die Antriebs-ENERGIE ist ein massiver eigener Knopf.
+
+## T11 (REF / CHANSEP / CHANOVLP / ENTROP, Seeds 110..119, DM 13.4848 exakt konstant)
+Alle 4 Arme P_lernt = 0.00 — auch REF. VERDICT: UNENTSCHEIDEN — Sanity gerissen.
+Die T11-Kanal-Struktur-Frage ist damit NICHT beantwortet; registriert: KEINE weitere
+Paritaets-Reparatur dieser Linie. T11-Linie tot.
+
+## Ursache — Mea culpa, klares Fehlverhalten gegen die eigene Kernregel
+Die T11-Registrierung nannte REF: "Uw = 0.5*randn(H,2)" (die bewaehrte
+T6/T9b/T10-Konvention, UNNORMIERT, Spaltennorm ~ 0.5*sqrt(48) ~ 3.46). Ich habe im
+T11-Code alle Spalten stillschweigend auf exakte Norm 0.5 normiert ("Energie-
+Konvention vereinheitlichen") — ohne die Aenderung zu registrieren oder zu
+dokumentieren. Damit hatte REF ~48x weniger Antriebsenergie als jede bewaehrte
+Referenz und verhungerte wie jede andere Verhungerungs-Konfiguration. Ein Sanity-
+Arm, den man nicht wortgetreu implementiert, misst nichts. Lehre (ergaenzend zur
+Freeze-Regel): Nicht nur die THESE ist genagelt — jede Abweichung vom bewaehrten
+Referenz-Code im Sanity-Arm ist ein Instrument-Bug, auch wenn sie "sauberer"
+aussieht.
+
+## Nebenbefund (ungeplant, Zwei-Punkt, kontrolliert durch T12):
+  iid-Gauss-Spalten, Norm 0.5 (T11-REF): P_lernt 0.00.
+  iid-Gauss-Spalten, Norm ~3.46 (T9b-REF 0.90, T10-REF 0.70): lernt.
+Die Antriebs-ENERGIE ist ein massiver eigener Knopf der Trainierbarkeit — neben
+der Richtungs-Struktur (T9b/T10: KILL-C/KILL-B). Wohlgemerkt: Bei T9/T9b/T10
+war die Energie pro Kanal als "konstant 0.5" registriert und gemeint war die
+kohaerente Konstruktion (Spaltennorm 0.5 dort: 0.5*v mit ||v||=1); REF war
+stets unnormiert. Die zwei Energie-Regime lagen also seit T9b NEBENEINANDER im
+selben Experiment: REF (E~12) lernte, KOH-d-Familie (E=0.25) verhungerte — ein
+Teil des T9b/T10-Kontrasts KOENNTE die Energie sein, nicht nur die Richtung!
+Das ist eine ernste, ehrliche Relativierung: Die Richtungs-Story (Nachtraege
+10/11) ist mit einem Energie-Konfund belastet. T12 trennt beide Knarren.
+
+## T12 (ENERGIE- UND KANAL-ZERLEGUNG, registriert VOR dem Lauf)
+Sechs Arme, W T6-B60 pro Seed fix, b=0.1*randn fix, Seeds 120..129 (frisch),
+f64, Masse identisch T3/T7/T10/T11. Spaltennorm-Konventionen GENAGELT:
+  REF: 0.5*randn(H,2) UNNORMIERT (bewaehrte Konvention) — SANITY >= 0.5.
+  AMP-NEG: REF-Spalten exakt auf Norm 0.5 skaliert (= T11-REF-Replikation) —
+    registrierte Negativkontrolle: erwartet P_lernt = 0. Wenn AMP-NEG >= 0.5,
+    ist die Energie-Story widerlegt und T11 war ein anderes Artefakt.
+  KOH48E: kohaerente Moden-Summen (T9-Konstruktion), aber auf REF-Energie
+    hochskaliert (Spaltennorm exakt 0.5*sqrt(48)): trennt, ob die T9/T9b/
+    T10-Verhungerung der kohaerenten Arme die RICHTUNG war oder die ENERGIE.
+    DAS ist der entscheidende Arm des Laufs.
+  CHANSEP-E, CHANOVLP-E, ENTROP-E: die T11-Zerlegungs-Arme, jeweils auf
+    Spaltennorm exakt 0.5*sqrt(48) hochskaliert (CHANSEP/CHANOVLP: iid Gauss
+    auf getrennten/gemeinsamen 24er-Haelften; ENTROP: iid Vorzeichen / sqrt(H),
+    skaliert auf volle Norm).
+REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
+  SANITY: P_lernt(REF) >= 0.5, sonst UNENTSCHEIDEN (Serie-Post-Mortem, Ende
+    der Kanal-/Energie-Linie).
+  AMP-NEG-NEGATIVKONTROLLE (VOR der Primaer-Auswertung, berichtet):
+    erwartet P_lernt(AMP-NEG) = 0; wenn >= 0.5: ENERGIE-STORY WIDERLEGT
+    (Berichtspflicht, veraendert die Interpretation von KOH48E).
+  PRIMAER (P-ENERGIE, die eine These): P_lernt(KOH48E) >= 0.5 — die
+    Verhungerung der kohaerenten Arme war die ENERGIE, nicht die Richtung.
+    Dann sind Nachtraege 10/11 relativiert: Der Richtungs-Kontrast
+    REF-vs-KOH war ein Energie-Konfund (ehrliche Selbstkorrektur).
+  KILL-A (RICHTUNGS-STORY HAELT): P_lernt(KOH48E) = 0 UND P_lernt(KOH48) = 0
+    (bekannt aus T9/T9b/T10) — die Energie-Substitution rettet die kohaerente
+    Richtung nicht: Die Richtungs-Story von Nachtrag 10/11 bleibt stehen,
+    jetzt ENERGIE-BEREINIGT. Die T11-Frage (CHANSEP/CHANOVLP/ENTROP-E)
+    wird sekundaer berichtet.
+  KILL-B (MISCHUNG): P_lernt(KOH48E) in (0, 0.5): Energie verschiebt, Richtung
+    moduliert — beide Knarren tragen.
+  UNENTSCHEIDEN: Sanity gerissen, >3/10 Divergenzen, DM-Verletzung.
+  SEKUNDAER: P_lernt der CHANSEP/CHANOVLP/ENTROP-E-Arme (T11-Frage bei
+    richtiger Energie), MC je Arm, median acc, DM, Laufzeit.
+  Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
