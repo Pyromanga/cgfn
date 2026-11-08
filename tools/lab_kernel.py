@@ -2,7 +2,15 @@
 '''W1 P1 — LAB-KERNEL: Contract-Generator + Invarianten-Audit
 (Registrierung: analysis/W1_lab_kernel.md, Abschnitt 4; P1-Umfang: C+A)
 
-REPARATUR-PROTOKOLL (Run-1-Crash, 12s): Der Run-1-Push enthielt im
+PROTOKOLL: Run-1-Crash (12s, Schreib-Artefakt: aufgeloeste \n im
+String-Literal — Gates fingen es, kein Design-Schaeden). Run-2-Crash
+(laufend): _eval_pred rief einen bereits berechneten bool auf
+("TypeError: bool object is not callable") — DIE EINE registrierte
+Reparatur der W1-Linie (W1-Abschnitt 4: UNENTSCHEIDEN -> EINE Reparatur,
+dann tot). Fix: () hinter dem Dict-Lookup entfernt. Design, Contract,
+Test, Registrierung unveraendert. Run-3 ist der letzte Versuch.
+
+ALTER PROTOTOKOLL-TEXT (Run-1): Der Run-1-Push enthielt im
 Datei-Inhalt zwei aufgeloeste \n-Zeichen innerhalb von String-Literalen
 (return '\n'.join(L), fh.write(out + '\n')) — Schreib-Artefakt des Push-
 Wegs, kein Design-Defekt. Die py_compile-Gates fingen es ab (0 verbrannte
@@ -109,7 +117,7 @@ def _eval_pred(pred, metrics):
         'ge': m >= pred['value'],
         'lt': m < pred['value'],
         'le': m <= pred['value'],
-    }[pred['op']]()
+    }[pred['op']]
 
 
 def evaluate(contract, measurements):
