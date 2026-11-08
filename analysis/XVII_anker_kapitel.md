@@ -931,3 +931,42 @@ REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
     DM-Verletzung INNERHALB eines H.
   SEKUNDAER: median acc, DM je H, Laufzeit.
   Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
+
+
+---
+
+# Nachtrag 16 (2026-11-08): T15 Run-1 — UNENTSCHEIDEN (Crash-Klasse): Instrument-Bug im AUSWERTUNGS-READOUT (REF-Doppelschluessel). Mea culpa. Rerun mit unveraendertem Design gefeuert.
+
+## T15 Run-1 (8 Arme, Seeds 150..159, Lauf 18:32-18:58 UTC, 0 Divergenzen)
+VERDICT (Run-1): UNENTSCHEIDEN (Crash-Klasse) — gemeldet: DM-Konstanz
+innerhalb eines H verletzt. FEHLALARM aus dem READOUT: stats[] ist nach
+Arm-NAMEN geschlossen; REF24 und REF96 teilen den Schluessel 'REF',
+REF96 ueberschreibt REF24 (laeuft in ARMS nach H=24). Die Auswertung liest
+fuer H=24 DM=20.6678 (den H=96-Wert) und rennt gegen die R24-Arme mit
+DM=7.5793 -> scheinbare Verletzung. Die ARM-Sektionen sind sauber:
+REF24 DM=7.5793 exakt wie alle R24-Arme, REF96 DM=20.6678 exakt wie alle
+R96-Arme — DM-Konstanz INNERHALB jedes H sitzt per Konstruktion. Der
+Doppeleintrag war im Vorfeld als kleine Unsauberheit notiert und hat
+zugeschlagen. Lehre von T11 in der zweiten Auflage: JEDE Abweichung vom
+bewaehrten Referenz-Muster ist ein Instrument-Bug — hier nicht im
+Sanity-Arm, sondern im Auswertungs-Readout.
+
+## Run-1-Arm-Daten (gueltige Messungen; deterministische Seeds -> im Rerun identisch erwartet)
+  REF24: P_lernt 0.80 | REF96: P_lernt 1.00 — SANITY je H sitzt.
+  H=24: s=2.0: 0.70, s=3.5: 0.90, s=4.9: 1.00.
+  H=96: s=2.0: 0.10, s=3.5: 0.60, s=4.9: 0.80.
+  0 Divergenzen in allen 8 Armen; DM je H exakt konstant.
+Vorblick (kein Verdikt, nur Lesart der Messungen): Der Uebergang ist an
+H=24/96 eine RAMPE, kein Schalter (H=24 lernt schon bei s=2.0 mit 0.70 —
+die scharfe T13-Kante bei H=48 repliziert sich NICHT als scharfe Null
+unterhalb 0.5*sqrt(H)). Aber die Ordnung P(H=24) > P(H=96) bei JEDEM
+festen s (0.70/0.10, 0.90/0.60, 1.00/0.80) traegt die sqrt(H)-RICHTUNG:
+hoeheres H braucht mehr Norm. Formales Verdikt erst in Nachtrag 17 nach
+dem Rerun (registrierte Kriterien, keine Nachverhandlung).
+
+## Rerun (registriert: Design UNVERAENDERT, nur Readout-Reparatur)
+Mess-Arme, Seeds, Masse, Registrierung und VERDICT-Logik unangetastet.
+Einzige Aenderungen: REF-Arme werden getrennt verschluesselt (REF24/
+REF96); der redundante s_ref24-Patz entfernt. Deterministische Seeds ->
+identische Arm-Zahlen erwartet, nur der Readout korrigiert. Bewahrung:
+Rerun nur bei Crash — Crash-Klasse lag vor (Instrument-Bug).
