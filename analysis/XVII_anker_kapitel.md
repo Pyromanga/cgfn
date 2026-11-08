@@ -772,3 +772,80 @@ REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
   SEKUNDAER: MC je Arm (erwartet flach ~1.6-1.8 — MC bleibt energie-robust),
     median acc, DM, Laufzeit.
   Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
+
+
+---
+
+# Nachtrag 14 (2026-11-08): T13 — PASS (ENERGIE-KANTE). Die Kante liegt zwischen Norm 2.0 und 3.5, ist scharf und geometrie-frei. REF sitzt knapp oberhalb. T14-Registrierung (Mechanismus-Beweis).
+
+## T13 (REF + 6 Sweep-Arme s in {1.0, 2.0, 3.5} x {REFGEOM iid, KOHGEOM kohaerent}, Seeds 130..139, DM 13.8110 exakt konstant)
+P_lernt: REFGEOM 0.00 / 0.00 / 0.70; KOHGEOM 0.00 / 0.10 / 0.50; REF (unnnormiert
+~3.46) 0.50. P1 (Kante) JA, P2 (Geometrie-frei, max Diff 0.20 <= 0.3) JA,
+Sanity JA (knapp). VERDICT: PASS — ENERGIE-KANTE BEWIESEN.
+
+## Der Befund
+1. Die Kante ist SCHARF: 0 -> 0.5..0.7 innerhalb Faktor 1.75 in der Norm
+   (E=4 -> E=12). Kein gleitender Uebergang, ein Regime-Schalter.
+2. Die Geometrie verschiebt die Kante NICHT (kleiner Trend: kohaerent im
+   Uebergang leicht zurueck, aber unter der Registrierungsschwelle 0.3).
+3. REF SELBST SITZT KNAPP OBERHALB DER KANTE (unnnormiert ~3.46, P 0.50 vs
+   REFGEOM exakt-normiert 3.5 mit 0.70). Retroaktive Aufklaerung: Die REF-
+   Lotterei der Serie (0.50 in T9b/T10... 0.70-0.90) ist Kanten-Balancieren.
+4. MC flach (1.69-1.75) ueber alle Normen: Das Reservoir ist energie-robust,
+   das Training lebt von der Energie. Dissoziation dreifach: Energie
+   (T12/13), Richtung (T10), Norm-Sweep (T13).
+
+## Karte nach T13 (Regime-Karte v4)
+  TRAINING (BPTT, Adam, konstantes W-Regime):
+    - PRIMAER-KNOPF: Antriebs-ENERGIE mit scharfer Kante zwischen Norm 2.0
+      und 3.5 (E=4..12). Oberhalb: lernt (0.5-1.0). Unterhalb: tot (0.0-0.1).
+    - Geometrie des Antriebs: oberhalb der Kante fast gleichgueltig
+      (iid/kohaerent/Vorzeichen/kohaerent-Moden alle 0.5-1.0 in T12).
+    - DM-Knopf (T6) bleibt: Er moduliert INNERHALB des lernbaren Regimes.
+  RESERVOIR-RIDGE: MC = Funktion der Moden-Abdeckung (T9/T9b, energie-
+    konstant); energie-robust (T12/13) UND richtungs-robust (T10).
+  GEFALLEN (endgueltig): Die Richtungs-Verhungerungs-Story (Nachtraege 8/10/
+  11) war ein Energie-Konfund. T8/T8b sind energie-verdaechtig.
+
+## Mechanismus-Hypothese (seit Nachtrag 13, jetzt entscheidbar)
+Sub-Kante bleibt tanh(z+b) im linearen Regime -> effektives lineares Netz ->
+mit linearem Readout ist Paritaet nicht repraesentierbar (T2b-Linie) -> tot.
+Die Kante = Eintritt ins nichtlineare Regime (z+Betraege muessen ~1..3
+erreichen, tanh-Saettigung ab ~1).
+
+## T14 (MECHANISMUS-BEWIES-VERSUCH, registriert VOR dem Lauf)
+Sechs Arme, W T6-B60 pro Seed fix (nur in den ID/RELU-Armen wird die
+AKTIVIERUNG geaendert, W bleibt trainierbar wie immer), b=0.1*randn fix,
+Seeds 140..149 (frisch), f64, Masse identisch T3/T12/T13.
+  REF: 0.5*randn(H,2) UNNORMIERT, tanh — SANITY (P_lernt >= 0.5).
+  T3.5: REFGEOM exakt Norm 3.5, tanh — Positiv-Kontrolle (erwartet >= 0.5).
+  T1.0: REFGEOM exakt Norm 1.0, tanh — Negativ-Kontrolle (erwartet 0).
+  ID3.5: Aktiviierung IDENTITY (tanh -> identity), REFGEOM Norm 3.5 —
+    KERN-ARM: rein lineares RNN, W trainierbar. Erwartung: 0 bei jeder
+    Energie, wenn die Linearitaets-Story stimmt.
+  ID10: IDENTITY, REFGEOM Norm 10 — teste, dass selbst brute-force Energie
+    ein lineares Netz nicht rettet.
+  R3.5: RELU-Aktiviierung (tanh -> relu), REFGEOM Norm 3.5 — nichtlineare
+    Kontrolle: ReLU ist nicht-ungerade; wenn die Nichtlinearitaet (nicht
+    die tanh-Form) zaehlt, lernt auch R3.5.
+REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
+  SANITY: P_lernt(REF) >= 0.5 UND P_lernt(T3.5) >= 0.5 UND
+    P_lernt(T1.0) = 0, sonst UNENTSCHEIDEN (Instrument inkonsistent zur
+    T12/T13-Basis, Serie-Post-Mortem).
+  PASS (P-MECH, die eine These): P_lernt(ID3.5) = 0 UND P_lernt(ID10) = 0
+    UND P_lernt(R3.5) >= 0.5: Die Nichtlinearitaet ist NOTWENDIG (Identity
+    tot bei jeder Energie) UND die tanh-Form nicht (ReLU lernt) — die
+    Kante ist der Eintritt ins nichtlineare Regime. Die Energie-Story
+    ist MECHANISTISCH geschlossen: sub-Kante = linear = unloesbar (T2b).
+  KILL-A (IDENTITY LERNT): P_lernt(ID3.5) >= 0.3 ODER P_lernt(ID10) >= 0.3:
+    Ein lineares RNN loest die Paritaet — die Linearitaets-Story ist
+    FALSCH, die Kante ist etwas anderes (z.B. Signal-Rausch-Verhaeltnis).
+  KILL-B (RELU TOT): ID-Arme wie erwartet, ABER P_lernt(R3.5) = 0: Nicht-
+    linearitaet allein reicht nicht; die Form der Nichtlinearitaet
+    (Saettigung, Befaelligung) traegt.
+  UNENTSCHEIDEN: Sanity gerissen, >3/10 Divergenzen, DM-Verletzung.
+  SEKUNDAER: tanh-Auslastungs-Statistik (Anteil der Zustaende mit
+    |z+b| > 1 waehrend der Test-Rolle, gemittelt) je Arm — zeigt, dass die
+    Kante mit dem Nichtlinearitaets-Eintritt zusammenfaellt; MC je Arm;
+    median acc, DM, Laufzeit.
+  Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
