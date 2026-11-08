@@ -1,0 +1,41 @@
+======================================================================================================================
+T9b — ANTRIEBS-KNOPF v2: MODEN-ABDECKUNG vs. KOORDINATEN-DIFFUSION
+(registriert: Sanity P_lernt(REF)>=0.5; PASS nur wenn zusaetzlich
+P1 P_lernt(48)-P_lernt(2)>=0.3 UND P2 MC(2)>=0.90*MC(48); Seeds 90..99, f64)
+======================================================================================================================
+
+Arm REF: n_ok=10/10 | P_lernt=0.90 | median acc=1.0000 | median MC=1.6549 | DM=13.9842 | div=0
+  Parity-Seeds: 90:1.0000, 91:1.0000, 92:1.0000, 93:1.0000, 94:0.4785, 95:1.0000, 96:1.0000, 97:1.0000, 98:1.0000, 99:1.0000
+
+Arm 2: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=0.8519 | DM=13.9842 | div=0
+  Parity-Seeds: 90:0.5215, 91:0.5215, 92:0.5215, 93:0.5215, 94:0.4785, 95:0.4785, 96:0.4785, 97:0.4785, 98:0.4785, 99:0.4785
+
+Arm 4: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=0.9012 | DM=13.9842 | div=0
+  Parity-Seeds: 90:0.5215, 91:0.5215, 92:0.5215, 93:0.5215, 94:0.4785, 95:0.4785, 96:0.4785, 97:0.4785, 98:0.4785, 99:0.4785
+
+Arm 8: n_ok=10/10 | P_lernt=0.00 | median acc=0.4980 | median MC=1.3462 | DM=13.9842 | div=0
+  Parity-Seeds: 90:0.5215, 91:0.5215, 92:0.5215, 93:0.5215, 94:0.4785, 95:0.4785, 96:0.4785, 97:0.4785, 98:0.5215, 99:0.4980
+
+Arm 16: n_ok=10/10 | P_lernt=0.00 | median acc=0.5146 | median MC=1.6743 | DM=13.9842 | div=0
+  Parity-Seeds: 90:0.5215, 91:0.5215, 92:0.5215, 93:0.5215, 94:0.4785, 95:0.4785, 96:0.4785, 97:0.4785, 98:0.5215, 99:0.5146
+
+Arm 48: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.6973 | DM=13.9842 | div=0
+  Parity-Seeds: 90:0.5215, 91:0.5215, 92:0.5215, 93:0.5215, 94:0.4785, 95:0.4785, 96:0.4785, 97:0.4785, 98:0.4785, 99:0.5049
+
+--- T9b-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+REF: P_lernt=0.90 median acc=1.0000 median MC=1.6549 DM=13.9842
+2: P_lernt=0.00 median acc=0.4785 median MC=0.8519 DM=13.9842
+4: P_lernt=0.00 median acc=0.4785 median MC=0.9012 DM=13.9842
+8: P_lernt=0.00 median acc=0.4980 median MC=1.3462 DM=13.9842
+16: P_lernt=0.00 median acc=0.5146 median MC=1.6743 DM=13.9842
+48: P_lernt=0.00 median acc=0.4785 median MC=1.6973 DM=13.9842
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+SANITY (REF lernt, P_lernt(REF)=0.90 >= 0.5?): JA
+P1 (Training: P_lernt(48)-P_lernt(2)>=0.3): NEIN
+P2 (Reservoir: MC(2)>=0.90*MC(48)): NEIN
+KILL-A-Indikator: P_lernt(d=2)=0.00 (>=0.5? NEIN)
+KILL-C-Indikator: P_lernt(d=48)=0.00 (bester d-Arm P_lernt=0.00)
+Sanity: Divergenzen gesamt=0 (JA)
+
+VERDICT: KILL-C — DIE PHASEN-WETTE VERLOREN: Sanity (REF lernt) sitzt, aber P1 riss: Trainierbarkeit ist KEINE Funktion der Moden-Abdeckung. P_lernt(d=48)=0: JEDE kohaerente Eigenmoden-Summe verhungert — es ist die RICHTUNG (Koordinaten-Diffusion, Phasenmischung, Kanal-Overlap), nicht die ZAHL der getroffenen Moden. Die Verhungerungs-These von Nachtrag 8 ist verfeinert und vollstaendig: Der G8-F-Transfer schleppt die Antriebs-Richtung mit. T8/T8b endgueltig erklaert.
+=== FERTIG ===
