@@ -1029,3 +1029,34 @@ Ueberlebt: Energie-Gesetz (Rampe, Richtung mit H), MC-Moden-Kurve, DM-
 Knopf, Budget-Kurve, Symmetrie-Theorem (T2b), Bias-Lotto (T2b),
 All-or-nothing (T4b), Mechanismus-Beweis (T14). Gefallen: P-SQRT als
 scharfes Skalen-Gesetz 0.5*sqrt(H).
+
+
+---
+
+# Nachtrag 18 (2026-11-08): W1-REGISTRIERUNG — LAB-KERNEL, der Experiment-Compiler (Werkzeug-Stein, P0 Design)
+
+## Warum ein Werkzeug-Stein (die Kostenrechnung)
+Zwei Laeufe des heutigen Tages (T11 einst, T15 Run-1 heute) sind an der
+Disziplin-Luecke zwischen Registrierung und Code verbrannt — zusammen
+~52 Runner-Minuten, das volle Tagesbudget. Beide Bug-Klassen
+(handgeschriebene Abweichung vom bewaehrten Referenz-Arm; handgeschriebene
+Auswertung abseits der eigenen Registrierung) sind strukturell gleich: Es
+gab zwei Quellen der Wahrheit. W1 eliminiert die zweite.
+
+## W1 (LAB-KERNEL, registriert VOR dem Bau — Design in analysis/W1_lab_kernel.md)
+THESE: Registrierung, Lauf, Auswertung und Verdikt aus EINER deklarativen
+Quelle generiert -> die Bug-Klasse wird unmoeglich, nicht bloss unwahrscheinlich.
+Fuenf Module, drei Phasen: C-Contract (Generator), A-Invarianten-Audit
+(misst Konventionen zur Laufzeit statt ihnen zu vertrauen), D-Determinismus-
+Diff (Rerun-Diff gegen letzten Result-Commit), K-Kollaps-Gate (Pre-Flight:
+unpruefbare Begriffe, doppelte Keys, unregistrierte Masse), N-Auto-Nachtrag
+(Zahlen-Skelett mit Lueckenliste). P0 (dieser Stein): nur Design. P1: C+A,
+Abnahme AUSSCHLIESSLICH am Historien-Test (known-answer):
+  W1-PASS: (a) T15-Contract reproduziert Run-2 exakt (KILL-A, Commit 4d9bd4b),
+  (b) historische T11-Abweichung wird als Audit-Alarm angezeigt,
+  (c) T15-Run-1-Doppelkey wird verweigert/angemeckert.
+  W1-KILL: nur mit Hardcodes erreichbar -> Contract ist Schaum; oder (b)/(c)
+  unpruefbar -> These falsch.
+  W1-UNENTSCHEIDEN: T15 nicht reproduzierbar; EINE Reparatur, dann tot.
+Bewahrung: Nach Abnahme keine Nachjustierung; erste Anwendung auf dem
+Stone nach T15. Kosten: 0 Runner-Minuten (Offline-Historien-Test).
