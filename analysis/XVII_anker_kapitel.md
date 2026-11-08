@@ -496,3 +496,59 @@ T9 vergass den T6-Referenzpunkt im selben Lauf: T6 lernt mit Koordinaten-Zufalls
 
 ## T9b (Reparatur-Linie, registriert VOR dem Lauf)
 Arme: REF (exaktes T6-Instrument: Uw = 0.5*randn(H,2)) als Lernbarkeits-Sanity + die T9-d-Familie UNVERAENDERT (W T6-B60 pro Seed fix, Spektrum fix, b = 0.1*randn fix, Energie pro Kanal 0.5). SANITY: P_lernt(REF) >= 0.5, sonst UNENTSCHEIDEN und Serie-Post-Mortem (KEINE weitere Paritaets-Reparatur). PRIMAER: P1 P_lernt(48)-P_lernt(2) >= 0.3; P2 MC(2) >= 0.90*MC(48). PASS = Sanity UND P1 UND P2 (Doppeldissoziation: Training braucht Moden-Abdeckung, Ridge braucht sie nicht). KILL-A: P_lernt(2) >= 0.5 (Konzentration trainiert, Verhungerungs-Story falsch). KILL-B: P1 UND nicht P2 (auch Reservoir leidet — Diffusion universell; T9-MC-Kurve deutet hierher). KILL-C (NEU, die Phasen-Wette): Sanity JA, P1 NEIN — Lernbarkeit ist KEINE Funktion der Moden-Abdeckung; ist zusaetzlich P_lernt(48) = 0, verhungert JEDE kohaerente Eigenmoden-Summe: Es ist die RICHTUNG, nicht die ZAHL (Verhungerungs-These verfeinert, T8/T8b vollstaendig erklaert). Sekundaer: MC(REF) vs MC(d)-Kurve, DM, Laufzeit. Seeds 90..99. Workflow-Gate erweitert: Import-Check via runpy (run_name != __main__) nach pip, schliesst die py_compile-Blindstelle (fehlende Imports).
+
+
+---
+
+# Nachtrag 10 (2026-11-08): T9b — KILL-C. Es ist die RICHTUNG, nicht die ZAHL. Und: MC ist eine Funktion der Moden-Abdeckung, Training eine der Richtungs-Struktur.
+
+## T9b (REF-Arm + d-Familie, Seeds 90..99, W=T6-B60-Familie fix, DM 13.9842 exakt konstant, Laufzeit 10m47s)
+SANITY: REF (exaktes T6-Instrument, Uw = 0.5*randn(H,2)) lernt P_lernt = 0.90, 9/10 perfekt (median acc 1.0000; nur Seed 94 versagt) — Instrument faehig, Vergleich legitim. ALLE fuenf d-Arme P_lernt = 0.00 (Chance 0.48-0.52), 0 Divergenzen, DM-Streuung exakt 0. VERDICT: KILL-C — die Phasen-Wette verloren.
+
+## Der Befund (verfeinerte Verhungerungs-These)
+Trainierbarkeit ist KEINE Funktion der Moden-Abdeckung: Selbst d=48 (beide Kanaele auf je 24 Eigenmoden, kohaerente Summen, Energie pro Kanal konstant 0.5) verhungert. JEDE kohaerente Eigenmoden-Summe toetet das Training, jede iid-Koordinaten-Antriebsmatrix (REF) lernt. Es ist die RICHTUNG (Phasenmischung / Basis-Bezug), nicht die Zahl der getroffenen Moden. T8/T8b damit endgueltig erklaert: Der G8-F-Transfer schleppt die Antriebs-RICHTUNG mit, und genau daran stirbt das Training — nicht am Rahmen.
+
+## Die saubere Dissoziation der beiden Variablen (Nebenbefund, sekundaer, aber strukturbildend)
+MC-Kurve: strikt monoton in d (0.8519, 0.9012, 1.3462, 1.6743, 1.6973). Und: MC(REF) = 1.6549 liegt AUF der Kurve beim 48-Moden-Wert — der Koordinaten-Zufalls-Antrieb regt in der Eigenbasis saemtliche 48 Moden mit zufaelligen Amplituden an. Damit: MC haengt an der ZAHL (Spektral-Verteilung) der angeregten Moden und ist gegenueber der Richtungs-Struktur ROBUST; Training haengt an der RICHTUNG und ist gegenueber der Moden-Zahl FRAGIL. P2 verfehlt (MC(2) < 0.90*MC(48)): Der G8-Konzentrations-Vorteil ist ein Artefakt des Ein-Moden-Ein-Kanal-Designs, kein Regime-Gesetz. Der Regime-Kontrast von Nachtrag 8 (konzentriert gut fuer Ridge, verteilt gut fuer Training) kollabiert teilweise: Fuer die Ridge-Ernte ist Verteilung ebensogut.
+
+## Regime-Karte v3
+  RESERVOIR-RIDGE-REGIME (fixes W, Ridge, MC):
+    - MC folgt der Moden-Abdeckung (T9/T9b-Monotonie), richtungs-robust (REF auf der Kurve).
+    - Rahmen-Geometrie (G8-Knopf): WIRKT bei konzentriertem Ein-Moden-Antrieb (+16..41%),
+      aber KEIN generelles Konzentrierungs-Gesetz im 2-Kanal-Regime (T9b P2 NEIN).
+    - T-Knopf: wirkungslos fuer MC (T7).
+  TRAININGS-REGIME (BPTT, Adam):
+    - DM-Knopf (T6) wirkt; Antriebs-RICHTUNG wirkt (T9/T9b: kohaerente
+      Eigenmoden-Summen verhungern bei jedem d, REF lernt 0.90).
+    - Moden-Abdeckung allein wirkt NICHT (d=48 tot).
+  Offen (T10, registriert): WAS an der Richtung: Phasenmischung in der Eigenbasis
+    (MODRAND-Test) oder Bezug zur Koordinaten-Struktur (KOORDKOH-Test)?
+
+## T10 (RICHTUNGS-ZERLEGUNG, registriert VOR dem Lauf)
+Vier Arme, alle mit voller Moden-Abdeckung bzw. als Kontrollen, Energie pro
+Kanal konstant 0.5, W T6-B60 pro Seed fix (DM exakt konstant), b=0.1*randn
+fix, Seeds 100..109 (frisch), f64. Training- und MC-Mass identisch T3/T7/T9.
+  REF: Uw = 0.5*randn(H,2) — SANITY (P_lernt >= 0.5, sonst UNENTSCHEIDEN,
+    Serie-Post-Mortem, KEINE weitere Paritaets-Reparatur).
+  KOH48: kohaerente Moden-Summen (T9-Konstruktion) — Negativ-Kontrolle (erwartet 0).
+  MODRAND48: v_c = R[:,subset_c] @ g_c, g_c ~ N(0,1)^{24} zufaellige
+    Phasen, Kanaele mod-getrennt — PHASEN-TEST.
+  KOORDKOH48: v0 = ones/sqrt(H), v1 = alternierendes Vorzeichenmuster/sqrt(H)
+    — kohaerent in Koordinaten, damit PHASEN-GEMISCHT in der Eigenbasis
+    (R^T ones ist voll) — BASIS-TEST.
+REGISTRIERUNG (GENAGELT):
+  PASS (PHASEN-THESE): Sanity UND P_lernt(MODRAND) >= 0.5: Phasenmischung
+    bei voller Moden-Abdeckung genuegt zum Lernen; die Eigenmoden-Richtung
+    war der Killer. (KOORDKOH dann erwartet lernt; berichtet als sekundaer.)
+  KILL-A (BASIS-THESE): Sanity UND P_lernt(KOORDKOH) >= 0.5 ABER
+    P_lernt(MODRAND) = 0: Eigenmoden-seitige Phasenmischung genuegt NICHT,
+    kohaerente Koordinaten-Richtung schon — der Schluessel liegt im Bezug
+    zur Koordinaten-Struktur (Anker/tanh-Schleifen leben in Koordinaten).
+  KILL-B (ZERLEGUNG SCHEITERT): MODRAND UND KOORDKOH beide < 0.5: Keine der
+    beiden Komponenten reicht — nur iid-Koordinaten-Antriebe (REF-Art)
+    lernen. "Genuin diffus" bleibt undifferenziert.
+  UNENTSCHEIDEN: Sanity gerissen, >3/10 Divergenzen, DM-Verletzung.
+  SEKUNDAER: MC je Arm (Kontrolle: alle 48-Moden-Arme erwartet ~1.65-1.70;
+    wenn MC(MODRAND) ≈ MC(REF) aber Training trennt, ist die Richtung fuer
+    MC irrelevant — Dissoziation auch innerhalb des Reservoir-Regimes).
+  Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
