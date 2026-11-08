@@ -1,0 +1,30 @@
+======================================================================================================================
+T10 — RICHTUNGS-ZERLEGUNG: PHASEN vs. BASIS
+(registriert: Sanity P_lernt(REF)>=0.5; PASS wenn P_lernt(MODRAND48)>=0.5;
+KILL-A wenn KOORDKOH48>=0.5 und MODRAND48=0; KILL-B wenn beide <0.5; Seeds 100..109, f64)
+======================================================================================================================
+
+Arm REF: n_ok=10/10 | P_lernt=0.70 | median acc=1.0000 | median MC=1.7606 | DM=13.2207 | div=0
+  Parity-Seeds: 100:1.0000, 101:0.5215, 102:1.0000, 103:1.0000, 104:1.0000, 105:0.4785, 106:0.7725, 107:1.0000, 108:1.0000, 109:1.0000
+
+Arm KOH48: n_ok=10/10 | P_lernt=0.00 | median acc=0.5215 | median MC=1.7199 | DM=13.2207 | div=0
+  Parity-Seeds: 100:0.5215, 101:0.5215, 102:0.4785, 103:0.5215, 104:0.4785, 105:0.4854, 106:0.5215, 107:0.5215, 108:0.4785, 109:0.5215
+
+Arm MODRAND48: n_ok=10/10 | P_lernt=0.00 | median acc=0.5215 | median MC=1.7190 | DM=13.2207 | div=0
+  Parity-Seeds: 100:0.5215, 101:0.5215, 102:0.4785, 103:0.5215, 104:0.4785, 105:0.4785, 106:0.5215, 107:0.5215, 108:0.4951, 109:0.5215
+
+Arm KOORDKOH48: n_ok=10/10 | P_lernt=0.00 | median acc=0.5215 | median MC=1.7257 | DM=13.2207 | div=0
+  Parity-Seeds: 100:0.5215, 101:0.5215, 102:0.4785, 103:0.5215, 104:0.4785, 105:0.4785, 106:0.5215, 107:0.5400, 108:0.4785, 109:0.5215
+
+--- T10-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+REF: P_lernt=0.70 median acc=1.0000 median MC=1.7606 DM=13.2207
+KOH48: P_lernt=0.00 median acc=0.5215 median MC=1.7199 DM=13.2207
+MODRAND48: P_lernt=0.00 median acc=0.5215 median MC=1.7190 DM=13.2207
+KOORDKOH48: P_lernt=0.00 median acc=0.5215 median MC=1.7257 DM=13.2207
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+SANITY (REF lernt, P_lernt(REF)=0.70 >= 0.5?): JA
+P_lernt(MODRAND48)=0.00 | P_lernt(KOORDKOH48)=0.00 | P_lernt(KOH48)=0.00
+Sanity: Divergenzen gesamt=0 (JA)
+
+VERDICT: KILL-B — ZERLEGUNG SCHEITERT: Weder Phasenmischung in der Eigenbasis (MODRAND48) noch kohaerente Koordinaten-Richtung (KOORDKOH48) lernen. Nur iid-Koordinaten-Antriebe (REF-Art) machen das Netz trainierbar. "Genuin diffus" bleibt undifferenziert — der naechste Stein muss die REF-Struktur weiter zerlegen (z.B. Kanal-Overlap oder Rang der Antriebsmatrix als Variable).
+=== FERTIG ===
