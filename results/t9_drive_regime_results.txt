@@ -1,0 +1,35 @@
+======================================================================================================================
+T9 — ANTRIEBS-KNOPF: DOPPELDISSOZIATION (registriert: PASS nur wenn
+P1 P_lernt(48)-P_lernt(2)>=0.3 UND P2 MC(2)>=0.90*MC(48); Seeds 80..89, f64)
+W pro Seed fix (DM konstant), F=I, Energie pro Kanal konstant 0.5
+======================================================================================================================
+
+Arm d=2: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=0.7775 | DM=13.8515 | div=0
+  Parity-Seeds: 80:0.4785, 81:0.4785, 82:0.5215, 83:0.4785, 84:0.4785, 85:0.4785, 86:0.5215, 87:0.5215, 88:0.5215, 89:0.4785
+
+Arm d=4: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=0.8976 | DM=13.8515 | div=0
+  Parity-Seeds: 80:0.4785, 81:0.4785, 82:0.5215, 83:0.4785, 84:0.4785, 85:0.5215, 86:0.5215, 87:0.5215, 88:0.5215, 89:0.4785
+
+Arm d=8: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.3535 | DM=13.8515 | div=0
+  Parity-Seeds: 80:0.4785, 81:0.4785, 82:0.5215, 83:0.4785, 84:0.4785, 85:0.4785, 86:0.5215, 87:0.5215, 88:0.5215, 89:0.4785
+
+Arm d=16: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.6526 | DM=13.8515 | div=0
+  Parity-Seeds: 80:0.4785, 81:0.4785, 82:0.5215, 83:0.4785, 84:0.4785, 85:0.4785, 86:0.5215, 87:0.5215, 88:0.5215, 89:0.4785
+
+Arm d=48: n_ok=10/10 | P_lernt=0.00 | median acc=0.4785 | median MC=1.7047 | DM=13.8515 | div=0
+  Parity-Seeds: 80:0.4785, 81:0.4785, 82:0.5215, 83:0.4785, 84:0.4785, 85:0.4785, 86:0.5215, 87:0.5215, 88:0.5215, 89:0.4785
+
+--- T9-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+d=2: P_lernt=0.00 median acc=0.4785 median MC=0.7775 DM=13.8515
+d=4: P_lernt=0.00 median acc=0.4785 median MC=0.8976 DM=13.8515
+d=8: P_lernt=0.00 median acc=0.4785 median MC=1.3535 DM=13.8515
+d=16: P_lernt=0.00 median acc=0.4785 median MC=1.6526 DM=13.8515
+d=48: P_lernt=0.00 median acc=0.4785 median MC=1.7047 DM=13.8515
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+P1 (Training: P_lernt(48)-P_lernt(2)>=0.3): NEIN
+P2 (Reservoir: MC(2)>=0.90*MC(48)): NEIN
+KILL-A-Indikator: P_lernt(d=2)=0.00 (>=0.5? NEIN)
+Sanity: bester Trainings-Arm P_lernt=0.00 (>=0.5? NEIN), Divergenzen gesamt=0 (JA)
+
+VERDICT: UNENTSCHEIDEN — Sanity gerissen: Auch d=48 lernt nicht (Instrument defekt gegenueber T6-Basis) oder Divergenzen. EINE Reparatur erlaubt (neue Linie).
+=== FERTIG ===
