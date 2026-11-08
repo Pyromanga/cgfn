@@ -51,6 +51,12 @@ import torch
 
 torch.set_default_dtype(torch.float64)
 
+# FIX 2026-11-08 (Run-1-Readout-Bug, siehe XVII Nachtrag 16): REF-Arme
+# werden in stats getrennt verschluesselt (REF24/REF96). Run-1 schloss
+# beide unter 'REF' zusammen, REF96 ueberschrieb REF24, der DM-Konstanz-
+# Check las falsche DM-Werte und meldete eine Verletzung (Crash-Verdikt).
+# Design, Masse, Registrierung und VERDICT-Logik UNVERAENDERT.
+
 FIXED_P0 = 4242
 TEST_SEED = 777
 T_SEQ = 24
@@ -68,6 +74,11 @@ B_LO, B_HI = 16, 20
 HOLD = 3
 NORMS = [2.0, 3.5, 4.9]
 ARMS = [('REF', 24), ('REF', 96)] + [('R24_%s' % s, 24) for s in NORMS] + [('R96_%s' % s, 96) for s in NORMS]
+
+
+def skey(arm, H):
+    # REF existiert zweimal (H=24, H=96) — getrennt verschluesseln.
+    return 'REF%d' % H if arm == 'REF' else arm
 
 
 def make_task(batch, gen):
@@ -195,11 +206,12 @@ def main():
             rows.append(dict(arm=arm, H=H, seed=seed, acc=acc))
         ok = [v for v in pvals if v == v]
         pf = sum(1 for v in ok if v >= 0.99) / len(ok) if ok else float('nan')
-        stats[arm] = dict(pf=pf, ndiv=ndiv, dm=float(torch.tensor(dms).mean()),
-                          med=median(ok), H=H)
+        st = dict(pf=pf, ndiv=ndiv, dm=float(torch.tensor(dms).mean()),
+                  med=median(ok), H=H)
+        stats[skey(arm, H)] = st
         L.append('')
         L.append('Arm %s (H=%d): n_ok=%d/%d | P_lernt=%.2f | median acc=%.4f | DM=%.4f | div=%d'
-                 % (arm, H, len(ok), len(pvals), pf, median(ok), stats[arm]['dm'], ndiv))
+                 % (arm, H, len(ok), len(pvals), pf, median(ok), st['dm'], ndiv))
         L.append('  Parity-Seeds: ' + ', '.join('%d:%.4f' % (s, v) for s, v in zip(SEEDS, pvals)))
         Path(out_path).write_text('\n'.join(L) + '\n', encoding='utf-8')
 
@@ -211,18 +223,12 @@ def main():
     L.append('')
     L.append('--- T15-AUSWERTUNG (nur registrierte Groessen zaehlen) ---')
     for arm, H in ARMS:
+        st = stats[skey(arm, H)]
         L.append('%s (H=%d): P_lernt=%.2f median acc=%.4f DM=%.4f'
-                 % (arm, H, stats[arm]['pf'], stats[arm]['med'], stats[arm]['dm']))
+                 % (arm, H, st['pf'], st['med'], st['dm']))
 
-    s_ref24 = stats['REF']['pf'] if True else float('nan')
-    # REF erscheint doppelt (H=24 und H=96): getrennt auswerten
-    p_ref24 = None
-    p_ref96 = None
-    for arm, H in ARMS:
-        if arm == 'REF' and H == 24:
-            p_ref24 = stats[arm]['pf']
-        if arm == 'REF' and H == 96:
-            p_ref96 = stats[arm]['pf']
+    p_ref24 = stats['REF24']['pf']
+    p_ref96 = stats['REF96']['pf']
     p_r24_20 = stats['R24_2.0']['pf']
     p_r24_35 = stats['R24_3.5']['pf']
     p_r24_49 = stats['R24_4.9']['pf']
@@ -230,10 +236,10 @@ def main():
     p_r96_35 = stats['R96_3.5']['pf']
     p_r96_49 = stats['R96_4.9']['pf']
     sanity_ok = (p_ref24 >= 0.5) and (p_ref96 >= 0.5)
-    sanity_div = all(stats[a]['ndiv'] <= 3 for a, _ in ARMS)
+    sanity_div = all(stats[skey(a, H)]['ndiv'] <= 3 for a, H in ARMS)
     dm_ok = True
     for h in (24, 96):
-        dms_h = [stats[a]['dm'] for a, H in ARMS if H == h]
+        dms_h = [stats[skey(a, H)]['dm'] for a, H in ARMS if H == h]
         if max(dms_h) > 0 and (max(dms_h) - min(dms_h)) / max(dms_h) > 1e-9:
             dm_ok = False
     L.append('SANITY: REF24=%.2f (>=0.5? %s), REF96=%.2f (>=0.5? %s)'
@@ -242,7 +248,7 @@ def main():
     L.append('H=24: s=2.0: %.2f, s=3.5: %.2f, s=4.9: %.2f' % (p_r24_20, p_r24_35, p_r24_49))
     L.append('H=96: s=2.0: %.2f, s=3.5: %.2f, s=4.9: %.2f' % (p_r96_20, p_r96_35, p_r96_49))
     L.append('DM-Konstanz innerhalb H: %s | Divergenzen gesamt=%d (%s)'
-             % ('OK' if dm_ok else 'VERLETZT', sum(stats[a]['ndiv'] for a, _ in ARMS),
+             % ('OK' if dm_ok else 'VERLETZT', sum(stats[skey(a, H)]['ndiv'] for a, H in ARMS),
                 'JA' if sanity_div else 'NEIN'))
 
     if not dm_ok:
