@@ -970,3 +970,62 @@ Einzige Aenderungen: REF-Arme werden getrennt verschluesselt (REF24/
 REF96); der redundante s_ref24-Patz entfernt. Deterministische Seeds ->
 identische Arm-Zahlen erwartet, nur der Readout korrigiert. Bewahrung:
 Rerun nur bei Crash — Crash-Klasse lag vor (Instrument-Bug).
+
+
+---
+
+# Nachtrag 17 (2026-11-08): T15 Rerun — VERDICT: KILL-A (formal). P-SQRT gefallen. Ehrliche Lesart: Weder scharfes Skalen-Gesetz noch absolute Kante — der Uebergang ist eine RAMPE, und die registrierten binaeren Kriterien fassen sie nicht.
+
+## Rerun (Run-2, Start 19:04 UTC, fertig 19:31 UTC, Readout repariert)
+Arm-Zahlen identisch zu Run-1 (deterministische Seeds), Readout korrekt:
+SANITY REF24=0.80, REF96=1.00 — beide sitzen. DM-Konstanz innerhalb beider
+H OK (7.5793 / 20.6678), 0 Divergenzen in allen 8 Armen.
+Formaler Durchgang: PASS nein (R24_2.0=0.70 statt 0; R96_3.5=0.60 statt 0),
+KILL-B nein, KILL-A-Bedingung R96_3.5 >= 0.5 erfuellt (0.60).
+VERDICT: KILL-A. Freeze: kein Rerun, keine Nachverhandlung am Etikett.
+
+## Warum das KILL-A-Etikett die Messung nicht trifft (beide Richtungen)
+Der KILL-A-Text behauptet eine absolute Kante ~3.5 unabhaengig von H.
+Die Daten widersprechen dem in BEIDE Richtungen:
+  H=24: s=2.0 lernt schon 0.70 — weit unter 3.5.
+  H=96: s=4.9 nur 0.80 — kein saettigendes All-or-nothing oberhalb 3.5.
+Die Kriterien waren auf eine SCHARFE Kante gebaut (T13-Format bei H=48:
+0.00 -> 0.70 in einem Norm-Schritt). An H=24/96 ist der Uebergang eine
+RAMPE: P_lernt steigt glatt mit s, und die ganze Rampe verschiebt sich
+mit H. Registrierungs-Lektion: Ein binaeres Kanten-Kriterium (tot vs
+lernt) ist gegen Rampen blind — die Vorblick-Warnung aus Nachtrag 16 war
+berechtigt, das formale Etikett ist streng genommen ueber-keywordet.
+
+## Das Gesetz-Material (berichtet, kein neues Verdikt)
+1. RICHTUNG: P(H=24) > P(H=96) bei jedem festen s (0.70/0.10, 0.90/0.60,
+   1.00/0.80) — groessere Netze brauchen mehr Antriebsnorm. Aber die
+   Ordnung ist nicht sauber ueber alle H: bei s=2.0 liegt H=48 aus T13
+   mit 0.00 ZWISCHEN H=24 (0.70) und H=96 (0.10) — Rauschen bei n=10 oder
+   echte Nicht-Monotonie, unentscheidbar mit dem vorhandenen Material.
+2. KEIN KOLLAPS: Weder s/sqrt(H) noch s/H legt die drei H-Kurven
+   aufeinander (H=24 lernt bei skaliert 0.41 schon 0.70; H=96 bei
+   skaliert 0.50 erst 0.80). Ein einfaches Ein-Parameter-Skalierungs-
+   Gesetz ist mit drei H nicht im Material — die 2D-Karte (H x s) ist
+   der naechste Stein, NEU zu registrieren.
+3. T13-REFRAMING: Die "scharfe Kante" bei H=48 war vermutlich ein
+   Rampen-Punkt mit Zufallsrest (nur zwei Rasterpunkte unterhalb, 10
+   Seeds). REF (unnnormiert ~3.46) sass am Rampenanstieg — die REF-
+   Lotterei der Serie (0.50-1.00) ist MITTLERE-RAMPEN-Streuung, kein
+   Kanten-Balancieren eines scharfen Gesetzes. Die T15-Daten stuetzen
+   das: REF24 (~2.45) sitzt auf der Rampe (0.80), REF96 (~4.9) am
+   oberen Ende (1.00).
+4. Design-Rezept (pragmatisch, konservativ): Antriebsnorm >= ~1.0*sqrt(H)
+   wahlen (oberhalb der Rampe), niemals unter ~2 (dort kein verlaessliches
+   Lernen bei keinem getesteten H). Das 0.5*sqrt(H)-Rezept aus Nachtrag
+   15 ist als SCHARFES Gesetz gefallen; als grobe untere Orientierung
+   bleibt es brauchbar, aber mit Rampe, nicht mit Kante.
+
+## Serie-Stand: Die Energie-Kette bleibt, verliert die Schaerfe
+Die geschlossene Kette (T12/T13/T14: Energie -> NL-Eintritt -> Lernbarkeit,
+geometrie-frei) ist unangetastet — sub-Kante linear/tot, oberhalb lernbar.
+Neu durch T15: Der Uebergang ist breiter und H-abhaengiger als bei H=48
+geschaetzt; "scharf" war eine Ueberschaetzung aus zwei Rasterpunkten.
+Ueberlebt: Energie-Gesetz (Rampe, Richtung mit H), MC-Moden-Kurve, DM-
+Knopf, Budget-Kurve, Symmetrie-Theorem (T2b), Bias-Lotto (T2b),
+All-or-nothing (T4b), Mechanismus-Beweis (T14). Gefallen: P-SQRT als
+scharfes Skalen-Gesetz 0.5*sqrt(H).
