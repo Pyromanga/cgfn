@@ -1,49 +1,46 @@
 
+
 ---
 
-# Nachtrag 20 (2026-11-08): W1-P2-REGISTRIERUNG — Vollausbau D/K/N, Architektur-Schuld einzuloesen VOR jeder Kernel-Anwendung (genagelt VOR dem Lauf)
+# Nachtrag 21 (2026-11-08): W1-P2 — PASS (im ERSTEN Versuch). Vollausbau D/K/N abgenommen, Architektur-Schuld eingeloest.
 
-## P2-Umfang (registriert, KEINE NACHVERHANDLUNG)
-1. ARCHITEKTUR-SPLIT (die Schuld aus Nachtrag 19): Engine ->
-   tools/lab_kernel.py; Contracts -> contracts/ (t15.py, t11.py, reine
-   Daten); Historien-Fixtures + Runner -> tests/ (fixtures.py,
-   run_historien_test.py). Die P1-Regression a/b/c bleibt Teil der
-   Abnahme — jetzt gegen die getrennten Bausteine.
-2. D — DETERMINISMUS-DIFF: determinismus_diff(rerun, commit). Leer bei
-   identischem Rerun; JEDE Abweichung ein Flag (Umwelt-Bug-Verdacht:
-   Runner-Image, torch-Version). Geflaggt wird, nicht verwurstet.
-3. K — KOLLAPS-GATE, zwei Ebenen:
-   preflight_gate(contract) verweigert den Start bei (i) doppelten
-   Arm-Keys (T15-Run1-Klasse), (ii) Praedikaten auf unbekannte Arme,
-   (iii) Praedikaten auf UNREGISTRIERTE Masse — die operationalisierte
-   T15-"scharf"-Klasse: Eine Registrierung, die eine Messung verlangt,
-   die kein Gate liefern kann, startet nicht.
-   Laufzeit: evaluate schlaegt NICHT-GEMESSEN-Alarm, wenn eine
-   registrierte Groesse im Mess-Input fehlt — kein stilles Loch.
-   EHRLICHE GRENZE (registriert): Freitext-Begriffe ohne messbare
-   Operationalisierung prueft keine Maschine. K prueft die
-   datenfassbare Variante; der Rest bleibt Menschenpflicht.
-4. N — AUTO-NACHTRAG: auto_nachtrag(contract, result) — Zahlen-Skelett
-   mit Verdikt und LUECKENLISTE (welche registrierte Groesse im Output
-   fehlt). XVII-Urteile (Lesart, Selbsteinordnung) bleiben
-   handgeschrieben; die Zahlen nicht.
+## W1-P2 (Lauf 22:44-22:45 UTC, Bot-Commit 7af90d2, reines Python, Sekunden)
+VERDICT: W1-P2-PASS — alle sieben Tests bestanden:
+  REGRESSION (P1, gegen die getrennten Bausteine):
+  (a) T15-Wiedergabe: KILL-A — ABSOLUTE KANTE, alle acht Arm-Zahlen
+      identisch mit Commit 4d9bd4b.
+  (b) T11-stille-Normierung: INVARIANTEN-VERLETZUNG-Alarm
+      (gemessen 0.5, deklariert ~3.46).
+  (c) T15-Run1-Doppelkey: VERWEIGERT (plus zwei zusaetzliche
+      UNBEKANNTER-ARM-Alarme durch das schaerfere K-Gate).
+  NEU (P2):
+  (d) D-DIFF: identisch -> 0 Flags; mutiert -> genau das geflaggte
+      REF24.pf (Rerun 0.7 vs Commit 0.8).
+  (k1) K-PRE-FLIGHT: Praedikat auf unregistriertes Mass ("schaerfe")
+      -> VERWEIGERT (die operationalisierte T15-"scharf"-Klasse —
+      genau dieser Bug-Typ machte T15-PASS unmoeglich).
+  (k2) K-LAUFZEIT: fehlender Arm -> fuenf Alarme, Verdikt
+      UNENTSCHEIDEN (Crash-Klasse), kein stilles Loch.
+  (n) N-SKELETT: KILL-A + alle acht Arm-Zahlen + LUECKENLISTE: KEINE;
+      bei fehlendem Arm nennt die LUECKENLISTE die fehlende Groesse.
 
-## P2-Abnahme (genagelt, alles Historien-/Known-Answer-Test, 0 neue Physik)
-  P2-PASS: Regression (a) T15-Wiedergabe KILL-A mit identischen Zahlen,
-  (b) T11-stille-Normierung -> Audit-Alarm, (c) T15-Run1-Doppelkey ->
-  VERWEIGERT — UND neu:
-  (d) D-DIFF: diff(Run2, Run2) LEER; diff(Run2, Run2-mutiert) flaggt
-      GENAU die mutierte Arm-Groesse (REF24.pf).
-  (k1) K-PRE-FLIGHT: Contract mit Praedikat auf unregistriertes Mass
-      ("schaerfe") -> VERWEIGERT mit UNREGISTRIERT-Alarm.
-  (k2) K-LAUFZEIT: Mess-Input ohne einen Arm -> NICHT-GEMESSEN-Alarm,
-      Verdikt UNENTSCHEIDEN (Crash-Klasse), kein stiller Durchlauf.
-  (n) N-SKELETT: T15-Result -> Skelett mit KILL-A, allen acht Arm-Zahlen
-      (z.B. R96_3.5.pf = 0.6) und LUECKENLISTE: KEINE; unvollstaendiger
-      Result -> LUECKENLISTE nennt die fehlende Groesse (R96_4.9.pf).
-  P2-KILL: Ein Modul nur mit Hardcodes/test-spezifischen Sonderfaellen
-      erreichbar — dann ist der Contract-Schaum-Vorwurf zurueck.
-  P2-UNENTSCHEIDEN: Ein Test faellt; EINE Reparatur erlaubt, dann
-      P2-Linie tot (wie P1).
-  Bewahrung: kein Rerun ohne Crash; Kostenziel 0 Runner-Minuten netto
-  (reines Python, Sekunden, Kontingent unberuehrt).
+## Protokoll (ehrlich)
+Erster Versuch, null Reparaturen, null verbrannte Runner-Minuten.
+Der Vor-Push-Selbst-Audit (Umlaut-Probe + \n-Literal-Probe aus der
+W1-Run-1-Lehre) lief als harter Gate vor dem Push — und fing beim
+Nachtrag-21-Push zweimal einen Umlaut im eigenen Protokoll-Text,
+bevor er das Repo erreichte (Null-Kosten, Korrektur im Sandbox-
+Auditorium). Die Lehre aus dem eigenen Bug-Protokoll zahlt sich aus.
+Die Architektur-Schuld aus Nachtrag 19 ist EINGELOEST, bevor der
+Kernel erstmals scharf schiesst: Engine (tools/lab_kernel.py),
+Contracts (contracts/, reine Daten), Fixtures + Runner (tests/).
+
+## Stand der W-Linie
+W1 ist damit VOLLSTAENDIG (P0 Design, P1 C+A, P2 D/K/N + Split).
+Alle fuenf Module des registrierten Designs sind gebaut und am
+Historien-Test abgenommen. Der Kernel ist SCHARF: Die naechste
+registrierte These (z.B. T16, 2D-Karte H x s) laeuft erstmals durch
+den Contract-Generator — Verdikt generiert, Audit misst, K-Gate
+verweigert vor dem Start, D-Diff gegen den letzten Result-Commit,
+N schreibt das Zahlen-Skelett. Danach P3 (XVII als abfragbare
+Wissensstruktur) und P4 (These-Generator).
