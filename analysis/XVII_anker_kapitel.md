@@ -849,3 +849,85 @@ REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
     Kante mit dem Nichtlinearitaets-Eintritt zusammenfaellt; MC je Arm;
     median acc, DM, Laufzeit.
   Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
+
+
+---
+
+# Nachtrag 15 (2026-11-08): T14 — PASS (P-MECH). Die Kette ist mechanistisch geschlossen: Energie -> Nichtlinearitaets-Eintritt -> Lernbarkeit. T15-Registrierung (Skalierungsgesetz der Kante).
+
+## T14 (REF / T3.5 / T1.0 / ID3.5 / ID10 / R3.5, Seeds 140..149, DM 13.9473 exakt konstant)
+SANITY-Kette perfekt: REF 1.00, T3.5 0.60, T1.0 0.00 — konsistent mit T12/T13.
+KERN: ID3.5 = 0.00, ID10 = 0.00 — das rein lineare RNN lernt die Paritaet bei
+KEINER Antriebs-Energie (W trainierbar, 0 Divergenzen). R3.5 = 1.00 — ReLU
+lernt perfekt (10/10). VERDICT: PASS — P-MECH.
+
+## Das geschlossene Gesetz der Serie
+Die Energie-Kante ist der EINTRITT INS NICHTLINEARE REGIME:
+  - Sub-Kante: tanh bleibt linear -> effektives lineares Netz -> Paritaet
+    mit linearem Readout nicht loesbar (T2b-Linie) -> tot (ID-Arme beweisen
+    den Endpunkt: selbst lineare Dynamik mit brute-force Energie bleibt tot).
+  - Oberhalb: Nichtlinearitaet nimmt am Gradienten teil -> lernbar,
+    GEOMETRIE-ALLES-GLICH (T12: iid/kohaerent/Vorzeichen/kanaele 0.5-1.0).
+  - tanh-Form nicht spezifisch (ReLU 1.00).
+  - NL-Auslastungs-Diagnostik (Anteil |z+b| > 1): T1.0: 0.000 (tot),
+    T3.5: 0.083 (lernt 0.60), REF: 0.231 (lernt 1.00) — die Kante
+    korreliert exakt mit dem Nichtlinearitaets-Eintritt. Schon ~8 Prozent
+    Auslastung reichen.
+DIE SERIE HAT DAMIT IHREN ERSTEN VOLLSTAENDIG MECHANISTISCH GESCHLOSSENEN
+BEFUND: Antriebs-Energie (Kante, scharf, geometrie-frei, T12/T13) ->
+Nichtlinearitaets-Beteiligung (T14) -> Lernbarkeit. Sub-Kante = linear =
+unloesbar ist ein THEORETISCH getragenes Gesetz (T2b), experimentell
+bestaetigt.
+
+## Faellige Storys (endgueltige Bilanz der Serie-Korrekturen)
+- Richtungs-/Verhungerungs-Story (Nachtraege 8/10/11): Energie-Konfund,
+  gefallen in T12. T8/T8b energie-verdaechtig.
+- G8-Regime-Kontrast (konzentriert gut fuer Ridge): im 2-Kanal-Regime nicht
+  reproduziert (T9/T9b P2 verfehlt); MC ist geometrie- UND energie-robust
+  und zaehlt nur Moden-Abdeckung.
+- Ueberlebt: Energie-Kante-Gesetz (geschlossen), MC-Moden-Abdeckungs-Kurve
+  (T9/T9b, energie-konstant), DM-Knopf (T6, moduliert innerhalb des
+  lernbaren Regimes), Budget-Kurve (T6), Symmetrie-Theorem (T2b),
+  Bias-Lotto (T2b), All-or-nothing-Optimierungs-Loch (T4b).
+
+## Auffaelliger Zufall: Die Kante liegt bei 0.5*sqrt(H)
+T13: Kante zwischen Norm 2.0 und 3.5 bei H=48. Und 0.5*sqrt(48) = 3.46 —
+EXAKT die REF-Konvention (0.5*randn(H,2) hat Spaltennorm ~ 0.5*sqrt(H)).
+Die bewaehrte Konvention sitzt MOEGLICHERWEISE AUF der Kante — das wuerde
+erklaeren, warum REF in der Serie zwischen 0.50 und 1.00 lottert
+(Kanten-Balancieren). Wenn die Kante systematisch bei 0.5*sqrt(H) liegt,
+gilt das Skalen-Gesetz ||v_c||-Kante = 0.5*sqrt(H) — ein direktes
+Design-Rezept (Antriebsnorm >= 0.5*sqrt(H), sonst funktional tot).
+T15 macht das entscheidbar.
+
+## T15 (KANTEN-SKALIERUNGSGESETZ, registriert VOR dem Lauf)
+Acht Arme: H in {24, 96} x REFGEOM-Normen s in {2.0, 3.5, 4.9} plus je ein
+unnnormierter REF-Arm (SANITY). W-B60-Familie bei jeweiligem H, b=0.1*randn
+fix, Seeds 150..159 (frisch), f64, Masse identisch T3/T12/T13/T14
+(Paritaet, P_lernt = Fraktion(acc >= 0.99); MC wie T7 nur sekundaer bei
+H=48-Standard). DM-Konstanz wird INNERHALB jedes H geprueft (DM ist
+H-abhaengig, nicht arm-abhaengig).
+  REF24 / REF96: 0.5*randn(H,2) unnnormiert — SANITY je H (>= 0.5).
+  R24_2.0 / R24_3.5 / R24_4.9: H=24, REFGEOM exakt normiert.
+  R96_2.0 / R96_3.5 / R96_4.9: H=96, REFGEOM exakt normiert.
+REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
+  SANITY: P_lernt(REF24) >= 0.5 UND P_lernt(REF96) >= 0.5, sonst
+    UNENTSCHEIDEN (Serie-Post-Mortem, keine weitere Skalierungs-Reparatur).
+  PASS (P-SQRT, die eine These: Kante = 0.5*sqrt(H)):
+    P_lernt(R24_2.0) = 0 UND P_lernt(R24_3.5) >= 0.5
+    UND P_lernt(R96_3.5) = 0 UND P_lernt(R96_4.9) >= 0.5.
+    (Kante bei 2.45 fuer H=24, bei 4.90 fuer H=96 — die Vorhersage
+    prueft beide Seiten des Gesetzes an beiden H.)
+  KILL-A (ABSOLUTE KANTE): P_lernt(R96_3.5) >= 0.5 — die Kante bleibt bei
+    ~3.5 auch fuer H=96: absolute Amplituden-Schwelle (pro-Einheit-
+    Betrag), kein sqrt(H)-Gesetz.
+  KILL-B (KANTE BEI H=24 HOEHER ALS VORHERGESAGT): P_lernt(R24_3.5) = 0
+    UND P_lernt(R24_4.9) >= 0.5 (Kante zwischen 3.5 und 4.9 auch bei H=24):
+    Die Kante skaliert schwaecher oder gar invers — Skalierungs-Gesetz
+    unklar, feiner Sweep noetig.
+  SONST (keine der Kanten-Konstellationen): GEMISCHT — Bericht, keine
+    der registrierten Formen sitzt; Kanten-Karte bei 2D (H x s) noetig.
+  UNENTSCHEIDEN: Sanity gerissen, >3/10 Divergenzen in einem Arm,
+    DM-Verletzung INNERHALB eines H.
+  SEKUNDAER: median acc, DM je H, Laufzeit.
+  Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
