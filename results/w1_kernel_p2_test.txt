@@ -1,0 +1,57 @@
+==============================================================================
+W1 P2 — HISTORIEN-TEST (Regression a/b/c + Module D/K/N)
+Known-answer gegen die eigene Serie. Kein neues Experiment.
+Architektur-Split (Nachtrag 19/20): Engine tools/, Contracts
+contracts/, Fixtures + Runner tests/ — Schuld eingeloest.
+==============================================================================
+
+TEST (a) T15-WIEDERGABE (Regression P1):
+  erwartet: KILL-A — ABSOLUTE KANTE | Zahlen wie Commit 4d9bd4b
+  bekommen: KILL-A — ABSOLUTE KANTE
+    R24_2.0.pf = 0.70
+    R24_3.5.pf = 0.90
+    R24_4.9.pf = 1.00
+    R96_2.0.pf = 0.10
+    R96_3.5.pf = 0.60
+    R96_4.9.pf = 0.80
+    REF24.pf = 0.80
+    REF96.pf = 1.00
+  (a) PASS
+
+TEST (b) T11-ANZEIGE (Regression P1; stille Normierung -> Alarm):
+  ALARM: ARM REF: INVARIANTEN-VERLETZUNG 'colnorm': gemessen 0.5, erwartet approx 3.4641016151377544 (deklarierte Konvention missachtet — T11-Bug-Klasse).
+  (b) PASS
+
+TEST (c) T15-RUN1-DOPPELKEY (Regression P1; Generator verweigert):
+  bekommen: VERWEIGERT
+  ALARM: DOPPELTE ARM-KEYS: ['REF'] — Generator verweigert (historische T15-Run1-Bug-Klasse).
+  ALARM: Praedikat 'REF24.pf' referenziert UNBEKANNTEN Arm 'REF24'.
+  ALARM: Praedikat 'REF96.pf' referenziert UNBEKANNTEN Arm 'REF96'.
+  (c) PASS
+
+TEST (d) D-DETERMINISMUS-DIFF:
+  identisch -> 0 Flags (erwartet 0)
+  mutiert (REF24.pf 0.70) -> 1 Flag(s): ARM REF24, pf: Rerun 0.7 vs Commit 0.8 — Abweichung ohne Crash = Umwelt-Bug-Verdacht.
+  (d) PASS
+
+TEST (k1) K-PRE-FLIGHT (Praedikat auf unregistriertes Mass):
+  bekommen: VERWEIGERT
+  ALARM: Praedikat 'R96_3.5.schaerfe' referenziert UNREGISTRIERTES Mass 'schaerfe' — Registrierung verlangt eine Messung, die kein Gate liefern kann (Kollaps-Verletzung).
+  (k1) PASS
+
+TEST (k2) K-LAUFZEIT (fehlende Messung -> Alarm, kein Loch):
+  bekommen: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+  ALARM: ARM R96_4.9: KEINE Messwerte — Lauf unvollstaendig (Kollaps-Verletzung).
+  ALARM: ARM R96_4.9: Invariante 'colnorm' NICHT GEMESSEN — Audit unvollstaendig (Verdikt unzulaessig).
+  ALARM: ARM R96_4.9: Invariante 'dm' NICHT GEMESSEN — Audit unvollstaendig (Verdikt unzulaessig).
+  ALARM: ARM R96_4.9: registrierte Groesse 'pf' NICHT GEMESSEN (Kollaps-Verletzung).
+  ALARM: PRAEDIKAT 'R96_4.9.pf': "Unregistrierte/unbekannte Groesse 'R96_4.9.pf' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
+  (k2) PASS
+
+TEST (n) N-AUTO-NACHTRAG:
+  Skelett (vollstaendig): 15 Zeilen, LUECKENLISTE: KEINE
+  Skelett (R96_4.9 fehlt): LUECKENLISTE nennt R96_4.9.pf: JA
+  (n) PASS
+
+VERDICT: W1-P2-PASS — Regression a/b/c bestanden; D-Diff leer/flaggt korrekt, K-Gate verweigert/alarmt, N-Skelett komplett/LUECKENLISTE korrekt. P2 ANGENOMMEN.
+=== FERTIG ===
