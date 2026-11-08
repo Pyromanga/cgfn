@@ -1,0 +1,57 @@
+name: cgfn-w1 (Lab-Kernel P1 Historien-Test)
+
+# W1-P1 — Abnahme des Contract-Kernels AUSSCHLIESSLICH am Historien-Test
+# (T15-Wiedergabe, T11-Anzeige, T15-Run1-Doppelkey-Verweigerung).
+# Registrierung: analysis/W1_lab_kernel.md Abschnitt 4. Kein torch noetig —
+# reines Python, wenige Sekunden Laufzeit, Kontingent geschont.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/w1"
+
+jobs:
+  w1-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Gate syntax-check kernel
+        run: |
+          python -m py_compile tools/lab_kernel.py || { echo "[e] SYNTAX-FEHLER — Abbruch"; exit 1; }
+          echo "[i] syntax ok"
+      - name: Gate import-check kernel (runpy)
+        run: |
+          python -c "import runpy; runpy.run_path('tools/lab_kernel.py', run_name='not_main')" || { echo "[e] IMPORT/LOAD-FEHLER — Abbruch"; exit 1; }
+          echo "[i] import ok"
+      - name: Run W1 Historien-Test
+        run: |
+          set -o pipefail
+          python tools/lab_kernel.py 2>&1 | tee results/w1_run.log
+      - name: Commit results to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: W1-kernel ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            echo "[w] push fehlgeschlagen (Versuch $i) — rebase (autostash) und erneut"
+            git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen" && exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: w1-kernel-results
+          path: results/
+          retention-days: 30
