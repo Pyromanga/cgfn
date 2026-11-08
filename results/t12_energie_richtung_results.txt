@@ -1,0 +1,41 @@
+======================================================================================================================
+T12 — ENERGIE- UND KANAL-ZERLEGUNG
+(registriert: Sanity P_lernt(REF)>=0.5; AMP-NEG erwartet 0;
+PASS (P-ENERGIE) wenn P_lernt(KOH48E)>=0.5; KILL-A wenn KOH48E=0;
+KILL-B wenn 0<KOH48E<0.5; Seeds 120..129, f64)
+======================================================================================================================
+
+Arm REF: n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | median MC=1.6929 | DM=13.3764 | div=0
+  Parity-Seeds: 120:1.0000, 121:0.5049, 122:0.4785, 123:1.0000, 124:1.0000, 125:1.0000, 126:1.0000, 127:1.0000, 128:1.0000, 129:1.0000
+
+Arm AMPNEG: n_ok=10/10 | P_lernt=0.00 | median acc=0.5215 | median MC=1.6748 | DM=13.3764 | div=0
+  Parity-Seeds: 120:0.5215, 121:0.5146, 122:0.4785, 123:0.5215, 124:0.4785, 125:0.4785, 126:0.5215, 127:0.5215, 128:0.5215, 129:0.5215
+
+Arm KOH48E: n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | median MC=1.7194 | DM=13.3764 | div=0
+  Parity-Seeds: 120:1.0000, 121:1.0000, 122:1.0000, 123:1.0000, 124:1.0000, 125:1.0000, 126:0.5215, 127:0.5215, 128:1.0000, 129:1.0000
+
+Arm CHANSEP_E: n_ok=10/10 | P_lernt=0.70 | median acc=1.0000 | median MC=1.7152 | DM=13.3764 | div=0
+  Parity-Seeds: 120:1.0000, 121:1.0000, 122:0.4785, 123:1.0000, 124:1.0000, 125:0.4785, 126:1.0000, 127:1.0000, 128:1.0000, 129:0.5215
+
+Arm CHANOVLP_E: n_ok=10/10 | P_lernt=1.00 | median acc=1.0000 | median MC=1.6336 | DM=13.3764 | div=0
+  Parity-Seeds: 120:1.0000, 121:1.0000, 122:1.0000, 123:1.0000, 124:1.0000, 125:1.0000, 126:1.0000, 127:1.0000, 128:1.0000, 129:1.0000
+
+Arm ENTROP_E: n_ok=10/10 | P_lernt=0.60 | median acc=1.0000 | median MC=1.7779 | DM=13.3764 | div=0
+  Parity-Seeds: 120:1.0000, 121:0.4854, 122:0.4785, 123:1.0000, 124:0.4785, 125:1.0000, 126:1.0000, 127:0.4502, 128:1.0000, 129:1.0000
+
+--- T12-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
+REF: P_lernt=0.80 median acc=1.0000 median MC=1.6929 DM=13.3764
+AMPNEG: P_lernt=0.00 median acc=0.5215 median MC=1.6748 DM=13.3764
+KOH48E: P_lernt=0.80 median acc=1.0000 median MC=1.7194 DM=13.3764
+CHANSEP_E: P_lernt=0.70 median acc=1.0000 median MC=1.7152 DM=13.3764
+CHANOVLP_E: P_lernt=1.00 median acc=1.0000 median MC=1.6336 DM=13.3764
+ENTROP_E: P_lernt=0.60 median acc=1.0000 median MC=1.7779 DM=13.3764
+DM-Konstanz: rel. Streuung=0.00e+00 (OK)
+SANITY (REF lernt, P_lernt(REF)=0.80 >= 0.5?): JA
+AMP-NEG-NEGativkontrolle (erwartet 0): P_lernt(AMPNEG)=0.00
+PRIMAER: P_lernt(KOH48E)=0.80 (bekannt: KOH48 bei kleiner Energie = 0.00 aus T9b/T10)
+SEKUNDAER (T11-Frage bei REF-Energie): CHANSEP_E=0.70 CHANOVLP_E=1.00 ENTROP_E=0.60
+Sanity: Divergenzen gesamt=0 (JA)
+
+VERDICT: PASS — P-ENERGIE BEWIESEN: Die kohaerente 48-Moden-Konstruktion lernt auf REF-Energie (KOH48E P_lernt >= 0.5). Die Verhungerung der T9/T9b/T10-kohaerenten Arme war die ENERGIE, nicht die Richtung. Ehrliche Selbstkorrektur: Der Richtungs-Kontrast von Nachtrag 10/11 ist als Energie-Konfund entlarvt und relativiert. (AMP-NEG berichtet: 0.00)
+=== FERTIG ===
