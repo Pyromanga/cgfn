@@ -62,6 +62,7 @@ REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
     DM-Check, Laufzeit.
   Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
 '''
+import math
 import os
 import time
 from pathlib import Path
