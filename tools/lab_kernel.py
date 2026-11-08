@@ -2,6 +2,13 @@
 '''W1 P1 — LAB-KERNEL: Contract-Generator + Invarianten-Audit
 (Registrierung: analysis/W1_lab_kernel.md, Abschnitt 4; P1-Umfang: C+A)
 
+REPARATUR-PROTOKOLL (Run-1-Crash, 12s): Der Run-1-Push enthielt im
+Datei-Inhalt zwei aufgeloeste \n-Zeichen innerhalb von String-Literalen
+(return '\n'.join(L), fh.write(out + '\n')) — Schreib-Artefakt des Push-
+Wegs, kein Design-Defekt. Die py_compile-Gates fingen es ab (0 verbrannte
+Runner-Minuten). EINZIGE Aenderung Run-2: korrektes \n in den beiden
+Zeilen. Design, Contract, Test, Registrierung unveraendert.
+
 DIE WETTE VON W1: Wenn Registrierung, Auswertung und Verdikt aus EINEM
 deklarativen Contract GENERIERT werden, stirbt die Bug-Klasse
 "Code weicht von Registrierung ab" strukturell (T11: stille Normierung;
@@ -293,8 +300,7 @@ def run_historien_test():
                    % '/'.join(parts))
     L.append('VERDICT: ' + verdict)
     L.append('=== FERTIG ===')
-    return '
-'.join(L)
+    return '\n'.join(L)
 
 
 if __name__ == '__main__':
@@ -302,5 +308,4 @@ if __name__ == '__main__':
     out = run_historien_test()
     print(out)
     with open('results/w1_kernel_historien_test.txt', 'w', encoding='utf-8') as fh:
-        fh.write(out + '
-')
+        fh.write(out + '\n')
