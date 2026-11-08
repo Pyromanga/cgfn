@@ -30,7 +30,7 @@ Arm R96_4.9 (H=96): n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | DM=20.6678 |
   Parity-Seeds: 150:1.0000, 151:1.0000, 152:0.4980, 153:1.0000, 154:0.4785, 155:1.0000, 156:1.0000, 157:1.0000, 158:1.0000, 159:1.0000
 
 --- T15-AUSWERTUNG (nur registrierte Groessen zaehlen) ---
-REF (H=24): P_lernt=1.00 median acc=1.0000 DM=20.6678
+REF (H=24): P_lernt=0.80 median acc=1.0000 DM=7.5793
 REF (H=96): P_lernt=1.00 median acc=1.0000 DM=20.6678
 R24_2.0 (H=24): P_lernt=0.70 median acc=1.0000 DM=7.5793
 R24_3.5 (H=24): P_lernt=0.90 median acc=1.0000 DM=7.5793
@@ -38,10 +38,10 @@ R24_4.9 (H=24): P_lernt=1.00 median acc=1.0000 DM=7.5793
 R96_2.0 (H=96): P_lernt=0.10 median acc=0.4785 DM=20.6678
 R96_3.5 (H=96): P_lernt=0.60 median acc=1.0000 DM=20.6678
 R96_4.9 (H=96): P_lernt=0.80 median acc=1.0000 DM=20.6678
-SANITY: REF24=1.00 (>=0.5? JA), REF96=1.00 (>=0.5? JA)
+SANITY: REF24=0.80 (>=0.5? JA), REF96=1.00 (>=0.5? JA)
 H=24: s=2.0: 0.70, s=3.5: 0.90, s=4.9: 1.00
 H=96: s=2.0: 0.10, s=3.5: 0.60, s=4.9: 0.80
-DM-Konstanz innerhalb H: VERLETZT | Divergenzen gesamt=0 (JA)
+DM-Konstanz innerhalb H: OK | Divergenzen gesamt=0 (JA)
 
-VERDICT: UNENTSCHEIDEN (Crash-Klasse) — DM-Konstanz innerhalb eines H verletzt: Instrument-Bug. Rerun erlaubt, Design unveraendert.
+VERDICT: KILL-A — ABSOLUTE KANTE: R96_3.5 lernt — die Kante bleibt bei ~3.5 auch fuer H=96. Kein sqrt(H)-Gesetz; die Kante ist eine absolute Amplituden-Schwelle (pro-Einheit-Betrag ~ 3.5/sqrt(48) ≈ 0.5 pro Einheit). Design-Rezept absolut: Antriebsnorm >= ~3.5, unabhaengig von H.
 === FERTIG ===
