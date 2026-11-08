@@ -552,3 +552,73 @@ REGISTRIERUNG (GENAGELT):
     wenn MC(MODRAND) ≈ MC(REF) aber Training trennt, ist die Richtung fuer
     MC irrelevant — Dissoziation auch innerhalb des Reservoir-Regimes).
   Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
+
+
+---
+
+# Nachtrag 11 (2026-11-08): T10 — KILL-B. Zerlegung scheitert: Nur iid-Koordinaten-Antriebe lernen. MC bleibt richtungs-robust.
+
+## T10 (REF / KOH48 / MODRAND48 / KOORDKOH48, Seeds 100..109, DM 13.2207 exakt konstant, Lauf 14:28-14:38 UTC)
+SANITY: REF lernt P_lernt = 0.70 (7/10 perfekt). Alle drei Zerlegungs-Arme P_lernt = 0.00:
+  MODRAND48 (iid Phasen auf je 24 Eigenmoden, Kanaele getrennt) — PHASEN-THESE TOT.
+  KOORDKOH48 (ones + alternierend, phasen-gemischt in der Eigenbasis) — BASIS-THESE TOT.
+  KOH48 (kohaerent) — Negativ-Kontrolle bestaetigt (0.00 wie T9/T9b).
+VERDICT: KILL-B — Zerlegung scheitert. "Genuin diffus" bleibt undifferenziert.
+
+## Was bleibt als Unterschied von REF?
+REF ist das einzige Design mit ZWEI UNABHAENGIGEN iid-Gauss-Spalten in Koordinaten
+(volle Entropie, beide Kanaele im ganzen R^48, keine Struktur). Die toten Arme
+haben je eine Rest-Struktur: Kanal-Trennung (MODRAND: Kanaele auf disjunkte
+Moden-Bloecke) oder Richtungsdeterminismus (KOORDKOH: DC + Nyquist, Entropie 0)
+oder beides (KOH). Drei Kandidaten-Knarren bleiben: (a) KANAL-OVERLAP (beide
+Kanaele tragen dieselben Unterraume), (b) TRAEGER-DIMENSION je Kanal (24 vs 48),
+(c) ENTROPIE der Richtungen (iid vs deterministisch). T11 zerlegt REF weiter.
+
+## Sekundaer: MC-Richtungs-Robustheit (dritte Bestaetigung)
+MC: REF 1.7606, KOH48 1.7199, MODRAND48 1.7190, KOORDKOH48 1.7257 — Spread < 3%
+bei maximal getrennten Trainings-Outcomes (0.70 vs 0.00). MC haengt an der
+Moden-Abdeckung (hier bei allen 48), NICHT an der Richtung. Die T9/T9b/T10-
+Dissoziation ist dreifach reproduziert: MC = Zahl der angeregten Moden,
+Training = Struktur des Antriebs.
+
+## T11 (KANAL-STRUKTUR-ZERLEGUNG, registriert VOR dem Lauf)
+Vier Arme, Energie pro Kanal konstant 0.5, W T6-B60 pro Seed fix, b=0.1*randn
+fix, Seeds 110..119 (frisch), f64, Masse identisch T3/T7/T10.
+  REF: Uw = 0.5*randn(H,2) — SANITY (P_lernt >= 0.5, sonst UNENTSCHEIDEN,
+    Serie-Post-Mortem, KEINE weitere Paritaets-Reparatur).
+  CHANSEP: REF-Struktur, aber ohne Kanal-Overlap: v0 = Zufall nur in den ersten
+    24 Koordinaten, v1 = Zufall nur in den letzten 24 (iid Gauss, je normiert)
+    — testet KANAL-OVERLAP als Schluessel.
+  CHANOVLP: maximaler Kanal-Overlap mit reduzierter Traeger-Dimension:
+    v0, v1 = zwei unabhaengige iid Gauss-Vektoren auf den ERSTEN 24
+    Koordinaten (beide Kanaele im selben 24-dim Unterraum)
+    — testet TRAEGER-DIMENSION vs. OVERLAP getrennt von CHANSEP.
+  HALFRAND: v0 = iid Gauss auf ersten 24 Koordinaten, v1 = iid Gauss auf
+    letzten 24 — identisch mit CHANSEP... NEIN: HALFRAND faellt weg,
+    CHANSEP deckt es ab. Stattdessen als vierter Arm:
+  ENTROP: deterministische, aber "typische" Koordinaten-Richtungen:
+    v0 = sign(randn)/sqrt(H) (iid Vorzeichen, Entropie maximal unter
+    deterministischer Konstruktion), v1 = unabhaengig ebenso — testet, ob
+    iid VORZEICHEN (statt Gauss-Amplituden) genuegen (Entropie-Knarp).
+REGISTRIERUNG (GENAGELT):
+  SANITY: P_lernt(REF) >= 0.5, sonst UNENTSCHEIDEN (Serie-Post-Mortem).
+  PASS (OVERLAP-THESE): Sanity UND P_lernt(CHANOVLP) >= 0.5 UND
+    P_lernt(CHANSEP) = 0 — Kanal-Overlap ist der Schluessel, nicht die
+    Traeger-Dimension (24 reicht, wenn beide Kanaele denselben Raum teilen).
+  KILL-A (TRAEGERTHESE): Sanity UND P_lernt(CHANSEP) >= 0.5 — auch ohne
+    Overlap lernbar: Dann war die Traeger-Dimension/Trennung nie der Punkt;
+    die zusaetzliche Rest-Variable ist die Amplituden-/Vorzeichen-Verteilung.
+    (CHANOVLP dann berichtet als sekundaer.)
+  KILL-B (VORZEICHEN-THESE): Sanity UND P_lernt(ENTROP) >= 0.5 UND
+    MOD... (hier: CHANSEP und CHANOVLP beide = 0) — iid Vorzeichen genuegen:
+    Der Schluessel ist die FEINVERTEILUNG (Entropie) der Antriebsmatrix,
+    nicht Geometrie: Eine iid-Gleichverteilung ueber die Einheiten macht
+    trainierbar, jede konzentrierte/strukturierte Amplitudenverteilung nicht.
+  KILL-C (NICHTS DAVON): Sanity UND alle drei Zerlegungs-Arme < 0.5 — auch
+    die Kanal-Struktur-Zerlegung scheitert. Dann ist die verbleibende
+    Variable die Gauss-Amplituden-Verteilung selbst (nur REF-artige
+    Amplituden-Spektren lernen) — T12 muesste die Amplituden-Verteilung
+    drehen (z.B. Randomisierte Amplituden gegen festes Richtungsbild).
+  UNENTSCHEIDEN: Sanity gerissen, >3/10 Divergenzen, DM-Verletzung.
+  SEKUNDAER: MC je Arm, median acc, DM, Laufzeit.
+  Bewahrung: Kein Arm wird nachjustiert; Rerun nur bei Crash.
