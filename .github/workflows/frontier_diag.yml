@@ -1,0 +1,49 @@
+name: cgfn-diag (Gate-Diagnose T19-R2, kein Stein)
+
+# Diagnose-Instrument: Der T19-R2-Syntax-Gate starb in 2 Laeufen
+# in 0 Sekunden ohne lesbaren Fehler (Logs brauchen Admin-Rechte).
+# Dieser Lauf py_compiliert JEDE Datei einzeln und committet die
+# Traceback-Ausgabe ins Repo. KEIN registrierter Stein, keine
+# Physik, nur Instrumentendiagnose.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/diag"
+
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Py-Compile je Datei, Ausgabe sichern
+        run: |
+          {
+            echo "=== GATE-DIAGNOSE $(date -u '+%F %H:%M') UTC ==="
+            python --version 2>&1
+            for f in contracts/t19.py experiments/t19_core_vorhersage2.py tools/lab_kernel.py; do
+              echo "--- $f"
+              python -m py_compile "$f" 2>&1 && echo "OK" || echo "FEHLER"
+            done
+            echo "=== ENDE ==="
+          } | tee results/gate_diagnose.txt
+      - name: Commit diagnose output
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/gate_diagnose.txt 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine Diagnose-Ausgabe — kein Commit."; exit 0; fi
+          git commit -m "diag: Gate-Diagnose T19-R2 ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok"; exit 0; fi
+            git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 5))
+          done
+          echo "[e] push fehlgeschlagen" && exit 1
