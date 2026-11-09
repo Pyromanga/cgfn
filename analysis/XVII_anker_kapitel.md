@@ -1,4 +1,4 @@
-
+successfully downloaded text file (SHA: 439c94cfdb2aa8784f57842ee5e45abbde258ab7)
 
 ---
 
@@ -74,3 +74,54 @@ REGISTRIERUNG (GENAGELT):
     8 Arme x 20 Seeds).
   RISIKO (ehrlich): REF48 (0.5*sqrt(48)~3.46) sitzt wieder auf der
   Rampe — deshalb ist Sanity auf HIGH48, REF48 nur Bericht.
+
+
+---
+
+# Nachtrag 28 (2026-11-09): T19 UNENTSCHEIDEN (Crash — Raster verfehlt). Die eine erlaubte Reparatur: Raster nach UNTEN. Und ein Physik-Alarm, der wichtiger ist als das Verdikt.
+
+## T19 Lauf 1 (gefeuert 16:51 UTC, Ergebnisse 17:21 UTC, ~30 min, Bot-Commit fe0f84e, Seeds 190..209, 7 Arme, 0 Divergenzen)
+VERDICT (GENERIERT): UNENTSCHEIDEN (Crash-Klasse). Registriertes
+Crash-Kriterium "Raster verfehlt" traf EXAKT zu: Die sgrid-Kurve
+s=1.9:0.55, 2.2:0.75, 2.55:0.85, 2.9:0.90, 3.3:0.95 liegt beim
+untersten Rasterpunkt bereits UEBER 0.5 — s50(48) sitzt UNTERHALB
+des Rasters, s50_from_curve -> None, LUECKENLISTE voll (s50 als
+Arm-Mass nie geliefert). Kein KILL, kein PASS: unentscheidbar.
+
+## PHYSIK-ALARM (Vorzeichen, kein Verdikt): Moegliche Nicht-Monotonie
+P_lert(s=1.9, H=48) = 0.55, fast auf der 0.5-Linie. Falls s50(48)
+wirklich < 1.9, dann gilt s50(48) < 2.00 = s50(24) — die s50-Kurve
+faellt zwischen H=24 und H=48. Das wuerde nicht nur KILL-A (Vor-
+hersage 2.55 zu optimistisch) bedeuten, sondern das monophone
+Potenz-Gesetz GANZ fallen lassen. Bisherige Reihe: 12:1.30,
+24:2.00, 96:3.50, 192:4.675. Ehrlich: Rerun-1 kann auch Seed-Bimodalitaet
+oder Raster-Quantisierung (20 Seeds -> 0.05-Schritte) uebertreiben —
+genau deshalb R2 mit dichterem unteren Raster.
+
+## Ursachen-Analyse (ehrlich, Bau-Fehler-Klasse: Prediction-Lock-in)
+Das Raster wurde UM DIE VORHERSAGE 2.55 gelegt. Das ist ein
+Design-Vorurteil: Wer das Raster auf seine eigene Vorhersage zentriert,
+misst nur deren Bestaetigung und blendet das Gegenteil aus. T18
+hatte genau davor gewarnt (14 Prozent daneben). Die Contract-Struktur
+(s50 als Arm-Mass, Instrument setzt es kurvenweit) war intakt —
+allein die Raster-Platzierung war falsch. Lehre fuer den Kernel:
+Raser-Wahl ist Teil der Registrierung und gehoert GEGEN die
+Vorhersame robustifiziert (Randpunkte beidseitig weit ausserhalb
+des erwarteten Bands).
+
+## REPARATUR R2 (die EINE erlaubte; danach ist die Linie tot)
+NUR das Raster geaendert, alles andere GENAGELT wie Nachtrag 27:
+  s-grid: {0.7, 0.9, 1.1, 1.3, 1.55, 1.9, 2.2} (7 Punkte, dicht unten,
+    Obergrenze 2.2 reicht: P(2.2)=0.75 bekannt).
+  Seeds 190..209 (20), H=48, f64, REF48/HIGH48 unveraendert.
+  SANITY: P_lernt(HIGH48) >= 0.5.
+  PASS: s50(48) in [2.05, 3.05) | KILL-A: < 2.05 | KILL-B: >= 3.05.
+  UNENTSCHEIDEN: Raster erneut verfehlt (s50 < 0.7), Sanity gerissen,
+    ndiv > 6 von 20, dmdev-/colnorm-Verletzung — DANN LINIE TOT.
+  KEINE Nachverhandlung der Schwellen.
+VORHERSAGE FUER R2 (Band, kein Verdikt, aus Lauf-1-Material):
+  s50(48) in [1.2, 1.9] — falls real: KILL-A und das Potenz-Gesetz
+  verliert die Monotonie. Falls s50 in [2.05, 3.05): PASS (dann war
+  Lauf 1 ein reines Raster-Artefakt — unwahrscheinlich angesichts
+  P(1.9)=0.55).
+KOSTEN: ~40 min (9 Arme x 20 Seeds, H=48).
