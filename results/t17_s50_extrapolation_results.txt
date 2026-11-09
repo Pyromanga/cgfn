@@ -1,0 +1,78 @@
+======================================================================================================================
+T17 — s50-EXTRAPOLATION BEI H=192 (kernel-generierter Stein)
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t17.py
+Registrierung: XVII Nachtrag 24 | Seeds 170..179, f64, H=192
+Anker: T16 s50(96)=3.5 (Commit 731933f) | These: ratio2 in (1.0, 1.4142)
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+
+Arm REF192 (H=192): n_ok=10/10 | P_lernt=0.90 | median acc=1.0000 | colnorm=6.9593 | DM=29.4346 | div=0
+  Parity-Seeds: 170:1.0000, 171:0.5215, 172:1.0000, 173:1.0000, 174:1.0000, 175:1.0000, 176:1.0000, 177:1.0000, 178:1.0000, 179:1.0000
+
+Arm R192_2.8 (H=192): n_ok=10/10 | P_lernt=0.00 | median acc=0.4854 | colnorm=2.8000 | DM=29.4346 | div=0
+  Parity-Seeds: 170:0.6865, 171:0.4785, 172:0.5215, 173:0.4854, 174:0.4785, 175:0.5215, 176:0.5020, 177:0.4785, 178:0.4785, 179:0.5146
+
+Arm R192_3.5 (H=192): n_ok=10/10 | P_lernt=0.30 | median acc=0.4951 | colnorm=3.5000 | DM=29.4346 | div=0
+  Parity-Seeds: 170:1.0000, 171:0.4785, 172:0.5146, 173:0.4785, 174:1.0000, 175:1.0000, 176:0.4951, 177:0.4785, 178:0.4785, 179:0.5146
+
+Arm R192_4.4 (H=192): n_ok=10/10 | P_lernt=0.40 | median acc=0.5215 | colnorm=4.4000 | DM=29.4346 | div=0
+  Parity-Seeds: 170:1.0000, 171:1.0000, 172:1.0000, 173:0.7490, 174:1.0000, 175:0.5215, 176:0.4854, 177:0.4785, 178:0.4785, 179:0.5146
+
+Arm R192_5.5 (H=192): n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | colnorm=5.5000 | DM=29.4346 | div=0
+  Parity-Seeds: 170:1.0000, 171:1.0000, 172:1.0000, 173:0.5215, 174:1.0000, 175:1.0000, 176:1.0000, 177:1.0000, 178:1.0000, 179:0.5215
+
+Arm R192_7.0 (H=192): n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | colnorm=7.0000 | DM=29.4346 | div=0
+  Parity-Seeds: 170:1.0000, 171:1.0000, 172:1.0000, 173:1.0000, 174:1.0000, 175:0.5215, 176:1.0000, 177:1.0000, 178:1.0000, 179:0.5215
+
+--- T17-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+s50(H=192) = 4.6750 | Anker s50(H=96) = 3.5000 (T16) | ratio2 = 1.3357
+s50/sqrt(192) = 0.3374 | Rampe: s=2.8:0.00, s=3.5:0.30, s=4.4:0.40, s=5.5:0.80, s=7.0:0.80
+
+VERDICT: PASS — P-SUBSQRT-EXTRAPOLATION
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 24 (2026-11-08) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: PASS — P-SUBSQRT-EXTRAPOLATION
+
+## Arm-Zahlen (aus dem Contract generiert)
+  REF192.pf = 0.9
+  REF192.colnorm = 6.95928
+  REF192.dmdev = 1.20698e-16
+  REF192.ndiv = 0
+  REF192.s50 = 4.675
+  REF192.ratio2 = 1.33571
+  R192_2.8.pf = 0
+  R192_2.8.colnorm = 2.8
+  R192_2.8.dmdev = 1.20698e-16
+  R192_2.8.ndiv = 0
+  R192_2.8.s50 = 4.675
+  R192_2.8.ratio2 = 1.33571
+  R192_3.5.pf = 0.3
+  R192_3.5.colnorm = 3.5
+  R192_3.5.dmdev = 1.20698e-16
+  R192_3.5.ndiv = 0
+  R192_3.5.s50 = 4.675
+  R192_3.5.ratio2 = 1.33571
+  R192_4.4.pf = 0.4
+  R192_4.4.colnorm = 4.4
+  R192_4.4.dmdev = 1.20698e-16
+  R192_4.4.ndiv = 0
+  R192_4.4.s50 = 4.675
+  R192_4.4.ratio2 = 1.33571
+  R192_5.5.pf = 0.8
+  R192_5.5.colnorm = 5.5
+  R192_5.5.dmdev = 1.20698e-16
+  R192_5.5.ndiv = 0
+  R192_5.5.s50 = 4.675
+  R192_5.5.ratio2 = 1.33571
+  R192_7.0.pf = 0.8
+  R192_7.0.colnorm = 7
+  R192_7.0.dmdev = 1.20698e-16
+  R192_7.0.ndiv = 0
+  R192_7.0.s50 = 4.675
+  R192_7.0.ratio2 = 1.33571
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
