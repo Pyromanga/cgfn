@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-'''T19 — THE-CORE-VORHERSAGE-TEST 2: SAGT DER THEORY-CORE DIE BREITE
-H=48 VORUS? (registriert 2026-11-09 VOR dem Lauf, XVII Nachtrag 27)
-
-Zweiter Vorhersage-Stein: Beide Fit-Formen aus Nachtrag 27 sagen
-s50(48) ~ 2.55 voraus (reiner Potenz-Fit: 2.55 | affin: 2.58).
-Band +-20 Prozent, 20 Seeds (T18-Lehre: Raster/Rauschen-
-Empfindlichkeit). Contract contracts/t19.py, Verdikt generiert.
-Rollen: REF48 = Konventions-Bericht (KEIN Sanity — liegt prognos-
-tiziert auf der Rampe), HIGH48 = Sanity-Anker, R48_s = s50-Kurve.'''
+'''T19-R2 — REPARATURLAUF: s50(48) MESSEN (registriert 2026-11-09
+VOR dem Lauf, XVII Nachtrag 28). Lauf 1 war UNENTSCHEIDEN: Das
+Raster {1.9..3.3} lag um die Vorhersage 2.55 (Prediction-Lock-in),
+aber P_lernt(1.9)=0.55 — s50(48) sitzt UNTERHALB. R2 erweitert das
+Raster nach UNTEN ({0.7..2.2}, 7 Punkte). Schwellen UNVERAENDERT:
+PASS [2.05, 3.05), KILL-A < 2.05, KILL-B >= 3.05. Nach einem
+weiteren Crash ist die Linie TOT. Contract contracts/t19.py,
+Verdikt generiert. Rollen: REF48 = Konventions-Bericht, HIGH48 =
+Sanity-Anker, R48_s = s50-Kurve.'''
 import json
 import os
 import sys
@@ -82,8 +82,8 @@ def make_Uw(arm, H, gen):
     if arm['kind'] == 'ref':
         return 0.5 * torch.randn(H, 2, generator=gen)
     s = float(arm['s'])
-    v0 = torch.randn(H, generator=gen)
-    v1 = torch.randn(H, generator=gen)
+    v0 = torch.randn(H, 2, generator=gen)[:, 0]
+    v1 = torch.randn(H, 2, generator=gen)[:, 1]
     v0 = v0 / v0.norm() * s
     v1 = v1 / v1.norm() * s
     return torch.stack([v0, v1], dim=1)
@@ -163,10 +163,11 @@ def main():
     t0 = time.time()
     L = []
     L.append('=' * 118)
-    L.append('T19 — THE-CORE-VORHERSAGE-TEST 2 (kernel-generierter Stein)')
+    L.append('T19-R2 — REPARATURLAUF: RASTER UNTEN, s50(48) MESSEN')
     L.append('Vorhersage: s50(48) ~ 2.55 (+-20 Prozent, Nachtrag 27)')
+    L.append('R2-Registrierung: XVII Nachtrag 28 | Lauf 1: UNENTSCHEIDEN (Raster verfehlt)')
     L.append('Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t19.py')
-    L.append('Registrierung: XVII Nachtrag 27 | Seeds 190..209 (20), f64, H=48')
+    L.append('Seeds 190..209 (20), f64, H=48 | NACH UNENTSCHEIDEN R2: LINIE TOT')
     L.append('=' * 118)
 
     errs = lab_kernel.preflight_gate(C)
@@ -231,8 +232,9 @@ def main():
         measurements[a['name']]['s50'] = s50
 
     L.append('')
-    L.append('--- T19-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---')
+    L.append('--- T19-R2-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---')
     L.append('VORHERSAGE: s50(48) ~ 2.55 (reiner Potenz-Fit 2.55 | affin 2.58)')
+    L.append('R2-BAND (Nachtrag 28, Bericht): s50 in [1.2, 1.9] vermutet')
     L.append('GEMESSEN:   s50(48) = %s' % fmt(s50))
     L.append('sgrid-Kurve: %s' % ', '.join('s=%s:%.2f' % (s, measurements['R48_%s' % s]['pf'])
                                             for s in sorted(float(a['s'])
@@ -244,13 +246,15 @@ def main():
         e_hi = math.log(3.5 / s50) / math.log(96.0 / 48.0)
         L.append('Implizierte Schritt-Exponenten (Bericht): 24->48: %.4f | '
                  '48->96: %.4f' % (e_lo, e_hi))
+        L.append('MONOTONIE-CHECK (Bericht): s50(48) %s s50(24)=2.00'
+                 % ('<' if s50 < 2.0 else '>='))
 
     res = lab_kernel.evaluate(C, measurements)
     for al in res['alarms']:
         L.append('ALARM: %s' % al)
     L.append('')
     L.append('VERDICT: %s' % res['verdict'])
-    skelett = lab_kernel.auto_nachtrag(C, res, '27', '2026-11-09')
+    skelett = lab_kernel.auto_nachtrag(C, res, '28', '2026-11-09')
     L.append('')
     L.append('--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---')
     L.append(skelett)

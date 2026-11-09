@@ -1,14 +1,17 @@
-'''T19-Contract — reine Daten (registriert XVII Nachtrag 27).
-ZWEITER VORHERSAGE-STEIN: Theory-Core sagt s50(48) ~ 2.55 voraus
-(beide Fit-Formen aus Nachtrag 27: reiner Potenz-Fit 2.55, affin
-2.58). Band +-20 Prozent. 20 Seeds (T18-Lehre: Raster-Rauschen).
-Verdikt generiert vom W1-Kernel; Instrument liest alles hier.
+'''T19-Contract — R2-REPARATUR (registriert XVII Nachtrag 28).
+Einzige Aenderung gegen Nachtrag 27: Das s-Raster liegt NUR UNTEN
+dichter und weiter ({0.7 .. 2.2}), weil Lauf 1 zeigte, dass
+P_lernt(1.9)=0.55 bereits ueber der 0.5-Linie liegt — das alte
+Raster (um die Vorhersage 2.55) war Prediction-Lock-in.
+ALLES ANDERE GENAGELT: Seeds 190..209, Vorhersage s50(48) ~ 2.55,
+Band [2.05, 3.05), KILL-A/KILL-B wie Nachtrag 27. Verdikt
+generiert vom W1-Kernel; Instrument liest alles hier.
+Nach UNENTSCHEIDEN R2 ist die Linie TOT (keine zweite Reparatur).
 
-Rollen: ref (Konventions-Bericht, KEIN Sanity — 0.5*sqrt(48)~3.46
-liegt prognostiziert auf der Rampe), anchor (SANITY weit oberhalb),
-sgrid (s50-Kurve).'''
+Rollen: ref (Konventions-Bericht, KEIN Sanity), anchor (SANITY
+weit oberhalb), sgrid (s50-Kurve, dicht unten).'''
 
-S_GRID = [1.9, 2.2, 2.55, 2.9, 3.3]
+S_GRID = [0.7, 0.9, 1.1, 1.3, 1.55, 1.9, 2.2]
 H = 48
 S_ANCHOR = 5.5
 
@@ -46,13 +49,14 @@ def contract_t19():
                      predicate=[dict(metric='HIGH48.pf', op='ge', value=0.5)])],
         verdict=[
             dict(id='PASS — P-CORE-VORHERSAGE-2',
-                 text='s50(48) in [2.05, 3.05]: Theory-Core trifft die '
+                 text='s50(48) in [2.05, 3.05): Theory-Core trifft die '
                       'zweite Vorhersage (+-20 Prozent um 2.55)',
                  predicate=[dict(metric='REF48.s50', op='ge', value=2.05),
                             dict(metric='REF48.s50', op='lt', value=3.05)]),
             dict(id='KILL-A — ZU KLEIN',
                  text='s50(48) < 2.05: beide Formen zu optimistisch, '
-                      'Kurve biegt staerker',
+                      'Kurve biegt staerker (R2: Moegliche '
+                      'Nicht-Monotonie gegen s50(24)=2.00)',
                  predicate=[dict(metric='REF48.s50', op='lt', value=2.05)]),
             dict(id='KILL-B — ZU GROSS',
                  text='s50(48) >= 3.05: Kurve steiler als beide Formen',
