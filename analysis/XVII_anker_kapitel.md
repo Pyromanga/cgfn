@@ -2,65 +2,75 @@
 
 ---
 
-# Nachtrag 26 (2026-11-09): EXPONENTEN-ANALYSE (ehrlich: KEIN exaktes Pinning aus 3 Punkten) + T18-REGISTRIERUNG — Theory-Core-Vorhersage-Stein (genagelt VOR dem Lauf)
+# Nachtrag 27 (2026-11-09): T18 — PASS formal, aber das reine Potenz-Gesetz KNICKT. Der Theory-Core lernt aus seinem ersten Vorhersage-Test: 14 Prozent daneben heisst nicht "bestaetigt", es heisst "fast".
 
-## Exponenten-Analyse (Antwort auf die Kapitaens-Frage)
-Der 1%-Fit s50 ~ 0.546 * H^0.4083 ist real, ABER: Die Raster-
-unsicherheit (n=10, pf=k/10, s50 +- ~0.25) blaest den Exponenten auf
-das Band [0.382, 0.433]. Darin leben ALLE Kandidaten:
-  2/5 = 0.400 | ln(3/2) = 0.405 | 1/sqrt(6) = 0.408 (0.02% Abweichung
-  — VERDAECHTIG exakt, aber Numerologie-Gefahr: 3 Punkte pinnen keine
-  Konstante) | 5/12 = 0.417. KEIN Kandidat ist ausschliessbar; <1%-
-  Abweichung beweist hier KEINE genaue Formel, nur eine gute
-  Naeherung. Schritt-Exponenten (0.404 / 0.418) zeigen keinen Drift.
-ROBUST ueber alle Kandidaten: die Vorhersage s50(12) in [1.47, 1.52]
-(e=0.40: 1.523 | e=0.408: 1.498 | e=5/12: 1.471).
-PINNING-PLAN (registriert): Wenn T18 PASS -> T19 als Pinning-Stein
-(H in {12, 48} mit feinem Raster und 20 Seeds an den Klammer-
-punkten; Ziel: Exponenten-Band +-0.01) ODER analytische Herleitung
-(Warum H^alpha mit alpha ~ 0.41? Kandidat-Mechanismus: DM/Spektrum-
-Kopplung der T6-B60-Familie). VERALLGEMEINERUNG (offen, eigene
-Steine): Das Gesetz ist bisher an EINER Familie gemessen (Paritaet,
-T6-B60-W, REFGEOM); allgemein gueltig heisst: Familie variieren.
+## T18 (Lauf 08:03-08:20 UTC, 17 min, Bot-Commit b6cd8f4, Seeds 180..189, 7 Arme, 0 Divergenzen, Bug-Protokoll leer)
+VERDICT (GENERIERT): PASS — P-GESCHLOSSENE-VORHERSAGE (s50(12) = 1.30
+in [1.1, 1.9]). ABER die scharfe Vorhersage war 1.51 — das Messergebnis
+liegt 14 Prozent DARUNTER, nah an der Bandunterkante. Formal PASS,
+inhaltlich: Das 3-Punkt-Gesetz s50 ~ 0.546*H^0.408 ist als GLOBALES
+Ein-Parameter-Gesetz GEFAELLEN.
 
-## T18 — THE-CORE-VORHERSAGE-TEST (P-GESCHLOSSENE-VORHERSAGE)
-ERSTER VORHERSAGE-STEIN der Serie: Das gefittete Weltmodell (Nachtrag
-25) sagt eine Zahl voraus; der Kernel verdiktet sie. Das ist der
-geschlossene Kreislauf in Miniatur und der erste messbare
-Research-Taste-Datenpunkt (Nutzer-These, Nachtrag 24).
+## Die vier Punkte jetzt (T16/T17/T18)
+  H= 12: s50 = 1.300 (T18)   H= 24: s50 = 2.000 (T16)
+  H= 96: s50 = 3.500 (T16)   H=192: s50 = 4.675 (T17)
+SCHRITT-EXPONENTEN: 12->24: 0.6215 | 24->96: 0.4037 | 96->192: 0.4176.
+Der Exponent ist NICHT konstant: Die Kurve ist am kleinen H STEILER
+und flacht auf ~0.41 ein. Ein Ein-Exponent war von Anfang an zu
+einfach geglaubt (drei Punkte), jetzt ist es widerlegt (vier Punkte).
 
-VORHERSAGE (aus s50 ~ 0.546 * H^0.408, Nachtrag 25):
-  s50(H=12) ~ 1.51 (Kandidaten-Band [1.47, 1.52]).
+## Refit ueber alle vier Punkte (Material)
+  (a) Reiner Potenz-Fit: s50 ~ 0.447 * H^0.450 — Residuen bis
+      +-6.5 Prozent (H=24: -6.5, H=12: +5.3). Kein <1%-Gesetz.
+  (b) AFFINE Form: s50 ~ 0.564 * H^0.41 - 0.176 — Residuen bis
+      +-6.7 Prozent. Praktisch aequivalent zu (a) im Bereich
+      [12, 192] (beide sagen z.B. H=48 bei ~2.55 voraus).
+  EHRLEICHES FAZIT: Beide Formen treffen die vier Punkte auf ~5-6
+  Prozent. Als VORHERSAGE-Werkzeug ist der Theory-Core brauchbar
+  (Vorhersageband +-15 Prozent waere ehrlich); als EXAKTES Gesetz
+  ist nichts gepinnt. Die <1%-Frage des Kapitaens (Nachtrag 26)
+  ist damit negativ beantwortet: Es gibt (noch) keine genaue
+  Formel, nur eine gute Naeherung mit Biegung am unteren H-Rand.
 
-INSTRUMENT (kernel-generiert wie T16/T17): Contract contracts/t18.py,
-Instrument experiments/t18_core_vorhersage.py, Verdikt generiert.
-H=12 (neu, billigste Breite), Seeds 180..189, Paritaet wie T15/T16/
-T17. ARME (7): REF12 (unnnormierte Konvention, role ref — Bericht,
-KEIN Sanity: 0.5*sqrt(12)=1.73 liegt VORHERGESAGT auf der Rampe —
-T3-Lehre: kein Sanity-Arm auf einem marginalen Punkt), HIGH12
-(REFGEOM exakt Norm 3.5, role anchor — SANITY: weit oberhalb der
-Vorhersage-Rampe, dort muss das Instrument lernen), R12_s fuer s in
-{0.8, 1.1, 1.5, 1.9, 2.4} (role sgrid, REFGEOM exakt normiert).
+## Was der Theory-Core aus T18 gelernt hat (der eigentliche Ertrag)
+1. DAS MODELL HAT EINEN VERLUST-SIGNAL-DATENPUNKT: Vorhersage 1.51,
+   gemessen 1.30, Fehler 14 Prozent. Erste Zeile des kuenftigen
+   Research-Taste-Trainings (Nutzer-These, Nachtrag 24): Ein Fit aus
+   3 Punkten ist zu optimistisch, wenn er keine
+   Unsicherheits-Schaetzung traegt. Lehre: kuenftige Vorhersagen mit
+   explizitem Band UND mit Modellvergleich gegen Alternativ-Form.
+2. KANDIDAT-KOVARIATE ENTDECKT (Material): DM wachst mit H (4.84 bei
+   H=12 bis 29.43 bei H=192). Moeglicherweise ist s50 eine Funktion
+   von DM (oder beides folgen dem Spektrum), nicht von H direkt —
+   das wuerde die Biegung erklaeren und ist der analytische Angriffs-
+   punkt fuer die WARUM-Frage.
+3. Die Sanity-Architektur (HIGH12-Anker statt REF12-auf-der-Rampe,
+   T3-Lehre) hat funktioniert: Sanity 0.60, sauber getrennt vom
+   Rampen-Bericht.
 
-s50-Definition wie T16/T17 genagelt (erste 0.5-Durchquerung der
-sgrid-Kurve, linear interpoliert; nicht einklammerbar -> NICHT
-GEMESSEN -> Kernel-Alarm -> UNENTSCHEIDEN, EINE Reparatur).
-
-REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
-  SANITY: P_lernt(HIGH12) >= 0.5.
-  PASS (P-GESCHLOSSENE-VORHERSAGE): s50(12) in [1.1, 1.9]
-    (Vorhersage 1.51, Band +-27 Prozent — grosszuegig gegen n=10-
-    Rauschen, scharf genug, um einen kaputten Fit zu toeten).
-  KILL-A (VORHERSAGE ZU HOCH): s50(12) < 1.1 — das Netz lernt frueher
-    als das Gesetz sagt; Fit war Zufall oder H^alpha falsch geformt.
-  KILL-B (VORHERSAGE ZU NIEDRIG): s50(12) >= 1.9 — das Netz lernt
-    spaeter; dito.
-  UNENTSCHEIDEN (Crash): s50 nicht einklammerbar (Raster verfehlt),
-    Sanity gerissen, ndiv > 3, dmdev-/colnorm-Verletzung. Rerun nur
-    bei Crash; EINE Reparatur, dann T18-Linie tot.
-  SEKUNDAER: REF12-pf (Konventions-Bericht), DM, Laufzeit,
-    D-Diff-Snapshot, implizierter Exponent aus 4 Punkten (Bericht).
-  Bewahrung: kein Arm wird nachjustiert.
-  KOSTEN-SCHAETZUNG: ~10-15 Runner-Minuten (H=12 ist schnell).
-  RISIKEN: pf(0.8) >= 0.5 -> s50 < 0.8 -> UNENTSCHEIDEN (haette
-  KILL-A-Richtung); pf(2.4) < 0.5 -> UNENTSCHEIDEN (KILL-B-Richtung).
+## T19-REGISTRIERUNG (VORHERSAGE, genagelt VOR dem Lauf) — DER ZWEITE VORHERSAGE-TEST, diesals MIT BAND UND MODELLVERGLEICH
+Design: H=48 (die Luecke in der Kurve, billig). s-Raster um die
+beiden Form-Vorhersagen (beide ~2.55): R48_s fuer s in {1.9, 2.2,
+2.55, 2.9, 3.3} (role sgrid), HIGH48 (s=5.5, Sanity-Anker), REF48
+(Konventions-Bericht, role ref). Seeds 190..209 (20 Seeds — doppelt,
+denn T18s Lehre ist Raster/Rauschen-empfindlichkeit). f64, Paritaet
+wie immer, kernel-generiert (contracts/t19.py).
+VORHERSAGEN (registriert, beide Formen aus Nachtrag 27):
+  s50(48) ~ 2.55 (reiner Potenz-Fit: 2.55 | affin: 2.58 — die Formen
+  unterscheiden sich hier praktisch nicht; der Test ist gegen die
+  MESSUNG, nicht gegen eine Form gegen die andere).
+REGISTRIERUNG (GENAGELT):
+  SANITY: P_lernt(HIGH48) >= 0.5.
+  PASS (P-CORE-VORHERSAGE-2): s50(48) in [2.05, 3.05] (+-20 Prozent
+    um 2.55, breiter als T18 gelernt hat: 14%-Fehler-Plus-Rauschen).
+  KILL-A (ZU KLEIN): s50(48) < 2.05 — beide Formen zu optimistisch,
+    Kurve biegt staerker.
+  KILL-B (ZU GROSS): s50(48) >= 3.05 — Kurve steiler als beide.
+  UNENTSCHEIDEN (Crash): Raster verfehlt (alles < 0.5 oder Rand >=
+    0.5), Sanity gerissen, ndiv > 6 von 20, dmdev-/colnorm-Verletzung.
+    Rerun nur bei Crash; EINE Reparatur.
+  SEKUNDAER: 4-Punkt-Refit mit H=48 (Bericht), REF48-pf, DM, Laufzeit.
+  Bewahrung: kein Arm nachjustiert. KOSTEN: ~15-25 min (H=48,
+    8 Arme x 20 Seeds).
+  RISIKO (ehrlich): REF48 (0.5*sqrt(48)~3.46) sitzt wieder auf der
+  Rampe — deshalb ist Sanity auf HIGH48, REF48 nur Bericht.
