@@ -2,61 +2,65 @@
 
 ---
 
-# Nachtrag 25 (2026-11-09): T17 — PASS (P-SUBSQRT-EXTRAPOLATION). Drei s50-Punkte, ein Kandidaten-Gesetz: s50 ~ 0.55 * H^0.41. Der Theory-Core hat sein erstes Material.
+# Nachtrag 26 (2026-11-09): EXPONENTEN-ANALYSE (ehrlich: KEIN exaktes Pinning aus 3 Punkten) + T18-REGISTRIERUNG — Theory-Core-Vorhersage-Stein (genagelt VOR dem Lauf)
 
-## T17 (Lauf 23:43-00:06 UTC, 23 min, Bot-Commit 7e6da59, Seeds 170..179, 6 Arme, 0 Divergenzen, Bug-Protokoll leer)
-VERDICT (GENERIERT): PASS — P-SUBSQRT-EXTRAPOLATION.
-  s50(192) = 4.675 | Anker s50(96) = 3.5 (T16) | ratio2 = 1.3357,
-  strikt in (1.0, 1.4142) — knapp unter sqrt(2), Sub-Sqrt haelt.
-  RAMPE H=192: pf = 0.00 / 0.30 / 0.40 / 0.80 / 0.80
-       (s = 2.8 / 3.5 / 4.4 / 5.5 / 7.0)
-  SANITY REF192: 0.90. colnorm exakt, dmdev ~1e-16, ndiv = 0.
+## Exponenten-Analyse (Antwort auf die Kapitaens-Frage)
+Der 1%-Fit s50 ~ 0.546 * H^0.4083 ist real, ABER: Die Raster-
+unsicherheit (n=10, pf=k/10, s50 +- ~0.25) blaest den Exponenten auf
+das Band [0.382, 0.433]. Darin leben ALLE Kandidaten:
+  2/5 = 0.400 | ln(3/2) = 0.405 | 1/sqrt(6) = 0.408 (0.02% Abweichung
+  — VERDAECHTIG exakt, aber Numerologie-Gefahr: 3 Punkte pinnen keine
+  Konstante) | 5/12 = 0.417. KEIN Kandidat ist ausschliessbar; <1%-
+  Abweichung beweist hier KEINE genaue Formel, nur eine gute
+  Naeherung. Schritt-Exponenten (0.404 / 0.418) zeigen keinen Drift.
+ROBUST ueber alle Kandidaten: die Vorhersage s50(12) in [1.47, 1.52]
+(e=0.40: 1.523 | e=0.408: 1.498 | e=5/12: 1.471).
+PINNING-PLAN (registriert): Wenn T18 PASS -> T19 als Pinning-Stein
+(H in {12, 48} mit feinem Raster und 20 Seeds an den Klammer-
+punkten; Ziel: Exponenten-Band +-0.01) ODER analytische Herleitung
+(Warum H^alpha mit alpha ~ 0.41? Kandidat-Mechanismus: DM/Spektrum-
+Kopplung der T6-B60-Familie). VERALLGEMEINERUNG (offen, eigene
+Steine): Das Gesetz ist bisher an EINER Familie gemessen (Paritaet,
+T6-B60-W, REFGEOM); allgemein gueltig heisst: Familie variieren.
 
-## Die drei s50-Punkte (T16/T17, konsistent gemessen)
-  H= 24: s50 = 2.000  (T16)
-  H= 96: s50 = 3.500  (T16)
-  H=192: s50 = 4.675  (T17)
+## T18 — THE-CORE-VORHERSAGE-TEST (P-GESCHLOSSENE-VORHERSAGE)
+ERSTER VORHERSAGE-STEIN der Serie: Das gefittete Weltmodell (Nachtrag
+25) sagt eine Zahl voraus; der Kernel verdiktet sie. Das ist der
+geschlossene Kreislauf in Miniatur und der erste messbare
+Research-Taste-Datenpunkt (Nutzer-These, Nachtrag 24).
 
-## Kandidaten-Gesetz (MATERIAL, unregistriert — der Theory-Core-Fit)
-Log-Log-Fit ueber alle drei Punkte:
-  s50(H) ~ 0.547 * H^0.408
-  Probe: H=24 -> 2.00 (exakt), H=96 -> 3.52 (vs 3.50), H=192 ->
-  4.67 (vs 4.675). Alle drei Punkte innerhalb 1 Prozent.
-Der EXPONENT ~0.41 ist stabil ueber beide H-Schritte (0.40 im
-ersten, 0.42 im zweiten Doppel-Schritt) — kein Drift. s50/sqrt(H)
-faellt weiter (0.408 / 0.357 / 0.337), konsistent mit Exponent <
-0.5. EHRliche Grenzen: (1) drei Punkte, n=10-Seeds, s50-Raster-
-unsicherheit +-1 halber Rasterpunkt; (2) nur EINE Aufgabenfamilie
-(Paritaet), EINE W-Familie (T6-B60), EINE Antriebsgeometrie
-(REFGEOM); (3) der Fit ist deskriptiv, KEIN registriertes Verdikt.
+VORHERSAGE (aus s50 ~ 0.546 * H^0.408, Nachtrag 25):
+  s50(H=12) ~ 1.51 (Kandidaten-Band [1.47, 1.52]).
 
-## Was das Gesetz bedeutet (wenn es haelt)
-- Design-Rezept GUENSTIGER als jede fruehere Version: Antriebsnorm
-  >= ~1.5 * s50(H) ~ 0.8 * H^0.41 waechst deutlich langsamer als
-  sqrt(H) — grosse Netze sind ANTRIEBS-BILLIGER als die sqrt-Regel
-  behauptete.
-- Die NL-Eintritts-Kette (T14) bekommt eine quantitative Spitze:
-  Der benoetigte Antrieb waechst sub-thermisch mit der Breite.
+INSTRUMENT (kernel-generiert wie T16/T17): Contract contracts/t18.py,
+Instrument experiments/t18_core_vorhersage.py, Verdikt generiert.
+H=12 (neu, billigste Breite), Seeds 180..189, Paritaet wie T15/T16/
+T17. ARME (7): REF12 (unnnormierte Konvention, role ref — Bericht,
+KEIN Sanity: 0.5*sqrt(12)=1.73 liegt VORHERGESAGT auf der Rampe —
+T3-Lehre: kein Sanity-Arm auf einem marginalen Punkt), HIGH12
+(REFGEOM exakt Norm 3.5, role anchor — SANITY: weit oberhalb der
+Vorhersage-Rampe, dort muss das Instrument lernen), R12_s fuer s in
+{0.8, 1.1, 1.5, 1.9, 2.4} (role sgrid, REFGEOM exakt normiert).
 
-## DER NAECCHSTE SCHRITT: der erste THEORY-CORE-PRUEFSTEIN (T18)
-Der Stack bekommt seinen ersten echten Vorhersage-Test: Das gefittete
-Gesetz sagt EINE Zahl voraus, ein neuer Stein prueft sie am Kernel.
-  T18 (registriert VOR dem Lauf, NEU): H=12 (billigste Breite, keine
-  Messung existiert). VORHERSAGE aus dem Fit: s50(12) ~ 0.547 *
-  12^0.408 ~ 1.51. Design: REF12 + R12_s-Raster um die Vorhersage
-  (s in {0.8, 1.1, 1.5, 1.9, 2.4}), Seeds 180..189. Registriertes
-  Verdikt: PASS wenn das interpolierte s50(12) in (1.1, 1.9) liegt
-  (Vorhersage +-25 Prozent, grosszuegig gegen n=10-Rauschen und
-  Rastergroebheit); KILL wenn ausserhalb — dann faellt das
-  Potenz-Gesetz als Einzelgesetz und der Fit war Zufall.
-  Kosten: H=12 ist der billigste Stein der Serie (~10-15 min).
-Das ist der geschlossene Kreislauf in Miniatur: Weltmodell (Fit)
-sagt voraus -> Contract -> Lauf -> generiertes Verdikt -> Graph.
-GENAuso wird Research-Taste messbar (Nutzer-These, Nachtrag 24):
-Jede Vorhersage des Modells ist ein Trainingsbeispiel.
+s50-Definition wie T16/T17 genagelt (erste 0.5-Durchquerung der
+sgrid-Kurve, linear interpoliert; nicht einklammerbar -> NICHT
+GEMESSEN -> Kernel-Alarm -> UNENTSCHEIDEN, EINE Reparatur).
 
-## Kernel-Protokoll (Echtbetrieb, Stein 2 von 2)
-Zweiter kernel-generierter Stein, wieder: K-Pre-Flight OK, Selbst-
-Messung sauber, Verdikt generiert, LUECKENLISTE: KEINE, Bug-
-Protokoll: LEER, Laufzeit 23 min (unter der 40-55-Schaetzung).
-Echtbetriebs-Bilanz des Kernels: 2 Steine, 0 Bugs, 0 Reparaturen.
+REGISTRIERUNG (GENAGELT, KEINE NACHVERHANDLUNG):
+  SANITY: P_lernt(HIGH12) >= 0.5.
+  PASS (P-GESCHLOSSENE-VORHERSAGE): s50(12) in [1.1, 1.9]
+    (Vorhersage 1.51, Band +-27 Prozent — grosszuegig gegen n=10-
+    Rauschen, scharf genug, um einen kaputten Fit zu toeten).
+  KILL-A (VORHERSAGE ZU HOCH): s50(12) < 1.1 — das Netz lernt frueher
+    als das Gesetz sagt; Fit war Zufall oder H^alpha falsch geformt.
+  KILL-B (VORHERSAGE ZU NIEDRIG): s50(12) >= 1.9 — das Netz lernt
+    spaeter; dito.
+  UNENTSCHEIDEN (Crash): s50 nicht einklammerbar (Raster verfehlt),
+    Sanity gerissen, ndiv > 3, dmdev-/colnorm-Verletzung. Rerun nur
+    bei Crash; EINE Reparatur, dann T18-Linie tot.
+  SEKUNDAER: REF12-pf (Konventions-Bericht), DM, Laufzeit,
+    D-Diff-Snapshot, implizierter Exponent aus 4 Punkten (Bericht).
+  Bewahrung: kein Arm wird nachjustiert.
+  KOSTEN-SCHAETZUNG: ~10-15 Runner-Minuten (H=12 ist schnell).
+  RISIKEN: pf(0.8) >= 0.5 -> s50 < 0.8 -> UNENTSCHEIDEN (haette
+  KILL-A-Richtung); pf(2.4) < 0.5 -> UNENTSCHEIDEN (KILL-B-Richtung).
