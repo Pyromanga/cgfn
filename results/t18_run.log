@@ -1,0 +1,85 @@
+======================================================================================================================
+T18 — THEORY-CORE-VORHERSAGE-TEST (kernel-generierter Stein)
+Vorhersage: s50(12) ~ 1.51 (s50 ~ 0.546*H^0.408, Nachtrag 25)
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t18.py
+Registrierung: XVII Nachtrag 26 | Seeds 180..189, f64, H=12
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+
+Arm REF12 (H=12, role=ref): n_ok=10/10 | P_lernt=0.40 | median acc=0.5215 | colnorm=1.6799 | DM=4.8405 | div=0
+  Parity-Seeds: 180:0.5215, 181:1.0000, 182:0.4980, 183:0.5098, 184:0.5215, 185:1.0000, 186:1.0000, 187:0.5215, 188:1.0000, 189:0.5576
+
+Arm HIGH12 (H=12, role=anchor): n_ok=10/10 | P_lernt=0.60 | median acc=1.0000 | colnorm=3.5000 | DM=4.8405 | div=0
+  Parity-Seeds: 180:1.0000, 181:1.0000, 182:1.0000, 183:0.5098, 184:0.5215, 185:1.0000, 186:1.0000, 187:0.5049, 188:0.4785, 189:1.0000
+
+Arm R12_0.8 (H=12, role=sgrid): n_ok=10/10 | P_lernt=0.40 | median acc=0.5215 | colnorm=0.8000 | DM=4.8405 | div=0
+  Parity-Seeds: 180:0.5215, 181:1.0000, 182:1.0000, 183:0.5215, 184:0.5215, 185:0.5146, 186:1.0000, 187:0.5215, 188:0.4785, 189:1.0000
+
+Arm R12_1.1 (H=12, role=sgrid): n_ok=10/10 | P_lernt=0.40 | median acc=0.5215 | colnorm=1.1000 | DM=4.8405 | div=0
+  Parity-Seeds: 180:0.5215, 181:1.0000, 182:1.0000, 183:0.5215, 184:0.5215, 185:0.4785, 186:1.0000, 187:0.5215, 188:0.4785, 189:1.0000
+
+Arm R12_1.5 (H=12, role=sgrid): n_ok=10/10 | P_lernt=0.60 | median acc=1.0000 | colnorm=1.5000 | DM=4.8405 | div=0
+  Parity-Seeds: 180:0.5215, 181:1.0000, 182:1.0000, 183:0.5098, 184:0.5215, 185:1.0000, 186:1.0000, 187:0.5020, 188:1.0000, 189:1.0000
+
+Arm R12_1.9 (H=12, role=sgrid): n_ok=10/10 | P_lernt=0.60 | median acc=1.0000 | colnorm=1.9000 | DM=4.8405 | div=0
+  Parity-Seeds: 180:0.7725, 181:1.0000, 182:1.0000, 183:0.5098, 184:1.0000, 185:1.0000, 186:1.0000, 187:0.5020, 188:0.4785, 189:1.0000
+
+Arm R12_2.4 (H=12, role=sgrid): n_ok=10/10 | P_lernt=0.80 | median acc=1.0000 | colnorm=2.4000 | DM=4.8405 | div=0
+  Parity-Seeds: 180:1.0000, 181:1.0000, 182:1.0000, 183:0.5098, 184:1.0000, 185:1.0000, 186:1.0000, 187:0.5049, 188:1.0000, 189:1.0000
+
+--- T18-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+VORHERSAGE: s50(12) ~ 1.51 (Band [1.47, 1.52] ueber Exponenten-Kandidaten)
+GEMESSEN:   s50(12) = 1.3000
+sgrid-Kurve: s=0.8:0.40, s=1.1:0.40, s=1.5:0.60, s=1.9:0.60, s=2.4:0.80
+Implizierter Exponent aus H=12/24-Paar (Bericht): 0.6215
+
+VERDICT: PASS — P-GESCHLOSSENE-VORHERSAGE
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 26 (2026-11-09) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: PASS — P-GESCHLOSSENE-VORHERSAGE
+
+## Arm-Zahlen (aus dem Contract generiert)
+  REF12.pf = 0.4
+  REF12.colnorm = 1.67987
+  REF12.dmdev = 0
+  REF12.ndiv = 0
+  REF12.s50 = 1.3
+  HIGH12.pf = 0.6
+  HIGH12.colnorm = 3.5
+  HIGH12.dmdev = 0
+  HIGH12.ndiv = 0
+  HIGH12.s50 = 1.3
+  R12_0.8.pf = 0.4
+  R12_0.8.colnorm = 0.8
+  R12_0.8.dmdev = 0
+  R12_0.8.ndiv = 0
+  R12_0.8.s50 = 1.3
+  R12_1.1.pf = 0.4
+  R12_1.1.colnorm = 1.1
+  R12_1.1.dmdev = 0
+  R12_1.1.ndiv = 0
+  R12_1.1.s50 = 1.3
+  R12_1.5.pf = 0.6
+  R12_1.5.colnorm = 1.5
+  R12_1.5.dmdev = 0
+  R12_1.5.ndiv = 0
+  R12_1.5.s50 = 1.3
+  R12_1.9.pf = 0.6
+  R12_1.9.colnorm = 1.9
+  R12_1.9.dmdev = 0
+  R12_1.9.ndiv = 0
+  R12_1.9.s50 = 1.3
+  R12_2.4.pf = 0.8
+  R12_2.4.colnorm = 2.4
+  R12_2.4.dmdev = 0
+  R12_2.4.ndiv = 0
+  R12_2.4.s50 = 1.3
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
+
+[i] Laufzeit: 16.8 min
+[i] Ergebnisse: results/t18_core_vorhersage_results.txt | results/t18_core_vorhersage_table.csv | results/t18_measurements.json (D-Diff-Snapshot)
