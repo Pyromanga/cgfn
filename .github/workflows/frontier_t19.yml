@@ -24,7 +24,8 @@ jobs:
       - name: Gate syntax-check t19r2 (Contract, Instrument, Kernel)
         run: |
           python -m py_compile contracts/t19.py experiments/t19_core_vorhersage2.py tools/lab_kernel.py || { echo "[e] SYNTAX-FEHLER — Abbruch, Kontingent geschont"; exit 1; }
-          echo "[i] syntax ok"
+          python tools/wrapper_check.py contracts/t19.py experiments/t19_core_vorhersage2.py tools/lab_kernel.py || { echo "[e] MSL-WRAPPER IM SPIEL — Abbruch, Kontingent geschont (Fix: siehe tools/wrapper_check.py-Docstring)"; exit 1; }
+          echo "[i] syntax + wrapper-guard ok"
       - name: Install torch (CPU)
         run: pip install torch --index-url https://download.pytorch.org/whl/cpu
       - name: Install package with dev extras
