@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+successfully downloaded text file (SHA: e2947c71c89a47bd3ee69f89f6ca12ececd53b7a)#!/usr/bin/env python
 '''T19-R2 — REPARATURLAUF: s50(48) MESSEN (registriert 2026-11-09
 VOR dem Lauf, XVII Nachtrag 28). Lauf 1 war UNENTSCHEIDEN: Das
 Raster {1.9..3.3} lag um die Vorhersage 2.55 (Prediction-Lock-in),
@@ -82,8 +82,8 @@ def make_Uw(arm, H, gen):
     if arm['kind'] == 'ref':
         return 0.5 * torch.randn(H, 2, generator=gen)
     s = float(arm['s'])
-    v0 = torch.randn(H, 2, generator=gen)[:, 0]
-    v1 = torch.randn(H, 2, generator=gen)[:, 1]
+    v0 = torch.randn(H, generator=gen)
+    v1 = torch.randn(H, generator=gen)
     v0 = v0 / v0.norm() * s
     v1 = v1 / v1.norm() * s
     return torch.stack([v0, v1], dim=1)
