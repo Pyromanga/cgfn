@@ -1,8 +1,9 @@
 ======================================================================================================================
-T19 — THE-CORE-VORHERSAGE-TEST 2 (kernel-generierter Stein)
+T19-R2 — REPARATURLAUF: RASTER UNTEN, s50(48) MESSEN
 Vorhersage: s50(48) ~ 2.55 (+-20 Prozent, Nachtrag 27)
+R2-Registrierung: XVII Nachtrag 28 | Lauf 1: UNENTSCHEIDEN (Raster verfehlt)
 Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t19.py
-Registrierung: XVII Nachtrag 27 | Seeds 190..209 (20), f64, H=48
+Seeds 190..209 (20), f64, H=48 | NACH UNENTSCHEIDEN R2: LINIE TOT
 ======================================================================================================================
 K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
 
@@ -13,91 +14,88 @@ Arm REF48 (H=48, role=ref): n_ok=20/20 | P_lernt=0.85 | median acc=1.0000 | coln
 Arm HIGH48 (H=48, role=anchor): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | colnorm=5.5000 | DM=13.2123 | div=0
   Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:1.0000, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:1.0000
 
+Arm R48_0.7 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=0.7000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.5537, 196:0.4785, 197:0.5098, 198:0.4951, 199:0.5215
+
+Arm R48_0.9 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=0.9000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5098, 198:0.5098, 199:0.5215
+
+Arm R48_1.1 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.05 | median acc=0.4785 | colnorm=1.1000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5098, 198:0.4805, 199:0.5215
+
+Arm R48_1.3 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.25 | median acc=0.4785 | colnorm=1.3000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:0.4785, 194:0.5215, 195:0.4854, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm R48_1.55 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.30 | median acc=0.4854 | colnorm=1.5500 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:0.4785, 194:0.4785, 195:0.4854, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
 Arm R48_1.9 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.55 | median acc=1.0000 | colnorm=1.9000 | DM=13.2123 | div=0
   Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:0.4785, 194:0.4785, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
 
 Arm R48_2.2 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.75 | median acc=1.0000 | colnorm=2.2000 | DM=13.2123 | div=0
   Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
 
-Arm R48_2.55 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.85 | median acc=1.0000 | colnorm=2.5500 | DM=13.2123 | div=0
-  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.7539
-
-Arm R48_2.9 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.90 | median acc=1.0000 | colnorm=2.9000 | DM=13.2123 | div=0
-  Parity-Seeds (erste 10): 190:0.4980, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.4785, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:1.0000
-
-Arm R48_3.3 (H=48, role=sgrid): n_ok=20/20 | P_lernt=0.95 | median acc=1.0000 | colnorm=3.3000 | DM=13.2123 | div=0
-  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:1.0000
-
---- T19-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+--- T19-R2-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
 VORHERSAGE: s50(48) ~ 2.55 (reiner Potenz-Fit 2.55 | affin 2.58)
-GEMESSEN:   s50(48) = NICHT GEMESSEN
-sgrid-Kurve: s=1.9:0.55, s=2.2:0.75, s=2.55:0.85, s=2.9:0.90, s=3.3:0.95
-ALARM: ARM REF48: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_1.9: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_2.2: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_2.55: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_2.9: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_3.3: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: PRAEDIKAT 'REF48.s50': "Unregistrierte/unbekannte Groesse 'REF48.s50' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
-ALARM: PRAEDIKAT 'REF48.s50': "Unregistrierte/unbekannte Groesse 'REF48.s50' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
-ALARM: PRAEDIKAT 'REF48.s50': "Unregistrierte/unbekannte Groesse 'REF48.s50' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
-ALARM: PRAEDIKAT 'REF48.s50': "Unregistrierte/unbekannte Groesse 'REF48.s50' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
+R2-BAND (Nachtrag 28, Bericht): s50 in [1.2, 1.9] vermutet
+GEMESSEN:   s50(48) = 1.8300
+sgrid-Kurve: s=0.7:0.00, s=0.9:0.00, s=1.1:0.05, s=1.3:0.25, s=1.55:0.30, s=1.9:0.55, s=2.2:0.75
+Implizierte Schritt-Exponenten (Bericht): 24->48: -0.1282 | 48->96: 0.9355
+MONOTONIE-CHECK (Bericht): s50(48) < s50(24)=2.00
 
-VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+VERDICT: KILL-A — ZU KLEIN
 
 --- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
-# Nachtrag 27 (2026-11-09) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+# Nachtrag 28 (2026-11-09) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
 
-VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
-ALARM: ARM REF48: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_1.9: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_2.2: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_2.55: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_2.9: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM R48_3.3: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: PRAEDIKAT 'REF48.s50': "Unregistrierte/unbekannte Groesse 'REF48.s50' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
-ALARM: PRAEDIKAT 'REF48.s50': "Unregistrierte/unbekannte Groesse 'REF48.s50' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
-ALARM: PRAEDIKAT 'REF48.s50': "Unregistrierte/unbekannte Groesse 'REF48.s50' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
-ALARM: PRAEDIKAT 'REF48.s50': "Unregistrierte/unbekannte Groesse 'REF48.s50' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
+VERDICT: KILL-A — ZU KLEIN
 
 ## Arm-Zahlen (aus dem Contract generiert)
   REF48.pf = 0.85
   REF48.colnorm = 3.33407
   REF48.dmdev = 1.34447e-16
   REF48.ndiv = 0
-  REF48.s50 = FEHLT
+  REF48.s50 = 1.83
   HIGH48.pf = 1
   HIGH48.colnorm = 5.5
   HIGH48.dmdev = 1.34447e-16
   HIGH48.ndiv = 0
-  HIGH48.s50 = FEHLT
+  HIGH48.s50 = 1.83
+  R48_0.7.pf = 0
+  R48_0.7.colnorm = 0.7
+  R48_0.7.dmdev = 1.34447e-16
+  R48_0.7.ndiv = 0
+  R48_0.7.s50 = 1.83
+  R48_0.9.pf = 0
+  R48_0.9.colnorm = 0.9
+  R48_0.9.dmdev = 1.34447e-16
+  R48_0.9.ndiv = 0
+  R48_0.9.s50 = 1.83
+  R48_1.1.pf = 0.05
+  R48_1.1.colnorm = 1.1
+  R48_1.1.dmdev = 1.34447e-16
+  R48_1.1.ndiv = 0
+  R48_1.1.s50 = 1.83
+  R48_1.3.pf = 0.25
+  R48_1.3.colnorm = 1.3
+  R48_1.3.dmdev = 1.34447e-16
+  R48_1.3.ndiv = 0
+  R48_1.3.s50 = 1.83
+  R48_1.55.pf = 0.3
+  R48_1.55.colnorm = 1.55
+  R48_1.55.dmdev = 1.34447e-16
+  R48_1.55.ndiv = 0
+  R48_1.55.s50 = 1.83
   R48_1.9.pf = 0.55
   R48_1.9.colnorm = 1.9
   R48_1.9.dmdev = 1.34447e-16
   R48_1.9.ndiv = 0
-  R48_1.9.s50 = FEHLT
+  R48_1.9.s50 = 1.83
   R48_2.2.pf = 0.75
   R48_2.2.colnorm = 2.2
   R48_2.2.dmdev = 1.34447e-16
   R48_2.2.ndiv = 0
-  R48_2.2.s50 = FEHLT
-  R48_2.55.pf = 0.85
-  R48_2.55.colnorm = 2.55
-  R48_2.55.dmdev = 1.34447e-16
-  R48_2.55.ndiv = 0
-  R48_2.55.s50 = FEHLT
-  R48_2.9.pf = 0.9
-  R48_2.9.colnorm = 2.9
-  R48_2.9.dmdev = 1.34447e-16
-  R48_2.9.ndiv = 0
-  R48_2.9.s50 = FEHLT
-  R48_3.3.pf = 0.95
-  R48_3.3.colnorm = 3.3
-  R48_3.3.dmdev = 1.34447e-16
-  R48_3.3.ndiv = 0
-  R48_3.3.s50 = FEHLT
+  R48_2.2.s50 = 1.83
 
-## LUECKENLISTE: REF48.s50, HIGH48.s50, R48_1.9.s50, R48_2.2.s50, R48_2.55.s50, R48_2.9.s50, R48_3.3.s50
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
 === FERTIG ===
