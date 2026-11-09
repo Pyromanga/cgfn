@@ -1,0 +1,13 @@
+=== GATE-DIAGNOSE 2026-11-09 20:46 UTC ===
+Python 3.11.18
+--- contracts/t19.py
+OK
+--- experiments/t19_core_vorhersage2.py
+  File "experiments/t19_core_vorhersage2.py", line 1
+    successfully downloaded text file (SHA: e2947c71c89a47bd3ee69f89f6ca12ececd53b7a)#!/usr/bin/env python
+                 ^^^^^^^^^^
+SyntaxError: invalid syntax
+FEHLER
+--- tools/lab_kernel.py
+OK
+=== ENDE ===
