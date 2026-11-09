@@ -1,0 +1,60 @@
+name: cgfn-frontier (T19 Theory-Core-Vorhersage 2, kernel-generiert)
+
+# T19 — Zweiter Vorhersage-Stein: sagt der Theory-Core die Breite H=48 voraus (s50 ~ 2.55)?
+# Contract contracts/t19.py, Instrument experiments/t19_core_vorhersage2.py, Verdikt generiert.
+# Registrierung: XVII Nachtrag 27.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/t19"
+
+jobs:
+  frontier-t19:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Gate syntax-check t19 (Contract, Instrument, Kernel)
+        run: |
+          python -m py_compile contracts/t19.py experiments/t19_core_vorhersage2.py tools/lab_kernel.py || { echo "[e] SYNTAX-FEHLER — Abbruch, Kontingent geschont"; exit 1; }
+          echo "[i] syntax ok"
+      - name: Install torch (CPU)
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - name: Install package with dev extras
+        run: pip install -e ".[dev]"
+      - name: Gate import-check t19 (runpy, laedt Kernel + Contract mit)
+        run: |
+          python -c "import runpy; runpy.run_path('experiments/t19_core_vorhersage2.py', run_name='not_main')" || { echo "[e] IMPORT/LOAD-FEHLER — Abbruch, Kontingent geschont"; exit 1; }
+          echo "[i] import ok"
+      - name: Run T19 Theory-Core-Vorhersage 2
+        run: |
+          set -o pipefail
+          python experiments/t19_core_vorhersage2.py 2>&1 | tee results/t19_run.log
+      - name: Commit results and logs to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Ergebnisse — kein Commit."; exit 0; fi
+          git commit -m "results: T19-core-vorhersage2 ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            echo "[w] push fehlgeschlagen (Versuch $i) — rebase (autostash) und erneut"
+            git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen" && exit 1
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontier-t19-results
+          path: results/
+          retention-days: 30
