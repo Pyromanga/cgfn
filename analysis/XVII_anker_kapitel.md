@@ -1767,3 +1767,63 @@ DM pro Stufe, s50 pro Stufe, Stufen-Kurven, implizite DM(H)-Reihe.
 Der erreichbare DM-Bereich der Konjugation ist vorher NICHT
 bekannt. Falls a=12 DM nicht um >= 10 Prozent bewegt: Crash als
 UNENTSCHEIDEN, NICHT als KILL — ein schmaler Bereich beweist nichts.
+
+
+---
+
+# Nachtrag 31 (2026-11-10): T20 UNENTSCHEIDEN (Stufen-Raster verfehlt) — aber das schwerste Sekundaer-Signal der Serie. R2: WB-Treppe statt Konjugation, zensierungsfreies Mass. Und: Die Delle bleibt unerklaert, auch gegen DM.
+
+## T20 Lauf 1 (gefeuert 07:21 UTC, Ergebnisse 09:07 UTC, ~106 min, Bot-Commit bfb1f59, 18 Arme, 0 Divergenzen)
+VERDICT (GENERIERT): UNENTSCHEIDEN — registriertes Kriterium
+"Stufen-Raster verfehlt". Nur die Identitaetsstufe (a=0) liefert
+ein interpolierbares s50=1.89 (reproduziert T19-R2 1.83 auf 3
+Prozent — Rasterdifferenz). Die Konjugationsstufen kollabieren:
+DM faellt 13.21 -> 1.40/1.34/1.58 (Faktor ~9, Spektrum identisch),
+P_lernt(2.2) bricht 0.75 -> 0.05/0.15/0.05 ein, s50 dort nicht
+interpolierbar -> LUECKENLISTE voll.
+
+## DAS SEKUNDAER-SIGNAL (kein Verdikt, aber der Geruch)
+KEIN Kontinuum: Lern-Kollaps fast auf Null bei DM-Kollaps.
+Lesart (Geruch): DM ist kein Kovariat, sondern ein ORDNUNGSPARAMETER.
+Diagonallastige Dynamik = H entkoppelte Kanaele, eine Mode ein
+Drehknopf, Energie gebuendelt, NL-Eintritt gelingt. Gemischte
+Basis = jede Parameter-Aenderung streut ueber alle Moden, Energie
+verschmiert, NL-Eintritt verfehlt. Das ist das fehlende Glied der
+Energie-Kette: DM entscheidet, WOHIN die Eingangsenergie geht.
+
+## GERICHT: Die naive "falsche-x-Achse"-Version ist WIDERLEGT
+DM(H) komplett (D-Diff-Snapshots, 0 Runner-Minuten): 12:4.84,
+24:8.29, 48:13.21, 96:20.55, 192:29.43. s50 gegen DM aufgetragen:
+1.30, 2.00, 1.83, 3.50, 4.675 — die Delle sitzt bei DM=13.21
+GENAUSO. DM als blosse Ersatzachse loest die Delle NICHT auf.
+Sie bleibt unerklaert: Seed-Rauschen (8.5 Prozent, ein 20er-Satz
+je H) oder zweites Phaenomen. Ehrlich: offen.
+
+## R2-REGISTRIERUNG (die EINE Reparatur von T20; danach Linie tot)
+Konjugation war ein Schalter, kein Regler (QR einer Zufallsmatrix
+gibt immer denselben gemischten DM-Bereich — Treppe wurde Kante;
+Bau-Fehlerklasse: Instrument-Dial-Blindheit). R2 nimmt den GLATTEN
+Regler: WB in eigenbasis() steuert die Diagonallast direkt
+(th = WB*rand; WB->0 macht R zur Identitaet, DM->1).
+  DESIGN (GENAGELT): H=48 fix, Spektrum fix (genS unveraendert),
+  WB-Stufen {0.6, 0.45, 0.3, 0.15}, je Stufe s-Raster
+  {1.83, 2.2, 2.9} (T20-a=0-Kurve: 1.83:0.45, 2.2:0.75 — Crossing
+  liegt prognostiziert im Raster). 12 Stufen-Arme + HIGH48
+  (Sanity, s=5.5, WB=0.6). KEIN REF48 (identisch zur WB0.6-Stufe
+  bereits gemessen — Ressourcen schonend, Nutzer-Auflage).
+  Seeds 190..209 (20), f64.
+  PRIMAER (VERDIKT): pfspread220 = max-min von P_lernt(s=2.2)
+  ueber die WB-Stufen, registriert an jedem Arm.
+    PASS — DM-TREPPE-KAUSAL: pfspread220 >= 0.4.
+    KILL — DM-NEBENSPUR:     pfspread220 < 0.4.
+  SEKUNDAER (Bericht, KEIN Crash): s50rep je Stufe — interpolierbar
+  oder -1.0 = ZENSIERT (Lektion aus T20: Zensierung ist
+  Messergebnis, kein Instrumentenfehler; der -1-Code haelt sie aus
+  der LUECKENLISTE raus).
+  UNENTSCHEIDEN (Crash): DM-Bereich < 10 Prozent relativ ueber
+  Stufen, Sanity gerissen, ndiv > 6 von 20, colnorm-Verletzung.
+  DANACH LINIE TOT.
+  KOSTEN: 13 Arme x 20 Seeds ≈ 60-75 min (Timeout 120).
+  RISIKO (ehrlich): Falls die WB-Stufen ebenfalls springen
+  (Treppe wieder Kante): Crash, Linie tot, DM bleibt Geruch ohne
+  Verdikt.
