@@ -1,4 +1,4 @@
-successfully downloaded text file (SHA: 439c94cfdb2aa8784f57842ee5e45abbde258ab7)
+successfully downloaded text file (SHA: bfcd6a0f43520de7f6f022157f54831115d8b81f)successfully downloaded text file (SHA: 439c94cfdb2aa8784f57842ee5e45abbde258ab7)
 
 ---
 
@@ -125,3 +125,58 @@ VORHERSAGE FUER R2 (Band, kein Verdikt, aus Lauf-1-Material):
   Lauf 1 ein reines Raster-Artefakt — unwahrscheinlich angesichts
   P(1.9)=0.55).
 KOSTEN: ~40 min (9 Arme x 20 Seeds, H=48).
+
+
+---
+
+# Nachtrag 29 (2026-11-09): T19-R2 KILL-A. Die s50-Kurve hat ein EINBRUCH bei H=48. Das monophone Potenz-Gesetz in H ist GEFALLEN — und genau das waehlt den naechsten Stein: DM-Kovariate.
+
+## T19-R2 Lauf 4 (gefeuert 20:47 UTC, Ergebnisse 21:26 UTC, ~39 min, Bot-Commit 43f4056, Seeds 190..209, 9 Arme, 0 Divergenzen, LUECKENLISTE LEER)
+VERDICT (GENERIERT): KILL-A — ZU KLEIN. s50(48) = 1.83 < 2.05.
+R2-Band-Vermutung [1.2, 1.9] aus Nachtrag 28: GETROFFEN (1.83).
+Vorhersage 2.55 lag 39 Prozent daneben. P-CORE-VORHERSAGE-2 tot.
+
+## Der BEFUND: Nicht-Monotonie
+s50-Reihe komplett: 12:1.30, 24:2.00, 48:1.83, 96:3.50, 192:4.675.
+s50(48) < s50(24): Die Kurve FAELLT zwischen 24 und 48 und steigt
+dann steil (48->96 Exponent 0.9355, der hoechste der Serie).
+Schritt-Exponenten gesamt: 12->24: 0.6215, 24->48: -0.1282,
+48->96: 0.9355, 96->192: 0.4176. KEIN konstanter Exponent existiert,
+die Schwankung ist nicht Rauschen um einen Mittelsatz, sondern
+SYSTEMATISCH: erst hoch, dann negativ, dann fast 1, dann halb.
+
+## Ehrliche Lesart (zwei Lagen, beide offen)
+1. FALL DELLT-RECHT: Der Einbruch ist real. Dann ist H NICHT die
+   kausale Variable — das Gesetz ist in etwas anderem verankert,
+   das mit H nicht monoton waechst. Kandidat: DM (Nachtrag 27:
+   DM waechst 4.84 -> 13.21 -> 29.43, aber moeglicherweise nicht
+   glatt). Die Schritt-Exponenten-Schwingung riecht nach einer
+   verkehrten x-Achse.
+2. FALL SAATGUT-RAUSCHEN: Die Delle ist klein (2.00 -> 1.83 sind
+   8.5 Prozent) und P ist auf 0.05 quantisiert (20 Seeds). T16
+   mass s50(24)=2.00 mit EIGENEM Raster. Ob die Delle die
+   Seed-Summen ueberlebt, ist offen — aber KILL-A ist FORMAL
+   unangreifbar: Die Vorhersage 2.55 war auf KEINEM Blatt richtig.
+
+## Konsequenz: T20 = DM-KOVARIATE (Nutzer-Entscheidung, direkt nach R2)
+Warum dieser Stein jetzt: Er unterscheidet die zwei Faelle NICHT
+durch noch eine Kurve in H (das waere die dritte Seed-Summe auf
+derselben Achse), sondern durch KAUSAL-TEST: DM bei FESTEM H=48
+variieren (Konjugation der Eigenbasis — Spektrum identisch,
+Diagonalmasse anders) und s50 messen.
+  - Wenn s50 auf DM hoert: H war nie die Variable; Delle erklaert
+    sich aus DM(H)-Verlauf; WARUM-Frage hat einen Anker. KILL.
+  - Wenn s50 bei DM-Variation bei ~1.83 bleibt: DM ist Kovariate
+    ohne Kausalitaet; H/Spektrum behaelt die Rolle. Dann ist die
+    Delle entweder Rauschen (Fall 2) oder verlangt einen dritten
+    Kandidaten.
+REGISTRIERUNG als Nachtrag 30, Design dort genagelt. EINE Reparatur
+falls Crash, dann Linie tot.
+
+## Kernel-Bilanz nach dem Stein (Echtbetrieb)
+5 kernel-generierte Steine (T15..T19R2), 2 saubere Verdikte in Serie,
+1 korrekt erkannter UNENTSCHEIDEN-Crash, 1 Reparaturlauf sauber,
+0 Runner-Minuten auf kaputten Contracts verbrannt (Syntax-Gate +
+Wrapper-Guard). Die Engine war in KEINEM einzigen Lauf der
+Flaschenhals — jedes Mal war es Bau oder Design. Das ist die
+L1-Aussage in Echtbetrieb: abgenommen.
