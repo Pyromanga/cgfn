@@ -1,0 +1,136 @@
+======================================================================================================================
+T20-R2 — DM-TREPPE: GLATTER REGLER (WB) STATT KONJUGATION
+These P-DM-TREPPE-KAUSAL (Nachtrag 31): P_lernt(2.2) hoert auf WB.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t20r2.py
+Seeds 190..209 (20), f64, H=48 | Verdikt-Mass pfspread220 (0.4-Schwelle)
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+
+Arm HIGH48 (H=48, role=anchor, wb=0.6): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | colnorm=5.5000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:1.0000, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:1.0000
+
+Arm WB0.6_s1.83 (H=48, role=sgrid, wb=0.6): n_ok=20/20 | P_lernt=0.45 | median acc=0.5645 | colnorm=1.8300 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:0.4785, 194:0.4785, 195:0.5645, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.6_s2.2 (H=48, role=sgrid, wb=0.6): n_ok=20/20 | P_lernt=0.75 | median acc=1.0000 | colnorm=2.2000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.6_s2.9 (H=48, role=sgrid, wb=0.6): n_ok=20/20 | P_lernt=0.90 | median acc=1.0000 | colnorm=2.9000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4980, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.4785, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:1.0000
+
+Arm WB0.45_s1.83 (H=48, role=sgrid, wb=0.45): n_ok=20/20 | P_lernt=0.55 | median acc=1.0000 | colnorm=1.8300 | DM=16.9006 | div=0
+  Parity-Seeds (erste 10): 190:0.4980, 191:1.0000, 192:1.0000, 193:0.4785, 194:0.4785, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.45_s2.2 (H=48, role=sgrid, wb=0.45): n_ok=20/20 | P_lernt=0.80 | median acc=1.0000 | colnorm=2.2000 | DM=16.9006 | div=0
+  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.4785, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.45_s2.9 (H=48, role=sgrid, wb=0.45): n_ok=20/20 | P_lernt=0.80 | median acc=1.0000 | colnorm=2.9000 | DM=16.9006 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.3_s1.83 (H=48, role=sgrid, wb=0.3): n_ok=20/20 | P_lernt=0.60 | median acc=1.0000 | colnorm=1.8300 | DM=22.2136 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:1.0000, 192:1.0000, 193:0.4785, 194:0.4785, 195:1.0000, 196:0.4785, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.3_s2.2 (H=48, role=sgrid, wb=0.3): n_ok=20/20 | P_lernt=0.75 | median acc=1.0000 | colnorm=2.2000 | DM=22.2136 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.3_s2.9 (H=48, role=sgrid, wb=0.3): n_ok=20/20 | P_lernt=0.90 | median acc=1.0000 | colnorm=2.9000 | DM=22.2136 | div=0
+  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.15_s1.83 (H=48, role=sgrid, wb=0.15): n_ok=20/20 | P_lernt=0.70 | median acc=1.0000 | colnorm=1.8300 | DM=30.8182 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:1.0000, 194:0.4785, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.15_s2.2 (H=48, role=sgrid, wb=0.15): n_ok=20/20 | P_lernt=0.75 | median acc=1.0000 | colnorm=2.2000 | DM=30.8182 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.4785, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm WB0.15_s2.9 (H=48, role=sgrid, wb=0.15): n_ok=20/20 | P_lernt=0.90 | median acc=1.0000 | colnorm=2.9000 | DM=30.8182 | div=0
+  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+--- T20-R2-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+Stufen-Bericht:
+  wb=0.15: DM=30.8182 | pf(2.2)=0.75 | s50rep=ZENSIERT
+  wb=0.3: DM=22.2136 | pf(2.2)=0.75 | s50rep=ZENSIERT
+  wb=0.45: DM=16.9006 | pf(2.2)=0.80 | s50rep=ZENSIERT
+  wb=0.6: DM=13.2123 | pf(2.2)=0.75 | s50rep=1.8917
+DM-Bereich (rel): 0.8470 (Guard-Schwelle 0.10)
+GEMESSEN: pfspread220 = 0.0500 (Schwelle 0.4)
+
+VERDICT: KILL — DM-NEBENSPUR
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 31 (2026-11-10) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: KILL — DM-NEBENSPUR
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 1
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.s50rep = 1.89167
+  HIGH48.pfspread220 = 0.05
+  WB0.6_s1.83.pf = 0.45
+  WB0.6_s1.83.colnorm = 1.83
+  WB0.6_s1.83.ndiv = 0
+  WB0.6_s1.83.s50rep = 1.89167
+  WB0.6_s1.83.pfspread220 = 0.05
+  WB0.6_s2.2.pf = 0.75
+  WB0.6_s2.2.colnorm = 2.2
+  WB0.6_s2.2.ndiv = 0
+  WB0.6_s2.2.s50rep = 1.89167
+  WB0.6_s2.2.pfspread220 = 0.05
+  WB0.6_s2.9.pf = 0.9
+  WB0.6_s2.9.colnorm = 2.9
+  WB0.6_s2.9.ndiv = 0
+  WB0.6_s2.9.s50rep = 1.89167
+  WB0.6_s2.9.pfspread220 = 0.05
+  WB0.45_s1.83.pf = 0.55
+  WB0.45_s1.83.colnorm = 1.83
+  WB0.45_s1.83.ndiv = 0
+  WB0.45_s1.83.s50rep = -1
+  WB0.45_s1.83.pfspread220 = 0.05
+  WB0.45_s2.2.pf = 0.8
+  WB0.45_s2.2.colnorm = 2.2
+  WB0.45_s2.2.ndiv = 0
+  WB0.45_s2.2.s50rep = -1
+  WB0.45_s2.2.pfspread220 = 0.05
+  WB0.45_s2.9.pf = 0.8
+  WB0.45_s2.9.colnorm = 2.9
+  WB0.45_s2.9.ndiv = 0
+  WB0.45_s2.9.s50rep = -1
+  WB0.45_s2.9.pfspread220 = 0.05
+  WB0.3_s1.83.pf = 0.6
+  WB0.3_s1.83.colnorm = 1.83
+  WB0.3_s1.83.ndiv = 0
+  WB0.3_s1.83.s50rep = -1
+  WB0.3_s1.83.pfspread220 = 0.05
+  WB0.3_s2.2.pf = 0.75
+  WB0.3_s2.2.colnorm = 2.2
+  WB0.3_s2.2.ndiv = 0
+  WB0.3_s2.2.s50rep = -1
+  WB0.3_s2.2.pfspread220 = 0.05
+  WB0.3_s2.9.pf = 0.9
+  WB0.3_s2.9.colnorm = 2.9
+  WB0.3_s2.9.ndiv = 0
+  WB0.3_s2.9.s50rep = -1
+  WB0.3_s2.9.pfspread220 = 0.05
+  WB0.15_s1.83.pf = 0.7
+  WB0.15_s1.83.colnorm = 1.83
+  WB0.15_s1.83.ndiv = 0
+  WB0.15_s1.83.s50rep = -1
+  WB0.15_s1.83.pfspread220 = 0.05
+  WB0.15_s2.2.pf = 0.75
+  WB0.15_s2.2.colnorm = 2.2
+  WB0.15_s2.2.ndiv = 0
+  WB0.15_s2.2.s50rep = -1
+  WB0.15_s2.2.pfspread220 = 0.05
+  WB0.15_s2.9.pf = 0.9
+  WB0.15_s2.9.colnorm = 2.9
+  WB0.15_s2.9.ndiv = 0
+  WB0.15_s2.9.s50rep = -1
+  WB0.15_s2.9.pfspread220 = 0.05
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
+
+[i] Laufzeit: 53.7 min
+[i] Ergebnisse: results/t20r2_dm_treppe_results.txt | results/t20r2_dm_treppe_table.csv | results/t20r2_measurements.json (D-Diff-Snapshot)
