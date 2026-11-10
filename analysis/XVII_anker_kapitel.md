@@ -1925,3 +1925,45 @@ traegt allein d183. Erwartung (Band, kein Verdikt, aus T16/T19/T20-
 Kurven): d183 in [+0.05, +0.20] — die Schwelle 0.15 sitzt im
 Erwartungsband, der Ausgang ist offen und genau deshalb ein guter
 Stein.
+
+
+---
+
+# Nachtrag 34 (2026-11-10): T21 RUN-1 CRASH — TIMEOUT. Mea culpa: Kostenmodell. Rerun mit GENAGELTEM Design (nur Timeout 300). Vorab-Zahlen BERICHTET, KEIN Verdikt.
+
+## T21 Lauf 1 (gefeuert 17:20 UTC, abgebrochen ~20:40 UTC, ~200 min = Timeout-Limit, Bot-Commit 5332f46, 6/7 Arme vollstaendig, H48_s2.2 fehlt, keine generierte Auswertung)
+CRASH-URSACHE: TIMEOUT. Als Crash registriert waren: Sanity gerissen,
+ndiv > 6, colnorm — TIMEOUT stand NICHT in der Liste.
+Instrumenten-Versagen, kein Physik-Ausgang. KEIN VERDIKT.
+
+## MEA CULPA (Kostenmodell, ehrlich)
+Schaetzung war 100-120 min; real brauchten ~6.9 Arme bereits 200 min
+(100 arm-runs ≈ 29 min). Zwei Fehler: (1) Der Anchor HIGH48 mit 100
+Seeds wurde im Kostenmodell wie ein sgrid-Arm behandelt — ist aber
+teuer. (2) H=24-Runs sind nicht halb so billig wie H=48: Fixkosten
+pro Run (600 Steps, Batch 32, Rollout 24 Frames) dominieren, H ist
+nur ein Faktor. Lehre fuer den Kernel: Kostenmodelle muessen
+Anchor-Seed-Zahl und Fixkosten pro Run ausweisen. Infra-Fix im
+Repair: Timeout 300.
+
+## VORAB-ZAHLEN (Bericht, KEIN Verdikt — H48_s2.2 fehlt)
+H24:  P(1.55)=0.49 | P(1.83)=0.67 | P(2.2)=0.78
+H48:  P(1.55)=0.13 | P(1.83)=0.29
+HIGH48 Sanity: pf=0.97 (haelt), 0 Divergenzen, alle Arme n_ok=100/100.
+AUFFAELLIG (nur Geruch, kein Verdikt): d183-Vorab = 0.29 - 0.67 =
+-0.38 — KEHRUNG-Richtung, weit jenseits der ±0.15-Schwelle. UND:
+Der frische Block 210..309 verschiebt BEIDE Kurven gegen den alten
+Block 190..209 (P48(1.83): 0.45 alt vs 0.29 frisch; P24(1.83) alt
+implizit ~0.45 aus s50(24)=2.00 vs 0.67 frisch). Moegliche Lesart,
+erst ein Geruch: Block-Effekte (Seed-Familien) sind von derselben
+Groessenordnung wie die Delle selbst — vielleicht war die ganze
+s50-Reihe ein Block-Artefakt auf Traegerschultern. Der Rerun
+entscheidet mit vollstaendiger Auswertung.
+
+## REPARATUR (die EINE erlaubte; danach Linie tot)
+Design UNVERAENDERT wie Nachtrag 33 (Seeds 210..309, 7 Arme,
+d183-Schwelle ±0.15, alle Verdikte). EINZIGE Aenderung:
+Workflow-Timeout 200 -> 300 Minuten (reine Infrastruktur, kein
+Design-Parameter; Praezedenz T15: Rerun mit unveraendertem Design).
+Erwartete Laufzeit ~230-240 min. Danach: generierte Auswertung,
+Lesart als Nachtrag 35, T21-Knoten im P3-Graph im selben Commit.
