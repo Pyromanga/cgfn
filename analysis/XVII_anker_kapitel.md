@@ -1827,3 +1827,55 @@ Regler: WB in eigenbasis() steuert die Diagonallast direkt
   RISIKO (ehrlich): Falls die WB-Stufen ebenfalls springen
   (Treppe wieder Kante): Crash, Linie tot, DM bleibt Geruch ohne
   Verdikt.
+
+
+---
+
+# Nachtrag 32 (2026-11-10): T20-R2 KILL — DM-NEBENSPUR. Der Schalter trug T20s Kollaps, nicht die Diagonallast. DM-Linie TOT.
+
+## T20-R2 Lauf 1 (gefeuert 11:07 UTC, Ergebnisse 12:01 UTC, ~54 min, Bot-Commit a6381cc, 13 Arme, 0 Divergenzen, LUECKENLISTE LEER)
+VERDICT (GENERIERT): KILL — DM-NEBENSPUR. pfspread220 = 0.0500
+(Schwelle 0.4). Registriert in Nachtrag 31; keine Nachverhandlung;
+keine Reparatur (Regel greift nur bei UNENTSCHEIDEN). DM-Linie TOT.
+
+## Zahlen
+WB-Treppe {0.6, 0.45, 0.3, 0.15} bei H=48, Spektrum fix,
+Seeds 190..209. DM lief glatt mit: 13.2123 / 16.9006 / 22.2136 /
+30.8182 (rel Bereich 0.8470, Guard 0.10 locker bestanden — der
+Dial ist ein echter Regler, T20s Kanten-Defekt behoben).
+P_lernt(2.2) je Stufe: 0.75 / 0.80 / 0.75 / 0.75. DM um Faktor
+2.3 gedreht — das Lernen bewegte sich um 0.05. Keine Richtung,
+keine Treppe: Rauschen um 0.75. Alle Arme n_ok=20/20, ndiv=0,
+Sanity HIGH48 sauber (pf=1.0). s50rep nur bei wb=0.6 messbar
+(1.8917, reproduziert T19-R2 1.83 und T20-a=0 1.89); darunter
+ZENSIERT (-1, Bericht statt Crash — Zensierungs-Lektion zahlt
+sich aus, die -1-Kodierung hielt die LUECKENLISTE leer).
+
+## Lesart: Der Schalter, nicht die Last
+T20s spektakulaerer Doppelkollaps (DM 13.21 -> ~1.4, P(2.2)
+0.75 -> 0.05) war KEIN Diagonallast-Effekt. Es war der
+Strukturbruch: die harte Konjugation Q_a W Q_a^T ist ein
+Schalter, und der BRUCH brachte das Lernen um — nicht die
+verschobene Last. Der glatte WB-Dial bewegt DM kontinuierlich
+durch den gesamten frueheren Bereich und weit darueber hinaus:
+nichts passiert. DM ist damit als Nebenpur GEMESSEN; die
+Ordnungsparameter-/Phasenuebergang-These aus Nachtrag 31 ist
+KILL. Ehrliche Bilanz: zwei Achsen getestet (H in T19-R2, DM in
+T20/R2), zwei KILLs. Die Delle bei H=48 (1.83 gegen interpoliert
+~2.4) bleibt unerklaert; als Hypothese uebrig: Seed-Rauschen
+(8.5 Prozent, 20er-Satz).
+
+## Kernel-Bilanz (Echtbetrieb)
+6 kernel-generierte Steine (T15..T20R2), 3 saubere Verdikte in
+Serie, 1 UNENTSCHEIDEN + 1 zensierungsfreie Reparatur, 0
+Runner-Minuten auf kaputten Contracts. Bau war wieder der
+Flaschenhals (diesmal: Rueckgabe-Shape von get_file_contents,
+zwei Proben-Tode bevor die Form stand), nie die Engine.
+
+## Naechster Stein (Nutzer-Entscheidung, DM-Linie tot)
+(a) Delle-Statistik-Stein: mehr Seeds gezielt an H=24/48, direkt
+    Rauschen-vs-Realitaet, kleinster Compute, schliesst die
+    T19-Frage.
+(b) P3-Befund-Graph L2: 0 Runner-Minuten, Instrument-Ausbau.
+(c) T20-Verallgemeinerung auf andere Familie (nur falls das
+    Schalter-Phaenomen selbst zur Linie wird).
