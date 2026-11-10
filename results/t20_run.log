@@ -1,0 +1,242 @@
+======================================================================================================================
+T20 — DM-KOVARIATE: KAUSAL-TEST BEI FESTEM H=48
+These P-DM-KAUSAL (Nachtrag 30): s50 haengt an DM, nicht an H.
+Konjugation W = Q_a W Q_a^T, a in {0, 1, 4, 12}, Spektrum fix.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t20.py
+Seeds 190..209 (20), f64, H=48 | Verdikt-Mass s50spread (0.2-Schwelle)
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+
+Arm REF48 (H=48, role=ref, a=0): n_ok=20/20 | P_lernt=0.85 | median acc=1.0000 | colnorm=3.3341 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:1.0000, 191:0.4785, 192:1.0000, 193:1.0000, 194:1.0000, 195:1.0000, 196:1.0000, 197:0.5029, 198:1.0000, 199:1.0000
+
+Arm HIGH48 (H=48, role=anchor, a=0): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | colnorm=5.5000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:1.0000, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:1.0000
+
+Arm Q0_s1.3 (H=48, role=sgrid, a=0): n_ok=20/20 | P_lernt=0.25 | median acc=0.4785 | colnorm=1.3000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:0.4785, 194:0.5215, 195:0.4854, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm Q0_s1.55 (H=48, role=sgrid, a=0): n_ok=20/20 | P_lernt=0.30 | median acc=0.4854 | colnorm=1.5500 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:0.4785, 194:0.4785, 195:0.4854, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm Q0_s1.83 (H=48, role=sgrid, a=0): n_ok=20/20 | P_lernt=0.45 | median acc=0.6416 | colnorm=1.8300 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:1.0000, 193:0.4785, 194:0.4785, 195:0.6416, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm Q0_s2.2 (H=48, role=sgrid, a=0): n_ok=20/20 | P_lernt=0.75 | median acc=1.0000 | colnorm=2.2000 | DM=13.2123 | div=0
+  Parity-Seeds (erste 10): 190:1.0000, 191:1.0000, 192:1.0000, 193:1.0000, 194:0.5215, 195:1.0000, 196:1.0000, 197:1.0000, 198:1.0000, 199:0.5215
+
+Arm Q1_s1.3 (H=48, role=sgrid, a=1): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.3000 | DM=1.3996 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5020, 198:0.5020, 199:0.5215
+
+Arm Q1_s1.55 (H=48, role=sgrid, a=1): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.5500 | DM=1.3996 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5020, 198:0.5029, 199:0.5215
+
+Arm Q1_s1.83 (H=48, role=sgrid, a=1): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.8300 | DM=1.3996 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.5215, 195:0.4854, 196:0.4785, 197:0.5020, 198:0.4951, 199:0.5215
+
+Arm Q1_s2.2 (H=48, role=sgrid, a=1): n_ok=20/20 | P_lernt=0.05 | median acc=0.4785 | colnorm=2.2000 | DM=1.3996 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5020, 198:1.0000, 199:0.5215
+
+Arm Q4_s1.3 (H=48, role=sgrid, a=4): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.3000 | DM=1.3438 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5098, 198:0.5098, 199:0.5215
+
+Arm Q4_s1.55 (H=48, role=sgrid, a=4): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.5500 | DM=1.3438 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5020, 198:0.5195, 199:0.5215
+
+Arm Q4_s1.83 (H=48, role=sgrid, a=4): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.8300 | DM=1.3438 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5420, 198:0.5146, 199:0.5215
+
+Arm Q4_s2.2 (H=48, role=sgrid, a=4): n_ok=20/20 | P_lernt=0.15 | median acc=0.4785 | colnorm=2.2000 | DM=1.3438 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5020, 198:1.0000, 199:0.5215
+
+Arm Q12_s1.3 (H=48, role=sgrid, a=12): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.3000 | DM=1.5797 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.5020, 198:0.5020, 199:0.5215
+
+Arm Q12_s1.55 (H=48, role=sgrid, a=12): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.5500 | DM=1.5797 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.5215, 195:0.4854, 196:0.4785, 197:0.4854, 198:0.4854, 199:0.5215
+
+Arm Q12_s1.83 (H=48, role=sgrid, a=12): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | colnorm=1.8300 | DM=1.5797 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.4854, 198:0.5225, 199:0.5215
+
+Arm Q12_s2.2 (H=48, role=sgrid, a=12): n_ok=20/20 | P_lernt=0.05 | median acc=0.4785 | colnorm=2.2000 | DM=1.5797 | div=0
+  Parity-Seeds (erste 10): 190:0.4785, 191:0.4785, 192:0.5215, 193:0.4785, 194:0.4785, 195:0.4854, 196:0.4785, 197:0.4951, 198:0.5127, 199:0.5215
+ALARM: STUFEN-RASTER VERFEHLT (mindestens eine Stufen-s50 nicht interpolierbar — registrierter Crash).
+
+--- T20-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+Stufen-Bericht:
+  a=0: DM=13.2123 | s50=1.8917
+  a=1: DM=1.3996 | s50=NICHT GEMESSEN
+  a=4: DM=1.3438 | s50=NICHT GEMESSEN
+  a=12: DM=1.5797 | s50=NICHT GEMESSEN
+DM-Bereich (rel): 2.7073 (Guard-Schwelle 0.10)
+GEMESSEN: s50spread = NICHT GEMESSEN (Schwelle 0.2)
+ALARM: ARM REF48: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q0_s1.3: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q0_s1.55: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q0_s1.83: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q0_s2.2: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.3: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.3: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.55: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.55: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.83: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.83: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s2.2: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s2.2: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.3: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.3: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.55: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.55: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.83: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.83: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s2.2: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s2.2: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.3: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.3: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.55: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.55: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.83: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.83: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s2.2: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s2.2: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: PRAEDIKAT 'Q0_s1.3.s50spread': "Unregistrierte/unbekannte Groesse 'Q0_s1.3.s50spread' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
+ALARM: PRAEDIKAT 'Q0_s1.3.s50spread': "Unregistrierte/unbekannte Groesse 'Q0_s1.3.s50spread' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
+
+VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 30 (2026-11-09) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+ALARM: ARM REF48: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q0_s1.3: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q0_s1.55: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q0_s1.83: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q0_s2.2: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.3: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.3: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.55: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.55: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.83: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s1.83: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s2.2: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q1_s2.2: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.3: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.3: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.55: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.55: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.83: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s1.83: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s2.2: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q4_s2.2: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.3: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.3: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.55: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.55: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.83: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s1.83: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s2.2: registrierte Groesse 's50' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM Q12_s2.2: registrierte Groesse 's50spread' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: PRAEDIKAT 'Q0_s1.3.s50spread': "Unregistrierte/unbekannte Groesse 'Q0_s1.3.s50spread' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
+ALARM: PRAEDIKAT 'Q0_s1.3.s50spread': "Unregistrierte/unbekannte Groesse 'Q0_s1.3.s50spread' im Praedikat — Contract verlangt eine Messung, die der Lauf nicht liefert (Kollaps-Verletzung)."
+
+## Arm-Zahlen (aus dem Contract generiert)
+  REF48.pf = 0.85
+  REF48.colnorm = 3.33407
+  REF48.ndiv = 0
+  REF48.s50 = 1.89167
+  REF48.s50spread = FEHLT
+  HIGH48.pf = 1
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.s50 = 1.89167
+  HIGH48.s50spread = FEHLT
+  Q0_s1.3.pf = 0.25
+  Q0_s1.3.colnorm = 1.3
+  Q0_s1.3.ndiv = 0
+  Q0_s1.3.s50 = 1.89167
+  Q0_s1.3.s50spread = FEHLT
+  Q0_s1.55.pf = 0.3
+  Q0_s1.55.colnorm = 1.55
+  Q0_s1.55.ndiv = 0
+  Q0_s1.55.s50 = 1.89167
+  Q0_s1.55.s50spread = FEHLT
+  Q0_s1.83.pf = 0.45
+  Q0_s1.83.colnorm = 1.83
+  Q0_s1.83.ndiv = 0
+  Q0_s1.83.s50 = 1.89167
+  Q0_s1.83.s50spread = FEHLT
+  Q0_s2.2.pf = 0.75
+  Q0_s2.2.colnorm = 2.2
+  Q0_s2.2.ndiv = 0
+  Q0_s2.2.s50 = 1.89167
+  Q0_s2.2.s50spread = FEHLT
+  Q1_s1.3.pf = 0
+  Q1_s1.3.colnorm = 1.3
+  Q1_s1.3.ndiv = 0
+  Q1_s1.3.s50 = FEHLT
+  Q1_s1.3.s50spread = FEHLT
+  Q1_s1.55.pf = 0
+  Q1_s1.55.colnorm = 1.55
+  Q1_s1.55.ndiv = 0
+  Q1_s1.55.s50 = FEHLT
+  Q1_s1.55.s50spread = FEHLT
+  Q1_s1.83.pf = 0
+  Q1_s1.83.colnorm = 1.83
+  Q1_s1.83.ndiv = 0
+  Q1_s1.83.s50 = FEHLT
+  Q1_s1.83.s50spread = FEHLT
+  Q1_s2.2.pf = 0.05
+  Q1_s2.2.colnorm = 2.2
+  Q1_s2.2.ndiv = 0
+  Q1_s2.2.s50 = FEHLT
+  Q1_s2.2.s50spread = FEHLT
+  Q4_s1.3.pf = 0
+  Q4_s1.3.colnorm = 1.3
+  Q4_s1.3.ndiv = 0
+  Q4_s1.3.s50 = FEHLT
+  Q4_s1.3.s50spread = FEHLT
+  Q4_s1.55.pf = 0
+  Q4_s1.55.colnorm = 1.55
+  Q4_s1.55.ndiv = 0
+  Q4_s1.55.s50 = FEHLT
+  Q4_s1.55.s50spread = FEHLT
+  Q4_s1.83.pf = 0
+  Q4_s1.83.colnorm = 1.83
+  Q4_s1.83.ndiv = 0
+  Q4_s1.83.s50 = FEHLT
+  Q4_s1.83.s50spread = FEHLT
+  Q4_s2.2.pf = 0.15
+  Q4_s2.2.colnorm = 2.2
+  Q4_s2.2.ndiv = 0
+  Q4_s2.2.s50 = FEHLT
+  Q4_s2.2.s50spread = FEHLT
+  Q12_s1.3.pf = 0
+  Q12_s1.3.colnorm = 1.3
+  Q12_s1.3.ndiv = 0
+  Q12_s1.3.s50 = FEHLT
+  Q12_s1.3.s50spread = FEHLT
+  Q12_s1.55.pf = 0
+  Q12_s1.55.colnorm = 1.55
+  Q12_s1.55.ndiv = 0
+  Q12_s1.55.s50 = FEHLT
+  Q12_s1.55.s50spread = FEHLT
+  Q12_s1.83.pf = 0
+  Q12_s1.83.colnorm = 1.83
+  Q12_s1.83.ndiv = 0
+  Q12_s1.83.s50 = FEHLT
+  Q12_s1.83.s50spread = FEHLT
+  Q12_s2.2.pf = 0.05
+  Q12_s2.2.colnorm = 2.2
+  Q12_s2.2.ndiv = 0
+  Q12_s2.2.s50 = FEHLT
+  Q12_s2.2.s50spread = FEHLT
+
+## LUECKENLISTE: REF48.s50spread, HIGH48.s50spread, Q0_s1.3.s50spread, Q0_s1.55.s50spread, Q0_s1.83.s50spread, Q0_s2.2.s50spread, Q1_s1.3.s50, Q1_s1.3.s50spread, Q1_s1.55.s50, Q1_s1.55.s50spread, Q1_s1.83.s50, Q1_s1.83.s50spread, Q1_s2.2.s50, Q1_s2.2.s50spread, Q4_s1.3.s50, Q4_s1.3.s50spread, Q4_s1.55.s50, Q4_s1.55.s50spread, Q4_s1.83.s50, Q4_s1.83.s50spread, Q4_s2.2.s50, Q4_s2.2.s50spread, Q12_s1.3.s50, Q12_s1.3.s50spread, Q12_s1.55.s50, Q12_s1.55.s50spread, Q12_s1.83.s50, Q12_s1.83.s50spread, Q12_s2.2.s50, Q12_s2.2.s50spread
+=== FERTIG ===
+
+[i] Laufzeit: 105.0 min
+[i] Ergebnisse: results/t20_dm_kovariate_results.txt | results/t20_dm_kovariate_table.csv | results/t20_measurements.json (D-Diff-Snapshot)
