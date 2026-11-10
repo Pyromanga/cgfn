@@ -1879,3 +1879,49 @@ zwei Proben-Tode bevor die Form stand), nie die Engine.
 (b) P3-Befund-Graph L2: 0 Runner-Minuten, Instrument-Ausbau.
 (c) T20-Verallgemeinerung auf andere Familie (nur falls das
     Schalter-Phaenomen selbst zur Linie wird).
+
+
+---
+
+# Nachtrag 33 (2026-11-10): P3-BEFUND-GRAPH v1 (L2) + T21-REGISTRIERUNG — DELLE-STATISTIK. Nutzer-Entscheidung nach T20-R2-KILL (Nachtrag 32).
+
+## P3-BEFUND-GRAPH v1 (L2, 0 Runner-Minuten)
+analysis/P3_befund_graph.md: alle Steine G1-G10, T1-T20-R2, W1 als
+maschinenlesbare Knoten (Kern-Frage, Verdikt, Kern-Zahl, XVII-Anker)
+plus Kanten (Folge-Logik) und Offene-Fragen-Liste. Zweck: Fundament
+fuer L3/L5 — ein Vorschlags-System kann nur auf einem Graphen
+arbeiten, nicht auf 105k Zeichen Prosa. v1 hand-autoriert aus XVII
+(Verdiktkette gegen Nachtrag-Header verifiziert). Update-Pflicht:
+jeder neue Stein bekommt seinen Knoten im selben Commit wie sein
+Nachtrag.
+
+## T21 — DIESE (P-DELLE-REAL)
+Die Delle bei H=48 (s50-Reihe 12:1.30, 24:2.00, 48:1.83, 96:3.50,
+192:4.675; Delle = 8.5 Prozent gegen H=24) ist REAL, nicht
+Seed-Rauschen. H und DM sind als Achsen gefallen (T19-R2 KILL-A,
+T20-R2 KILL); dies ist die letzte offene Messfrage der T-Linie.
+
+## DESIGN (GENAGELT)
+Frischer Seed-Block 210..309 (100 Seeds, DISJUNKT zu allen frueheren
+Bloecken 190..209 — kein Seed-Anchoring; P quantisiert auf 0.01,
+SE(P) ~ 0.05, SE(d183) ~ 0.07).
+H in {24, 48} x s in {1.55, 1.83, 2.2} (6 sgrid-Arme) + HIGH48
+(Sanity, s=5.5, wb=0.6). wb=0.6 Standard ueberall.
+  PRIMAER (VERDIKT): d183 = P_lernt(48, 1.83) - P_lernt(24, 1.83),
+  registriert an jedem Arm.
+    PASS — DELLE-RECHT: d183 >= +0.15 (H=48 lernt FRUEHER — Delle
+      real, zweites Phaenomen, neue Linie noetig).
+    KILL — RAUSCHEN: -0.15 < d183 < +0.15 (Kurven identisch
+      innerhalb 2 Sigma — die Delle war Seed-Lotto).
+    KEHRUNG: d183 <= -0.15 (H=24 lernt frueher — Vorzeichen
+      ueberraschend, Bericht + neue Frage).
+  SEKUNDAER (Bericht, KEIN Crash): s50rep je H aus 3-Punkt-Kurve
+    (-1 = ZENSIERT, Lektion aus T20/R2), median acc, volle Kurven.
+  UNENTSCHEIDEN (Crash): Sanity gerissen, ndiv > 6 von 100,
+    colnorm-Verletzung.
+KOSTEN: 7 Arme x 100 Seeds ≈ 100-120 min (Timeout 200).
+RISIKO (ehrlich): 3-Punkt-Kurven geben grobes s50rep; primaer
+traegt allein d183. Erwartung (Band, kein Verdikt, aus T16/T19/T20-
+Kurven): d183 in [+0.05, +0.20] — die Schwelle 0.15 sitzt im
+Erwartungsband, der Ausgang ist offen und genau deshalb ein guter
+Stein.
