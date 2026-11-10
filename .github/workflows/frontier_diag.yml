@@ -22,6 +22,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+      - name: Gate wrapper-check diag (T19-R2-Dateien)
+        run: |
+          python tools/wrapper_check.py contracts/t19.py experiments/t19_core_vorhersage2.py tools/lab_kernel.py || { echo "[e] MSL-WRAPPER IM SPIEL — Abbruch, Kontingent geschont"; exit 1; }
+          echo "[i] wrapper-guard ok"
       - name: Py-Compile je Datei, Ausgabe sichern
         run: |
           {
