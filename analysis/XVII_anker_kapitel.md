@@ -1,4 +1,4 @@
-successfully downloaded text file (SHA: bfcd6a0f43520de7f6f022157f54831115d8b81f)successfully downloaded text file (SHA: 439c94cfdb2aa8784f57842ee5e45abbde258ab7)
+successfully downloaded text file (SHA: 24b547b95cd69b3ed28695c77a48e32cff5cdd9c)successfully downloaded text file (SHA: bfcd6a0f43520de7f6f022157f54831115d8b81f)successfully downloaded text file (SHA: 439c94cfdb2aa8784f57842ee5e45abbde258ab7)
 
 ---
 
@@ -180,3 +180,44 @@ falls Crash, dann Linie tot.
 Wrapper-Guard). Die Engine war in KEINEM einzigen Lauf der
 Flaschenhals — jedes Mal war es Bau oder Design. Das ist die
 L1-Aussage in Echtbetrieb: abgenommen.
+
+
+---
+
+# Nachtrag 30 (2026-11-09): T20-REGISTRIERUNG — DM-KOVARIATE (Kausal-Test). Nutzer-Entscheidung direkt nach T19-R2-KILL-A (Nachtrag 29).
+
+## DIESE (P-DM-KAUSAL)
+s50 haengt an DM (Diagonalmasse), nicht an H. Wenn DM bei festem
+H=48 variiert wird — Spektrum identisch via Basis-Konjugation —
+verschiebt sich s50 ueber die Stufen hinweg messbar.
+
+## DESIGN (GENAGELT)
+H=48 fix. W' = Q_a W Q_a^T, Q_a aus QR(I + a*G), G fix (Seed 2020),
+a in {0, 1, 4, 12} — vier DM-Stufen; a=0 ist Identitaet
+(Referenzstufe = T19-R2-Material, s50=1.83 erwartbar).
+Pro Stufe s-Raster {1.3, 1.55, 1.83, 2.2} (dicht um 1.83).
+16 sgrid-Arme + REF48 (Bericht) + HIGH48 (Sanity, s=5.5).
+Seeds 190..209 (20), f64, Paritaet wie immer.
+
+## VERDICT-MASS
+s50spread = max(s50_stufe) - min(s50_stufe), an jedem Arm als
+registriertes Mass 's50spread'.
+  PASS — DM-KAUSAL:  s50spread >= 0.2 (s50 hoert auf DM).
+  KILL — DM-NEBENSPUR: s50spread < 0.2 (s50 bleibt bei ~1.83,
+    DM ist Kovariate ohne Kausalitaet — H/Spektrum behaelt Rolle).
+  UNENTSCHEIDEN (Crash): DM-Bereich zu schmal
+    ((max DM - min DM)/mean DM < 10 Prozent ueber Stufen),
+    Stufen-Raster verfehlt (Stufen-s50 nicht interpolierbar),
+    Sanity gerissen, ndiv > 6 von 20, colnorm-Verletzung.
+    EINE Reparatur, dann Linie tot.
+
+## SEKUNDAER (Bericht)
+DM pro Stufe, s50 pro Stufe, Stufen-Kurven, implizite DM(H)-Reihe.
+
+## KOSTEN
+18 Arme x 20 Seeds, H=48 ≈ 70-90 min (Timeout 150).
+
+## RISIKO (ehrlich)
+Der erreichbare DM-Bereich der Konjugation ist vorher NICHT
+bekannt. Falls a=12 DM nicht um >= 10 Prozent bewegt: Crash als
+UNENTSCHEIDEN, NICHT als KILL — ein schmaler Bereich beweist nichts.
