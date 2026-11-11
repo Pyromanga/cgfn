@@ -1,0 +1,54 @@
+name: cgfn-frontier (P4-Generator v1, L3)
+
+# P4-GENERATOR v1 (L3-Baustein): deterministischer Stein-Vorschlags-
+# Generator. Kein Torch, keine Engine — reine Regeln auf P3-Snapshot.
+# Output: analysis/P4_proposal_v1.md (Bot-Commit). ~1-2 Runner-Minuten.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/p4"
+
+jobs:
+  frontier-p4:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Gate syntax + wrapper-check p4
+        run: |
+          python -m py_compile experiments/p4_generator.py tools/wrapper_check.py || { echo "[e] SYNTAX-FEHLER — Abbruch, Kontingent geschont"; exit 1; }
+          python tools/wrapper_check.py experiments/p4_generator.py || { echo "[e] MSL-WRAPPER IM SPIEL — Abbruch, Kontingent geschont"; exit 1; }
+          echo "[i] syntax + wrapper-guard ok"
+      - name: Run P4-Generator v1
+        run: |
+          set -o pipefail
+          mkdir -p analysis results
+          python experiments/p4_generator.py 2>&1 | tee results/p4_generator_run.log
+      - name: Commit proposal to repo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis/ results/ 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine neuen Vorschlaege — kein Commit."; exit 0; fi
+          git commit -m "proposal: P4-Generator v1 ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok (Versuch $i)"; exit 0; fi
+            echo "[w] push fehlgeschlagen (Versuch $i) — rebase (autostash) und erneut"
+            git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 10))
+          done
+          echo "[e] push nach 5 Versuchen fehlgeschlagen" && exit 1
+      - name: Upload proposal
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontier-p4-proposal
+          path: analysis/
+          retention-days: 30
