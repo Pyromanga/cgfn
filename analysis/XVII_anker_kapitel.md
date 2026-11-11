@@ -1967,3 +1967,46 @@ Workflow-Timeout 200 -> 300 Minuten (reine Infrastruktur, kein
 Design-Parameter; Praezedenz T15: Rerun mit unveraendertem Design).
 Erwartete Laufzeit ~230-240 min. Danach: generierte Auswertung,
 Lesart als Nachtrag 35, T21-Knoten im P3-Graph im selben Commit.
+
+
+---
+
+# Nachtrag 35 (2026-11-11): T21 RUN-2 KOMPLETT — aber VERDIKT GEBLOCKT DURCH MEINEN READOUT-BUG (Anchor s50rep nie gesetzt). Reparatur: Neu-Auswertung der GEFRORENEN Run-2-Daten. Vorab: d183 = -0.38.
+
+## Run 2 (gefeuert 20:45 UTC, Ergebnisse 00:02 UTC, 196 min, Bot-Commit be35ddf, 7/7 Arme, 0 Divergenzen)
+FORMAL: UNENTSCHEIDEN (Crash-Klasse) — Kollaps-Gate: an HIGH48 ist
+die registrierte Groesse s50rep NICHT GEMESSEN. Ursache: BAU-BUG,
+mea culpa. Ich registrierte s50rep als Mass an JEDEM Arm, setzte es
+im Instrument aber nur fuer sgrid-Arme; der Anchor blieb None.
+Fehlerklasse: Readout-Vollstaendigkeit (verwandt mit T15-Run1:
+Auswertungs-Readout; derselbe Lehrbereich).
+
+## Die eingefrorenen Run-2-Zahlen (Bericht)
+H24:  P(1.55)=0.49 | P(1.83)=0.67 | P(2.2)=0.78 | s50rep=1.5656
+H48:  P(1.55)=0.13 | P(1.83)=0.29 | P(2.2)=0.43 | s50rep=ZENSIERT
+HIGH48 Sanity: pf=0.97 (haelt), 0 Divergenzen, alle Arme n_ok=100/100.
+GEMESSEN: d183 = -0.3800 (Schwelle ±0.15).
+
+## REPARATUR (die EINE erlaubte; danach Linie tot)
+KEIN Rerun der Physik: Das Experiment ist deterministisch (fixe
+Seeds) — ein Rerun wuerde BIT-IDENTISCHE Zahlen produzieren und 200
+Runner-Minuten verbrennen. Reparatur stattdessen als Neu-Auswertung
+der GEFRORENEN Messungen (results/t21_measurements.json, Bot-Commit
+be35ddf): Readout-Fix (Anchor-Kurve ist Einpunkt -> s50rep = -1
+ZENSIERT, exakt die sgrid-Regel aus Nachtrag 33), danach
+lab_kernel.evaluate auf den UNVERAENDERTEN Daten. Instrument:
+experiments/t21_repair_readout.py, ~2 Runner-Minuten, keine neue
+Physik, keine Nachverhandlung von Schwellen. Ausgang: formales
+Verdikt aus Run-2-Daten; Lesart + T21-Knoten im P3-Graph als
+Nachtrag 36 im selben Zug.
+
+## Vorab-Einordnung (Bericht, KEIN Verdikt)
+d183 = -0.38 liegt 5+ Sigma jenseits der Schwelle — KEHRUNG-Richtung.
+Und schaerfer: Der frische Block 210..309 verschiebt BEIDE Kurven
+gegen den alten Block 190..209 (H48: P(2.2) 0.75 alt vs 0.43 frisch;
+P(1.83) 0.45 vs 0.29. H24: s50rep 1.57 frisch vs 2.00 alt aus T16).
+Moegliche Lesart, falls KEHRUNG formal wird: Die s50-Reihe T16-T19
+war BLOCK-KONFUNDIERT — Seed-Block-Effekte sind von der Groessen-
+ordnung der gesamten H-Trend-These. Das Seed-Lotto aus dem G-Kapitel
+schlaegt im T-Bau zurueck, mit verspaeteter Fuellung. Nachtrag 36
+traegt die Lesart nach dem formalen Verdikt.
