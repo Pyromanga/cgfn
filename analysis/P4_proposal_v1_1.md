@@ -1,0 +1,81 @@
+# P4-PROPOSAL v1.1 — maschinengenerierter Stein-Vorschlag (P4-Generator v1.1 (2026-11-11))
+
+Erzeugt: 2026-11-11 16:14 UTC | Input: P3-Snapshot v1.1 (T20-Dosis-Kurve NEU) | Verfahren: R1-R7 + Scoring, deterministisch.
+
+## v1.0-DEFEKT (dokumentiert, 0 Runner-Minuten Verlust)
+v1.0 schlug a=[0,4,12,24] vor und verpasste das T20-Fenster:
+der steilste Uebergang liegt bei a=0->1 (P 0.75->0.05, Kollaps
+bereits bei EINER konjugierten Dimension). v1.0-Raster haette
+vorhersagbar UNENTSCHEIDEN geendet (drop4 gross, kein Folge-Abfall).
+R7 haette v1.0 abgelehnt: Klammer-Stufen (0, 1) nicht im Raster
+[0, 4, 12, 24] -> R7 VERLETZT. Vom Kernel-Kritiker vor dem Feuer
+gefunden; Snapshot um Dosis-Kurve erweitert. Lehre: Der Kritiker
+muss die QUELL-Daten pruefen, nicht nur die Prozess-Hygiene.
+
+## Rangliste
+1. T23 SCHALTER-DOSIS v1.1 — Score 0.72 (Ueberraschung 1.0, Kostenquote 0.93, Scheidung 1.0)
+2. T24 BLOCK-MITTEL-GESETZ (VERTAGT) — Score 0.32
+   Verworfen: RESEARCH-TASTE-Serie (kein Physik-Stein),
+   konfirmatorische Block-Bestaetigung (geringe Entropie).
+
+## GEWINNER: T23 SCHALTER-DOSIS v1.1
+
+FRAGE: Repliziert der Lern-Kollaps bei Konjugationstiefe a=1 (T20, alter Block) auf frischen Seed-Bloecken?
+THESE: T20-Signal: Schon EINE konjugierte Dimension (a=1) kippt P_lernt von 0.75 auf 0.05. Falls das auf frischen Bloecken steht (Block-Gesetz beachten!), ist der Schalter extrem scharf: Strukturbruch bei a=1.
+
+DESIGN: EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter).
+Stufen a = [0, 1, 4, 24] (Konjugationstiefe Q_a W Q_a^T).
+R7: Steilster T20-Uebergang a=0->1, Klammer-Stufen {0, 1} im Raster.
+Je Stufe 2 disjunkte 20er-Bloecke (frische Seeds 430..589):
+  a=0: Bloecke 430..449 + 450..469
+  a=1: Bloecke 470..489 + 490..509
+  a=4: Bloecke 510..529 + 530..549
+  a=24: Bloecke 550..569 + 570..589
+Anchor: HIGH48 (s=5.5, a=0, Seeds 590..609). Total 180 Runs.
+
+MASSE: pf, colnorm, ndiv je Arm; Block-P je Block; P_Stufe = Mittel
+der 2 Block-P; drop1 = P(0)-P(1); drop124 = P(1)-P(24) (Form).
+SE(Stufen-Mittel) = 0.068, SE(drop1) = 0.096 (Diskrepanz 2 Stufen).
+
+VERDIKT (registriert, Kipp-Schnitt bei 3.1 SE):
+- PASS — SCHALTER-BESTAETIGT: drop1 = P(0)-P(1) >= 0.30 (>= 3.1 SE): Der a=1-Kollaps repliziert auf frischen Bloecken. Der Schalter ist real und extrem scharf.
+- KILL — KEIN-KOLLAPS: drop1 < 0.30: Der T20-Schalter war ein Artefakt des Ausreisser-Blocks 190..209 (T22-Lektion). Schalter-Linie TOT.
+- UNENTSCHEIDEN: Crash — R6-Sanity (Anchor pf < 0.5), ndiv > 6 je Block, std(P_Block) < 0.02 je Stufe, colnorm-Verletzung. EINE Reparatur (R5), dann tot.
+
+VORHERSAGEBAND (mechanisch, KEIN Hand-Tuning):
+- P(0) (2 Block-Mittel) in [0.31, 0.58] (10-Block-Statistik (T22+n37))
+- P(1) in [0.00, 0.25] (T20: 0.05, n=1 alter Block, ehrlich breit)
+- P(4) in [0.00, 0.30] (T20: 0.15, n=1 alter Block)
+- P(24) in [0.00, 0.25] (T20-Kollaps extrapoliert (a=12: 0.05))
+- drop1 in [0.05, 0.55] (Union beider Hypothesen)
+- drop124 = P(1)-P(24) in [-0.10, 0.20] (Plateau-Erwartung (Form, SEKUNDAER))
+
+KONSEQUENZEN je Ausgang (R4):
+- PASS -> eigene Linie SCHALTER: Ordnungsparameter des Kipppunkts suchen; erste Anschlussfrage: Ist die top-Singulaerrichtung die kritische? (Konjugation entlang Zufallsrichtung a=1 als Gegenprobe.)
+- KILL -> Schalter-Linie geschlossen: T20-Doppelkollaps war Seed-Lotto am Ausreisser-Block; Pfade wieder frei fuer T24 Block-Mittel oder L5-Durchlauf 3.
+- PASS/KILL fuehren zu verschiedenen Linien -> R4 ERFUELLT.
+
+SEKUNDAER (Bericht): Schalter-FORM: drop124 < 0.15 = Plateau nach
+Kipp (BINAER-Form); fortlaufender Abfall = Dosis-Form. Kein Verdikt.
+
+## Kritiker-Gate R1-R7 (Angewandt auf T23 v1.1)
+- R1 ERFUELLT: Block-Mittel mit SE/std ausgewiesen (2 disjunkte 20er-Bloecke je Stufe)
+- R2 ERFUELLT: Masse pf/colnorm/ndiv/P_Stufe/drop1 an JEDEM Arm inkl. Anchor
+- R3 ERFUELLT: Fixkosten 5.0 min + variabel 51.0 min = 56.0 min (Cap 60)
+- R4 ERFUELLT: PASS/KILL -> unterschiedliche Linien (siehe Konsequenzen)
+- R5 ERFUELLT: EINE Reparatur bei Crash, dann Linie tot
+- R6 ERFUELLT: Anchor HIGH48 (s=5.5, a=0, Seeds 590..609) pf >= 0.5 Pflicht
+- R7 ERFUELLT: Steilster Uebergang a=0->1; Klammer-Stufen im Raster [0, 1, 4, 24]
+
+## VERTAGT: T24 BLOCK-MITTEL-GESETZ (VERTAGT)
+GRUND: Kosten: >= 3 Zellen x 4 Bloecke x 20 Runs ~ 73+ min > Cap 60. UND konfirmatorisch (Block-Frage durch T22 abgeschlossen): geringe Entscheidungs-Entropie. Erst bei freiem Cap.
+
+## Naechster Schritt (Kernel-seitig)
+1. Nachtrag 40 registriert DIESEN Vorschlag (Band + Schwellen
+   unveraendert). L5-Durchlauf 2: Vorschlagsquelle erstmals
+   P4-Generator (Maschine statt LLM).
+2. T23-Bau: contracts/t23.py + experiments/t23_schalter_dosis.py +
+   Workflow (Syntax/Wrapper/Import-Gates, Timeout 75).
+3. Trigger erst nach Nutzer-Freigabe.
+
+=== ENDE P4-PROPOSAL v1.1 ===
