@@ -1,0 +1,62 @@
+# P4-PROPOSAL v1.2 — maschinengenerierter Stein-Vorschlag (P4-Generator v1.2 (2026-11-11))
+
+Erzeugt: 2026-11-11 20:09 UTC | Input: P3-Snapshot v1.2 (T23-Frischdaten NEU) | Verfahren: R1-R8, deterministisch.
+
+## Rangliste
+1. T24 SCHALTER-RICHTUNG — Score 0.78 (Ueberraschung 1.0, Kostenquote 0.74, Scheidung 1.0)
+2. BLOCK-MITTEL-GESETZ (VERTAGT) — Score 0.32 (VERTAGT, Cap + konfirmatorisch)
+   Verworfen: konfirmatorische Achsen-Replikation ohne neue Frage.
+
+## GEWINNER: T24 SCHALTER-RICHTUNG
+
+FRAGE: Kippt JEDE 1-dim-Konjugation das Lernen (RICHTUNGS-AGNOSTISCH, Symmetriebruch) oder nur bestimmte Rotationsachsen (RICHTUNGS-SPEZIFISCH, Achsen-Lotto)?
+THESE: T23 mass EINE Achse (Q_SEED=2020) mit a=1: totaler Kollaps (0.025). Wenn der Schalter richtungsagnostisch ist, ist der Mechanismus ein Symmetriebruch (Anschluss G6: Symmetrie toetet Kapazitaet). Wenn nicht, existiert ein Achsen-Lotto und die Achsen-Charakteristik wird die naechste Frage.
+
+DESIGN: EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter).
+Konjugationstiefe a=1 (Q_a W Q_a^T, QR(I + 1*G_q)), 5 Rotations-
+achsen G_q via q_seed in [2020, 5150, 8080, 1111, 4242]:
+  q_seed=2020: Block 610..629 (20 frische Seeds)
+  q_seed=5150: Block 630..649 (20 frische Seeds)
+  q_seed=8080: Block 650..669 (20 frische Seeds)
+  q_seed=1111: Block 670..689 (20 frische Seeds)
+  q_seed=4242: Block 690..709 (20 frische Seeds)
+Control a=0: Block 710..729 | Anchor HIGH48 (s=5.5): 730..749.
+Total 140 Runs.
+
+MASSE: pf, colnorm, ndiv je Arm; P_Q je Achse (Block-P); pqmax = max(P_Q); registriert an JEDEM Arm (R2).
+SE(Einzel-Block) = 0.096 (10-Block-Statistik).
+
+VERDIKT (registriert, Achsen-Schnitt):
+- PASS — RICHTUNGS-AGNOSTISCH: pqmax = max(P_Q ueber alle 5 Achsen) <= 0.15. Jede getestete Achse kippt das Lernen; Schalter robust. Konsequenz: Symmetriebruch-Mechanismus, Anschluss G6; naechste Frage: Ordnungsparameter des Kipppunkts.
+- KILL — RICHTUNGS-SPEZIFISCH: pqmax >= 0.30. Mindestens eine Achse laesst Lernen zu; der Schalter haengt an der Rotationsachse. Konsequenz: Achsen-Charakteristik (top-Singulaerrichtung vs Zufallsrichtung) wird die naechste registrierte Frage.
+- UNENTSCHEIDEN: 0.15 < pqmax < 0.30 (Schwellen-Fenster ohne Praedikat) oder Crash: R6-Sanity (Anchor pf < 0.5), ndiv > 6 je Block, colnorm-Verletzung. EINE Reparatur (R5), dann Linie tot.
+
+VORHERSAGEBAND (mechanisch, R8-Haertung an duennen Quellen):
+- P_Q je Achse (5 Werte) in [0.00, 0.22] (T23 a=1 frisch 0.025, n=1 Achse — R8: +50% Weite)
+- pqmax in [0.05, 0.25] (Union beider Hypothesen)
+- P(0)-Control (1 Block) in [0.25, 0.64] (10-Block-Statistik (T22+n37), Einzel-Block-Band)
+
+KONSEQUENZEN (R4):
+- PASS -> Linie SCHALTER: Mechanismus-Stein (Ordnungsparameter).
+- KILL -> Linie SCHALTER: Achsen-Stein (top vs Zufallsrichtung).
+- PASS/KILL fuehren zu verschiedenen naechsten Steinen -> R4 ERFUELLT.
+
+## Kritiker-Gate R1-R8
+- R1 ERFUELLT: Single-Block je Achse, Schwelle 0.30 = 3.1 SE gegen Block-Streuung 0.096 — SCHWELLEN-adequat, keine Fein-Trends auf Einzelbloecken
+- R2 ERFUELLT: Masse pf/colnorm/ndiv/P_Q/pqmax an JEDEM Arm inkl. Anchor
+- R3 ERFUELLT: Fix 5.0 min + variabel 39.7 min = 44.7 min (Cap 60)
+- R4 ERFUELLT: PASS/KILL -> Mechanismus- vs Achsen-Stein (verschieden)
+- R5 ERFUELLT: EINE Reparatur bei Crash, dann Linie tot
+- R6 ERFUELLT: Anchor HIGH48 (s=5.5, a=0, Seeds 730..749) pf >= 0.5 Pflicht
+- R7 ERFUELLT: Replikations-Achse Q_SEED=2020 (T23) im Achsen-Raster
+- R8 ERFUELLT: Band an duenner Quelle (n=1 Achse) um 50 Prozent geweitet
+
+## Naechster Schritt
+1. Nachtrag 43 registriert DIESEN Vorschlag (Band + Schwellen
+   unveraendert). L5-Durchlauf 3, Quelle Maschine (v1.2).
+2. T24-Bau: contracts/t24.py + experiments/t24_schalter_richtung.py
+   + Workflow (Timeout 60). Instrument-Test: pqmax an JEDEM Arm
+   setzen (R2, T21/T23-Lektion maschinell).
+3. Trigger erst nach Nutzer-Freigabe.
+
+=== ENDE P4-PROPOSAL v1.2 ===
