@@ -2010,3 +2010,58 @@ war BLOCK-KONFUNDIERT — Seed-Block-Effekte sind von der Groessen-
 ordnung der gesamten H-Trend-These. Das Seed-Lotto aus dem G-Kapitel
 schlaegt im T-Bau zurueck, mit verspaeteter Fuellung. Nachtrag 36
 traegt die Lesart nach dem formalen Verdikt.
+
+
+---
+
+# Nachtrag 36 (2026-11-11): T21 KEHRUNG — Vorzeichenumkehr im frischen Block. Die Delle ist tot, aber NICHT als Rauschen: Der H-Trend selbst ist block-empfindlich.
+
+## Verdikt-Weg (formal)
+Run 2 komplett (Bot-Commit be35ddf); Verdict durch meinen Readout-Bug
+formal geblockt (Nachtrag 35); die EINE Reparatur als Neu-Auswertung
+der gefrorenen Daten (Bot-Commit 44f3b0d, ~2 Runner-Minuten):
+VERDICT: KEHRUNG. d183 = -0.3800 (Schwelle ±0.15), LUECKENLISTE
+LEER, Sanity pf=0.97, 0 Divergenzen. T21-Linie nach der Reparatur
+TOT (Regel: EINE Reparatur bei UNENTSCHEIDEN).
+
+## Lesart
+1. DIE DELLE IST TOT, ABER NICHT ALS RAUSCHEN. RAUSCHEN haette
+   identische Kurven verlangt. Gemessen: H24 liegt an ALLEN drei
+   Rasterpunkten ueber H48 (0.49/0.67/0.78 gegen 0.13/0.29/0.43).
+   Die Delle existiert im Block 210..309 UEBERHAUPT NICHT — das
+   Vorzeichen des H-Effekts ist gedreht. s50rep(24)=1.5656;
+   s50rep(48) ZENSIERT (Kurve erreicht 0.5 erst oberhalb 2.2).
+2. DIE H-TREND-THESE IST BLOCK-EMPFINDLICH. Block 190..209
+   (20 Seeds, T16-T20): H48 lernt bei 1.83/2.2 gut (0.45/0.75) —
+   daraus wuchsen die s50-Reihe, das Sub-Sqrt-Gesetz (T17) und
+   der Delle-Befund (T19-R2). Block 210..309 (100 Seeds): H48
+   durchgaengig SCHWAECHER als H24. Gleicher Bauplan, gleiches
+   Instrument — zwei Bloecke, entgegengesetzte H-Ordnungen.
+   Signifikanz des Block-Effekts: P48(2.2) 0.75 vs 0.43 ≈ 2.9
+   Sigma; P48(1.83) 0.45 vs 0.29 ≈ 1.3 Sigma (alleinstehend
+   schwach). Ehrlich: sauber belegt ist EIN Rasterpunkt plus die
+   durchgaengige KEHRUNG im frischen Block.
+3. ANSCHLUSS AN DAS G-KAPITEL. G2/G5: Das Seed-Lotto sitzt in
+   der Basis-Rotation gegen die tanh-Achsen. T21 zeigt: Im
+   T-Bau ist das Lotto so gross, dass 20er-Bloecke ganze
+   Skalierungsgesetze tragen koennen, die ein 100er-Block
+   umdreht. Damit ist der zweite Allgemein-Befund des Anker-
+   Kapitels im T-Bau angekommen: Der Bias-Confound-Transfer
+   gelang als Hebel (T12), der Seed-Lotto-Transfer jetzt als
+   FALLE FUER DIE EIGENE T-SERIE. 20er-Bloecke sind KEINE
+   vertraegliche Basis fuer H-Trend-Aussagen.
+4. VORHERSAGE-BILANZ (ehrlich). Registriertes Band: d183 in
+   [+0.05, +0.20]. Gemessen: -0.38. Wieder ein Vorzeichenfehler
+   (wie T19: 2.55 gegen 1.83). Der Theory-Core lernt: Rueckgrat
+   jeder kuenftigen Registrierung ist die Block-Frage.
+
+## Naechste Linie (Nutzer-Entscheidung; T21-, DM-, H-Linien tot)
+(a) T22 BLOCK-ROBUSTHEIT: EINE Zelle (H=48, s=2.2), K disjunkte
+    20er-Bloecke — Verteilung der Block-P_lernt. Scharfe Frage:
+    Ist std(P_Block) von der Groessenordnung der T19-Delle und
+    des T16-Trend-Offsets? Kosten: K x 20 Runs (K=10 ≈ 1 h).
+(b) 0-Runner-Reanalyse: alle vorhandenen T21/T20-R2-Einzelseed-
+    Messungen als Block-Stichproben sammeln (D-Diff-Praxis).
+(c) L5 ERSTER DURCHLAUF: Der P3-Graph steht — ein LLM schlaegt
+    Stein 27 vor, registriert VOR dem Lauf. Research Taste wird
+    Messobjekt (Nutzer-These Nachtrag 24).
