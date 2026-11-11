@@ -1,0 +1,67 @@
+======================================================================================================================
+T22 — BLOCK-ROBUSTHEIT ALT vs NEU (L5-DURCHLAUF 1, erster LLM-Vorschlag)
+These (Nachtrag 38): Der alte Block 190..209 (P48(2.2)=0.75) war ein
+AUSREISSER der Block-Verteilung. Verdikt-Mass zalt (Schwelle 2.5).
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t22.py
+5 neue disjunkte 20er-Bloecke 310..409, H=48, s=2.2, f64 | L5-Band gem. Nachtrag 38
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+
+Arm HIGH48 (H=48, role=anchor, s=5.5, seeds 410..429): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | colnorm=5.5000 | div=0
+
+Arm B0 (H=48, role=block, s=2.2, seeds 310..329): n_ok=20/20 | P_lernt=0.35 | median acc=0.5215 | colnorm=2.2000 | div=0
+
+Arm B1 (H=48, role=block, s=2.2, seeds 330..349): n_ok=20/20 | P_lernt=0.40 | median acc=0.5215 | colnorm=2.2000 | div=0
+
+Arm B2 (H=48, role=block, s=2.2, seeds 350..369): n_ok=20/20 | P_lernt=0.50 | median acc=0.5215 | colnorm=2.2000 | div=0
+
+Arm B3 (H=48, role=block, s=2.2, seeds 370..389): n_ok=20/20 | P_lernt=0.40 | median acc=0.5215 | colnorm=2.2000 | div=0
+
+Arm B4 (H=48, role=block, s=2.2, seeds 390..409): n_ok=20/20 | P_lernt=0.65 | median acc=1.0000 | colnorm=2.2000 | div=0
+
+--- T22-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+Neue Block-P (310..409): 0.35 0.40 0.50 0.40 0.65
+mean(P_neu5) = 0.4600 | std(P_neu5) = 0.1068
+10-Block-Verteilung (5 Reanalyse + 5 neu): mean = 0.4450 | std = 0.0960
+zalt (gegen 5 neue)   = 2.7161
+zalt-10 (Bericht)     = 3.1755
+GEMESSEN: zalt = (0.75 - mean5) / std5, Schwelle 2.5 (Nachtrag 38)
+L5-BAND (registriert VOR dem Lauf, Nachtrag 38): mean in [0.30,0.56] | std in [0.05,0.13] | zalt in [2.0,6.0]
+L5-BAND-TREFFER: mean JA | std JA | zalt JA
+
+VERDICT: PASS — ALT-AUSREISSER
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 39 (2026-11-11) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: PASS — ALT-AUSREISSER
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 1
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.zalt = 2.7161
+  B0.pf = 0.35
+  B0.colnorm = 2.2
+  B0.ndiv = 0
+  B0.zalt = 2.7161
+  B1.pf = 0.4
+  B1.colnorm = 2.2
+  B1.ndiv = 0
+  B1.zalt = 2.7161
+  B2.pf = 0.5
+  B2.colnorm = 2.2
+  B2.ndiv = 0
+  B2.zalt = 2.7161
+  B3.pf = 0.4
+  B3.colnorm = 2.2
+  B3.ndiv = 0
+  B3.zalt = 2.7161
+  B4.pf = 0.65
+  B4.colnorm = 2.2
+  B4.ndiv = 0
+  B4.zalt = 2.7161
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
