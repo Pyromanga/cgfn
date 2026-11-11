@@ -1,0 +1,77 @@
+======================================================================================================================
+T23 READOUT-REPARATUR (R5, die EINE erlaubte; Nachtrag 41, Pfad (b))
+Daten: results/t23_measurements.json (Run 1, 184c7c1, GEFROREN — kein Rerun, kein Torch)
+Eingriff 1: HIGH48.pstage = HIGH48.pf (Ein-Arm-Stufenmittel, n41-Definition)
+Eingriff 2: std-Klausel-Dokumentation (Nenner-Schutz-Ursprung, T22;
+  a=1 std=0.025 >= 0.02 clean; a=24 std=0.0 Boden-Stabilitaet, Form-Befund)
+Verdikt-Mass drop1 + Schwelle 0.30 UNBERUEHRT. Deterministisch.
+======================================================================================================================
+
+KONTROLLE: gefrorene Werte unveraendert: drop1=0.5499999999999999 | drop124=-0.125
+std(P_Block) je Stufe: {'0': 0.07500000000000001, '1': 0.025, '4': 0.049999999999999996, '24': 0.0}
+READOUT-FIX: HIGH48.pstage = 1.0 (war NICHT GEMESSEN)
+Fehlende Masse gesetzt: 1 (nur HIGH48.pstage; kein Messwert veraendert)
+
+VERDICT: PASS — SCHALTER-BESTAETIGT
+
+KLAUSEL-PROTOKOLL (Nachtrag 41):
+  - std(a=1) = 0.025 >= 0.02: verdikts-entscheidende Stufe CLEAN
+  - std(a=24) = 0.0 < 0.02: Boden-Stabilitaet (0.15/0.15); Form-Befund, kein Nenner im Primaer-Mass
+  - Ursprung der Klausel: T22 zalt-Nenner-Schutz (Nachtrag 38)
+
+--- N-SKELETT (N-Modul; Lesart handzuschreiben) ---
+# Nachtrag 42 (2026-11-11) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: PASS — SCHALTER-BESTAETIGT
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 1
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.pstage = 1
+  HIGH48.drop1 = 0.55
+  A0_B0.pf = 0.5
+  A0_B0.colnorm = 2.2
+  A0_B0.ndiv = 0
+  A0_B0.pstage = 0.575
+  A0_B0.drop1 = 0.55
+  A0_B1.pf = 0.65
+  A0_B1.colnorm = 2.2
+  A0_B1.ndiv = 0
+  A0_B1.pstage = 0.575
+  A0_B1.drop1 = 0.55
+  A1_B0.pf = 0.05
+  A1_B0.colnorm = 2.2
+  A1_B0.ndiv = 0
+  A1_B0.pstage = 0.025
+  A1_B0.drop1 = 0.55
+  A1_B1.pf = 0
+  A1_B1.colnorm = 2.2
+  A1_B1.ndiv = 0
+  A1_B1.pstage = 0.025
+  A1_B1.drop1 = 0.55
+  A4_B0.pf = 0.15
+  A4_B0.colnorm = 2.2
+  A4_B0.ndiv = 0
+  A4_B0.pstage = 0.1
+  A4_B0.drop1 = 0.55
+  A4_B1.pf = 0.05
+  A4_B1.colnorm = 2.2
+  A4_B1.ndiv = 0
+  A4_B1.pstage = 0.1
+  A4_B1.drop1 = 0.55
+  A24_B0.pf = 0.15
+  A24_B0.colnorm = 2.2
+  A24_B0.ndiv = 0
+  A24_B0.pstage = 0.15
+  A24_B0.drop1 = 0.55
+  A24_B1.pf = 0.15
+  A24_B1.colnorm = 2.2
+  A24_B1.ndiv = 0
+  A24_B1.pstage = 0.15
+  A24_B1.drop1 = 0.55
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
+
+[i] Laufzeit: 0.0 s (deterministisch, kein Rerun)
