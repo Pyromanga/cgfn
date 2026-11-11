@@ -2221,3 +2221,92 @@ kein Rerun. Verdikt-Serie: 5 saubere Verdikte in Serie
 einzige Flaschenhals der Saison; die Engine hat seit T19-R2 keinen
 einzigen Fehler produziert. Wrapper-Guard und Syntax-Gate in allen
 Workflows: 0 Runner-Minuten auf kaputten Contracts seit Rollout.
+
+
+---
+
+# Nachtrag 40 (2026-11-11): P4-GENERATOR v1/v1.1 (L3 IN ECHTBETRIEB) — erster Maschinen-Vorschlag, erster Maschinen-Defekt, erste R7-Lehre. T23-REGISTRIERUNG.
+
+## L3 in Echtbetrieb
+P4-Generator v1 gebaut und gelauft (~2 Runner-Minuten, kein
+Torch): deterministische Regeln-Maschine auf eingefrorenem
+P3-Snapshot, Kritiker-Regeln R1-R6, dokumentiertes Scoring
+(Ueberraschung 0.5, Kostenquote 0.3, Konsequenz-Scheidung 0.2).
+Bot-Commit d87cf6c (v1.0-Proposal), v1.1-Regeneration analog.
+
+## Der erste Maschinen-Vorschlag und sein DEFEKT (ehrlich)
+v1.0 schlug T23 mit Raster a=[0,4,12,24] vor. Kernel-Kritiker-
+Cross-Check gegen die gefrorenen T20-Einzelmessungen riss ihn
+VOR dem Feuer (0 Runner-Minuten Verlust):
+1. Die T20-Dosis-Kurve zeigt den Kollaps BEREITS bei a=1
+   (P 0.75 -> 0.05; a=4: 0.15; a=12: 0.05). Das Schalter-Fenster
+   liegt zwischen a=0 und a=1 — ausserhalb des v1.0-Rasters.
+2. Folge: vorhersagbares UNENTSCHEIDEN (drop4 gross, kein
+   Folge-Abfall; beide Verdikt-Praedikate konnten nicht feuern).
+   56 Runner-Minuten waeren verbrannt.
+3. Das v1.0-Band widersprach seiner eigenen Quelle (drop4 in
+   [-0.10, 0.25] gegen T20-drop4 ~ 0.60): Der Snapshot enthielt
+   Aggregate ohne Dosis-Kurve.
+4. R1-R6 pruefen Prozess-Hygiene, nicht Raster-Adaequanz —
+   deshalb NEUE Regel R7 (UEBERGANGSFENSTER-ABDECKUNG): Ein
+   Raster muss die Klammer-Stufen des steilsten beobachteten
+   Uebergangs enthalten. R7 haette v1.0 abgelehnt (Beleg im
+   v1.1-Proposal).
+LEHRE: Der Kritiker muss die QUELL-Daten pruefen, nicht nur den
+Prozess. Der Loop hat den ersten Maschinenfehler in der
+Registrierungsphase gefangen — das Pre-Mortem-Gat funktioniert,
+diesmal mit Menschen als Kritiker; ab v1.1 ist die Lehre Regel
+im Generator.
+
+## v1.1-Regeneration
+Snapshot um T20-Dosis-Kurve erweitert, R7 ergaenzt, neu
+generiert: T23 SCHALTER-DOSIS v1.1 (analysis/P4_proposal_v1_1.md,
+R1-R7 alle ERFUELLT). T24 BLOCK-MITTEL-GESETZ vertagt (ueber Cap,
+konfirmatorisch).
+
+## T23-REGISTRIERUNG (GENAGELT, keine Nachverhandlung)
+FRAGE: Repliziert der Lern-Kollaps bei Konjugationstiefe a=1
+(T20, alter Ausreisser-Block 190..209) auf frischen Bloecken?
+DESIGN: EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter).
+Stufen a in {0, 1, 4, 24} (Konjugation Q_a W Q_a^T,
+Q_SEED=2020 wie T20). Je Stufe 2 disjunkte 20er-Bloecke,
+frische Seeds 430..589; Anchor HIGH48 (s=5.5, 590..609).
+180 Runs, Kostenmodell R3: Fix ~5 min + 17 s/Run x 180 =
+56 min (Cap 60), Timeout 75.
+PRIMAER (VERDIKT): drop1 = P(0) - P(1), registriert an jedem
+Arm. SE(Stufen-Mittel)=0.068, SE(drop1)=0.096.
+  PASS — SCHALTER-BESTAETIGT: drop1 >= 0.30 (>= 3.1 SE).
+    Konsequenz: eigene Linie SCHALTER; erste Anschlussfrage:
+    Ist die top-Singulaerrichtung die kritische? (Gegenprobe:
+    Konjugation entlang Zufallsrichtung a=1.)
+  KILL — KEIN-KOLLAPS: drop1 < 0.30.
+    Konsequenz: T20-Doppelkollaps war Seed-Lotto am
+    Ausreisser-Block; Schalter-Linie TOT.
+  UNENTSCHEIDEN (Crash): Sanity (HIGH48 pf < 0.5), ndiv > 6 je
+    Block, std(P_Block) < 0.02 je Stufe, colnorm. EINE
+    Reparatur (R5), dann Linie tot.
+SEKUNDAER (Bericht): Schalter-FORM: drop124 = P(1) - P(24);
+< 0.15 = Plateau nach Kipp (BINAER-Form), fortlaufender Abfall
+= Dosis-Form. Kein Verdikt.
+VORHERSAGEBAND (mechanisch aus Block-Statistik, KEIN
+Hand-Tuning — erster Maschinen-Band der Serie):
+  P(0) in [0.31, 0.58] | P(1) in [0.00, 0.25] |
+  P(4) in [0.00, 0.30] | P(24) in [0.00, 0.25] |
+  drop1 in [0.05, 0.55] | drop124 in [-0.10, 0.20].
+
+## L5-Bilanz-Status (Durchlauf 2)
+Vorschlagsquelle erstmals MASCHINE (P4-Generator v1.1) statt
+LLM. Band-Mechanik: Schwellen und Grenzen aus gemessener
+Block-Statistik (T22 + Nachtrag 37), nicht aus Gefuehl —
+damit ist eine Fehl-Calibration, falls sie eintritt, auf den
+Generator zurueckfuehrbar. Bewertung: 6 Teilband-Treffer
+(P(0), P(1), P(4), P(24), drop1, drop124); der informative
+Fall bleibt die Verfehlung (Nachtrag-39-Einschraenkung).
+
+## Kernel-Bilanz (Stand)
+Der Loop Taste -> Vorschlag -> Kernel -> Verdikt ->
+Gedaechtnis laeuft jetzt mit ZWEI Vorschlags-Quellen (LLM:
+T22; Maschine: T23) und EINEM Kritiker-Gat, das seinen ersten
+Fund in der Registrierungsphase machte (0 Runner-Minuten).
+Ab T23: 9 kernel-generierte Steine; L3 offiziell in
+Echtbetrieb — AGI-Loop-These: 3.5 von 4 Bausteinen.
