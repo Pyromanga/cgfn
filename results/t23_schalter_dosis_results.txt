@@ -1,0 +1,106 @@
+======================================================================================================================
+T23 — SCHALTER-DOSIS v1.1 (L5-DURCHLAUF 2, erster MASCHINEN-Vorschlag: P4-Generator v1.1)
+These (Nachtrag 40 / P4-Proposal v1.1): Der a=1-Kollaps aus T20 (alter
+Ausreisser-Block 190..209) repliziert auf frischen Bloecken — Schalter real.
+EINE Zelle (H=48, s=2.2, wb=0.6), Stufen a in {0, 1, 4, 24}, Konjugation Q_a W Q_a^T.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t23.py
+Je Stufe 2 disjunkte 20er-Bloecke (430..589) + Anchor HIGH48 (590..609), f64
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm HIGH48 (H=48, role=anchor, a=0, s=5.5, seeds 590..609): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | colnorm=5.5000 | div=0
+
+Arm A0_B0 (H=48, role=block, a=0, s=2.2, seeds 430..449): n_ok=20/20 | P_lernt=0.50 | median acc=0.5215 | colnorm=2.2000 | div=0
+
+Arm A0_B1 (H=48, role=block, a=0, s=2.2, seeds 450..469): n_ok=20/20 | P_lernt=0.65 | median acc=1.0000 | colnorm=2.2000 | div=0
+
+Arm A1_B0 (H=48, role=block, a=1, s=2.2, seeds 470..489): n_ok=20/20 | P_lernt=0.05 | median acc=0.4951 | colnorm=2.2000 | div=0
+
+Arm A1_B1 (H=48, role=block, a=1, s=2.2, seeds 490..509): n_ok=20/20 | P_lernt=0.00 | median acc=0.5215 | colnorm=2.2000 | div=0
+
+Arm A4_B0 (H=48, role=block, a=4, s=2.2, seeds 510..529): n_ok=20/20 | P_lernt=0.15 | median acc=0.5020 | colnorm=2.2000 | div=0
+
+Arm A4_B1 (H=48, role=block, a=4, s=2.2, seeds 530..549): n_ok=20/20 | P_lernt=0.05 | median acc=0.5215 | colnorm=2.2000 | div=0
+
+Arm A24_B0 (H=48, role=block, a=24, s=2.2, seeds 550..569): n_ok=20/20 | P_lernt=0.15 | median acc=0.4785 | colnorm=2.2000 | div=0
+
+Arm A24_B1 (H=48, role=block, a=24, s=2.2, seeds 570..589): n_ok=20/20 | P_lernt=0.15 | median acc=0.5146 | colnorm=2.2000 | div=0
+
+--- T23-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+Stufen-Bericht (Block-Mittel je Stufe):
+  a=0: P_Stufe=0.5750 | std(P_Block)=0.0750
+  a=1: P_Stufe=0.0250 | std(P_Block)=0.0250
+  a=4: P_Stufe=0.1000 | std(P_Block)=0.0500
+  a=24: P_Stufe=0.1500 | std(P_Block)=0.0000
+ALARM: std(P_Block) < 0.02 in mindestens einer Stufe — degenerierte Streuung (registrierter Crash).
+SE(Stufen-Mittel) = 0.068 | SE(drop1) = 0.096 (Nachtrag 40)
+drop1 = P(0) - P(1) = 0.5500 (Schwelle 0.30 = 3.1 SE)
+drop124 = P(1) - P(24) = -0.1250 (Form: < 0.15 = Plateau nach Kipp, SEKUNDAER)
+GEMESSEN: drop1 Schwelle 0.30 (Nachtrag 40 / P4-Proposal v1.1)
+L5-BAND (registriert VOR dem Lauf, Nachtrag 40):
+  P(0) in [0.31, 0.58]: gemessen 0.5750 — TREFFER
+  P(1) in [0.00, 0.25]: gemessen 0.0250 — TREFFER
+  P(4) in [0.00, 0.30]: gemessen 0.1000 — TREFFER
+  P(24) in [0.00, 0.25]: gemessen 0.1500 — TREFFER
+  drop1 in [0.05, 0.55]: gemessen 0.5500 — TREFFER
+  drop124 in [-0.10, 0.20]: gemessen -0.1250 — NEIN
+L5-BAND-TREFFER: 5/6 (Maschinen-Band, P4-Generator v1.1)
+ALARM: ARM HIGH48: registrierte Groesse 'pstage' NICHT GEMESSEN (Kollaps-Verletzung).
+
+VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 41 (2026-11-11) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+ALARM: ARM HIGH48: registrierte Groesse 'pstage' NICHT GEMESSEN (Kollaps-Verletzung).
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 1
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.pstage = FEHLT
+  HIGH48.drop1 = 0.55
+  A0_B0.pf = 0.5
+  A0_B0.colnorm = 2.2
+  A0_B0.ndiv = 0
+  A0_B0.pstage = 0.575
+  A0_B0.drop1 = 0.55
+  A0_B1.pf = 0.65
+  A0_B1.colnorm = 2.2
+  A0_B1.ndiv = 0
+  A0_B1.pstage = 0.575
+  A0_B1.drop1 = 0.55
+  A1_B0.pf = 0.05
+  A1_B0.colnorm = 2.2
+  A1_B0.ndiv = 0
+  A1_B0.pstage = 0.025
+  A1_B0.drop1 = 0.55
+  A1_B1.pf = 0
+  A1_B1.colnorm = 2.2
+  A1_B1.ndiv = 0
+  A1_B1.pstage = 0.025
+  A1_B1.drop1 = 0.55
+  A4_B0.pf = 0.15
+  A4_B0.colnorm = 2.2
+  A4_B0.ndiv = 0
+  A4_B0.pstage = 0.1
+  A4_B0.drop1 = 0.55
+  A4_B1.pf = 0.05
+  A4_B1.colnorm = 2.2
+  A4_B1.ndiv = 0
+  A4_B1.pstage = 0.1
+  A4_B1.drop1 = 0.55
+  A24_B0.pf = 0.15
+  A24_B0.colnorm = 2.2
+  A24_B0.ndiv = 0
+  A24_B0.pstage = 0.15
+  A24_B0.drop1 = 0.55
+  A24_B1.pf = 0.15
+  A24_B1.colnorm = 2.2
+  A24_B1.ndiv = 0
+  A24_B1.pstage = 0.15
+  A24_B1.drop1 = 0.55
+
+## LUECKENLISTE: HIGH48.pstage
+=== FERTIG ===
