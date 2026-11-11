@@ -1,0 +1,64 @@
+# P4-PROPOSAL v1 — maschinengenerierter Stein-Vorschlag (P4-Generator v1 (2026-11-11))
+
+Erzeugt: 2026-11-11 13:19 UTC | Input: P3-Snapshot (eingefroren, Quellen im Code) | Verfahren: Regeln R1-R6 + dokumentiertes Scoring, deterministisch.
+
+## Rangliste
+1. T23 SCHALTER-DOSIS — Score 0.72 (Ueberraschung 1.0, Kostenquote 0.93, Scheidung 1.0)
+2. T24 BLOCK-MITTEL-GESETZ — Score 0.32 (VERTAGT: siehe unten)
+   Verworfen: RESEARCH-TASTE-Serie (kein Physik-Stein, L5-Kalibration),
+   konfirmatorische Block-Bestaetigung (geringe Entropie).
+
+## GEWINNER: T23 SCHALTER-DOSIS
+
+FRAGE: Ist der Lern-Kippunkt bei Konjugation ein BINAerer Schalter oder eine gleitende Dosis-Kurve?
+THESE: Die harte Konjugation Q_a W Q_a^T kippt das Lernen in einem schmalen a-Fenster (Strukturbruch-These). Gegenthese: monotoner Abfall ueber alle Stufen.
+
+DESIGN: EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter).
+Stufen a = [0, 4, 12, 24] (Konjugationstiefe Q_a W Q_a^T).
+Je Stufe 2 disjunkte 20er-Bloecke (frische Seeds 430..589):
+  a=0: Bloecke 430..449 + 450..469
+  a=4: Bloecke 470..489 + 490..509
+  a=12: Bloecke 510..529 + 530..549
+  a=24: Bloecke 550..569 + 570..589
+Anchor: HIGH48 (s=5.5, a=0, Seeds 590..609). Total 180 Runs.
+
+MASSE: pf, colnorm, ndiv je Arm; Block-P je Block; P_Stufe = Mittel
+der 2 Block-P je Stufe; drop_a = P(0) - P(a). SE(Stufen-Mittel) = 0.068.
+
+VERDIKT (registriert, BINAer-Schnitt):
+- SCHALTER-BINAER: drop4 = P(0)-P(4) < 0.10 UND drop12 = P(0)-P(12) >= 0.30 (Abfall zwischen a=4 und a=12 konzentriert; Schwelle drop12 ~ 3.1 SE).
+- GLEITEND: drop4 >= 0.10 UND (drop12 - drop4) >= 0.10 (Stufenweiser Abfall ueber das ganze Raster).
+- UNENTSCHEIDEN: sonst; Crash (R6-Sanity, ndiv > 6 je Block, std(P_Block) < 0.02 je Stufe, colnorm).
+
+VORHERSAGEBAND (mechanisch aus Block-Statistik, KEIN Hand-Tuning):
+- P(0) (a=0, 2 Block-Mittel) in [0.31, 0.58] (aus 10-Block-Statistik)
+- P(12) in [0.00, 0.25] (T20-Kollaps 0.05, n=1 Quelle, ehrlich breit)
+- P(24) in [0.00, 0.20] (T20-Kollaps extrapoliert)
+- drop4 in [-0.10, 0.25] (Union beider Hypothesen)
+- drop12 in [0.20, 0.60] (Union beider Hypothesen)
+
+KONSEQUENZEN je Ausgang (R4-Anti-Kollaps):
+- SCHALTER-BINAER -> eigene Linie SCHALTER: Suche Ordnungsparameter des Kipppunkts (Strukturbruch-These wird Kopf einer Serie).
+- GLEITEND -> Dosis-Mechanismus: Konjugationstiefe als kontinuierlicher Regler dokumentieren; keine eigene Linie.
+- BEIDE unterscheiden die naechsten Schritte -> R4 ERFUELLT.
+
+## Kritiker-Gate R1-R6 (Angewandt auf T23)
+- R1 ERFUELLT: Block-Mittel mit SE/std ausgewiesen (2 disjunkte 20er-Bloecke je Stufe)
+- R2 ERFUELLT: Masse pf/colnorm/ndiv/P_Stufe an JEDEM Arm inkl. Anchor
+- R3 ERFUELLT: Fixkosten 5.0 min + variabel 51.0 min = 56.0 min (Cap 60)
+- R4 ERFUELLT: PASS/KILL -> unterschiedliche Konsequenzen (siehe oben)
+- R5 ERFUELLT: EINE Reparatur bei Crash, dann Linie tot
+- R6 ERFUELLT: Anchor HIGH48 (s=5.5, Seeds 590..609) pf >= 0.5 Pflicht
+
+## VERTAGT: T24 BLOCK-MITTEL-GESETZ (VERTAGT)
+FRAGE: Traegt der H-Trend im Block-Mittel?
+GRUND: Kosten: >= 3 Zellen x 4 Bloecke x 20 Runs = 240+ Runs ~ 73+ min > Cap 60. UND konfirmatorisch (die Block-Frage ist mathematisch abgeschlossen, T22): geringe Entscheidungs-Entropie. Erst wenn Cap-Budget frei und Q2 eine offene Anschlussfrage erzeugt.
+
+## Naechster Schritt (Kernel-seitig)
+1. Nachtrag 40 registriert DIESEN Vorschlag (Band + Verdikt-Schwellen
+   unveraendert, keine Nachverhandlung).
+2. T23-Bau: contracts/t23.py + experiments/t23_schalter_dosis.py +
+   Workflow (Syntax-Gate + Wrapper-Guard + Import-Gate + Kostenmodell).
+3. Trigger erst nach Nutzer-Freigabe.
+
+=== ENDE P4-PROPOSAL v1 ===
