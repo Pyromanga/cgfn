@@ -2065,3 +2065,38 @@ TOT (Regel: EINE Reparatur bei UNENTSCHEIDEN).
 (c) L5 ERSTER DURCHLAUF: Der P3-Graph steht — ein LLM schlaegt
     Stein 27 vor, registriert VOR dem Lauf. Research Taste wird
     Messobjekt (Nutzer-These Nachtrag 24).
+
+
+---
+
+# Nachtrag 37 (2026-11-11): (b) 0-RUNNER-REANALYSE — BLOCK-VERTEILUNG aus T21-Einzelseed-Daten. Zwei Befunde: Block-Streuung GROSS, KEHRUNG block-robust.
+
+## Methode
+results/t21_delle_statistik_table.csv (700 Einzelseed-Werte, Bot-
+Commit be35ddf): Die 100 frischen Seeds sind 5 disjunkte 20er-
+Bloecke. Block-P_lernt je Arm, 0 Runner-Minuten (D-Diff-Praxis).
+Datei: analysis/P_block_reanalyse.md.
+
+## BEFUND 1: BLOCK-STREUUNG IST GROSS
+std(P_Block) je Zelle: H24 0.058/0.081/0.133; H48 0.075/0.058/0.081.
+Groessenordnung 0.06-0.13 — vergleichbar mit der T19-Delle
+(8.5 Prozent) und den T16-Trend-Offsets. Ein EINZELNER 20er-Block
+kann H-Unterschiede dieser Groesse vortaeuschen UND verstecken.
+T21-Lesart Nr. 2 ist jetzt zahlenfest: 20er-Bloecke sind als
+einzige Basis fuer solche Aussagen untauglich.
+
+## BEFUND 2: DIE KEHRUNG IST BLOCK-ROBUST (gepaart)
+d183 je Block: -0.50/-0.45/-0.20/-0.25/-0.50 — KEHRUNG in 5 von 5
+Bloecken. d220 je Block: ebenfalls 5 von 5 negativ. Das gepaarte
+Design (dieselben Seeds an H24 UND H48) eliminiert die Block-
+Varianz: Der H-Effekt im frischen Block ist KEIN Block-Artefakt.
+Offen bleibt die Versoehnung mit dem ALTEN Block 190..209 — dort
+gibt es nur ungepaartes Material (P48(2.2)=0.75 vs frisch 0.43,
+≈ 2.9 Sigma zwischen Block-Mitteln).
+
+## KONSEQUENZ FUER (a)
+Der Stein verschaerft sich und wird BILLIGER: nicht "gibt es
+Block-Streuung" (beantwortet: JA), sondern "war der ALTE Block ein
+AUSREISSER?" — EINE Zelle (H=48, s=2.2), 5 neue disjunkte
+20er-Bloecke (310..409), z-Mass fuer 0.75. ~120 Runs ≈ 60 min
+statt 200. Registrierung als L5-Vorschlag in Nachtrag 38.
