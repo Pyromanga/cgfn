@@ -2398,3 +2398,78 @@ Kernel v2: Preflight muss pruefen, dass JEDES registrierte Mass
 an JEDEM Arm platzfindet (R2-Check maschinell, nicht per
 Selbstkontrolle des Bauenden). Bau blieb Flaschenhals; die
 Engine hat auch diesen Lauf fehlerfrei durchgezogen.
+
+
+---
+
+# Nachtrag 42 (2026-11-11): T23 REPARATUR-VERDICT — PASS: SCHALTER-BESTAETIGT. Neue Linie SCHALTER eroeffnet. Recon-Positionierung.
+
+## Verdict
+Reparatur-Run (Bot-Commit 19:46 UTC, 2 Runner-Minuten): Readout-Fix
+NUR HIGH48.pstage = pf (Ein-Arm-Stufenmittel, n41-Definition);
+geforderte Kontrolle: gefrorene Werte unveraendert (drop1 = 0.55,
+drop124 = -0.125, kein Messwert angefasst). Klausel-Protokoll:
+std(a=1) = 0.025 >= 0.02 — verdikts-entscheidende Stufe CLEAN;
+std(a=24) = 0.0 Boden-Stabilitaet, Form-Befund; Klausel-Ursprung
+(T22 Nenner-Schutz) dokumentiert. Lueckenliste LEER.
+VERDICT: PASS — SCHALTER-BESTAETIGT (drop1 = 0.55 >= 0.30, ~5.7 SE).
+
+## Die neue Linie SCHALTER (Kopf-Stein T23)
+- Befund: Eine einzige konjugierte Dimension (a=1) kippt P_lernt
+  auf frischen Bloecken von 0.575 auf 0.025. Kein Block-Artefakt
+  (T22-Lehre angewendet — der alte Ausreisser-Block hat den
+  Schalter eher UNTERtrieben). Form: Plateau mit Mini-Erholung
+  (0.10-0.15), KEINE Dosis-Kurve. GLEITEND ist empirisch tot.
+- PRAEZEDENZ-PROTOKOLL (ehrlich): Erste rueckgefuehrte Crash-
+  Klausel der Serie (Pfad (b), Nutzer-Entscheidung). Grenze
+  gezogen: Verdikt-Mass, Schwelle, Band UNANTASTBAR; nur der
+  Geltungsbereich einer Klausel wurde auf ihren dokumentierten
+  Ursprung (Nenner-Schutz) begrenzt. Kuenftige Registrierungen:
+  std-Klauseln NUR an Nenner-fuehrenden Primaer-Massen.
+
+## Recon-Positionierung (2026-11-11, vor jeder Unbekannt-Behauptung)
+1. KONTRAST ZUR ROTATIONSINVARIANZ: Rekurrente-Kernel- und
+   Mean-Field-Theorie sind rotationsinvariant (Reservoir Computing
+   meets Recurrent Kernels and Structured Transforms, NeurIPS
+   2020; Jaeger/Lukosevicius 2009 empfehlen sogar orthogonale
+   Matrizen als Topologie). Unser Befund ist der Gegensatz bei
+   endlichem H mit elementweiser tanh: Die Invarianz bricht
+   nicht statistisch, sondern als SCHALTER — eine Dimension
+   Basis-Rotation gegen den tanh-Anker toetet das Aufgabenlernen
+   (Anschluss G5/G6 des Anker-Kapitels: der Anker ist real und
+   scharf).
+2. 'WHY LLMS AREN'T SCIENTISTS YET' (Trehan/Chopara, arXiv
+   2601.03315): Drei von vier autonomen LLM-Forschungspipelines
+   scheitern daran, stillschweigendes Domains-Wissen in
+   glaubwuerdige Hypothesenformulierung zu operationalisieren.
+   Unsere Gegen-Serie (L3/L5): Still schweigendes Wissen als
+   REGELN kodieren (R1-R7), Vorschlag mit Band VOR dem Lauf,
+   Kernel-Verdikt ohne Nachverhandlung, messbare Band-Quote.
+   Erste Datenpunkte: LLM 3/3 (breites Band) | Maschine 5/6
+   (mechanisches Band, Verfehlung an duenner Quelle).
+
+## L5-Bilanz nach Durchlauf 2 (final)
+Maschinen-Band: 5/6 Treffer (P(0) 0.575, P(1) 0.025, P(4) 0.10,
+P(24) 0.15, drop1 0.55 — alle im Band; drop124 -0.125 gegen
+[-0.10, 0.20] NEIN). Die einzige Verfehlung sitzt an der einzigen
+duennen Quelle (T20 n=1, alter Block) — das Band war nicht
+trivial-breit, es verfehlte ehrenwert an der richtigen Stelle.
+Generator-Lehre v1.2: Band-Grenzen aus n=1-Quellen bekommen 50
+Prozent zusaetzliche Weite. Research Taste ist jetzt eine Serie
+mit ZWEI Quellen und einer Verfehlung — messbar, wie gefordert
+(Nutzer-These Nachtrag 24).
+
+## Naechster Stein (Generator v1.2, L3)
+T24-Kandidat SCHALTER-RICHTUNG: Kippt JEDE 1-dim-Konjugation
+(RICHTUNGS-AGNOSTISCH — Symmetriebruch-Mechanismus, Anschluss
+G6) oder nur bestimmte Rotationsachsen (RICHTUNGS-SPEZIFISCH —
+Achsen-Lotto)? Vorschlag generiert vom P4-Generator v1.2 (T23-
+Dosis-Kurve frisch im Snapshot), Registrierung als Nachtrag 43.
+
+## Kernel-Bilanz (Stand)
+9 kernel-generierte Steine (T15..T23). 6 saubere Verdikte in
+Serie. Zwei Reparaturen der Saison (T21, T23) — beide in der
+Readout-Klasse, beide 2 Runner-Minuten, beide mit Praezedenz-
+Dokumentation. Lehre fuer den Kernel v2 notiert: Preflight muss
+R2 maschinell pruefen (jedes registrierte Mass an jedem Arm).
+Bau blieb Flaschenhals; die Engine ist weiter fehlerfrei.
