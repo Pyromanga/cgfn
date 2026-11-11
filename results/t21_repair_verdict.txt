@@ -1,0 +1,54 @@
+======================================================================================================================
+T21-REPARATUR: NEU-AUSWERTUNG DER GEFRORENEN RUN-2-DATEN
+Readout-Fix (Nachtrag 35): Anchor-Einpunkt-Kurve -> s50rep = -1 ZENSIERT.
+KEINE neue Physik, Schwellen unveraendert (±0.15). Daten: Bot-Commit be35ddf.
+======================================================================================================================
+Gefroren: d183 = -0.3800 | H24-Kurve 0.49/0.67/0.78 | H48-Kurve 0.13/0.29/0.43
+Readout-Fix: HIGH48.s50rep = -1.0 (ZENSIERT, Einpunkt-Kurve).
+
+VERDICT (aus gefrorenen Run-2-Daten, Readout repariert): KEHRUNG
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 36 (2026-11-11) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: KEHRUNG
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 0.97
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.d183 = -0.38
+  HIGH48.s50rep = -1
+  H24_s1.55.pf = 0.49
+  H24_s1.55.colnorm = 1.55
+  H24_s1.55.ndiv = 0
+  H24_s1.55.d183 = -0.38
+  H24_s1.55.s50rep = 1.56556
+  H24_s1.83.pf = 0.67
+  H24_s1.83.colnorm = 1.83
+  H24_s1.83.ndiv = 0
+  H24_s1.83.d183 = -0.38
+  H24_s1.83.s50rep = 1.56556
+  H24_s2.2.pf = 0.78
+  H24_s2.2.colnorm = 2.2
+  H24_s2.2.ndiv = 0
+  H24_s2.2.d183 = -0.38
+  H24_s2.2.s50rep = 1.56556
+  H48_s1.55.pf = 0.13
+  H48_s1.55.colnorm = 1.55
+  H48_s1.55.ndiv = 0
+  H48_s1.55.d183 = -0.38
+  H48_s1.55.s50rep = -1
+  H48_s1.83.pf = 0.29
+  H48_s1.83.colnorm = 1.83
+  H48_s1.83.ndiv = 0
+  H48_s1.83.d183 = -0.38
+  H48_s1.83.s50rep = -1
+  H48_s2.2.pf = 0.43
+  H48_s2.2.colnorm = 2.2
+  H48_s2.2.ndiv = 0
+  H48_s2.2.d183 = -0.38
+  H48_s2.2.s50rep = -1
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
