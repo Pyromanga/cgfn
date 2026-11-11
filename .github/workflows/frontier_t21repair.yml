@@ -1,0 +1,45 @@
+name: cgfn-repair (T21 Readout, kein Stein)
+
+# T21-REPARATUR (Nachtrag 35): Neu-Auswertung der gefrorenen Run-2-Daten.
+# KEINE neue Physik (deterministisches Experiment), kein Torch noetig.
+# Schwellen unveraendert. ~2 Runner-Minuten.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".trigger/t21repair"
+
+jobs:
+  t21-repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Gate syntax + wrapper-check t21-repair
+        run: |
+          python -m py_compile contracts/t21.py experiments/t21_repair_readout.py tools/lab_kernel.py tools/wrapper_check.py || { echo "[e] SYNTAX-FEHLER — Abbruch, Kontingent geschont"; exit 1; }
+          python tools/wrapper_check.py contracts/t21.py experiments/t21_repair_readout.py tools/lab_kernel.py || { echo "[e] MSL-WRAPPER IM SPIEL — Abbruch, Kontingent geschont"; exit 1; }
+          echo "[i] syntax + wrapper-guard ok"
+      - name: Run T21 Readout-Reparatur
+        run: |
+          set -o pipefail
+          python experiments/t21_repair_readout.py
+      - name: Commit repair verdict
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add results/t21_repair_verdict.txt 2>/dev/null || true
+          if git diff --cached --quiet; then echo "[i] keine Reparatur-Ausgabe — kein Commit."; exit 0; fi
+          git commit -m "repair: T21 Readout-Verdikt ${GITHUB_RUN_NUMBER} ($(date -u '+%F %H:%M') UTC)"
+          for i in 1 2 3 4 5; do
+            if git push; then echo "[i] push ok"; exit 0; fi
+            git pull --rebase --autostash --no-edit || { echo "[e] rebase fehlgeschlagen"; exit 1; }
+            sleep $((i * 5))
+          done
+          echo "[e] push fehlgeschlagen" && exit 1
