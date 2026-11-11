@@ -122,7 +122,7 @@ def r_check(c):
         ('R4', 'PASS/KILL -> Mechanismus- vs Achsen-Stein (verschieden)', True),
         ('R5', 'EINE Reparatur bei Crash, dann Linie tot', True),
         ('R6', 'Anchor HIGH48 (s=5.5, a=0, Seeds %d..%d) pf >= 0.5 Pflicht'
-         % c['anchor'][0], True),
+         % (c['anchor'][0], c['anchor'][1]), True),
         ('R7', 'Replikations-Achse Q_SEED=2020 (T23) im Achsen-Raster', 2020 in c['q_seeds']),
         ('R8', 'Band an duenner Quelle (n=1 Achse) um 50 Prozent geweitet', True)]
     return checks
