@@ -2473,3 +2473,68 @@ Readout-Klasse, beide 2 Runner-Minuten, beide mit Praezedenz-
 Dokumentation. Lehre fuer den Kernel v2 notiert: Preflight muss
 R2 maschinell pruefen (jedes registrierte Mass an jedem Arm).
 Bau blieb Flaschenhals; die Engine ist weiter fehlerfrei.
+
+
+
+---
+
+# Nachtrag 43 (2026-11-11): T24 SCHALTER-RICHTUNG REGISTRIERT (L5-Durchlauf 3, Quelle Maschine). Band und Schwellen VOR dem Lauf eingefroren.
+
+## Registrierung
+Vorschlag: P4-Generator v1.2 (Bot-Commit 20:09 UTC, Proposal v1.2,
+Score 0.78 — Ueberraschung 1.0, Kostenquote 0.74, Scheidung 1.0).
+Erster Test der Generator-Lehre R8 (BAND-QUELLEN-HAERTUNG) im
+Echtbetrieb. Registrierung NACH Maschinen-Vorschlag, VOR Bau und
+Lauf — Freeze-Regel gilt, keine Nachverhandlung.
+
+## Frage
+Kippt JEDE 1-dim-Konjugation das Lernen (RICHTUNGS-AGNOSTISCH,
+Symmetriebruch-Mechanismus, Anschluss G6) oder nur bestimmte
+Rotationsachsen (RICHTUNGS-SPEZIFISCH, Achsen-Lotto)?
+
+## Design (eingefroren)
+EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter:
+t_seq=24, tau=1.0, dt=0.1, substeps=5, steps=600, batch=32,
+lr=5e-3, lam_max=0.6, fixed_p0=4242, test_seed=777, hold=3).
+Konjugationstiefe a=1, Q_a = QR(I + 1*G_q), 5 Achsen via q_seed
+in [2020, 5150, 8080, 1111, 4242], je 20 frische Seeds:
+  Q2020: 610..629 | Q5150: 630..649 | Q8080: 650..669
+  Q1111: 670..689 | Q4242: 690..709
+Control a=0: 710..729 | Anchor HIGH48 (s=5.5, a=0): 730..749.
+Total 140 Runs, Fix 5.0 min + variabel 39.7 min = 44.7 min
+(Cap 60). q_seed=2020 ist die Replikations-Achse (R7: T23 bei
+a=1 mass 0.025 — Vorab-Replikation im selben Lauf).
+
+## Masse (R2: an JEDEM Arm inkl. Anchor)
+pf, colnorm, ndiv, P_Q (Block-P je Achse), pqmax = max(P_Q).
+
+## Verdict-Schwellen (unantastbar)
+- PASS — RICHTUNGS-AGNOSTISCH: pqmax <= 0.15. Jede getestete
+  Achse kippt. Konsequenz: Symmetriebruch-Mechanismus bestaetigt
+  (Anschluss G6), naechster Stein: Ordnungsparameter des
+  Kipppunkts.
+- KILL — RICHTUNGS-SPEZIFISCH: pqmax >= 0.30. Mindestens eine
+  Achse laesst Lernen zu. Konsequenz: Achsen-Stein — top-
+  Singulaerrichtung vs Zufallsrichtung wird naechste Frage.
+- UNENTSCHEIDEN: 0.15 < pqmax < 0.30 oder Crash (Sanity
+  Anchor pf < 0.5, ndiv > 6 je Block, colnorm-Verletzung).
+  R5: EINE Reparatur, dann Linie tot. R4 erfuellt (PASS und
+  KILL fuehren zu verschiedenen naechsten Steinen).
+
+## Vorhersageband (mechanisch, R8-Haertung)
+- P_Q je Achse (5 Werte) in [0.00, 0.22]
+  (Quelle: T23 a=1 frisch 0.025, n=1 Achse, R8: +50% Weite)
+- pqmax in [0.05, 0.25] (Union beider Hypothesen)
+- P(0)-Control in [0.25, 0.64]
+  (Quelle: 10-Block-Statistik T22/n37: 0.445 +- 2*0.096)
+
+## L5-Serien-Zettel (Durchlauf 3)
+Quelle: Maschine (Generator v1.2). Band-Treffer werden nach dem
+Lauf an Nachtrag 44 fortgeschrieben; die Verfehlung von
+drop124 (Durchlauf 2) bleibt der einzige Maschinen-Missstand —
+R8 ist genau dafuer zum ersten Mal im Spiel.
+
+## Kernel-Bilanz (Stand, unveraendert bis T24-Verdict)
+9 kernel-generierte Steine (T15..T23). 6 saubere Verdikte,
+2 Readout-Reparaturen. T24 ist der erste Stein mit R8-Band und
+dem Achsen-Schnitt-Verdikt (pqmax).
