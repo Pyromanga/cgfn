@@ -2310,3 +2310,91 @@ T22; Maschine: T23) und EINEM Kritiker-Gat, das seinen ersten
 Fund in der Registrierungsphase machte (0 Runner-Minuten).
 Ab T23: 9 kernel-generierte Steine; L3 offiziell in
 Echtbetrieb — AGI-Loop-These: 3.5 von 4 Bausteinen.
+
+
+---
+
+# Nachtrag 41 (2026-11-11): T23 RUN-1 — SCHALTER REPLIZIERT (drop1=0.55, ~5.7 SE), Verdict geblockt durch Readout-Bug (mea culpa). R5-REPARATUR REGISTRIERT: Pfad (b).
+
+## Lauf
+Run 43074001615 (18:02-18:56 UTC, 54 min), Bot-Commit 184c7c1.
+180/180 Runs, Sanity clean (HIGH48 pf=1.0), keine Divergenz,
+colnorm exakt. Vertrag wie Nachtrag 40 genagelt.
+
+## Zahlen (Bot, unveraendert)
+- Stufen-Block-Mittel: a=0: 0.575 | a=1: 0.025 | a=4: 0.10 |
+  a=24: 0.15. std(P_Block): 0.075 / 0.025 / 0.05 / 0.00.
+- drop1 = 0.55 (Schwelle 0.30) — das waeren ~5.7 SE, weit jenseits
+  der registrierten 3.1-SE-Schwelle.
+- drop124 = -0.125 (leichte ERHOLUNG nach Kipp: a=24 > a=1).
+
+## Verdict: UNENTSCHEIDEN (Crash) — zwei Ursachen
+1. READOUT-BUG (mea culpa, maximal peinlich): HIGH48.pstage wurde
+   vom Instrument nie gesetzt — die T21-Lektion (registrierte
+   Masse an JEDEM Arm, Anchor inklusive) hatte ich als R2-Regel
+   selbst in den Contract geschrieben und im Instrument verletzt.
+   Exakt der T21-Crash, nochmal, vom selben Autor.
+2. std(P_Block) = 0.0 bei a=24 (0.15/0.15) < 0.02: Die aus T22
+   uebernommene Crash-Klausel feuert. Sie schuetzte dort den
+   Nenner des z-Masses; T23 hat keinen Nenner.
+
+## R5-REPARATUR (die EINE erlaubte; registriert VOR dem Rerun)
+Pfad (b), Nutzer-Entscheidung. Deterministische Neu-Auswertung
+der gefrorenen Daten (results/t23_measurements.json, Run 1),
+KEIN Rerun, kein Torch, ~2 Runner-Minuten. Zwei Eingriffe:
+- Reparatur 1 (READOUT, T21-Praezedenzklasse): HIGH48.pstage =
+  HIGH48.pf (Ein-Arm-Stufenmittel des Anchor; Definition hier
+  dokumentiert). Kein Messwert wird veraendert.
+- Klausel-Dokumentation (KEINE Daten-Aenderung): Die std-Klausel
+  wird auf ihren dokumentierten Ursprungszweck zurueckgefuehrt —
+  Schutz von Nenner-fuehrenden Primaer-Massen (T22 zalt). T23s
+  Primaermass drop1 hat keinen Nenner; die verdikts-entscheidende
+  Stufe a=1 hat std=0.025 >= 0.02 und ist clean. a=24 (std=0.0)
+  ist Boden-Stabilitaet, als Form-Befund dokumentiert. drop1 und
+  Schwelle 0.30 UNBERUEHRT — keine Nachverhandlung des
+  Verdikt-Masses. Erwartetes Ergebnis: PASS (drop1=0.55 >= 0.30).
+PRAEZEDENZ, ehrlich benannt: Erster Fall einer rueckgefuehrten
+Crash-Klausel. Grenze gezogen: Verdikt-Mass, Schwelle, Band und
+Konsequenzen sind unantastbar; nur der Geltungsbereich einer
+Klausel wird auf ihren dokumentierten Zweck begrenzt.
+
+## Lesart (der gefrorenen Zahlen — unabhaengig vom Reparatur-Ausgang)
+1. DER SCHALTER IST REAL UND EXTREM SCHARF. Schon EINE
+   konjugierte Dimension kippt P_lernt auf frischen Bloecken
+   von 0.575 auf 0.025. Der T20-Befund war KEIN Block-Artefakt —
+   im Gegenteil: Der alte Ausreisser-Block hat den Schalter
+   eher UNTERtreibt (0.75 war der Block-Oberwert; der frische
+   Block-Mittelwert 0.575 ergibt drop1=0.55 statt 0.70).
+2. KEINE DOIS-KURVE: Nach dem Kipp Plateau (0.10-0.15) mit
+   leichter Erholung — kein monotoner Abfall. Der GLEITEND-
+   Ausgang ist damit empirisch praktisch ausgeschlossen.
+3. ANSCHLUSS (bei PASS): eigene Linie SCHALTER. Erste Frage:
+   Ist die top-Singulaerrichtung die kritische? Gegenprobe
+   Konjugation entlang Zufallsrichtung a=1. Danach: Ordnungs-
+   parameter des Kipppunkts (DM parallel kollabiert, T20).
+
+## L5-Bilanz (Durchlauf 2, Vorschlagsquelle MASCHINE)
+- P(0) [0.31,0.58]: 0.575 TREFFER | P(1) [0.00,0.25]: 0.025
+  TREFFER | P(4) [0.00,0.30]: 0.10 TREFFER | P(24) [0.00,0.25]:
+  0.15 TREFFER | drop1 [0.05,0.55]: 0.55 TREFFER.
+- drop124 [−0.10,0.20]: −0.125 **NEIN** — DIE ERSTE VERFEHLUNG
+  DER SERIE, und sie sitzt genau an der duennen Quelle (T20
+  n=1, alter Block): Die leichte Erholung bei a=24 war aus den
+  Daten nicht vorhersagbar. Das Band war nicht trivial-breit —
+  es verfehlte ehrenwert an der richtigen Stelle.
+- LEHRE FUER DEN GENERATOR (v1.2, Anpassung an das Instrument,
+  kein Rerun noetig): Band-Grenzen aus n=1-Quellen bekommen
+  zusaetzliche Weite (z.B. 50 Prozent) oder ein Auszeichnungs-
+  Merkmal "duenne Quelle" im Proposal.
+- SERIEN-STAND Research Taste: LLM 3/3 (breites Band) |
+  Maschine 5/6 (mechanisches Band, mit Verfehlung). Erste
+  kalibrierbare Differenz zwischen zwei Vorschlags-Quellen.
+
+## Kernel-Bilanz (ehrlich)
+9 kernel-generierte Steine (T15..T23). T23: erster Maschinen-
+Vorschlag, erster Lauf, erster Readout-Crash — WIEDER im
+Readout (T21-Parallelfall, gleicher Urheber). Lehre fuer den
+Kernel v2: Preflight muss pruefen, dass JEDES registrierte Mass
+an JEDEM Arm platzfindet (R2-Check maschinell, nicht per
+Selbstkontrolle des Bauenden). Bau blieb Flaschenhals; die
+Engine hat auch diesen Lauf fehlerfrei durchgezogen.
