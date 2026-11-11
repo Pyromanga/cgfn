@@ -24,3 +24,60 @@ Arm H48_s1.55 (H=48, role=sgrid, s=1.55): n_ok=100/100 | P_lernt=0.130 | median 
 
 Arm H48_s1.83 (H=48, role=sgrid, s=1.83): n_ok=100/100 | P_lernt=0.290 | median acc=0.5215 | colnorm=1.8300 | div=0
   Parity-Seeds (erste 10): 210:0.5020, 211:0.4785, 212:0.5215, 213:0.4902, 214:0.5215, 215:0.4785, 216:0.4971, 217:1.0000, 218:0.4785, 219:0.5215
+
+Arm H48_s2.2 (H=48, role=sgrid, s=2.2): n_ok=100/100 | P_lernt=0.430 | median acc=0.5215 | colnorm=2.2000 | div=0
+  Parity-Seeds (erste 10): 210:0.5020, 211:0.4785, 212:0.5215, 213:0.4980, 214:1.0000, 215:0.4785, 216:0.4971, 217:1.0000, 218:0.4785, 219:0.5215
+
+--- T21-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+  H=24: Kurve 1.55:0.490 1.83:0.670 2.20:0.780 | s50rep=1.5656
+  H=48: Kurve 1.55:0.130 1.83:0.290 2.20:0.430 | s50rep=ZENSIERT
+GEMESSEN: d183 = P_lernt(48,1.83) - P_lernt(24,1.83) = -0.3800 (Schwelle ±0.15, 2 Sigma bei 100 Seeds)
+ALARM: ARM HIGH48: registrierte Groesse 's50rep' NICHT GEMESSEN (Kollaps-Verletzung).
+
+VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 33 (2026-11-10) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+ALARM: ARM HIGH48: registrierte Groesse 's50rep' NICHT GEMESSEN (Kollaps-Verletzung).
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 0.97
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.d183 = -0.38
+  HIGH48.s50rep = FEHLT
+  H24_s1.55.pf = 0.49
+  H24_s1.55.colnorm = 1.55
+  H24_s1.55.ndiv = 0
+  H24_s1.55.d183 = -0.38
+  H24_s1.55.s50rep = 1.56556
+  H24_s1.83.pf = 0.67
+  H24_s1.83.colnorm = 1.83
+  H24_s1.83.ndiv = 0
+  H24_s1.83.d183 = -0.38
+  H24_s1.83.s50rep = 1.56556
+  H24_s2.2.pf = 0.78
+  H24_s2.2.colnorm = 2.2
+  H24_s2.2.ndiv = 0
+  H24_s2.2.d183 = -0.38
+  H24_s2.2.s50rep = 1.56556
+  H48_s1.55.pf = 0.13
+  H48_s1.55.colnorm = 1.55
+  H48_s1.55.ndiv = 0
+  H48_s1.55.d183 = -0.38
+  H48_s1.55.s50rep = -1
+  H48_s1.83.pf = 0.29
+  H48_s1.83.colnorm = 1.83
+  H48_s1.83.ndiv = 0
+  H48_s1.83.d183 = -0.38
+  H48_s1.83.s50rep = -1
+  H48_s2.2.pf = 0.43
+  H48_s2.2.colnorm = 2.2
+  H48_s2.2.ndiv = 0
+  H48_s2.2.d183 = -0.38
+  H48_s2.2.s50rep = -1
+
+## LUECKENLISTE: HIGH48.s50rep
+=== FERTIG ===
