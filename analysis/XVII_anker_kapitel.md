@@ -2100,3 +2100,52 @@ Block-Streuung" (beantwortet: JA), sondern "war der ALTE Block ein
 AUSREISSER?" — EINE Zelle (H=48, s=2.2), 5 neue disjunkte
 20er-Bloecke (310..409), z-Mass fuer 0.75. ~120 Runs ≈ 60 min
 statt 200. Registrierung als L5-Vorschlag in Nachtrag 38.
+
+
+---
+
+# Nachtrag 38 (2026-11-11): L5-DURCHLAUF 1 — ERSTER LLM-VORSCHLAG (GLM 5.3 via Vibe), registriert VOR dem Lauf. Nutzer-Reihenfolge b -> c -> a: dies ist (c) und nagelt (a) fest.
+
+## L5-PROTOKOLL
+Vorschlag generiert NUR aus analysis/P3_befund_graph.md +
+Nachtraegen 36/37 — kein Nutzer-Geruch, keine zusaetzliche
+Information. Registrierung VOR dem Feuer, inklusive Vorhersage-
+band. Spaeter misst das Labor, ob das Band hielt: Research Taste
+wird Messobjekt (Nutzer-These Nachtrag 24: "Taste bleibt beim
+Mensch" ist der Bug — erster Testpunkt).
+
+## LLM-VORSCHLAG: T22 BLOCK-ROBUSTHEIT (ALT vs NEU)
+THESE: Der alte Seed-Block 190..209 war ein AUSREISSER: P48(2.2)
+= 0.75 ist ein Extremwert der Block-Verteilung dieser Zelle, nicht
+ihr Vertreter. Wenn ja: Die T16-T19-Kette (Sub-Sqrt-Gesetz, Delle)
+beruhte auf einem Block-Unfall — und die Serie endet nicht mit
+einem toten Gesetz, sondern mit einem methodischen GESETZ.
+
+DESIGN (GENAGELT):
+EINE Zelle (H=48, s=2.2, wb=0.6). 5 NEUE disjunkte 20er-Bloecke:
+310-329, 330-349, 350-369, 370-389, 390-409. Anchor HIGH48
+(s=5.5, 20 frische Seeds 410..429). 120 Runs ≈ 60 min (Timeout 90).
+  PRIMAER (VERDIKT): zalt = (0.75 - mean(P_neu5)) / std(P_neu5),
+  registriert an jedem Arm.
+    PASS — ALT-AUSREISSER: zalt >= 2.5. Der alte Block ist
+      Extremwert; T16-T19-Kette ein Block-Unfall. Konsequenz:
+      H-Trend-Aussagen nur noch als Block-Mittel mit Angabe von
+      std(P_Block).
+    KILL — KONTINUITAET: zalt < 2.5. Der Wert 0.75 liegt innerhalb
+      der Block-Verteilung; H48(2.2) streut so breit, dass
+      Einzelblock-Trends bedeutungslos sind — dieselbe Konsequenz
+      wie PASS, nur schwaecher signifikant.
+    UNENTSCHEIDEN (Crash): std(P_neu5) < 0.02 (degenerierte
+      Streuung, z-Mass sinnlos), Sanity gerissen, ndiv > 6 je
+      Block, colnorm-Verletzung.
+  SEKUNDAER (Bericht): Block-P je Block; 10-Block-Gesamtverteilung
+    (5 aus Nachtrag-37-Reanalyse + 5 neu); zalt-10-Variante als
+    Bericht.
+  VORHERSAGEBAND (L5, KEIN Verdikt): mean(P_neu5) in [0.30, 0.56];
+    std(P_neu5) in [0.05, 0.13]; zalt in [2.0, 6.0].
+
+## BEWERTUNGS-METRIK (L5-Bilanz, spaeter nachtragen)
+Teilband-Treffer von 3. Band generiert ohne Blick auf die neuen
+Daten (existieren noch nicht). Falls das Band haelt: erster L5-
+Punkt. Falls nicht: erste messbare Fehl-Calibration des Vorschlags-
+Modells.
