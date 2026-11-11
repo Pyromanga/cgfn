@@ -2149,3 +2149,75 @@ Teilband-Treffer von 3. Band generiert ohne Blick auf die neuen
 Daten (existieren noch nicht). Falls das Band haelt: erster L5-
 Punkt. Falls nicht: erste messbare Fehl-Calibration des Vorschlags-
 Modells.
+
+
+
+---
+
+# Nachtrag 39 (2026-11-11): T22 VERDICT — PASS: ALT-AUSREISSER. Der alte Block war ein Unfall, kein Gesetz. L5-Bilanz 3/3.
+
+## Lauf
+Run 42984601545 (08:07-08:46 UTC, 39 min), Bot-Commit b4b0f91
+("results: T22-block-robustheit 1"). 120/120 Runs, Lueckenliste LEER,
+Vertrag exakt wie in Nachtrag 38 genagelt (kein Design-Drift).
+
+## Zahlen (Bot, unveraendert uebernommen)
+- Block-P (310..409): B0 0.35, B1 0.40, B2 0.50, B3 0.40, B4 0.65.
+- mean(P_neu5) = 0.46, std(P_neu5) = 0.107.
+- zalt = 2.72 (Schwelle 2.5) -> PASS.
+- zalt-10 (Bericht, gegen alle 10 Bloecke inkl. Reanalyse-Konstanten
+  [0.35, 0.40, 0.55, 0.50, 0.35]) = 3.18.
+- 10-Block-Verteilung: mean 0.445, std 0.096.
+
+## Lesart
+1. DER ALTE BLOCK WAR EIN AUSREISSER. P48(2.2)=0.75 (Block 190..209)
+   ist ein Extremwert der Block-Verteilung, nicht ihr Vertreter. Die
+   T16-T19-Kette (Sub-Sqrt-Gesetz, Delle) beruhte auf einem
+   Block-Unfall. Die Serie endet nicht mit einem toten Gesetz,
+   sondern mit einem METHODISCHEN GESETZ: Einzelblock-Trends der
+   Groesse ~0.1 sind in dieser Simulationsklasse nicht
+   interpretierbar; H-Aussagen nur noch als Block-Mittel mit
+   std(P_Block) (Pass-Konsequenz aus Nachtrag 38, jetzt bindend).
+2. B4 = 0.65 (median acc 1.0): Der Ausreisser-Mechanismus ist
+   REPRODUZIERBAR — 1 von 5 neuen Bloecken knallt nach oben. Das
+   Seed-Lotto des G-Kapitels (G2/G5) schlaegt im BLOCK-Massstab,
+   nicht nur pro Einzel-Seed. Der Extremwert ist kein einmaliger
+   Betriebsunfall, sondern ein ~20-Prozent-Ereignis pro Block.
+3. VERSOEHNUNG MIT NACHTRAG 37. Die 2.9-Sigma-Diskrepanz
+   (0.75 alt vs 0.43 frisch) ist aufgeloest: 0.43 war selbst ein
+   BLOCKWERT am unteren Rand, 0.75 einer am oberen. Beide sind
+   keine Zell-Wahrheit; die Zell-Wahrheit ist die Verteilung
+   (mean 0.445, std ~0.10 ueber 10 Bloecke). Die Reanalyse-std
+   (0.06-0.13) und die T22-std (0.107) sind konsistent —
+   Nachtrag 37 haelt stand.
+4. KONSEQUENZ FUER DIE T-SERIE. Der H-Trend ist als
+   Einzelblock-Gesetz endgueltig tot (T21 KEHRUNG + T22 PASS
+   zusammen). T16-T19-Zahlen duerfen kuenftig nur mit
+   Block-Fehlerbalken zitiert werden. Offene Folge-Fragen:
+   BLOCK-MITTEL-GESETZ (gibt es einen echten Trend im
+   Block-Mittel ueber H?) oder SCHALTER-Linie (T20-Nebenbefund:
+   harte Konjugation als Strukturbruch).
+
+## L5-Bilanz (Durchlauf 1, Research Taste als Messobjekt)
+Registriertes Band (Nachtrag 38, VOR dem Lauf):
+- mean in [0.30, 0.56] — gemessen 0.46 — TREFFER.
+- std in [0.05, 0.13] — gemessen 0.107 — TREFFER.
+- zalt in [2.0, 6.0] — gemessen 2.72 — TREFFER.
+3/3 Teilband-Treffer. Erster Messpunkt fuer die Nutzer-These
+(Nachtrag 24: Research Taste ist messbar). Ehrliche Einschraenkung:
+n=1, und das Band war breit — ein Treffer ist schwache Evidenz fuer
+Kalibration; eine Fehl-Calibration wurde noch NICHT beobachtet
+(das waere der informativere Fall). Der Loop Taste -> Vorschlag ->
+Kernel -> Verdikt -> Gedaechtnis hat einen vollen Zyklus
+durchlaufen: Vorschlag aus P3-Graph allein, Registrierung vor dem
+Lauf, Verdikt ohne Nachverhandlung, Nachtrag im selben Commit wie
+der Graph-Knoten.
+
+## Kernel-Bilanz (Stand nach T22)
+8 kernel-generierte Steine (T15..T22). T22 ist der erste Stein auf
+LLM-Vorschlag — im ERSTEN Versuch, 0 Crash, 39 Runner-Minuten,
+kein Rerun. Verdikt-Serie: 5 saubere Verdikte in Serie
+(T19-R2, T20-R2, T21, T22 + Reparatur-Verdikt). Der Bau blieb der
+einzige Flaschenhals der Saison; die Engine hat seit T19-R2 keinen
+einzigen Fehler produziert. Wrapper-Guard und Syntax-Gate in allen
+Workflows: 0 Runner-Minuten auf kaputten Contracts seit Rollout.
