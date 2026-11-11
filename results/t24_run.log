@@ -1,0 +1,95 @@
+======================================================================================================================
+T24 — SCHALTER-RICHTUNG v1 (L5-DURCHLAUF 3, Quelle MASCHINE: P4-Generator v1.2)
+These (Nachtrag 43 / P4-Proposal v1.2): Der a=1-Schalter (T23) ist
+RICHTUNGS-AGNOSTISCH (jede Achse kippt, Symmetriebruch) oder
+RICHTUNGS-SPEZIFISCH (Achsen-Lotto). EINE Zelle (H=48, s=2.2, wb=0.6),
+a=1, 5 Achsen q_seed {2020, 5150, 8080, 1111, 4242}, Konjugation Q W Q^T.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t24.py
+Je Achse 20 frische Seeds (610..709) + Control a=0 (710..729)
++ Anchor HIGH48 (730..749), f64 | pqmax an JEDEM Arm (R2)
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm HIGH48 (H=48, role=anchor, a=0, q_seed=2020, s=5.5, seeds 730..749): n_ok=20/20 | P_lernt=1.00 | colnorm=5.5000 | div=0
+
+Arm A0_CTRL (H=48, role=block, a=0, q_seed=2020, s=2.2, seeds 710..729): n_ok=20/20 | P_lernt=0.60 | colnorm=2.2000 | div=0
+
+Arm Q2020 (H=48, role=block, a=1, q_seed=2020, s=2.2, seeds 610..629): n_ok=20/20 | P_lernt=0.05 | colnorm=2.2000 | div=0
+
+Arm Q5150 (H=48, role=block, a=1, q_seed=5150, s=2.2, seeds 630..649): n_ok=20/20 | P_lernt=0.05 | colnorm=2.2000 | div=0
+
+Arm Q8080 (H=48, role=block, a=1, q_seed=8080, s=2.2, seeds 650..669): n_ok=20/20 | P_lernt=0.05 | colnorm=2.2000 | div=0
+
+Arm Q1111 (H=48, role=block, a=1, q_seed=1111, s=2.2, seeds 670..689): n_ok=20/20 | P_lernt=0.10 | colnorm=2.2000 | div=0
+
+Arm Q4242 (H=48, role=block, a=1, q_seed=4242, s=2.2, seeds 690..709): n_ok=20/20 | P_lernt=0.00 | colnorm=2.2000 | div=0
+
+--- T24-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+Achsen-Bericht (Block-P je Achse, a=1):
+  q_seed=2020: P_Q=0.0500
+  q_seed=5150: P_Q=0.0500
+  q_seed=8080: P_Q=0.0500
+  q_seed=1111: P_Q=0.1000
+  q_seed=4242: P_Q=0.0000
+Control a=0: P(0)=0.6000 | Anchor HIGH48: pf=1.0000
+SE(P_Block) = 0.068 (T22 10-Block-Statistik)
+pqmax = max(P_Q) = 0.1000 (PASS <= 0.15 | KILL >= 0.30, Luecke = UNENTSCHEIDEN)
+L5-BAND (registriert VOR dem Lauf, Nachtrag 43, R8-Haertung):
+  P_Q(2020) in [0.00, 0.22]: gemessen 0.0500 — TREFFER
+  P_Q(5150) in [0.00, 0.22]: gemessen 0.0500 — TREFFER
+  P_Q(8080) in [0.00, 0.22]: gemessen 0.0500 — TREFFER
+  P_Q(1111) in [0.00, 0.22]: gemessen 0.1000 — TREFFER
+  P_Q(4242) in [0.00, 0.22]: gemessen 0.0000 — TREFFER
+  pqmax in [0.05, 0.25]: gemessen 0.1000 — TREFFER
+  P(0) in [0.25, 0.64]: gemessen 0.6000 — TREFFER
+L5-BAND-TREFFER: 7/7 (Maschinen-Band, P4-Generator v1.2, R8)
+
+VERDICT: PASS — RICHTUNGS-AGNOSTISCH
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 44 (2026-11-11) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: PASS — RICHTUNGS-AGNOSTISCH
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 1
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.pq = 1
+  HIGH48.pqmax = 0.1
+  A0_CTRL.pf = 0.6
+  A0_CTRL.colnorm = 2.2
+  A0_CTRL.ndiv = 0
+  A0_CTRL.pq = 0.6
+  A0_CTRL.pqmax = 0.1
+  Q2020.pf = 0.05
+  Q2020.colnorm = 2.2
+  Q2020.ndiv = 0
+  Q2020.pq = 0.05
+  Q2020.pqmax = 0.1
+  Q5150.pf = 0.05
+  Q5150.colnorm = 2.2
+  Q5150.ndiv = 0
+  Q5150.pq = 0.05
+  Q5150.pqmax = 0.1
+  Q8080.pf = 0.05
+  Q8080.colnorm = 2.2
+  Q8080.ndiv = 0
+  Q8080.pq = 0.05
+  Q8080.pqmax = 0.1
+  Q1111.pf = 0.1
+  Q1111.colnorm = 2.2
+  Q1111.ndiv = 0
+  Q1111.pq = 0.1
+  Q1111.pqmax = 0.1
+  Q4242.pf = 0
+  Q4242.colnorm = 2.2
+  Q4242.ndiv = 0
+  Q4242.pq = 0
+  Q4242.pqmax = 0.1
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
+
+[i] Laufzeit: 29.0 min
+[i] Ergebnisse: results/t24_schalter_richtung_results.txt | results/t24_schalter_richtung_table.csv | results/t24_measurements.json
