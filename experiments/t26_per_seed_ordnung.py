@@ -259,6 +259,13 @@ def main():
         measurements[name] = dict(
             pf=pf, colnorm=float(torch.tensor(cns).mean()), ndiv=ndiv,
             sepmax=None)
+        # R5 (EINMALIG, 2026-11-12): Emissions-Reparatur — der Contract
+        # deklariert die Kandidaten-Masse, das Kollaps-Gate prueft sie.
+        # Nur die Auslieferung ergaenzt (Arm-Mittel ueber alle gueltigen
+        # Seeds); Physik, Seeds, Schwellen,sepmax-Logik UNVERAENDERT.
+        for _c in CANDIDATES:
+            _vals = [rr[_c] for rr in cand_rows if rr[_c] == rr[_c]]
+            measurements[name][_c] = (sum(_vals) / len(_vals)) if _vals else float('nan')
         L.append('')
         L.append('Arm %s (H=%d, role=%s, a=%d, seeds %d..%d): n_ok=%d/%d | '
                  'P_lernt=%.2f | gelernt n=%d, gescheitert n=%d | div=%d'
