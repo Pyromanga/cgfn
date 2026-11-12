@@ -1,0 +1,67 @@
+# P4-PROPOSAL v1.3 — maschinengenerierter Stein-Vorschlag (P4-Generator v1.3 (2026-11-11))
+
+Erzeugt: 2026-11-12 07:11 UTC | Input: P3-Snapshot v1.3 (T24-Frischdaten NEU) | Verfahren: R1-R8, deterministisch.
+
+## Rangliste
+1. T25 ORDNUNGSPARAMETER — Score 0.80 (Ueberraschung 1.0, Kostenquote 0.56, Scheidung 1.0)
+2. BLOCK-MITTEL-GESETZ (VERTAGT) — Score 0.32 (VERTAGT, Cap + konfirmatorisch)
+   Verworfen: konfirmatorische T24-Achsen-Replikation ohne neue Frage (T24 ist PASS, abgeraeumt).
+
+## GEWINNER: T25 ORDNUNGSPARAMETER
+
+FRAGE: Ist der DM-Kollaps (T20-Beifang 13.21 -> 1.40 parallel zum Schalter) ein ORDNUNGSPARAMETER des Kipppunkts — d.h. DM trennt gekippte von intakten Netzen VOR dem Verdikt und ist kein blossem Begleitprodukt?
+THESE: T20-R2 zeigte: DM ist keine Ursache (Drehen der DM-Treppe aenderte nichts). Offen ist die diagnostische Seite: Faellt DM mit dem Schalter ZUSAMMEN (Stufen-Sprung zwischen a=0 und a=1) und trennt er Per-Seed die Kipp-Zugehoerigkeit? Wenn ja, hat die Linie SCHALTER ein messbares Vorhersage-Instrument. Wenn nein, ist DM endgueltig Nebenprodukt und die Ordnungsparameter-Suche geht zu Geometrie-Alternativen (Gain-Verteilung).
+
+DESIGN: EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter).
+Stufen a in [0, 1, 4, 24] (Konjugation Q_a W Q_a^T, Q_SEED=2020), je 1 frischer 20er-Block:
+  a=0: Block 750..769 (20 frische Seeds, DM + pf je Seed)
+  a=1: Block 770..789 (20 frische Seeds, DM + pf je Seed)
+  a=4: Block 790..809 (20 frische Seeds, DM + pf je Seed)
+  a=24: Block 810..829 (20 frische Seeds, DM + pf je Seed)
+Anchor HIGH48 (s=5.5, a=0): 830..849.
+DM-Definition: unveraendert aus T20-Instrument uebernommen
+(experiments/t20_conjugation*.py; Kollaps 13.21 -> 1.40 dort).
+Total 100 Runs.
+
+MASSE: pf, colnorm, ndiv, DM je Seed; DM-Mittel je Stufe;
+dmdrop = DM(0) - DM(1); registriert an JEDEM Arm (R2).
+SE(Einzel-Block-P) = 0.096; SE(dmdrop) wird im Lauf gemessen (R1-Klausel).
+
+VERDIKT (registriert):
+- PASS — ORDNUNGSPARAMETER-BESTAETIGT: dmdrop = DM(0) - DM(1) >= 5.0 UND dmdrop >= 3 * SE(dmdrop, im Lauf gemessen) UND Sanity clean. Konsequenz: DM wird Vorhersage- Instrument; naechster Stein: DM-Schwellwert-Kippregel pro Seed (Kipp VOR dem Training sichtbar).
+- KILL — DM-NEBENPRODUKT: dmdrop < 5.0 oder < 3 * SE. Konsequenz: DM endgueltig als Diagnostikum gefallen (konsistent mit T20-R2 KILL DM-NEBENSPUR); Ordnungsparameter-Suche: Gain-Verteilung als naechster Kandidat.
+- UNENTSCHEIDEN: Crash (R6-Sanity Anchor pf < 0.5, ndiv > 6 je Block, colnorm-Verletzung). EINE Reparatur (R5), dann Linie tot.
+
+VORHERSAGEBAND (mechanisch, R8-Haertung an duennen Quellen):
+- DM(0) in [8.80, 19.80] (T20 n=1 (13.21) — R8: +50% Weite)
+- DM(1) in [0.90, 2.10] (T20 n=1 (1.40) — R8: +50% Weite)
+- dmdrop in [5.90, 17.70] (T20-Effekt 11.81, n=1 — R8: Weite)
+- P(0) in [0.25, 0.64] (10-Block-Statistik (T22+n37))
+- P(1) in [0.00, 0.22] (T23 frisch 0.025, n=1 — R8)
+- P(4) in [0.00, 0.30] (T23 frisch 0.10, n=1 — R8)
+- P(24) in [0.00, 0.25] (T23 frisch 0.15, n=1 — R8)
+
+KONSEQUENZEN (R4):
+- PASS -> Linie SCHALTER: Vorhersage-Instrument (DM-Kippregel).
+- KILL -> Linie SCHALTER: Geometrie-Alternative (Gain-Verteilung).
+- PASS/KILL fuehren zu verschiedenen naechsten Steinen -> R4 ERFUELLT.
+
+## Kritiker-Gate R1-R8
+- R1 ERFUELLT: Single-Block je Stufe; DM-SE ungetestet -> Schwelle 5.0 = 42 Prozent des T20-Effekts ZUSAETZLICH als >= 3 * SE(dmdrop) im Verdikt-Praedikat gefordert (SE wird im Lauf gemessen); P-Schwellen: Kipp- Erwartung liegt 3+ SE unter P(0)-Mittel
+- R2 ERFUELLT: Masse pf/colnorm/ndiv/DM/DM-Mittel je Stufe an JEDEM Arm inkl. Anchor; dmdrop registriert an JEDEM Arm
+- R3 ERFUELLT: Fix 5.0 min + variabel 28.3 min = 33.3 min (Cap 60)
+- R4 ERFUELLT: PASS -> Vorhersage-Instrument; KILL -> Gain-Alternative
+- R5 ERFUELLT: EINE Reparatur bei Crash, dann Linie tot
+- R6 ERFUELLT: Anchor HIGH48 (s=5.5, a=0, Seeds 830..849) pf >= 0.5 Pflicht
+- R7 ERFUELLT: Stufen-Raster {0,1,4,24} enthaelt Replikations-Stufe a=1 (T23) und Klammer a=0 (T24-P(0))
+- R8 ERFUELLT: DM-Baender aus n=1-Quelle (T20) um 50 Prozent geweitet
+
+## Naechster Schritt
+1. Nachtrag 45 registriert DIESEN Vorschlag (Band + Schwellen
+   unveraendert). L5-Durchlauf 4, Quelle Maschine (v1.3).
+2. T25-Bau: contracts/t25.py + experiments/t25_ordnungsparameter.py
+   + Workflow (Timeout 60). DM-Readout aus T20-Instrument,
+   dmdrop an JEDEM Arm setzen (R2, maschinell).
+3. Trigger erst nach Nutzer-Freigabe.
+
+=== ENDE P4-PROPOSAL v1.3 ===
