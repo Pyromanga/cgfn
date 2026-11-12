@@ -1,0 +1,85 @@
+======================================================================================================================
+T25 — ORDNUNGSPARAMETER v1 (L5-DURCHLAUF 4, Quelle MASCHINE: P4-Generator v1.3)
+These (Nachtrag 45 / P4-Proposal v1.3): Ist der DM-Kollaps (T20:
+13.21 -> 1.40 parallel zum Schalter) ein ORDNUNGSPARAMETER des
+Kipppunkts (trennt gekippte von intakten Netzen VOR dem Verdikt)
+oder ein Begleitprodukt (konsistent mit T20-R2 KILL DM-NEBENSPUR)?
+EINE Zelle (H=48, s=2.2, wb=0.6), Stufen a {0,1,4,24},
+je 1 frischer 20er-Block 750..829 + Anchor HIGH48 830..849, f64.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t25.py
+PRIMAER: dmeff = dmdrop falls (dmdrop >= 5.0 UND >= 3*SE), sonst -1
+DM-Definition unveraendert aus T20 (dm_of). R2: jedes Mass an JEDEM Arm.
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm HIGH48 (H=48, role=anchor, a=0, seeds 830..849): n_ok=20/20 | P_lernt=1.00 | DM=12.6773 (SE 0.2201) | colnorm=5.5000 | div=0
+
+Arm A0 (H=48, role=block, a=0, seeds 750..769): n_ok=20/20 | P_lernt=0.55 | DM=13.0614 (SE 0.2109) | colnorm=2.2000 | div=0
+
+Arm A1 (H=48, role=block, a=1, seeds 770..789): n_ok=20/20 | P_lernt=0.05 | DM=1.4126 (SE 0.0120) | colnorm=2.2000 | div=0
+
+Arm A4 (H=48, role=block, a=4, seeds 790..809): n_ok=20/20 | P_lernt=0.05 | DM=1.3333 (SE 0.0109) | colnorm=2.2000 | div=0
+
+Arm A24 (H=48, role=block, a=24, seeds 810..829): n_ok=20/20 | P_lernt=0.10 | DM=1.5898 (SE 0.0154) | colnorm=2.2000 | div=0
+
+--- T25-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+Stufen-Bericht (DM-Mittel je Stufe, 20 Seeds):
+  a=0: DM=13.0614 (SE 0.2109) | P=0.55
+  a=1: DM=1.4126 (SE 0.0120) | P=0.05
+  a=4: DM=1.3333 (SE 0.0109) | P=0.05
+  a=24: DM=1.5898 (SE 0.0154) | P=0.10
+Anchor HIGH48: pf=1.00 | DM=12.6773
+dmdrop = DM(0) - DM(1) = 11.6488 | SE(dmdrop) = 0.2113 | 3*SE = 0.6338
+DOPPELKLAUSEL: dmdrop >= 5.0: True | dmdrop >= 3*SE: True -> dmeff = 11.6488 (PASS >= 5.0 | KILL < 5.0)
+PER-SEED (a=0, Bericht): DM gelernt 13.1330 (n=11) vs DM gescheitert 12.9738 (n=9)
+L5-BAND (registriert VOR dem Lauf, Nachtrag 45, R8-Haertung):
+  DM(0) in [8.80, 19.80]: gemessen 13.0614 — TREFFER
+  DM(1) in [0.90, 2.10]: gemessen 1.4126 — TREFFER
+  dmdrop in [5.90, 17.70]: gemessen 11.6488 — TREFFER
+  P(0) in [0.25, 0.64]: gemessen 0.5500 — TREFFER
+  P(1) in [0.00, 0.22]: gemessen 0.0500 — TREFFER
+  P(4) in [0.00, 0.30]: gemessen 0.0500 — TREFFER
+  P(24) in [0.00, 0.25]: gemessen 0.1000 — TREFFER
+L5-BAND-TREFFER: 7/7 (Maschinen-Band, P4-Generator v1.3, R8)
+
+VERDICT: PASS — ORDNUNGSPARAMETER-BESTAETIGT
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 46 (2026-11-12) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: PASS — ORDNUNGSPARAMETER-BESTAETIGT
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 1
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.dm = 12.6773
+  HIGH48.dmdrop = 11.6488
+  HIGH48.dmeff = 11.6488
+  A0.pf = 0.55
+  A0.colnorm = 2.2
+  A0.ndiv = 0
+  A0.dm = 13.0614
+  A0.dmdrop = 11.6488
+  A0.dmeff = 11.6488
+  A1.pf = 0.05
+  A1.colnorm = 2.2
+  A1.ndiv = 0
+  A1.dm = 1.41255
+  A1.dmdrop = 11.6488
+  A1.dmeff = 11.6488
+  A4.pf = 0.05
+  A4.colnorm = 2.2
+  A4.ndiv = 0
+  A4.dm = 1.33328
+  A4.dmdrop = 11.6488
+  A4.dmeff = 11.6488
+  A24.pf = 0.1
+  A24.colnorm = 2.2
+  A24.ndiv = 0
+  A24.dm = 1.58975
+  A24.dmdrop = 11.6488
+  A24.dmeff = 11.6488
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
