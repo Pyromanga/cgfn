@@ -1,0 +1,61 @@
+# P4-PROPOSAL v1.4 — maschinengenerierter Stein-Vorschlag (P4-Generator v1.4 (2026-11-12))
+
+Erzeugt: 2026-11-12 12:24 UTC | Input: P3-Snapshot v1.4 (T25-Frischdaten NEU) | Verfahren: R1-R8, deterministisch.
+
+## Rangliste
+1. T26 PER-SEED-ORDNUNG — Score 0.78 (Ueberraschung 1.0, Kostenquote 0.37, Scheidung 1.0)
+2. BLOCK-MITTEL-GESETZ (VERTAGT) — Score 0.32 (VERTAGT, Cap + konfirmatorisch)
+   Verworfen: DM-Schwellwert-Kippregel pro Seed (T25-Beyfang: Per-Seed-Trennung NEGATIV, Stein entfaellt).
+
+## GEWINNER: T26 PER-SEED-ORDNUNG
+
+FRAGE: Trennt UEBERHAUPT eine messbare Groesse gelernte von gescheiterten Seeds INNERHALB eines Blocks? T25-Beyfang: DM gelernt 13.133 (n=11) vs gescheitert 12.974 (n=9), Differenz 0.159 < SE. Kandidaten: DM, Initial-Loss, Gain-Mittel, Gain-Std, Weight-Norm, colnorm.
+THESE: Wenn ja (>= 3 * SE, Doppelklausel): Intra-Block-Marker -> Kipp-Vorhersage VOR dem Training moeglich (T27 Kippregel pro Seed). Wenn nein: Intra-Block-Lotto ist unveraenderlich; Per-Seed-Frage NEGATIV geschlossen und der Ordnungsparameter bleibt Ebenen-Marker (DM).
+
+DESIGN: EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter).
+Stufen a in [0, 1] (Konjugation Q_a W Q_a^T, Q_SEED=2020), je 1 frischer 20er-Block:
+  a=0: Block 850..869 (20 frische Seeds, alle Kandidat- Masse + pf je Seed)
+  a=1: Block 870..889 (20 frische Seeds, alle Kandidat- Masse + pf je Seed)
+Anchor HIGH48 (s=5.5, a=0): 890..909.
+Kandidaten-Groessen: DM (T20-Definition), Initial-Loss, Gain-Mittel, Gain-Std, Weight-Norm, colnorm.
+Total 60 Runs.
+
+MASSE: pf, colnorm, ndiv, alle Kandidaten je Seed; Trennung gelernt vs gescheitert je Kandidat je Stufe; registriert an JEDEM Arm (R2).
+SE(Einzel-Block-P) = 0.096; SE(Trennung) wird im Lauf gemessen (R1-Klausel).
+
+VERDIKT (registriert):
+- PASS — INTRA-BLOCK-MARKER: mindestens EINE Kandidat- Groesse trennt gelernt vs gescheitert im a=0-Block mit >= 3 * SE(im Lauf gemessen), Schwellwert VOR dem Readout fixiert, UND gleiche Richtung im a=1-Block UND Sanity clean. Konsequenz: T27 Kippregel pro Seed (Vorhersage vor dem Training).
+- KILL — INTRA-BLOCK-LOTTO: keine Kandidat-Groesse trennt >= 3 * SE. Konsequenz: Per-Seed-Frage NEGATIV geschlossen; DM bleibt Ebenen-Marker; Linie SCHALTER: neue offene Frage aus Geometrie/Replikation (Gain-Verteilung als Ebenen-Kandidat).
+- UNENTSCHEIDEN: Crash (R6-Sanity Anchor pf < 0.5, ndiv > 6 je Block, colnorm-Verletzung). EINE Reparatur (R5), dann Linie tot.
+
+VORHERSAGEBAND (mechanisch, R8-Haertung an duennen Quellen):
+- DM gelernt in [8.80, 19.70] (T25 n=11 — R8: +50% Weite)
+- DM gescheitert in [8.60, 19.50] (T25 n=9 — R8: +50% Weite)
+- Differenz DM in [0.11, 0.24] (T25-Beyfang 0.159, nicht trennend)
+- P(0) in [0.25, 0.64] (10-Block-Statistik (T22+n37))
+- P(1) in [0.00, 0.22] (T23 frisch 0.025, n=1 — R8)
+
+KONSEQUENZEN (R4):
+- PASS -> Linie SCHALTER: T27 Kippregel pro Seed (Marker).
+- KILL -> Linie SCHALTER: Per-Seed NEGATIV, Ebenen-Marker DM bleibt; naechste Frage: Gain-Verteilung als Ebenen-Marker.
+- PASS/KILL fuehren zu verschiedenen naechsten Steinen -> R4 ERFUELLT.
+
+## Kritiker-Gate R1-R8
+- R1 ERFUELLT: Doppelklausel: Schwellwert je Kandidat fixiert VOR dem Readout, ZUSAETZLICH >= 3 * SE(im Lauf gemessen); T25-Differenz 0.159 < SE -> keine Vorab-Schwelle aus DM ableitbar; P-Schwellen: Kipp-Erwartung 3+ SE unter P(0)-Mittel
+- R2 ERFUELLT: Alle Kandidat-Masse (DM, Initial-Loss, Gain-Mittel, Gain-Std, Weight-Norm, colnorm, pf) an JEDEM Arm inkl. Anchor; Trennung je Kandidat registriert
+- R3 ERFUELLT: Fix 5.0 min + variabel 17.0 min = 22.0 min (Cap 60)
+- R4 ERFUELLT: PASS -> T27 Kippregel pro Seed; KILL -> Per-Seed NEGATIV, Gain als Ebenen-Kandidat
+- R5 ERFUELLT: EINE Reparatur bei Crash, dann Linie tot
+- R6 ERFUELLT: Anchor HIGH48 (s=5.5, a=0, Seeds 890..909) pf >= 0.5 Pflicht
+- R7 ERFUELLT: Raster {0,1}: Replikations-Stufe a=1 (T23) prueft die Richtungs-Konstanz des Markers; Klammer a=0 (T24 P(0)) vorhanden
+- R8 ERFUELLT: DM-Baender aus T25-Quellen (n=11/n=9, duenn) um 50 Prozent geweitet
+
+## Naechster Schritt
+1. Nachtrag 47 registriert DIESEN Vorschlag (Band + Schwellen
+   unveraendert). L5-Durchlauf 5, Quelle Maschine (v1.4).
+2. T26-Bau: contracts/t26.py + experiments/t26_per_seed_ordnung.py
+   + Workflow (Timeout 60). Alle Kandidaten-Masse an JEDEM Arm
+   setzen (R2, maschinell); Schwellwerte VOR dem Readout fixiert.
+3. Trigger erst nach Nutzer-Freigabe.
+
+=== ENDE P4-PROPOSAL v1.4 ===
