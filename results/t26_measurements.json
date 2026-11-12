@@ -1,0 +1,71 @@
+{
+ "measurements": {
+  "HIGH48": {
+   "pf": 1.0,
+   "colnorm": 5.5,
+   "ndiv": 0,
+   "sepmax": -1.0
+  },
+  "A0": {
+   "pf": 0.65,
+   "colnorm": 2.2,
+   "ndiv": 0,
+   "sepmax": -1.0
+  },
+  "A1": {
+   "pf": 0.05,
+   "colnorm": 2.2,
+   "ndiv": 0,
+   "sepmax": -1.0
+  }
+ },
+ "sep_tvals": {
+  "HIGH48": {
+   "dm": -1.0,
+   "initloss": -1.0,
+   "gainmean": -1.0,
+   "gainstd": -1.0,
+   "wnorm": -1.0
+  },
+  "A0": {
+   "dm": 0.4865804339850877,
+   "initloss": 0.0,
+   "gainmean": 0.7096919918513197,
+   "gainstd": 0.5364361043464586,
+   "wnorm": 0.0
+  },
+  "A1": {
+   "dm": -1.0,
+   "initloss": -1.0,
+   "gainmean": -1.0,
+   "gainstd": -1.0,
+   "wnorm": -1.0
+  }
+ },
+ "sep_dvals": {
+  "HIGH48": {
+   "dm": NaN,
+   "initloss": NaN,
+   "gainmean": NaN,
+   "gainstd": NaN,
+   "wnorm": NaN
+  },
+  "A0": {
+   "dm": -0.3417926660914006,
+   "initloss": 0.0,
+   "gainmean": -0.0023193744414862494,
+   "gainstd": 0.0017632739740947312,
+   "wnorm": 0.0
+  },
+  "A1": {
+   "dm": NaN,
+   "initloss": NaN,
+   "gainmean": NaN,
+   "gainstd": NaN,
+   "wnorm": NaN
+  }
+ },
+ "sepmax": -1.0,
+ "winner": null,
+ "band_hits": 3
+}

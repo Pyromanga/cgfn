@@ -1,0 +1,120 @@
+======================================================================================================================
+T26 — PER-SEED-ORDNUNG v1 (L5-DURCHLAUF 5, Quelle MASCHINE: P4-Generator v1.4)
+These (Nachtrag 47 / P4-Proposal v1.4): Trennt UEBERHAUPT eine messbare
+Groesse gelernte von gescheiterten Seeds INNERHALB eines Blocks?
+T25-Beyfang: DM gelernt 13.133 (n=11) vs gescheitert 12.974 (n=9),
+Differenz 0.159 < SE — kein Trenner. Kandidaten (fixiert): dm, initloss, gainmean, gainstd, wnorm
+EINE Zelle (H=48, s=2.2, wb=0.6), Stufen a {0,1}, je 1 frischer
+20er-Block 850..889 + Anchor HIGH48 890..909, f64.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t26.py
+PRIMAER: sepmax = max t_c (zweiseitig, >= 3*SE gemessen, Richtung
+konstant a=0/a=1), sonst -1. PASS sepmax >= 3.0 | KILL < 3.0.
+R2: jedes Mass an JEDEM Arm.
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm HIGH48 (H=48, role=anchor, a=0, seeds 890..909): n_ok=20/20 | P_lernt=1.00 | gelernt n=20, gescheitert n=0 | div=0
+  dm: t=-1.00 (Diff nan)
+  initloss: t=-1.00 (Diff nan)
+  gainmean: t=-1.00 (Diff nan)
+  gainstd: t=-1.00 (Diff nan)
+  wnorm: t=-1.00 (Diff nan)
+
+Arm A0 (H=48, role=block, a=0, seeds 850..869): n_ok=20/20 | P_lernt=0.65 | gelernt n=13, gescheitert n=7 | div=0
+  dm: t=0.49 (Diff -0.3418)
+  initloss: t=0.00 (Diff 0.0000)
+  gainmean: t=0.71 (Diff -0.0023)
+  gainstd: t=0.54 (Diff 0.0018)
+  wnorm: t=0.00 (Diff 0.0000)
+
+Arm A1 (H=48, role=block, a=1, seeds 870..889): n_ok=20/20 | P_lernt=0.05 | gelernt n=1, gescheitert n=19 | div=0
+  dm: t=-1.00 (Diff nan)
+  initloss: t=-1.00 (Diff nan)
+  gainmean: t=-1.00 (Diff nan)
+  gainstd: t=-1.00 (Diff nan)
+  wnorm: t=-1.00 (Diff nan)
+
+--- T26-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+SEP-Bericht je Kandidat (zweiseitig, SE im Lauf gemessen):
+  dm: t(a=0)=0.49 | t(a=1)=-1.00 | Diff a=0 -0.3418, a=1 nan
+  initloss: t(a=0)=0.00 | t(a=1)=-1.00 | Diff a=0 0.0000, a=1 nan
+  gainmean: t(a=0)=0.71 | t(a=1)=-1.00 | Diff a=0 -0.0023, a=1 nan
+  gainstd: t(a=0)=0.54 | t(a=1)=-1.00 | Diff a=0 0.0018, a=1 nan
+  wnorm: t(a=0)=0.00 | t(a=1)=-1.00 | Diff a=0 0.0000, a=1 nan
+sepmax = -1.00 (Gewinner: None) | PASS-Schwelle 3.0
+L5-BAND (registriert VOR dem Lauf, Nachtrag 47, R8-Haertung):
+  DM_gelernt in [8.80, 19.70]: gemessen 13.3733 — TREFFER
+  DM_gescheitert in [8.60, 19.50]: gemessen 13.7151 — TREFFER
+  Differenz_DM in [0.11, 0.24]: gemessen -0.3418 — NEIN
+  P(0) in [0.25, 0.64]: gemessen 0.6500 — NEIN
+  P(1) in [0.00, 0.22]: gemessen 0.0500 — TREFFER
+L5-BAND-TREFFER: 3/5 (Maschinen-Band, P4-Generator v1.4, R8)
+ALARM: ARM HIGH48: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
+
+VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 49 (2026-11-12) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+ALARM: ARM HIGH48: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM HIGH48: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A0: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
+ALARM: ARM A1: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
+
+## Arm-Zahlen (aus dem Contract generiert)
+  HIGH48.pf = 1
+  HIGH48.colnorm = 5.5
+  HIGH48.ndiv = 0
+  HIGH48.dm = FEHLT
+  HIGH48.initloss = FEHLT
+  HIGH48.gainmean = FEHLT
+  HIGH48.gainstd = FEHLT
+  HIGH48.wnorm = FEHLT
+  HIGH48.sepmax = -1
+  A0.pf = 0.65
+  A0.colnorm = 2.2
+  A0.ndiv = 0
+  A0.dm = FEHLT
+  A0.initloss = FEHLT
+  A0.gainmean = FEHLT
+  A0.gainstd = FEHLT
+  A0.wnorm = FEHLT
+  A0.sepmax = -1
+  A1.pf = 0.05
+  A1.colnorm = 2.2
+  A1.ndiv = 0
+  A1.dm = FEHLT
+  A1.initloss = FEHLT
+  A1.gainmean = FEHLT
+  A1.gainstd = FEHLT
+  A1.wnorm = FEHLT
+  A1.sepmax = -1
+
+## LUECKENLISTE: HIGH48.dm, HIGH48.initloss, HIGH48.gainmean, HIGH48.gainstd, HIGH48.wnorm, A0.dm, A0.initloss, A0.gainmean, A0.gainstd, A0.wnorm, A1.dm, A1.initloss, A1.gainmean, A1.gainstd, A1.wnorm
+=== FERTIG ===
