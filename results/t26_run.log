@@ -49,75 +49,45 @@ L5-BAND (registriert VOR dem Lauf, Nachtrag 47, R8-Haertung):
   P(0) in [0.25, 0.64]: gemessen 0.6500 — NEIN
   P(1) in [0.00, 0.22]: gemessen 0.0500 — TREFFER
 L5-BAND-TREFFER: 3/5 (Maschinen-Band, P4-Generator v1.4, R8)
-ALARM: ARM HIGH48: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
 
-VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
+VERDICT: KILL — INTRA-BLOCK-LOTTO
 
 --- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
 # Nachtrag 49 (2026-11-12) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
 
-VERDICT: UNENTSCHEIDEN (Crash-Klasse) — Invarianten-Audit/Kollaps-Gate: deklarierte Konvention verletzt
-ALARM: ARM HIGH48: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM HIGH48: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A0: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'dm' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'initloss' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'gainmean' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'gainstd' NICHT GEMESSEN (Kollaps-Verletzung).
-ALARM: ARM A1: registrierte Groesse 'wnorm' NICHT GEMESSEN (Kollaps-Verletzung).
+VERDICT: KILL — INTRA-BLOCK-LOTTO
 
 ## Arm-Zahlen (aus dem Contract generiert)
   HIGH48.pf = 1
   HIGH48.colnorm = 5.5
   HIGH48.ndiv = 0
-  HIGH48.dm = FEHLT
-  HIGH48.initloss = FEHLT
-  HIGH48.gainmean = FEHLT
-  HIGH48.gainstd = FEHLT
-  HIGH48.wnorm = FEHLT
+  HIGH48.dm = 12.8727
+  HIGH48.initloss = 0.693147
+  HIGH48.gainmean = 0.126452
+  HIGH48.gainstd = 0.123512
+  HIGH48.wnorm = 2.2792
   HIGH48.sepmax = -1
   A0.pf = 0.65
   A0.colnorm = 2.2
   A0.ndiv = 0
-  A0.dm = FEHLT
-  A0.initloss = FEHLT
-  A0.gainmean = FEHLT
-  A0.gainstd = FEHLT
-  A0.wnorm = FEHLT
+  A0.dm = 13.4929
+  A0.initloss = 0.693147
+  A0.gainmean = 0.0650076
+  A0.gainstd = 0.0659628
+  A0.wnorm = 2.2792
   A0.sepmax = -1
   A1.pf = 0.05
   A1.colnorm = 2.2
   A1.ndiv = 0
-  A1.dm = FEHLT
-  A1.initloss = FEHLT
-  A1.gainmean = FEHLT
-  A1.gainstd = FEHLT
-  A1.wnorm = FEHLT
+  A1.dm = 1.39335
+  A1.initloss = 0.693147
+  A1.gainmean = 0.0738294
+  A1.gainstd = 0.0580259
+  A1.wnorm = 2.2792
   A1.sepmax = -1
 
-## LUECKENLISTE: HIGH48.dm, HIGH48.initloss, HIGH48.gainmean, HIGH48.gainstd, HIGH48.wnorm, A0.dm, A0.initloss, A0.gainmean, A0.gainstd, A0.wnorm, A1.dm, A1.initloss, A1.gainmean, A1.gainstd, A1.wnorm
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
 === FERTIG ===
 
-[i] Laufzeit: 13.4 min
+[i] Laufzeit: 13.0 min
 [i] Ergebnisse: results/t26_per_seed_ordnung_results.txt | results/t26_per_seed_ordnung_table.csv | results/t26_measurements.json
