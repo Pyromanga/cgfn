@@ -2681,3 +2681,72 @@ dokumentiert, nicht vertuscht).
 Stein der Linie SCHALTER mit einem diagnostischen (nicht
 kausalen) Verdikt-Mass — der Uebergang von Phaenomen- zu
 Werkzeug-Frage.
+
+
+
+---
+
+# Nachtrag 46 (2026-11-12): T25 VERDICT — PASS: ORDNUNGSPARAMETER-BESTAETIGT (dmdrop=11.65, ~55 SE). Mit Ehrlichkeits-Befund: DM trennt EBENEN, nicht einzelne Seeds. Zweiter interventionsfreier Stein in Serie.
+
+## Lauf
+Run 08:07-08:29 UTC (22 Runner-Minuten), Bot-Commit 50656f2.
+100/100 Runs, Sanity clean (HIGH48 pf=1.00), ndiv=0 ueberall,
+colnorm exakt, keine Reparatur — nach T24 der ZWEITE komplett
+interventionsfreie Stein in Serie. R2: dm/dmdrop/dmeff an
+JEDEM Arm, Lueckenliste LEER.
+
+## Zahlen (Bot, gefroren)
+DM-Mittel je Stufe (je 20 frische Seeds):
+  a=0: 13.0614 (SE 0.211) | a=1: 1.4126 (SE 0.012)
+  a=4: 1.3333 (SE 0.011) | a=24: 1.5898 (SE 0.015)
+dmdrop = 11.6488 | SE(dmdrop) = 0.2113 | 3*SE = 0.6338
+Doppelklausel erfuellt (>= 5.0 UND >= 3*SE mit Faktor ~55).
+dmeff = 11.6488 >= 5.0 -> PASS. P-Stufen: 0.55/0.05/0.05/0.10.
+L5-BAND (R8): 7/7 TREFFER.
+
+## Lesart
+1. DM KOLLABIERT EXAKT MIT DEM SCHALTER. a=0: 13.06, ab a=1:
+   1.33-1.59 — Plateau, gekoppelt an die Konjugationstiefe,
+   nicht an eine Dosis (identische Form wie die P-Kurve in
+   T23). Der Ordnungsparameter faellt mit dem Schalter
+   ZUSAMMEN, auf ~55 SE. DM ist damit als EBENEN-Marker des
+   Symmetriebruchs bestaetigt: Diagonal-Dominanz = wie stark
+   die Basis an den tanh-Achsen klebt.
+2. EHRLICHKEITS-BEYFANG (Per-Seed-Bericht, registriert als
+   Diagnostik ohne Verdikts-Gewicht): DM trennt innerhalb
+   des a=0-Blocks NICHT: DM gelernt 13.133 (n=11) vs DM
+   gescheitert 12.974 (n=9) — Differenz 0.16 < SE 0.21.
+   Der Per-Seed-Teil der registrierten Frage ist damit
+   VORBEIGEANTWORTET, NEGATIV: DM ist ein makroskopischer
+   Ordnungsparameter (unterscheidet konjugiert vs intakt),
+   KEIN Seed-Praediktor. Der in Nachtrag 45 projektierte
+   Folge-Stein 'DM-Schwellwert-Kippregel pro Seed' entfaellt
+   aus eigener Kraft — die Frage 'per Seed' braucht ein
+   anderes Mass.
+3. MECHANISMUS-ANSCHLUSS: DM bleibt keine Ursache (T20-R2
+   KILL DM-NEBENSPUR unangetastet) — aber die diagnostische
+   Seite ist jetzt bestanden: Der Schalter hat ein
+   messbares, billiges Vorhersage-Instrument auf Ebenen-
+   Niveau (DM aus W allein, vor jedem Training).
+4. SITUATION DER LINIE SCHALTER: Existenz (T23), Richtung
+   (T24), Ordnungsparameter Ebene (T25) — drei bestaetigte
+   Stufen. Offen: Per-Seed-Ordnung (gibt es UEBERHAUPT eine
+   Groesse, die innerhalb eines Blocks gelernt vs
+   gescheitert trennt — Kandidaten: Gain-Verteilung,
+   DM-Varianten, oder ist das Intra-Block-Lotto rein
+   unveraenderlich?).
+
+## L5-Serien-Zettel (Durchlauf 4, Quelle MASCHINE)
+Maschine 7/7 in diesem Lauf; Serie Maschine gesamt 19/20
+(T23 5/6, T24 7/7, T25 7/7). LLM 3/3. Gesamtkalibration
+22/23 — die einzige Verfehlung bleibt drop124 (duenne
+Quelle). R8-Bilanz nach zwei Einsaetzen: 14/14.
+
+## Kernel-Bilanz (ehrlich)
+11 kernel-generierte Steine (T15..T25). 8 saubere Verdikte.
+Zwei interventionsfreie Steine in Serie (T24, T25) — die
+R2-Readout-Schleife als Maschinen-Pflicht laesst die
+T21/T23-Fehlerklasse dauerhaft leer. Die Doppelklausel
+(dmeff) hat sich als Encoding bewaehrt: Verdict-Mass,
+Schwelle und SE-Klausel in einem einzigen Kernel-Praedikat,
+ohne Nachverhandlungsspielraum.
