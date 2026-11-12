@@ -87,7 +87,7 @@ def candidate_per_seed_ordnung():
         id='T26 PER-SEED-ORDNUNG',
         frage=frage_txt,
         these=('Wenn ja (>= 3 * SE, Doppelklausel): Intra-Block-Marker'
-               ' -> Kipp-Vorhersage VOR dem Training moeglich (T27
+               ' -> Kipp-Vorhersage VOR dem Training moeglich (T27'
                ' Kippregel pro Seed). Wenn nein: Intra-Block-Lotto ist'
                ' unveraenderlich; Per-Seed-Frage NEGATIV geschlossen und'
                ' der Ordnungsparameter bleibt Ebenen-Marker (DM).'),
