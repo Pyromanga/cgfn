@@ -69,19 +69,19 @@ def contract_t27():
                          metric='A0.pf', op='ge', value=0.25)])],
         verdict=[
             dict(id='PASS — SCHALTER-TRAIN',
-                 text='peff >= 0.0: P(1) <= 0.15 UND P(24) <= 0.15
-                      ' UND P(0) - P(1) >= 3 * SE UND P(0) im Band —
-                      ' Bruecke Reservoir -> trainiert BESTAETIGT;
-                      ' naechster Stein: Ordnungsparameter im
-                      ' trainierten Netz (DM_final-Analog)',
+                 text=('peff >= 0.0: P(1) <= 0.15 UND P(24) <= 0.15 '
+                       'UND P(0) - P(1) >= 3 * SE UND P(0) im Band — '
+                       'Bruecke Reservoir -> trainiert BESTAETIGT; '
+                       'naechster Stein: Ordnungsparameter im '
+                       'trainierten Netz (DM_final-Analog)'),
                  predicate=[dict(metric='A0.peff', op='ge',
                                  value=0.0)]),
             dict(id='KILL — TRAIN-NETZ-RESISTENT',
-                 text='peff < 0.0 (P > 0.30 oder Differenz < 3 * SE;
-                      ' Grauzone 0.15..0.30 komplementaer zu KILL):
-                      ' Der Schalter ist eine Eigenschaft des
-                      ' Eingefroren-Reservoirs — Grenze des Befunds
-                      ' praecise gezeichnet',
+                 text=('peff < 0.0 (P > 0.30 oder Differenz < 3 * SE; '
+                       'Grauzone 0.15..0.30 komplementaer zu KILL): '
+                       'Der Schalter ist eine Eigenschaft des '
+                       'Eingefroren-Reservoirs — Grenze des Befunds '
+                       'praecise gezeichnet'),
                  predicate=[dict(metric='A0.peff', op='lt',
                                  value=0.0)]),
         ])

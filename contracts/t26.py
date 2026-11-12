@@ -79,19 +79,19 @@ def contract_t26():
                          metric='HIGH48.pf', op='ge', value=0.5)])],
         verdict=[
             dict(id='PASS — INTRA-BLOCK-MARKER',
-                 text='sepmax >= 3.0: mindestens EINE Kandidat-'
-                      'Groesse trennt gelernt vs gescheitert im
-                      ' a=0-Block mit >= 3 * SE (im Lauf gemessen),
-                      ' Richtung konstant in a=1 — T27-Kippregel
-                      ' pro Seed (Vorhersage vor dem Training)',
+                 text=('sepmax >= 3.0: mindestens EINE Kandidat-'
+                       'Groesse trennt gelernt vs gescheitert im '
+                       'a=0-Block mit >= 3 * SE (im Lauf gemessen), '
+                       'Richtung konstant in a=1 — T27-Kippregel '
+                       'pro Seed (Vorhersage vor dem Training)'),
                  predicate=[dict(metric='A0.sepmax', op='ge',
                                  value=3.0)]),
             dict(id='KILL — INTRA-BLOCK-LOTTO',
-                 text='sepmax < 3.0: keine Kandidat-Groesse trennt
-                      ' >= 3 * SE — Per-Seed-Frage NEGATIV
-                      ' geschlossen; DM bleibt Ebenen-Marker;
-                      ' naechste Frage: Gain-Verteilung als
-                      ' Ebenen-Kandidat',
+                 text=('sepmax < 3.0: keine Kandidat-Groesse trennt '
+                       '>= 3 * SE — Per-Seed-Frage NEGATIV '
+                       'geschlossen; DM bleibt Ebenen-Marker; '
+                       'naechste Frage: Gain-Verteilung als '
+                       'Ebenen-Kandidat'),
                  predicate=[dict(metric='A0.sepmax', op='lt',
                                  value=3.0)]),
         ])
