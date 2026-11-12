@@ -1,0 +1,63 @@
+======================================================================================================================
+T27 — SCHALTER-TRAIN v1 (LINIE TRAIN, erster Gradienten-Stein)
+These (Nachtrag 48): Kippt ein GRADIENTEN-TRAINIERTES Netz denselben
+Schalter wie das eingefrorene Reservoir? MLP H=48, tanh, kein Bias,
+Init-Konjugation exakt T20/T25 (Q_SEED=2020). Stufen a {0,1,24},
+je 1 frischer 20er-Block 910..969, f64.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t27.py
+PRIMAER: peff = P(0)-P(1) falls (P(1) <= 0.15 UND P(24) <= 0.15 UND
+>= 3*SE gemessen UND P(0) im Band), sonst -1. Grauzone komplementaer.
+R2: jedes Mass an JEDEM Arm.
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm A0 (H=48, role=block, a=0, seeds 910..929): n_ok=20/20 | P_lernt=0.00 | DM_init=13.4820 | DM_final=9.5724 (SE 0.1381) | div=0
+
+Arm A1 (H=48, role=block, a=1, seeds 930..949): n_ok=20/20 | P_lernt=0.00 | DM_init=1.4081 | DM_final=1.2954 (SE 0.0156) | div=0
+
+Arm A24 (H=48, role=block, a=24, seeds 950..969): n_ok=20/20 | P_lernt=0.00 | DM_init=1.5736 | DM_final=1.3994 (SE 0.0173) | div=0
+
+--- T27-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: P(0)=0.0000 | P(1)=0.0000 | P(24)=0.0000
+SE(P0-P1) = 0.0038 (gemessen) | 3*SE = 0.0115
+DOPPELKLAUSEL: P(1) <= 0.15: True | P(24) <= 0.15: True | Diff >= 3*SE: False | P(0) im Band: False -> peff = -1.0000
+DM_FINAL-BERICHT: DM_final(0) - DM_final(1) = 8.2770 | SE = 0.1390 | trennt (>= 3*SE): True
+L5-BAND (registriert VOR dem Lauf, Nachtrag 48, R8-Haertung):
+  P(0) in [0.25, 0.64]: gemessen 0.0000 — NEIN
+  P(1) in [0.00, 0.30]: gemessen 0.0000 — TREFFER
+  P(24) in [0.00, 0.30]: gemessen 0.0000 — TREFFER
+  DM_init(0) in [8.80, 19.80]: gemessen 13.4820 — TREFFER
+L5-BAND-TREFFER: 3/4 (Band Nachtrag 48, R8)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 50 (2026-11-12) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT
+
+## Arm-Zahlen (aus dem Contract generiert)
+  A0.pf = 0
+  A0.colnorm = 0.300145
+  A0.ndiv = 0
+  A0.dm_init = 13.482
+  A0.dm_final = 9.5724
+  A0.peff = -1
+  A1.pf = 0
+  A1.colnorm = 0.327894
+  A1.ndiv = 0
+  A1.dm_init = 1.40813
+  A1.dm_final = 1.29541
+  A1.peff = -1
+  A24.pf = 0
+  A24.colnorm = 0.327823
+  A24.ndiv = 0
+  A24.dm_init = 1.57357
+  A24.dm_final = 1.3994
+  A24.peff = -1
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
+
+[i] Laufzeit: 0.6 min
+[i] Ergebnisse: results/t27_schalter_train_results.txt | results/t27_schalter_train_table.csv | results/t27_measurements.json
