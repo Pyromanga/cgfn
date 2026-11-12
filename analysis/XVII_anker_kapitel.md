@@ -2750,3 +2750,80 @@ T21/T23-Fehlerklasse dauerhaft leer. Die Doppelklausel
 (dmeff) hat sich als Encoding bewaehrt: Verdict-Mass,
 Schwelle und SE-Klausel in einem einzigen Kernel-Praedikat,
 ohne Nachverhandlungsspielraum.
+
+
+---
+
+# Nachtrag 47 (2026-11-12): T26 PER-SEED-ORDNUNG REGISTRIERT (L5-Durchlauf 5, Quelle Maschine/Generator v1.4). Band und Schwellen VOR dem Lauf eingefroren.
+
+## Registrierung
+Vorschlag: P4-Generator v1.4 (Proposal v1.4, Bot-Commit 575cf17,
+12:24 UTC, Score 0.78 — Ueberraschung 1.0, Kostenquote 0.37,
+Scheidung 1.0). Erster Generator-Vorschlag auf Basis der
+T25-Frischdaten inkl. Ehrlichkeits-Beyfang. Generator-
+Historie des Tages, ehrlich: ZWEI Gate-Faenge vor dem ersten
+erfolgreichen Lauf (R1-Text: fehlendes Anfuehrungszeichen +
+falsch gesetztes Prozent-Format; dann these-String: fehlende
+Quote hinter T27). Beide vom py_compile-Gate abgefangen, BEVOR
+der Generator lief — genau der Sinn des Gates (Kontingent-
+Schonung), aber zwei toete Runs sind zwei toete Runs.
+
+## Frage
+Trennt UEBERHAUPT eine messbare Groesse gelernte von
+gescheiterten Seeds INNERHALB eines Blocks? T25-Beyfang:
+DM gelernt 13.133 (n=11) vs gescheitert 12.974 (n=9),
+Differenz 0.159 < SE 0.21 — DM ist kein Trenner. Kandidaten:
+DM, Initial-Loss, Gain-Mittel, Gain-Std, Weight-Norm, colnorm.
+
+## Design (eingefroren)
+EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter).
+Stufen a in {0, 1} (Konjugation Q_a W Q_a^T, Q_SEED=2020),
+je 1 frischer 20er-Block:
+  a=0: 850..869 | a=1: 870..889
+Anchor HIGH48 (s=5.5, a=0): 890..909. Total 60 Runs,
+Fix 5.0 + variabel 17.0 = 22.0 min (Cap 60). R7: a=1 ist die
+Replikations-Stufe (Richtungs-Konstanz des Markers), a=0 die
+Klammer (T24-P(0)).
+
+## Masse (R2: an JEDEM Arm inkl. Anchor)
+pf, colnorm, ndiv, alle Kandidaten je Seed; Trennung gelernt
+vs gescheitert je Kandidat je Stufe. Schwellwerte je Kandidat
+WERDEN VOR DEM READOUT fixiert (Doppelklausel).
+
+## Verdict-Schwellen (unantastbar)
+- PASS — INTRA-BLOCK-MARKER: mindestens EINE Kandidat-Groesse
+  trennt gelernt vs gescheitert im a=0-Block mit
+  >= 3 * SE(im Lauf gemessen), Schwellwert VOR dem Readout
+  fixiert, UND gleiche Richtung im a=1-Block UND Sanity clean.
+  Konsequenz: T27 Kippregel pro Seed (Vorhersage vor dem
+  Training).
+- KILL — INTRA-BLOCK-LOTTO: keine Kandidat-Groesse trennt
+  >= 3 * SE. Konsequenz: Per-Seed-Frage NEGATIV geschlossen;
+  DM bleibt Ebenen-Marker; Linie SCHALTER: neue offene Frage
+  aus Geometrie/Replikation (Gain-Verteilung als Ebenen-
+  Kandidat).
+- UNENTSCHEIDEN: Crash (Sanity Anchor pf < 0.5, ndiv > 6 je
+  Block, colnorm-Verletzung). R5: EINE Reparatur, dann Linie
+  tot. R4 erfuellt.
+
+## Vorhersageband (mechanisch, R8-Haertung an duennen Quellen)
+- DM gelernt in [8.80, 19.70] (T25 n=11, +50% Weite)
+- DM gescheitert in [8.60, 19.50] (T25 n=9, +50% Weite)
+- Differenz DM in [0.11, 0.24] (T25-Beyfang 0.159, nicht
+  trennend — das Band ist bewusst ENG um NULL: Erwartung ist
+  kein Trenner)
+- P(0) in [0.25, 0.64] | P(1) in [0.00, 0.22]
+  (T22 10-Block / T23 frisch n=1 — R8)
+
+## L5-Serien-Zettel (Durchlauf 5)
+Quelle: Maschine (Generator v1.4). Erster Stein, dessen Frage
+direkt aus einem Ehrlichkeits-Beyfang (T25 Per-Seed-NEGATIV)
+geboren wurde — die Maschine hat den negativen Befund
+verarbeitet, statt ihn zu verbergen.
+
+## Kernel-Bilanz (Stand)
+11 kernel-generierte Steine (T15..T25), 8 saubere Verdikte.
+Neu in der Bilanz: die Generator-Reparaturkette (2 Gate-Faenge
+am selben Tag) — das Gate hat beide vor Runner-Kosten gefangen,
+die Fehlerklasse "Syntax in generiertem Code" bleibt damit im
+Kernel sichtbar und teuer-im-Kontingent-nicht.
