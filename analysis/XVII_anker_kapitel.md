@@ -2827,3 +2827,102 @@ Neu in der Bilanz: die Generator-Reparaturkette (2 Gate-Faenge
 am selben Tag) — das Gate hat beide vor Runner-Kosten gefangen,
 die Fehlerklasse "Syntax in generiertem Code" bleibt damit im
 Kernel sichtbar und teuer-im-Kontingent-nicht.
+
+
+---
+
+# Nachtrag 48 (2026-11-12): LINIE TRAIN eroeffnet — T27 SCHALTER-TRAIN REGISTRIERT (erster Gradienten-Stein). Band und Schwellen VOR dem Lauf eingefroren.
+
+## Motivation (ehrlich)
+Der Kernbefund der Saison (Seed-Lotto = Koordinaten-Artefakt
+des tanh-Ankers; Schalter bei einer rotierten Dimension; DM
+als Ebenen-Marker) ist bisher NUR an eingefrorenen Reservoirs
+bewiesen. Die offene Bruecke: Existiert der Schalter auch in
+einem GRADIENTEN-TRAINIERTEN Netz? Das ist die Designluecke
+der T-Serie — und sie ist im 40-EUR-Rahmen schliessbar:
+H=48-MLP, 600 Steps, CPU-Rechenminuten.
+
+## Recon-Positionierung (2026-11-12, vor der These)
+Kein Doppel gefunden. Naechste Nachbarn: (1) Omnigrok (ICLR
+2023) — Init-SKALA/Norm als Grokking-Ursache, nicht die
+Relation Basis-vs-tanh-Achsen; (2) Noether-Learning-Dynamics —
+Skalen-Symmetrien in der Lern-Dynamik, kein binarer Schalter
+durch Koordinaten-Rotation gegen die Aktivierungs-Achsen;
+(3) Geometric-Continuity (arXiv 2605.04971, bekannt aus N45) —
+MLP/Transformer, Kontinuum, nicht rekurrent. Die Frage
+"toetet EINE rotierte Dimension das Lernen in einem TRAINIERTEN
+tanh-Netz — und kollabiert ein DM-Analog parallel?" bleibt
+nach unserer Recherche unbeantwortet.
+
+## Frage (T27)
+Kippt das GRADIENTEN-Training dasselbe Phaenomen wie das
+eingefrorene Reservoir: P_lernt kollabiert bei a >= 1
+(Konjugation Q_a W_init Q_a^T) gegenueber a=0 — und folgt
+ein DM-Analog dem Kollaps?
+
+## Design (eingefroren)
+MLP (nicht rekurrent — bewusste Vereinfachung, Transfer
+zuerst am billigsten Objekt): H=48, tanh, delayed recall
+(t_seq=24), Adam lr=5e-3, 600 Steps, batch=32. Bias der
+Input-Projektion NULL (G5-Audit-Lektion: versteckter Bias-
+Lotto). Init: W = Q_a T Q_a^T, T aus dem Seed, Q_SEED=2020 —
+exakt die T20/T25-Konstruktion.
+Stufen a in {0, 1, 24}, je 1 frischer 20er-Block:
+  a=0: 910..929 | a=1: 930..949 | a=24: 950..969
+R6-Sanity: der a=0-Block ist Anker — P(0) muss im Band
+[0.25, 0.64] liegen (T22 10-Block-Statistik), sonst
+UNENTSCHEIDEN. R7: a=1 ist die Replikations-Stufe (Reservoir-
+Niveau T23/T25), a=24 die Tiefe, a=0 die Klammer.
+Kosten-Schaetzung: 60 Trainings, ~2-4 s/Run CPU = variabel
+~4 min + Fix 5.0 = ~9 min (Cap 60, bewusst weit drunter —
+Compute-Disziplin: Mini-Lab, keine Verschwendung).
+
+## Masse (R2: an JEDEM Arm)
+pf (Task-Performance nach Training), Initial-Loss, Final-Loss,
+DM_init je Seed (T20-Definition am INITIALISIERTEN W),
+DM_final je Seed (am TRAINIERTEN W), colnorm. Trennung
+gelernt vs gescheitert je Kandidat je Stufe (Anschluss an
+T26: falls T26 einen Intra-Block-Marker findet, wird er hier
+mitgeprueft).
+
+## Verdict-Schwellen (unantastbar)
+- PASS — SCHALTER-TRAIN: P(1) <= 0.15 UND P(24) <= 0.15 UND
+  P(0) - P(1) >= 3 * SE(im Lauf gemessen) UND P(0) im Band.
+  Konsequenz: Bruecke Reservoir -> trainiert BESTAETIGT;
+  naechster Stein: Ordnungsparameter im trainierten Netz
+  (DM_final-Analog).
+- KILL — TRAIN-NETZ-RESISTENT: P(1) > 0.30 ODER P(24) > 0.30
+  ODER Differenz < 3 * SE. Konsequenz: Der Schalter ist eine
+  Eigenschaft des Eingefroren-Reservoirs — Grenze des Befunds
+  praecise gezeichnet (das ist ein WERTVOLLER KILL: er sagt,
+  wo die Theorie endet).
+- TEIL-VERDICT (registriert, keine Nachverhandlung): P kollabiert
+  (PASS-Kriterien P), aber DM_final trennt die Stufen NICHT
+  (Differenz < 3 * SE) -> SCHALTER-OHNE-ORDNUNGSPARAMETER:
+  der Schalter transferiert, der Marker nicht.
+- UNENTSCHEIDEN: Crash (P(0) ausserhalb Band, colnorm-
+  Verletzung, Trainings-Divergenz > 10 Prozent der Seeds).
+  R5: EINE Reparatur, dann Linie tot. R4: PASS/KILL/TEIL
+  fuehren zu verschiedenen naechsten Steinen.
+
+## Vorhersageband (mechanisch, R8-Haertung an duennen Quellen)
+- P(0) in [0.25, 0.64] (T22 10-Block — Sanity, kein Verdikt-
+  Mass)
+- P(1) in [0.00, 0.30] (Reservoir: 0.025-0.05, T23/T24/T25;
+  +50% Weite und Transfer-Puffer: das trainierte Netz KOENNTE
+  resistenter sein — das Band erlaubt es dem Befund zu
+  bestehen, ohne ihm die PASS-Schwelle zu schenken)
+- P(24) in [0.00, 0.30] (Reservoir: 0.10-0.15 — R8)
+- DM_init(0) in [8.80, 19.80] (T25 n=11 — R8)
+- DM-Analog: SE ungetestet im Trainierten -> DOPPELKLAUSEL
+  (Schwellwert VOR dem Readout fixiert + 3 * SE gemessen),
+  Lehre aus T25.
+
+## Kernel-Bilanz (Stand)
+11 kernel-generierte Steine (T15..T25), 8 saubere Verdikte.
+T27 ist der erste Stein AUSSERHALB des Reservoir-Regimes.
+Generator-Lehre vom Tag (2 Gate-Faenge, N47) eingebracht:
+py_compile-Probe auf JEDEM neu generierten Instrument vor dem
+Push, Quote-Bilanz je String-Literal, Klammer-Bilanz je
+Funktion — die Fehlerklasse ist bekannt, die Proben stehen
+jetzt VOR dem Push, nicht im Run.
