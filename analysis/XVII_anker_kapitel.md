@@ -2538,3 +2538,71 @@ R8 ist genau dafuer zum ersten Mal im Spiel.
 9 kernel-generierte Steine (T15..T23). 6 saubere Verdikte,
 2 Readout-Reparaturen. T24 ist der erste Stein mit R8-Band und
 dem Achsen-Schnitt-Verdikt (pqmax).
+
+
+
+---
+
+# Nachtrag 44 (2026-11-11): T24 VERDICT — PASS: RICHTUNGS-AGNOSTISCH. Sauberster Stein der Saison (keine Reparatur, Lueckenliste LEER). Ordnungsparameter ist die naechste Frage.
+
+## Lauf
+Run 43109271510 (22:09-22:38 UTC, 29 Runner-Minuten), Bot-Commit
+55e027f. 140/140 Runs, Sanity clean (HIGH48 pf=1.00), ndiv=0
+ueberall, colnorm exakt, R2-Readout: pq/pqmax an JEDEM Arm
+gesetzt — erster kernel-generierter Stein OHNE jede
+Intervention (kein Readout-Crash, keine Reparatur).
+
+## Zahlen (Bot, gefroren)
+Achsen-P_Q (a=1, je 20 frische Seeds):
+  q_seed=2020: 0.05 | 5150: 0.05 | 8080: 0.05 | 1111: 0.10
+  | 4242: 0.00
+pqmax = 0.10 (Schwelle PASS <= 0.15). Control a=0: P(0) = 0.60.
+Anchor HIGH48: 1.00. L5-BAND (R8-Erstfahrt): 7/7 TREFFER.
+
+## Lesart
+1. JEDE ACHSE KIPPT. Alle fuenf Rotationsrichtungen bringen
+   P_lernt von 0.60 auf 0.00-0.10. Der Schalter von T23 ist
+   kein Achsen-Artefakt: RICHTUNGS-AGNOSTISCH bestaetigt.
+2. Kein Achsen-Lotto: Die Streuung ueber Achsen (0.00..0.10)
+   liegt innerhalb des Block-Rauschens (SE(P_Block)=0.068,
+   T22). Q4242=0.00 und Q1111=0.10 sind nicht trennbar —
+   Achsen-Unterschiede sind bisher untestbar klein.
+3. REPLIKATION: Q2020 frisch 0.05 vs T23 0.025 — stabil am
+   Boden, kein Erholungstrend zwischen Bloecken.
+4. MECHANISMUS-STUFE: Symmetriebruch. Eine einzige gegen den
+   tanh-Anker rotierte Dimension toetet das Aufgabenlernen,
+   egal in welche Richtung. Anschluss G6 (volle Symmetrie
+   toetet Kapazitaet) jetzt als SCHALTER-Phaenomen bei
+   endlichem H gefasst: Der Kontrast zur rotationsinvarianten
+   Reservoir-Theorie (NeurIPS 2020, Jaeger/Lukosevicius 2009)
+   ist zweiseitig scharf — Invarianz ist bei endlichem H
+   kein Kontinuum, sondern ein Kliff (G7-Parallelfall).
+5. R8-Erstfahrt: 7/7 — und das Band war nicht trivial-breit:
+   P(0)=0.60 sass nahe der Oberkante 0.64, pqmax=0.10 weit
+   unten. Die +50%-Haertung hat die n=1-Baender der Achsen
+   gerade nicht zur Freifahrt gemacht.
+
+## L5-Serien-Zettel (Durchlauf 3, Quelle MASCHINE)
+Maschine: 7/7 in diesem Lauf; Serie Maschine gesamt 12/13.
+LLM: 3/3. Gesamtkalibration: 15/16 — die eine Verfehlung
+bleibt drop124 (Durchlauf 2, duenne Quelle). Research Taste:
+beide Quellen liefern brauchbare Baender; die Maschine wird
+mit R8 erstmals ohne Verfehlung getestet.
+
+## Naechster Stein (SCHALTER-Linie, Generator-Rotation steht an)
+ORDNUNGSPARAMETER DES KIPPPUNKTS: Was unterscheidet kollabierte
+von intakten Netzen MESSBAR vor dem Verdikt? T20-Kandidat: der
+DM-Kollaps (13.21 -> 1.4) parallel zum Schalter. Frage: Ist DM
+ein Ordnungsparameter des Schalters (steigt/springt er mit a),
+und sagt er die Kipp-Zugehoerigkeit je Seed voraus?
+Generierungs-Pfad: P4-Generator v1.3 mit T24-Frischdaten im
+Snapshot.
+
+## Kernel-Bilanz (ehrlich)
+10 kernel-generierte Steine (T15..T24). T24: erster komplett
+unproblematischer Lauf der Serie (Bau, Lauf, Readout, Verdikt
+in einem Durchgang, 29 Minuten, 0 Alarme). Lehre bestaetigt:
+R2 als maschinelle Readout-Schleife (nicht als
+Bauenden-Selbstkontrolle) hat der T21/T23-Fehlerklasse die
+Grundlage entzogen. Bau blieb Flaschenhals der Saison, aber
+die Fehlerklasse ist bei T24 erstmals leer.

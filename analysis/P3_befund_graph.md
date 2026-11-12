@@ -42,6 +42,7 @@ T20-R2| DM-Treppe (WB-Regler)                                | KILL (DM-NEBENSPU
 T21   | Delle real oder Seed-Rauschen? (100 frische Seeds)  | KEHRUNG       | d183=-0.38; H24 lernt an ALLEN Rasterpunkten frueher; Delle existiert im Block 210..309 nicht; H-Trend BLOCK-EMPFINDLICH (P48(2.2) 0.75 alt vs 0.43 frisch ≈ 2.9 Sigma) | Nachtraege 33-36
 T22   | War der alte Block ein Ausreisser? (5 neue disjunkte 20er-Bloecke; erster LLM-Vorschlag) | PASS (ALT-AUSREISSER) | zalt=2.72 >= 2.5; Block-P 0.35/0.40/0.50/0.40/0.65; mean5=0.46 std5=0.107; B4=0.65 reproduziert den Ausreisser-Mechanismus; L5-Band 3/3 | Nachtraege 38-39
 T23   | Repliziert der a=1-Kollaps auf frischen Bloecken? (erster MASCHINEN-Vorschlag P4 v1.1; R5-Reparatur Pfad (b)) | PASS (SCHALTER-BESTAETIGT) | drop1=0.55 (~5.7 SE >= 0.30); P-Stufen 0.575/0.025/0.10/0.15; keine Dosis-Kurve (Plateau + Mini-Erholung); L5 Maschine 5/6 (drop124 verfehlt an duenner Quelle) | Nachtraege 40-42
+T24   | Kippt JEDE 1-dim-Konjugation? (5 Achsen q_seed x 20 frische Seeds; Maschinen-Vorschlag P4 v1.2, R8-Band) | PASS (RICHTUNGS-AGNOSTISCH) | pqmax=0.10 <= 0.15; Achsen-P_Q 0.05/0.05/0.05/0.10/0.00 (im Block-Rauschen, kein Achsen-Lotto); P(0)=0.60; L5-Band 7/7 (R8-Erstfahrt); sauberster Stein: 0 Reparaturen | Nachtraege 43-44
 
 ## Serie W — Werkzeug
 W1-P1 | Lab-Kernel Historien-Test                           | PASS          | T15 exakt wiedergegeben; T11-Bug angezeigt; T15-Run1-Bug verweigert | Nachtrag 19
@@ -57,10 +58,11 @@ T19-R2 -> T21 (Delle-Frage)
 T21 -> T22 (Block-Robustheits-Frage; erster LLM-Vorschlag des L5-Interfaces, Band 3/3)
 T22 -> OFFEN: BLOCK-MITTEL-GESETZ (H-Trend nur noch als Block-Mittel mit std(P_Block) testbar)
 T20-R2 -> T23 (Schalter-Signal als Dosis-Kurve; erster Maschinen-Vorschlag, Kritiker-R7 fing v1.0-Raster)
-T23 -> OFFEN: SCHALTER-RICHTUNG (T24-Kandidat: richtungsagnostischer Symmetriebruch vs Achsen-Lotto)
+T23 -> T24 (Richtungs-Frage; Maschinen-Vorschlag P4 v1.2, R8-Band-Haertung Erstfahrt)
+T24 -> OFFEN: ORDNUNGSPARAMETER (Kipppunkt-Mechanik; T20-Beifang DM-Kollaps 13.21->1.4 als Kandidat)
 
 ## Offene Fragen (Stand 2026-11-11, nach T23)
-1. SCHALTER-RICHTUNG: Kippt JEDE 1-dim-Konjugation das Lernen (RICHTUNGS-AGNOSTISCH, Symmetriebruch, Anschluss G6) oder nur bestimmte Achsen (RICHTUNGS-SPEZIFISCH, Achsen-Lotto)? — T24-Kandidat, Generator v1.2.
-2. RESEARCH TASTE: Serie mit ZWEI Quellen (LLM 3/3 breit; Maschine 5/6 mechanisch mit Verfehlung an duenner Quelle); naechste Durchlaeufe verengen die Kalibration (Nutzer-These Nachtrag 24).
+1. ORDNUNGSPARAMETER: Was misst den Schalterzustand VOR dem Verdikt (Kandidat: DM, T20-Beifang 13.21->1.4 parallel zum Kipp)? — T25-Kandidat nach Generator-Rotation.
+2. RESEARCH TASTE: Serie 15/16 gesamt (LLM 3/3 breit; Maschine 12/13 mechanisch; R8-Erstfahrt 7/7); Kalibration verengt (Nutzer-These Nachtrag 24).
 3. BLOCK-MITTEL-GESETZ: vertagt (Cap + konfirmatorisch; T22 liefert 10 Block-Konstanten als Startpunkt).
 
