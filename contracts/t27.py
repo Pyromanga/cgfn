@@ -7,7 +7,7 @@ flattened), KEIN Bias (G5-Audit-Lektion: versteckter Bias-
 Lotto), Output-Head 2x48. Init: W1 = Q_a W_init Q_a^T mit
 W_init aus der T20/T25-Konstruktion (Q_SEED=2020) — exakt
 dieselbe Konjugationstiefe. Training: Adam lr=5e-3, 600
-Steps, batch=32, delayed recall (t_seq=24), Test 1024.
+Steps (REPARATUR R5: 600 -> 2500, Run 1 lernte NICHT — P(0)=0.00 in ALLEN Armen inkl. Kontrolle a=0: Instrument zu kurz trainiert, kein Befund-Mass betroffen), batch=32, delayed recall (t_seq=24), Test 1024.
 Stufen a in {0, 1, 24}, je 1 frischer 20er-Block (a=0:
 910..929, a=1: 930..949, a=24: 950..969). Kein HIGH48-Anker:
 R6-Sanity ist der a=0-Block — P(0) muss >= 0.25 liegen
@@ -60,7 +60,7 @@ def contract_t27():
             stages=list(STAGES),
             blocks={str(k): list(BLOCKS[k]) for k in BLOCKS},
             q_seed=Q_SEED, fixed_p0=4242, test_seed=777,
-            t_seq=24, steps=600, batch=32, lr=5e-3, lam_max=0.6,
+            t_seq=24, steps=2500, batch=32, lr=5e-3, lam_max=0.6,
             wb=0.6, a_lo=4, a_hi=8, b_lo=16, b_hi=20, hold=3,
             pf_pass=PF_PASS, peff_zero=PEFF_ZERO),
         arms=arms,
