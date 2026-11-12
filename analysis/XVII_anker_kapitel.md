@@ -2984,3 +2984,67 @@ verfehlte Zelle ist genau die Sanity-Zelle — konsistent mit
 Reparaturen (T21, T23). R2 (Masse an JEDEM Arm) hat auch hier
 den Beyfang gerettet: ohne DM_final waere der Lauf leer
 gewesen.
+
+
+
+---
+
+# Nachtrag 51 (2026-11-12): T28 ZUFALLS-LEHRER REGISTRIERT (Linie TRAIN, zweiter Stein; HIGH-ENTROPIE-Aufgabe). Band und Schwellen VOR dem Lauf eingefroren.
+
+## Motivation (ehrlich, Lehre aus T27)
+T27 starb nicht an der Physik, sondern am Instrument: die feste
+delayed-recall-Aufgabe war vom flachen MLP ungelernbar (P=0.00
+in ALLEN Armen inkl. Kontrolle, auch nach 4x Trainingslaenge).
+T28 dreht den Spiess um: die Entropie wandert in die AUFGABE.
+Je Seed ein FRISCHER zufaelliger nichtlinearer Lehrer
+(2-Schichten-tanh, 8 verborgene Einheiten, Gewichte aus dem
+Seed) — keine feste Aufgabe mehr, deren Struktur das Ergebnis
+fremd-bestimmen kann. Die Frage bleibt exakt dieselbe: kippt
+die Konjugation Q_a W_init Q_a^T die Lernbarkeit?
+
+## Design (eingefroren)
+MLP H=48, tanh, KEIN Bias, W1 = Q_a W_init Q_a^T (exakt
+T20/T25/T27, Q_SEED=2020), linearer Skalar-Head. Input
+x ~ N(0, I_48). Adam lr=5e-3, 800 Steps, batch=64, Test 4096
+frische Samples vom GLEICHEN Lehrer. Lernkriterium
+kalibrierungsfrei: R2 >= 0.9 (finaler Test-MSE <= 0.10 *
+Varianz der Targets) — keine absoluten Schwellen, die man
+nachtraeglich streiten koennte.
+Stufen a in {0, 1, 24}, je 1 frischer 20er-Block:
+  a=0: 970..989 | a=1: 990..1009 | a=24: 1010..1029
+R6-Sanity: P(0) >= 0.5 (Kontrolle muss UEBERWIEGEND lernen —
+strenger als T27, weil das Kriterium kalibrierungsfrei ist).
+Kosten-Schaetzung: 60 Trainings, je ~2-4 s CPU = variabel
+~4 min + Fix 5.0 = ~9 min (Cap 60).
+
+## Verdict-Schwellen (unantastbar)
+- PASS — SCHALTER-HIGH-ENTROPIE: peff >= 0.0 (Doppelklausel:
+  P(1) <= 0.15 UND P(24) <= 0.15 UND P(0)-P(1) >= 3*SE
+  gemessen UND P(0) >= 0.5). Konsequenz: der Schalter kippt
+  die Lernbarkeit auch bei Aufgaben-Entropie — die Bruecke
+  Reservoir -> trainiert steht am lernbaren Instrument.
+- KILL — ENTROPIE-RESISTENT: peff < 0.0. Konsequenz: bei
+  zufaelligen Lehrern kippt nichts — der Schalter ist ein
+  Phaenomen der AUFGABEN-Struktur (delayed recall), nicht der
+  Geometrie. Grenze des Befunds praecise gezeichnet.
+- TEIL-VERDICT (Bericht): P kollabiert, DM_final trennt nicht.
+- UNENTSCHEIDEN: Crash (P(0) < 0.5, ndiv > 6, Divergenz >
+  10 Prozent). R5: EINE Reparatur, dann Linie tot.
+
+## Vorhersageband (mechanisch, R8-Haertung, ehrlich duenn)
+- DM_init(0) in [8.80, 19.80] (T25 n=11) — einzige Quelle.
+- ALLE aufgabenbezogenen Groessen sind ERSTFAHRT ohne Band;
+  registriert als solche, keine nachgeklaubten Intervalle.
+
+## Recon-Positionierung
+Kein Doppel: Zufalls-Lehrer-Ensembles sind Standard in
+Generalisierungs-Tests (random task distributions), aber die
+Frage "kippt eine Basis-Rotation gegen die tanh-Achsen die
+Lernbarkeit ueber EINEM ganzen Aufgaben-Ensemble" ist nach
+unserer Recherche unbeantwortet — T27 (feste Aufgabe) bleibt
+der naechste Nachbar und ist UNENTSCHEIDEN.
+
+## Compute-Disziplin
+Ein Commit, zwei Feuern: T26-R5 (Emissions-Reparatur, Physik
+frozen, A0-t-Werte zeigen auf KILL) und T28 (neuer Stein,
+neues R5-Budget). Keine weiteren Reruns ohne neues Verdikt.
