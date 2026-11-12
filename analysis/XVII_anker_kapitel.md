@@ -2606,3 +2606,78 @@ R2 als maschinelle Readout-Schleife (nicht als
 Bauenden-Selbstkontrolle) hat der T21/T23-Fehlerklasse die
 Grundlage entzogen. Bau blieb Flaschenhals der Saison, aber
 die Fehlerklasse ist bei T24 erstmals leer.
+
+
+
+---
+
+# Nachtrag 45 (2026-11-12): T25 ORDNUNGSPARAMETER REGISTRIERT (L5-Durchlauf 4, Quelle Maschine). Band und Schwellen VOR dem Lauf eingefroren.
+
+## Registrierung
+Vorschlag: P4-Generator v1.3 (Bot-Commit bae6c64, 07:11 UTC,
+Proposal v1.3, Score 0.80 — Ueberraschung 1.0, Kostenquote
+0.56, Scheidung 1.0). Erster Maschinen-Vorschlag auf Basis der
+T24-Frischdaten. Recon-Positionierung (2026-11-12, vor der
+These): Die Recherche findet KEIN Doppel des Schalter-
+Befunds; naechste Nachbarn sind (1) Geometric-Continuity-
+Arbeit arXiv 2605.04971 (symmetriebrechende Nichtlinearitaeten
+pinnen Schichten an ein gemeinsames Koordinatensystem — MLP/
+Transformer, Kontinuum, kein binarer Schalter, nicht
+rekurrent), (2) Warmuth, Downside of Rotation Invariance
+(untere Schranken rotationsinvarianter Algorithmen, Theorie
+ohne empirischen Schalter), (3) Vorontsov 2017 (Orthogonalitaet
+als RNN-Empfehlung — genau der Knaul, an dem wir den Schalter
+messen), (4) Seed-Folklore (torch.manual_seed(3407), mean+-std-
+Bericht). Prioritaets-Fenster als endlich eingeschaetzt.
+
+## Frage
+Ist der DM-Kollaps (T20-Beifang 13.21 -> 1.40, parallel zum
+Schalter) ein ORDNUNGSPARAMETER des Kipppunkts — trennt DM
+gekippte von intakten Netzen VOR dem Verdikt — oder ein
+Begleitprodukt (konsistent mit T20-R2 KILL DM-NEBENSPUR)?
+
+## Design (eingefroren)
+EINE Zelle (H=48, s=2.2, wb=0.6, T20-Basisparameter).
+Stufen a in {0, 1, 4, 24} (Konjugation Q_a W Q_a^T,
+Q_SEED=2020), je 1 frischer 20er-Block:
+  a=0: 750..769 | a=1: 770..789 | a=4: 790..809 | a=24: 810..829
+Anchor HIGH48 (s=5.5, a=0): 830..849. DM-Definition
+unveraendert aus dem T20-Instrument. Total 100 Runs,
+Fix 5.0 + variabel 28.3 = 33.3 min (Cap 60). R7: a=1 ist
+die Replikations-Stufe (T23), a=0 die Klammer (T24-P(0)).
+
+## Masse (R2: an JEDEM Arm inkl. Anchor)
+pf, colnorm, ndiv, DM je Seed; DM-Mittel je Stufe;
+dmdrop = DM(0) - DM(1).
+
+## Verdict-Schwellen (unantastbar)
+- PASS — ORDNUNGSPARAMETER-BESTAETIGT: dmdrop >= 5.0 UND
+  dmdrop >= 3 * SE(dmdrop, im Lauf gemessen) UND Sanity
+  clean. Konsequenz: DM wird Vorhersage-Instrument; naechster
+  Stein: DM-Schwellwert-Kippregel pro Seed.
+- KILL — DM-NEBENPRODUKT: dmdrop < 5.0 oder < 3 * SE.
+  Konsequenz: DM als Diagnostikum gefallen; Ordnungsparameter-
+  Suche geht zu Gain-Verteilung.
+- UNENTSCHEIDEN: Crash (Sanity Anchor pf < 0.5, ndiv > 6 je
+  Block, colnorm-Verletzung). R5: EINE Reparatur, dann Linie
+  tot. R4 erfuellt.
+
+## Vorhersageband (mechanisch, R8-Haertung)
+- DM(0) in [8.80, 19.80] (T20 n=1: 13.21, +50% Weite)
+- DM(1) in [0.90, 2.10] (T20 n=1: 1.40, +50% Weite)
+- dmdrop in [5.90, 17.70] (T20-Effekt 11.81, n=1)
+- P(0) in [0.25, 0.64] | P(1) in [0.00, 0.22] |
+  P(4) in [0.00, 0.30] | P(24) in [0.00, 0.25]
+  (T23 frisch, n=1 je Stufe — R8; P(0): T22 10-Block)
+
+## L5-Serien-Zettel (Durchlauf 4)
+Quelle: Maschine (Generator v1.3). Zweiter R8-Band-Einsatz;
+erste Doppelklausel der Serie (Schwelle + 3-SE gegen im Lauf
+gemessene Streuung, weil DM-SE ungetestet ist — R1-Luecke
+dokumentiert, nicht vertuscht).
+
+## Kernel-Bilanz (Stand, unveraendert bis T25-Verdict)
+10 kernel-generierte Steine (T15..T24). T25 ist der erste
+Stein der Linie SCHALTER mit einem diagnostischen (nicht
+kausalen) Verdikt-Mass — der Uebergang von Phaenomen- zu
+Werkzeug-Frage.
