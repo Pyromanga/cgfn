@@ -44,6 +44,7 @@ T22   | War der alte Block ein Ausreisser? (5 neue disjunkte 20er-Bloecke; erste
 T23   | Repliziert der a=1-Kollaps auf frischen Bloecken? (erster MASCHINEN-Vorschlag P4 v1.1; R5-Reparatur Pfad (b)) | PASS (SCHALTER-BESTAETIGT) | drop1=0.55 (~5.7 SE >= 0.30); P-Stufen 0.575/0.025/0.10/0.15; keine Dosis-Kurve (Plateau + Mini-Erholung); L5 Maschine 5/6 (drop124 verfehlt an duenner Quelle) | Nachtraege 40-42
 T24   | Kippt JEDE 1-dim-Konjugation? (5 Achsen q_seed x 20 frische Seeds; Maschinen-Vorschlag P4 v1.2, R8-Band) | PASS (RICHTUNGS-AGNOSTISCH) | pqmax=0.10 <= 0.15; Achsen-P_Q 0.05/0.05/0.05/0.10/0.00 (im Block-Rauschen, kein Achsen-Lotto); P(0)=0.60; L5-Band 7/7 (R8-Erstfahrt); sauberster Stein: 0 Reparaturen | Nachtraege 43-44
 T25   | Ist DM ein Ordnungsparameter des Schalters? (Stufen a {0,1,4,24}; Maschinen-Vorschlag P4 v1.3, Doppelklausel dmeff) | PASS (ORDNUNGSPARAMETER EBENE) | dmeff=11.65 (~55 SE); DM 13.06 -> 1.33-1.59 Plateau wie P-Kurve; BEYFANG: Per-Seed-Trennung NEGATIV (13.13 vs 12.97, Delta < SE); L5-Band 7/7; zweiter interventionsfreier Stein | Nachtraege 45-46
+T27   | Kippt der Schalter im GRADIENTEN-trainierten Netz? (LINIE TRAIN, erster Gradienten-Stein; R5 600->2500) | UNENTSCHEIDEN (SANITY, 2x) | P_lernt=0.00 in ALLEN Armen inkl. Kontrolle; DM_final trennt 7.58 (~54 SE) — Struktur ueberlebt Training; R5 verbraucht | Nachtraege 48+50
 
 ## Serie W — Werkzeug
 W1-P1 | Lab-Kernel Historien-Test                           | PASS          | T15 exakt wiedergegeben; T11-Bug angezeigt; T15-Run1-Bug verweigert | Nachtrag 19
@@ -62,6 +63,8 @@ T20-R2 -> T23 (Schalter-Signal als Dosis-Kurve; erster Maschinen-Vorschlag, Krit
 T23 -> T24 (Richtungs-Frage; Maschinen-Vorschlag P4 v1.2, R8-Band-Haertung Erstfahrt)
 T24 -> T25 (Ordnungsparameter-Frage; Maschinen-Vorschlag P4 v1.3, Doppelklausel dmeff)
 T25 -> OFFEN: PER-SEED-ORDNUNG (DM trennt Ebenen, nicht Seeds; Kandidaten Gain-Verteilung / DM-Varianten, sonst Intra-Block-Lotto unveraenderlich)
+T25 -> T27 (Bruecken-Frage LINIE TRAIN; erster Gradienten-Stein, Hand-Registrierung N48)
+T27 -> OFFEN: TRAIN-INSTRUMENT (delayed recall fuer flaches MLP ungelernbar — P=0 auch in Kontrolle; neuer Stein nur mit neuem Task-Design, Kapitaen-Entscheidung)
 
 ## Offene Fragen (Stand 2026-11-11, nach T23)
 1. PER-SEED-ORDNUNG: Trennt UEBERHAUPT eine Groesse gelernt vs gescheitert INNERHALB eines Blocks (Kandidaten: Gain-Verteilung, DM-Varianten), oder ist das Intra-Block-Lotto unveraenderlich? — T26-Kandidat nach Generator-Rotation.

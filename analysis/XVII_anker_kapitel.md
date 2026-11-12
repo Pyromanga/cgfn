@@ -2926,3 +2926,61 @@ py_compile-Probe auf JEDEM neu generierten Instrument vor dem
 Push, Quote-Bilanz je String-Literal, Klammer-Bilanz je
 Funktion — die Fehlerklasse ist bekannt, die Proben stehen
 jetzt VOR dem Push, nicht im Run.
+
+
+
+---
+
+# Nachtrag 50 (2026-11-12): T27 SCHALTER-TRAIN — UNENTSCHEIDEN (SANITY GERICHT, Run 2 nach R5); LINIE TRAIN IN DIESER BAUFORM GESCHLOSSEN
+
+## Lauf
+Run 43324794905 (R5-Reparatur: steps 600 -> 2500, alles andere
+frozen). Beide Runs 60/60 sauber (ndiv=0, colnorm ok, keine
+Divergenz). Results: results/t27_schalter_train_results.txt.
+
+## Zahlen (maschinell, N-Skelett im Results-File)
+P_lernt = 0.00 in ALLEN drei Armen (a=0: 910..929, a=1: 930..949,
+a=24: 950..969) — auch in der KONTROLLE. DM_init-Stufen
+13.4820 / 1.4081 / 1.5736 (Band-Treffer, Konjugations-Encoding
+funktioniert im MLP exakt wie im Reservoir). DM_final-Stufen
+8.8274 / 1.2436 / 1.3637; Trennung DM_final(0) - DM_final(1) =
+7.5838, SE 0.1415 -> ~54 SE. L5-Band 3/4 (P(0)-Band verfehlt,
+dort stand die Sanity).
+
+## Lesart (handgeschrieben, ehrlich)
+1. Die R5-Reparatur (4x Trainingslaenge) hat NICHTS bewegt: P
+   bleibt exakt 0.00 auch in der Kontrolle. Das ist kein
+   Grenzfall "zu kurz trainiert" — die delayed-recall-Aufgabe
+   wird unter dieser Konfiguration gar nicht erst gelernt.
+   Primaer-Verdacht: das INSTRUMENT (Task-Encoding/Readout fuer
+   ein flaches MLP ohne Rekurrenz), nicht die Physik. Aber:
+   R5 ist verbraucht, keine dritte Fahrt im selben Stein.
+2. BEYFANG (stark): DM ueberlebt das Gradienten-Training und
+   folgt der Konjugationstiefe (~54 SE). Die geometrische
+   Struktur ist kein Init-Effekt — sie persistiert unter Adam.
+   Die Bruecke "Struktur" haelt; die Bruecke "Aufgabe" blieb
+   mit diesem Instrument unentschieden.
+3. Konsequenz nach R5: LINIE TRAIN TOT in dieser Bauform (wie
+   die DM-Linie nach T20-R2). Ein neuer Stein (T28) waere NEUE
+   Registrierung mit neuem Instrument (Task, die ein MLP ohne
+   Rekurrenz ueberhaupt lernen kann, oder rezurrenter Kopf) —
+   Entscheidung dem Kapitaen vorbehalten. Compute-Disziplin:
+   kein automatischer Rerun.
+4. Selbstbefund des Labors: zwei UNENTSCHEIDEN in einer Linie
+   zeigen, dass der Uebergang Reservoir -> trainiert
+   unterschaetzt teuer war. Positiv: das P(0)-Band (R6-Sanity)
+   hat die Fehlkalkulation abgefangen, BEVOR ein falsches PASS
+   haette entstehen koennen — das Gate hat gearbeitet, das
+   Verdikt ist sauber UNENTSCHEIDEN, kein KILL unter Vorspiegelung.
+
+## L5-Serien-Zettel (Durchlauf 6, Linie TRAIN)
+Band-Quelle: Hand (N48-Registrierung). Treffer 3/4. Die
+verfehlte Zelle ist genau die Sanity-Zelle — konsistent mit
+"Instrument, nicht Physik".
+
+## Kernel-Bilanz (Stand)
+12 kernel-generierte Steine (T15..T27), 8 saubere Verdikte,
+3 UNENTSCHEIDEN (T27 2x, davor T19/T20-Klasse), 2 Readout-
+Reparaturen (T21, T23). R2 (Masse an JEDEM Arm) hat auch hier
+den Beyfang gerettet: ohne DM_final waere der Lauf leer
+gewesen.
