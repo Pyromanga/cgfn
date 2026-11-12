@@ -75,16 +75,17 @@ def candidate_per_seed_ordnung():
     total = n_runs * SNAPSHOT['sec_per_run'] / 60.0 + SNAPSHOT['fix_min']
     ps = SNAPSHOT['t25_per_seed']
     d_dm = ps['gelernt'][0] - ps['gescheitert'][0]
+    frage_txt = ('Trennt UEBERHAUPT eine messbare Groesse gelernte von'
+                 ' gescheiterten Seeds INNERHALB eines Blocks? T25-'
+                 'Beyfang: DM gelernt %.3f (n=%d) vs gescheitert %.3f'
+                 ' (n=%d), Differenz %.3f < SE. Kandidaten: DM,'
+                 ' Initial-Loss, Gain-Mittel, Gain-Std, Weight-Norm,'
+                 ' colnorm.') % (ps['gelernt'][0], ps['gelernt'][1],
+                                ps['gescheitert'][0],
+                                ps['gescheitert'][1], d_dm)
     return dict(
         id='T26 PER-SEED-ORDNUNG',
-        frage=('Trennt UEBERHAUPT eine messbare Groesse gelernte von'
-               ' gescheiterten Seeds INNERHALB eines Blocks? T25-'
-               'Beyfang: DM gelernt %.3f (n=%d) vs gescheitert %.3f'
-               ' (n=%d), Differenz %.3f < SE — kein Trenner. Kandidaten:'
-               ' DM, Initial-Loss, Gain-Mittel, Gain-Std, Weight-Norm,'
-               ' colnorm.')
-               % (ps['gelernt'][0], ps['gelernt'][1],
-                  ps['gescheitert'][0], ps['gescheitert'][1], d_dm),
+        frage=frage_txt,
         these=('Wenn ja (>= 3 * SE, Doppelklausel): Intra-Block-Marker'
                ' -> Kipp-Vorhersage VOR dem Training moeglich (T27
                ' Kippregel pro Seed). Wenn nein: Intra-Block-Lotto ist'
@@ -135,14 +136,15 @@ def candidate_block_mittel():
 
 
 def r_check(c):
+    d_dm = (SNAPSHOT['t25_per_seed']['gelernt'][0]
+            - SNAPSHOT['t25_per_seed']['gescheitert'][0])
+    r1_txt = ('Doppelklausel: Schwellwert je Kandidat fixiert VOR dem'
+              ' Readout, ZUSAETZLICH >= 3 * SE(im Lauf gemessen);'
+              ' T25-Differenz %.3f < SE -> keine Vorab-Schwelle aus DM'
+              ' ableitbar; P-Schwellen: Kipp-Erwartung 3+ SE unter'
+              ' P(0)-Mittel') % d_dm
     checks = [
-        ('R1', ('Doppelklausel: Schwellwert je Kandidat fixiert VOR dem'
-                ' Readout, ZUSAETZLICH >= 3 * SE(im Lauf gemessen);'
-                ' T25-Differenz %.3f < SE -> keine Vorab-Schwelle aus DM'
-                ' ableitbar; P-Schwellen: Kipp-Erwartung 3+ SE unter
-                ' P(0)-Mittel' % (SNAPSHOT['t25_per_seed']['gelernt'][0]
-                                  - SNAPSHOT['t25_per_seed']['gescheitert'][0])),
-         True),
+        ('R1', r1_txt, True),
         ('R2', 'Alle Kandidat-Masse (DM, Initial-Loss, Gain-Mittel,'
                ' Gain-Std, Weight-Norm, colnorm, pf) an JEDEM Arm inkl.'
                ' Anchor; Trennung je Kandidat registriert', True),
