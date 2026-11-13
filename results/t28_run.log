@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/home/runner/work/cgfn/cgfn/experiments/t28_zufalls_lehrer.py", line 278, in <module>
+    main()
+  File "/home/runner/work/cgfn/cgfn/experiments/t28_zufalls_lehrer.py", line 242, in main
+    [r['dm_final'] for r in rows if r['arm'] == 'A0']).std()).item(), 1e-9)
+                                                              ^^^^
+AttributeError: 'float' object has no attribute 'item'

@@ -1,0 +1,19 @@
+======================================================================================================================
+T28 — ZUFALLS-LEHRER v1 (LINIE TRAIN, zweiter Stein; HIGH-ENTROPIE-Aufgabe)
+These (Nachtrag 51): Kippt die Konjugation die Lernbarkeit, wenn die
+Aufgabe selbst hochentropisch ist? Je Seed ein frischer zufaelliger
+tanh-Lehrer (8 hidden); Lernkriterium kalibrierungsfrei: R2 >= 0.9.
+MLP H=48, tanh, kein Bias, W1 = Q_a W_init Q_a^T (Q_SEED=2020).
+Stufen a {0,1,24}, Bloecke 970..1029, 800 Steps, batch=64, f64.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t28.py
+PRIMAER: peff = P(0)-P(1) falls (P(1) <= 0.15 UND P(24) <= 0.15 UND
+>= 3*SE gemessen UND P(0) >= 0.5), sonst -1. Grauzone komplementaer.
+R2: jedes Mass an JEDEM Arm.
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm A0 (H=48, role=block, a=0, seeds 970..989): n_ok=20/20 | P_lernt=1.00 | div=0 | DM_init=13.6220 | DM_final=3.6121
+
+Arm A1 (H=48, role=block, a=1, seeds 990..1009): n_ok=20/20 | P_lernt=1.00 | div=0 | DM_init=1.4012 | DM_final=1.1217
+
+Arm A24 (H=48, role=block, a=24, seeds 1010..1029): n_ok=20/20 | P_lernt=1.00 | div=0 | DM_init=1.5871 | DM_final=1.1517
