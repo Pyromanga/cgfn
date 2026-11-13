@@ -3048,3 +3048,71 @@ der naechste Nachbar und ist UNENTSCHEIDEN.
 Ein Commit, zwei Feuern: T26-R5 (Emissions-Reparatur, Physik
 frozen, A0-t-Werte zeigen auf KILL) und T28 (neuer Stein,
 neues R5-Budget). Keine weiteren Reruns ohne neues Verdikt.
+
+
+
+---
+
+# Nachtrag 49 (2026-11-12): T26 PER-SEED-ORDNUNG — KILL (INTRA-BLOCK-LOTTO). Per-Seed-Frage NEGATIV geschlossen.
+
+## Lauf
+Run 1 (43324470898): UNENTSCHEIDEN (Crash-Klasse) — Kollaps-Gate:
+der Contract deklarierte die fuenf Kandidaten-Masse, das
+Instrument lieferte sie nicht in measurements (Emissions-
+Luecke, kein stilles Loch — das Gate hat genau das gefangen,
+wofuer es gebaut ist). R5-Einmalreparatur: NUR die Emission
+ergaenzt (Arm-Mittel je Kandidat), Physik/Seeds/Schwellen/
+sepmax-Logik frozen. Rerun (Run 3, results-Commit ff1d9fc):
+60/60 sauber, LUECKENLISTE LEER.
+
+## Zahlen (maschinell, N-Skelett im Results-File)
+sepmax = -1.00 (Gewinner: None), PASS-Schwelle 3.0. Alle fuenf
+Kandidaten im a=0-Block (13 gelernt vs 7 gescheitert): dm t=0.49,
+initloss t=0.00, gainmean t=0.71, gainstd t=0.54, wnorm t=0.00 —
+max 0.71, weit unter 3. Sanity clean (HIGH48 P=1.00, P(1)=0.05,
+ndiv=0). L5-Band 3/5: DM_gelernt 13.37 TREFFER, DM_gescheitert
+13.72 TREFFER, P(1) 0.05 TREFFER; Differenz_DM -0.34 ausserhalb
+[0.11, 0.24] (Vorzeichen gedreht gegen T25-Beyfang), P(0)=0.65
+knapp ueber [0.25, 0.64].
+
+## Lesart (handgeschrieben, ehrlich)
+1. KILL, und zwar UEBERZEUGEND: kein Kandidat kommt auch nur in
+   die Nahe der Schwelle (0.71 gegen 3.0 — Faktor 4 Luft). Das
+   Intra-Block-Lotto ist mit den fixierten Kandidaten (dm,
+   initloss, gainmean, gainstd, wnorm) UNveraenderlich: welche
+   Seeds lernen, ist aus diesen Groessen am initialisierten
+   Netz nicht vorhersagbar. DM bleibt Ebenen-Marker (T25);
+   die Per-Seed-Frage ist NEGATIV geschlossen.
+2. Ehrliche Design-Notiz (keine Nachverhandlung, aber
+   protokolliert): der Richtungs-Konstanz-Teil der sepmax-
+   Klausel ist bei P(1)=0.05 strukturell untestbar — mit 1
+   gelernten Seed in a=1 ist jede Trennung nan, sepmax
+   reduziert sich praktisch auf t(a=0). Das aendert das
+   Verdikt nicht (0.71 << 3 mit Faktor-4-Abstand), aber der
+   naechste Stein dieser Klasse muss Arme mit genug gelernten
+   Seeds auf BEIDEN Seiten planen.
+3. Band-Bilanz ehrlich: 3/5. Die zwei Fehltreffer sind beide
+   informativ: Differenz_DM drehte das Vorzeichen gegen den
+   T25-Beyfang (Block-Empfindlichkeit, Lehre T21), und P(0)=0.65
+   liegt knapp ueber dem T22-Band — neue Blocks, neue Mitte.
+   Das Maschinen-Band (Generator v1.4) war zu eng kalibriert:
+   Kalibrations-Lehre fuer v1.5.
+4. Konsequenz (R4): KILL -> Per-Seed-Linie mit diesen
+   Kandidaten TOT. Backlog: Gain-VERTEILUNG als Ebenen-
+   Kandidat (nicht Per-Seed); Prioritaet aber hinter T28,
+   denn die Bruecke Reservoir -> trainiert ist die groessere
+   offene Frage.
+
+## L5-Serien-Zettel (Durchlauf 5, abgeschlossen)
+Quelle: Maschine (Generator v1.4). Der Stein kam aus einem
+Ehrlichkeits-Beyfang (T25 Per-Seed-NEGATIV) und endet im
+KILL, der diesen Beyfang bestaetigt: die Maschine fragte
+richtig, die Antwort ist nein. Bilanz Durchlauf 5: 1 KILL,
+Band 3/5 (zu eng), 1 Gate-Fang (Emission), 1 R5 verbraucht.
+
+## Kernel-Bilanz (Stand)
+13 kernel-generierte Steine (T15..T28 in der Luft), 9 saubere
+Verdikte. Der T26-Fall ist die Bestaetigung der Wette von W1:
+die Emissions-Luecke wurde VOR dem Auswerten gefangen — ein
+stilles Loch haette hier ein PASS oder KILL aus unvoll-
+staendigen Daten produzieren koennen.
