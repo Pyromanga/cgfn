@@ -239,7 +239,7 @@ def main():
     dm1 = measurements['A1']['dm_final']
     if dm0 == dm0 and dm1 == dm1:
         se_dm = max(float(torch.tensor(
-            [r['dm_final'] for r in rows if r['arm'] == 'A0']).std()).item(), 1e-9)
+            [r['dm_final'] for r in rows if r['arm'] == 'A0']).std().item()), 1e-9)
         L.append('DM_FINAL-BERICHT: DM_final(0) - DM_final(1) = %.4f | '
                  'SE = %.4f | trennt (>= 3*SE): %s'
                  % (dm0 - dm1, se_dm, abs(dm0 - dm1) >= 3 * se_dm))
