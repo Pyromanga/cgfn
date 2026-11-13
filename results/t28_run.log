@@ -1,7 +1,62 @@
-Traceback (most recent call last):
-  File "/home/runner/work/cgfn/cgfn/experiments/t28_zufalls_lehrer.py", line 278, in <module>
-    main()
-  File "/home/runner/work/cgfn/cgfn/experiments/t28_zufalls_lehrer.py", line 242, in main
-    [r['dm_final'] for r in rows if r['arm'] == 'A0']).std()).item(), 1e-9)
-                                                              ^^^^
-AttributeError: 'float' object has no attribute 'item'
+======================================================================================================================
+T28 — ZUFALLS-LEHRER v1 (LINIE TRAIN, zweiter Stein; HIGH-ENTROPIE-Aufgabe)
+These (Nachtrag 51): Kippt die Konjugation die Lernbarkeit, wenn die
+Aufgabe selbst hochentropisch ist? Je Seed ein frischer zufaelliger
+tanh-Lehrer (8 hidden); Lernkriterium kalibrierungsfrei: R2 >= 0.9.
+MLP H=48, tanh, kein Bias, W1 = Q_a W_init Q_a^T (Q_SEED=2020).
+Stufen a {0,1,24}, Bloecke 970..1029, 800 Steps, batch=64, f64.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t28.py
+PRIMAER: peff = P(0)-P(1) falls (P(1) <= 0.15 UND P(24) <= 0.15 UND
+>= 3*SE gemessen UND P(0) >= 0.5), sonst -1. Grauzone komplementaer.
+R2: jedes Mass an JEDEM Arm.
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm A0 (H=48, role=block, a=0, seeds 970..989): n_ok=20/20 | P_lernt=1.00 | div=0 | DM_init=13.6220 | DM_final=3.6121
+
+Arm A1 (H=48, role=block, a=1, seeds 990..1009): n_ok=20/20 | P_lernt=1.00 | div=0 | DM_init=1.4012 | DM_final=1.1217
+
+Arm A24 (H=48, role=block, a=24, seeds 1010..1029): n_ok=20/20 | P_lernt=1.00 | div=0 | DM_init=1.5871 | DM_final=1.1517
+
+--- T28-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: P(0)=1.0000 | P(1)=1.0000 | P(24)=1.0000
+SE(P0-P1) = 0.0000 (gemessen) | 3*SE = 0.0000
+DOPPELKLAUSEL: P(1) <= 0.15: False | P(24) <= 0.15: False | Diff >= 3*SE: False | P(0) >= 0.5: True -> peff = -1.0000
+DM_FINAL-BERICHT: DM_final(0) - DM_final(1) = 2.4904 | SE = 0.2308 | trennt (>= 3*SE): True
+L5-BAND (registriert VOR dem Lauf, Nachtrag 51, R8):
+  DM_init(0) in [8.80, 19.80]: gemessen 13.6220 — TREFFER
+  Aufgabenbezogene Groessen: ERSTFAHRT ohne Band (registriert).
+L5-BAND-TREFFER: 1/1 (Hand-Band, Nachtrag 51, R8)
+
+VERDICT: KILL — ENTROPIE-RESISTENT
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 51 (2026-11-12) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: KILL — ENTROPIE-RESISTENT
+
+## Arm-Zahlen (aus dem Contract generiert)
+  A0.pf = 1
+  A0.colnorm = 0.13737
+  A0.ndiv = 0
+  A0.dm_init = 13.622
+  A0.dm_final = 3.61205
+  A0.peff = -1
+  A1.pf = 1
+  A1.colnorm = 0.265708
+  A1.ndiv = 0
+  A1.dm_init = 1.40116
+  A1.dm_final = 1.12169
+  A1.peff = -1
+  A24.pf = 1
+  A24.colnorm = 0.26362
+  A24.ndiv = 0
+  A24.dm_init = 1.58714
+  A24.dm_final = 1.15166
+  A24.peff = -1
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
+
+[i] Laufzeit: 0.3 min
+[i] Ergebnisse: results/t28_zufalls_lehrer_results.txt | results/t28_zufalls_lehrer_table.csv | results/t28_measurements.json
