@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "<frozen runpy>", line 291, in run_path
+  File "<frozen runpy>", line 98, in _run_module_code
+  File "<frozen runpy>", line 88, in _run_code
+  File "experiments/t28_zufalls_lehrer.py", line 32, in <module>
+    FIXED_P0 = P['fixed_p0']
+               ~^^^^^^^^^^^^
+KeyError: 'fixed_p0'
