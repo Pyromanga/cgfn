@@ -62,7 +62,8 @@ def contract_t28():
         params=dict(
             stages=list(STAGES),
             blocks={str(k): list(BLOCKS[k]) for k in BLOCKS},
-            q_seed=Q_SEED, din=48, t_hidden=8, steps=800,
+            q_seed=Q_SEED, fixed_p0=4242, test_seed=777,
+            din=48, t_hidden=8, steps=800,
             batch=64, lr=5e-3, lam_max=0.6, wb=0.6, r2_pass=0.9,
             pf_pass=PF_PASS, peff_zero=PEFF_ZERO),
         arms=arms,
