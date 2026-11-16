@@ -3345,3 +3345,86 @@ vs verlaessliches Recall; kein Doppel. Intrinsic Task
 Symmetry Drives Generalization (arXiv 2603.01968) —
 Aufgaben-Symmetrie als Generalisierungs-Mechanismus,
 unterstuetzt die Aufgaben-Struktur-Lesart aus T28.
+
+
+---
+
+# T29-R5 — VERDIKT ERGAENZUNG (2026-11-16): UNENTSCHEIDEN (SANITY GERICHT), Linie TOT — mit Hammer-Nebenbefund
+
+## Lauf
+Run (43906353760) gruenn, 80/80, LUECKENLISTE LEER.
+
+## Zahlen
+P_NOW(0) = 1.00 | P_NOW(1) = 1.00 — die GEDAECHTNISFREIE
+Aufgabe lernt in BEIDEN Konjugationen perfekt (40/40).
+P_MEM(0) = 0.00 | P_MEM(1) = 0.00 — Final-State-Ridge
+schafft delayed recall auch bei a = 0 nicht (der
+Gradienten-Kopf schaffte 0.50): Instrument zu schwach.
+dm29r5 = -1 (Klausel P_MEM(0) >= 0.25 FALSE).
+Band 1/2 (P_NOW(0) war Erstfahrt ohne Band, nur MEM
+gebandet; P_MEM(1) TREFFER, P_MEM(0) NEIN).
+
+## Lesart (handgeschrieben, ehrlich)
+1. Verdikt bleibt UNENTSCHEIDEN (Freeze, keine Nachver-
+   handlung). R5 verbraucht, Linie TOT — registriert.
+2. ABER der NOW-Befund ist der bisher sauberste der
+   Schalter-Linie: gedaechtnisfreies Lernen kollabiert
+   unter Konjugation NICHT (1.00 vs 1.00, 40/40).
+   Kombiniert mit T23/T24/T25 (MEM kollabiert) zeichnet
+   sich die Antwort auf N53s Frage ab: der Schalter
+   lebt im GEDAECHTNIS-Anteil der Aufgabe.
+3. Der MEM-Tod bei a=0 ist Instrument (Final-State-
+   Readout), nicht Geometrie — das naehrt den Verdacht,
+   dass auch T23-T25 teilweise eine Lesespur-Frage sind.
+   Neuer Stein T30 (Nachtrag 54) prueft genau das:
+   Fenster-Readout, Prozess statt Ergebnis.
+
+
+
+---
+
+# Nachtrag 54 (2026-11-16): T30 FENSTER-READOUT REGISTRIERT — Prozess statt Ergebnis. Neuer Stein nach T29-R5 (Linie dort TOT, keine Reparatur).
+
+## Konsequenz aus T29-R5 (Zahlen, nicht Erzaehlung)
+- NOW (gedaechtnisfrei): P = 1.00 in BEIDEN Konjugationen
+  (40/40) — die Geometrie killt gedaechtnisfreies Lernen
+  NICHT. Sauberste Lokalisierung der Serie.
+- MEM mit Ridge auf dem Final-State: 0.00 auch bei a = 0.
+  Der Gradienten-Kopf schaffte 0.50 — der Final-State-
+  Readout ist zu schwach fuer delayed recall (Instrument-
+  Verdacht, nicht Physik).
+
+## Frage (Landscape-Punkt 2: Prozess statt Ergebnis)
+Haelt der Reservoir-Schalter, wenn der Readout die ganze
+Rechenspur bekommt — ein Zustands-FENSTER der letzten
+W = 6 Frames (Feature-Dim 288) statt nur des Final-State?
+
+## Design (eingefroren, VOR dem Lauf)
+Exakt die T20/T23-Maschine (H=48, s=2.2, wb=0.6); Ridge
+lam = 1.0 fix, Train 512, Test 1024, P_lernt = acc >= 0.95
+(beide Aufgaben gleich). Aufgaben: MEM (Referenz) und NOW
+(Kontrolle aus T29-R5). Stufen a {0,1}: MEM 1190..1229,
+NOW 1230..1269. 80 Runs, f64, ~15 min, kein Gradienten-
+Training.
+- Sanity: NOW_A0 >= 0.6 UND MEM_A0 >= 0.5 (mit fairer
+  Lesespur MUSS die Referenz klar lernen).
+- PRIMAER: dm30 = P_MEM(0) - P_MEM(1), Doppelklausel
+  (P_MEM(0) >= 0.5 UND P_NOW(0) >= 0.6 UND >= 3*SE).
+- PASS — SCHALTER-BESTAETIGT: dm30 >= 0.30 — der Kollaps
+  haelt bei fairer Lesespur; Schalter echt an Gedaechtnis
+  gebunden.
+- KILL — READOUT-ARTIFAKT: dm30 < 0.30 (intakte Sanity) —
+  T23-T25 waren teilweise eine Frage der Lesespur.
+  Grauzone 0.0..0.30 komplementaer zu KILL registriert.
+- UNENTSCHEIDEN: Crash. Danach ist die Frage mit Ridge-
+  Instrumenten geschlossen (keine R5 mehr auf der Linie).
+- Band (R8): P_NOW(0) in [0.80, 1.00] (T29-R5: 1.00,
+  n=20, verengt registriert); MEM-Arme ERSTFAHRT ohne
+  Band (Fenster-Instrument neu — Lehre T26: nicht
+  nachklauben).
+
+## Recon (2026-11-16)
+Basin Geometry and Reliable Recall of Dynamical Memories
+(arXiv 2609.01914) — Becken-Geometrie vs verlaessliches
+Recall; kein Doppel. Der Fenster-Readout als
+"Prozess-Belohnung"-Analogie ist unsere eigene Lesart.

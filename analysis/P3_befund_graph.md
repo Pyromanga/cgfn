@@ -85,3 +85,12 @@ Instrument-Tod, nicht Geometrie-Befund. R5-Kandidat:
 Ridge-Readout fuer RND (EINE Reparatur, dann Linie tot).
 Knoten: dm29 unentschieden; DM bleibt Struktur-Marker
 (T25/T28-Lesart unangetastet).
+
+### T29-R5 (2026-11-16): UNENTSCHEIDEN (SANITY GERICHT), Linie TOT
+SCHALTER-RIDGE (Reparatur: Ridge-Readout + gedaechtnisfreier
+NOW-Task): NOW 1.00 in BEIDEN Konjugationen (40/40) —
+Geometrie killt gedaechtnisfreies Lernen NICHT. MEM 0.00
+auch bei a=0 — Final-State-Readout zu schwach (Instrument).
+dm29r5=-1. Kombiniert mit T23-T25: Schalter lebt im
+Gedaechtnis-Anteil. Folge-Stein T30 (Fenster-Readout,
+N54) prueft den Readout-Verdacht.
