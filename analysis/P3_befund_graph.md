@@ -46,6 +46,7 @@ T24   | Kippt JEDE 1-dim-Konjugation? (5 Achsen q_seed x 20 frische Seeds; Masch
 T25   | Ist DM ein Ordnungsparameter des Schalters? (Stufen a {0,1,4,24}; Maschinen-Vorschlag P4 v1.3, Doppelklausel dmeff) | PASS (ORDNUNGSPARAMETER EBENE) | dmeff=11.65 (~55 SE); DM 13.06 -> 1.33-1.59 Plateau wie P-Kurve; BEYFANG: Per-Seed-Trennung NEGATIV (13.13 vs 12.97, Delta < SE); L5-Band 7/7; zweiter interventionsfreier Stein | Nachtraege 45-46
 T26   | Trennt eine Groesse gelernt vs gescheitert INNERHALB eines Blocks? (Maschinen-Vorschlag P4 v1.4; R5 = Emissions-Reparatur) | KILL (INTRA-BLOCK-LOTTO) | sepmax=-1; max t=0.71 (gainmean) << 3.0 — Faktor 4 Luft; alle 5 Kandidaten tot; Per-Seed-Frage NEGATIV geschlossen; L5-Band 3/5 (Maschinen-Band zu eng) | Nachtraege 47+49
 T27   | Kippt der Schalter im GRADIENTEN-trainierten Netz? (LINIE TRAIN, erster Gradienten-Stein; R5 600->2500) | UNENTSCHEIDEN (SANITY, 2x) | P_lernt=0.00 in ALLEN Armen inkl. Kontrolle; DM_final trennt 7.58 (~54 SE) — Struktur ueberlebt Training; R5 verbraucht | Nachtraege 48+50
+T28   | Kippt die Konjugation die Lernbarkeit bei HIGH-ENTROPIE-Aufgaben? (frischer Zufalls-Lehrer je Seed, kalibrierungsfrei R2>=0.9; Hand-Registrierung N51) | KILL (ENTROPIE-RESISTENT) | P_lernt=1.00 in ALLEN Armen (60/60); peff=-1; DM_final trennt 2.49 (~10.8 SE) aber gate-t Lernbarkeit nicht; entlastet T27-Instrument; Schalter = Aufgaben-Struktur-Phaenomen | Nachtraege 51+52
 
 ## Serie W — Werkzeug
 W1-P1 | Lab-Kernel Historien-Test                           | PASS          | T15 exakt wiedergegeben; T11-Bug angezeigt; T15-Run1-Bug verweigert | Nachtrag 19
@@ -66,11 +67,11 @@ T24 -> T25 (Ordnungsparameter-Frage; Maschinen-Vorschlag P4 v1.3, Doppelklausel 
 T25 -> OFFEN: PER-SEED-ORDNUNG (DM trennt Ebenen, nicht Seeds; Kandidaten Gain-Verteilung / DM-Varianten, sonst Intra-Block-Lotto unveraenderlich)
 T25 -> T26 (Per-Seed-Frage; Maschinen-Vorschlag P4 v1.4 aus T25-Beyfang)
 T25 -> T27 (Bruecken-Frage LINIE TRAIN; erster Gradienten-Stein, Hand-Registrierung N48)
+T27 -> T28 (TRAIN-INSTRUMENT-Frage; neuer Stein mit Entropie-in-der-Aufgabe)
 T27 -> OFFEN: TRAIN-INSTRUMENT (delayed recall fuer flaches MLP ungelernbar — P=0 auch in Kontrolle; neuer Stein nur mit neuem Task-Design, Kapitaen-Entscheidung)
 
 ## Offene Fragen (Stand 2026-11-12, nach T26/T27)
 0. PER-SEED-ORDNUNG: GESCHLOSSEN (T26 KILL — Intra-Block-Lotto unveraenderlich mit fixierten Kandidaten; DM bleibt Ebenen-Marker). Backlog: Gain-VERTEILUNG als Ebenen-Kandidat.
-1. PER-SEED-ORDNUNG: Trennt UEBERHAUPT eine Groesse gelernt vs gescheitert INNERHALB eines Blocks (Kandidaten: Gain-Verteilung, DM-Varianten), oder ist das Intra-Block-Lotto unveraenderlich? — T26-Kandidat nach Generator-Rotation.
 2. RESEARCH TASTE: Serie 22/23 gesamt (LLM 3/3; Maschine 19/20; R8-Bilanz 14/14 nach zwei Einsaetzen); Kalibration verengt (Nutzer-These Nachtrag 24).
 3. BLOCK-MITTEL-GESETZ: vertagt (Cap + konfirmatorisch; T22 liefert 10 Block-Konstanten als Startpunkt).
 

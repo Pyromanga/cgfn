@@ -3116,3 +3116,80 @@ Verdikte. Der T26-Fall ist die Bestaetigung der Wette von W1:
 die Emissions-Luecke wurde VOR dem Auswerten gefangen — ein
 stilles Loch haette hier ein PASS oder KILL aus unvoll-
 staendigen Daten produzieren koennen.
+
+
+
+---
+
+# Nachtrag 52 (2026-11-13): T28 ZUFALLS-LEHRER — KILL (ENTROPIE-RESISTENT). Der Schalter ist ein Phaenomen der AUFGABEN-Struktur, nicht der Geometrie.
+
+## Lauf
+Run 3 (nach zwei Gate-Faengen mit 0 Experiment-Minuten:
+Import-Gate fing KeyError fixed_p0 — Contract-Param-Luecke;
+dann crashete Run 3 im DM-Bericht nach allen drei Armen:
+float(...).std()).item() — R5-Einmalreparatur der NUR
+Berichtstellung, Physik frozen). Rerun 60/60 sauber,
+LUECKENLISTE LEER.
+
+## Zahlen (maschinell, N-Skelett im Results-File)
+P_lernt = 1.00 in ALLEN drei Armen (a=0: 970..989, a=1:
+990..1009, a=24: 1010..1029), div=0. peff = -1 (Klausel:
+P(1) <= 0.15 FALSE — es gibt schlicht nichts zu kippen).
+DM_init-Stufen 13.6220 / 1.4012 / 1.5871 (Band-Treffer 1/1,
+Konjugations-Encoding exakt wie T20/T25/T27). DM_final-Stufen
+3.6121 / 1.1217 / 1.1517; Trennung DM_final(0) - DM_final(1)
+= 2.4904, SE 0.2308 -> ~10.8 SE, trennt.
+
+## Lesart (handgeschrieben, ehrlich)
+1. KILL, und er ist WERTVOLL: Bei hochentropischen Aufgaben
+   (frischer zufaelliger tanh-Lehrer je Seed) lernt JEDES
+   Netz, in JEDER Konjugationstiefe, 60/60. Die Basis-
+   Rotation gegen die tanh-Achsen kippt die Lernbarkeit
+   NICHT. Der Schalter ist damit kein Geometrie-Gesetz fuer
+   Aufgaben allgemein — er ist an die AUFGABEN-Struktur
+   gebunden (delayed recall / Gedaechtnis-Aufgaben). Grenze
+   des Befunds praecise gezeichnet.
+2. T28 ENTLASTET die Geometrie im T27-Fall: T27s P=0.00 in
+   allen Armen war das INSTRUMENT (flaches MLP + feste
+   delayed-recall-Aufgabe), nicht die Konjugation — sonst
+   haette a=0 in T28 nicht 1.00 gelernt. Die zwei Steine
+   zusammen: (a) Geometrie blockiert Lernen nicht per se,
+   (b) die feste Gedaechtnis-Aufgabe war ungelernbar, Punkt.
+3. BEYFANG (stabil ueber drei Steine): DM_final trennt auch
+   hier die Konjugationstiefe (~10.8 SE) und folgt ihr unter
+   Adam — die geometrische Struktur persistiert im
+   trainierten Netz, ABER sie gate-t die Lernbarkeit nicht.
+   Endformel der Linie: DM folgt der Konjugation ueberall
+   (Reservoir T25, trainiert T27/T28), aber Lernbarkeits-
+   Kollaps tritt nur im Reservoir-Regime mit Gedaechtnis-
+   Aufgaben auf (T23/T24/T25). DM = Struktur-Marker, kein
+   Lernbarkeits-Praediktor.
+4. Nebenbefund: Training selbst senkt DM (a=0: 13.62 ->
+   3.61) — Adam zieht das Netz von der Diagonale weg. Fuer
+   DM als Marker im Trainierten heisst das: die Skala
+   verschiebt sich, die Trennung bleibt.
+5. Ehrliche Grenze des KILLs: er gilt fuer diese Lehrer-
+   Familie (glatte zufaellige tanh-Funktionen, R2 >= 0.9).
+   Er sagt nichts ueber Gedaechtnis-Aufgaben im trainierten
+   rezurrenten Netz — die brauchen einen anderen Kopf und
+   waren genau der T27-Tod. Backlog (Kapitaen-Entscheid):
+   T29 — ist der RESERVOIR-Schalter selbst aufgaben-
+   abhaengig? Ridge-Readout auf Zufalls-Lehrer-Targets an
+   konjugierten Reservoirs: kollabiert P(1) auch dort, oder
+   nur bei delayed recall? Billig (kein Gradienten-Training),
+   und er wuerde lokalisieren, OB der Schalter eine
+   Gedaechtnis-Eigenschaft ist.
+
+## L5-Serien-Zettel (Durchlauf 6, Linie TRAIN, abgeschlossen)
+Band-Quelle: Hand (N51). Treffer 1/1 (nur DM_init gebandet —
+die Erstfahrt-Disziplin hat gehalten: keine nachgeklaubten
+Intervalle). Linie TRAIN Bilanz: T27 UNENTSCHEIDEN (2x,
+Instrument tot), T28 KILL (sauber). Die Bruecke Reservoir ->
+trainiert ist jetzt PRAEZISE: Struktur wandert rueber,
+Lernbarkeits-Kollaps nicht.
+
+## Kernel-Bilanz (Stand)
+14 Steine gefeuert (T15..T28), 10 saubere Verdikte. Zwei
+Gate-Faenge an T28 mit 0 Experiment-Minuten (Contract-Param-
+Luecke, Bericht-Crash) — die Wette von W1 zahlt sich zweifach:
+kein stilles Loch, kein verbrannter Lauf.
