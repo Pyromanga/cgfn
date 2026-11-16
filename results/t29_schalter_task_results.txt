@@ -1,0 +1,57 @@
+======================================================================================================================
+T29 — SCHALTER-TASK v1 (Konsequenz aus T26+T28: Gedaechtnis oder Geometrie?)
+These (Nachtrag 53): Kollabiert P bei a >= 1 nur fuer GEDAECHTNIS-Aufgaben
+(MEM, Referenz T23/T24/T25) oder auch fuer Zufalls-Lehrer (RND, Lehre T28)?
+Exakt die T20/T23-Maschine, zwei Aufgaben auf demselben Eingabeprotokoll.
+Stufen a {0,1}, Bloecke 1030..1109, 80 Runs, f64.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t29.py
+PRIMAER: dm29 = P_RND(1) - P_MEM(1) mit Doppelklausel, sonst -1.
+R2: jedes Mass an JEDEM Arm.
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm MEM_A0 (task=mem, a=0, seeds 1030..1049): n_ok=20/20 | P_lernt=0.50 | median acc=0.5215 | div=0
+
+Arm MEM_A1 (task=mem, a=1, seeds 1050..1069): n_ok=20/20 | P_lernt=0.00 | median acc=0.4785 | div=0
+
+Arm RND_A0 (task=rnd, a=0, seeds 1070..1089): n_ok=20/20 | P_lernt=0.00 | median acc=0.8730 | div=0
+
+Arm RND_A1 (task=rnd, a=1, seeds 1090..1109): n_ok=20/20 | P_lernt=0.10 | median acc=0.9141 | div=0
+
+--- T29-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: P_MEM(0)=0.5000 | P_MEM(1)=0.0000 | P_RND(0)=0.0000 | P_RND(1)=0.1000
+SE(P_RND1 - P_MEM1) = 0.0671 (gemessen) | 3*SE = 0.2012
+DOPPELKLAUSEL: P_RND(1) >= 0.5: False | P_MEM(1) <= 0.15: True | P_RND(0) >= 0.5: False | P_MEM(0) >= 0.25: True | Diff >= 3*SE: False -> dm29 = -1.0000
+L5-BAND (registriert VOR dem Lauf, Nachtrag 53, R8):
+  P_MEM(0) in [0.25, 0.64]: gemessen 0.5000 — TREFFER
+  P_MEM(1) in [0.00, 0.22]: gemessen 0.0000 — TREFFER
+  RND-Arme: ERSTFAHRT ohne Band (registriert).
+L5-BAND-TREFFER: 2/2 (Hand-Band, Nachtrag 53, R8)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 53 (2026-11-13) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT
+
+## Arm-Zahlen (aus dem Contract generiert)
+  MEM_A0.pf = 0.5
+  MEM_A0.colnorm = 2.2
+  MEM_A0.ndiv = 0
+  MEM_A0.dm29 = -1
+  MEM_A1.pf = 0
+  MEM_A1.colnorm = 2.2
+  MEM_A1.ndiv = 0
+  MEM_A1.dm29 = -1
+  RND_A0.pf = 0
+  RND_A0.colnorm = 2.2
+  RND_A0.ndiv = 0
+  RND_A0.dm29 = -1
+  RND_A1.pf = 0.1
+  RND_A1.colnorm = 2.2
+  RND_A1.ndiv = 0
+  RND_A1.dm29 = -1
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
