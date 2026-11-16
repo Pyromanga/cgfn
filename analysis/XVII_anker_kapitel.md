@@ -3301,3 +3301,47 @@ das Gate-Design (Sanity VOR Verdikt) ein falsches PASS/
 KILL verhindert: ohne RND_A0-Kontrolle haette dm29 =
 0.10 - 0.00 > 0 ein "SCHALTER-GEDAECHTNIS"-PASS aus
 einem toten Arm produziert.
+
+
+
+---
+
+# Nachtrag 53-R5 (2026-11-16): T29-R5 SCHALTER-RIDGE REGISTRIERT — die EINE erlaubte Reparatur. Danach ist die Linie TOT.
+
+## Ehrliche Selbstkritik an T29 (aus den Zahlen gelesen)
+1. T29s RND-Task war SELBST eine Gedaechtnis-Aufgabe: das
+   Label hing an der GESAMTEN Sequenz. Zufaelligkeit und
+   Gedaechtnis-Forderung waren verkoppelt — der Confound,
+   der RND_A0 = 0.00 produzierte.
+2. Der Gradienten-Kopf ist als Instrument tot (RND_A0 = 0
+   auch bei a = 0; konsistent mit T27).
+
+## R5-Design (eingefroren, VOR dem Lauf)
+- Ridge-Readout statt Gradienten-Training: lam = 1.0 fix,
+  Train 512, Test 1024, P_lernt = acc >= 0.95 (beide
+  Aufgaben GLEICH, kalibrierungsfrei).
+- NOW-Task: Zufalls-Lehrer je Seed nur auf dem LETZTEN
+  Eingabe-Frame (A1: 8x2, a2: Einheitsvektor, Seed
+  50000+s) — gedaechtnisfrei. MEM unveraendert (Referenz).
+- Exakt die T20/T23-Maschine, Stufen a {0,1}: MEM
+  1110..1149, NOW 1150..1189. 80 Runs, f64, ~10 min,
+  kein Gradienten-Training.
+- Sanity: NOW_A0 >= 0.6 UND MEM_A0 >= 0.25.
+- PASS — SCHALTER-GEDAECHTNIS: dm29r5 = P_NOW(1) -
+  P_MEM(1) >= 0.0 (Doppelklausel wie N53). Konsequenz:
+  der Kollaps ist an Gedaechtnis gebunden.
+- KILL — SCHALTER-ALLGEMEIN: dm29r5 < 0.0. Konsequenz:
+  Geometrie kippt Lernen generell im Reservoir-Regime.
+  Grauzone 0.15..0.50 komplementaer zu KILL registriert.
+- UNENTSCHEIDEN: Crash. Danach Linie TOT (R5
+  verbraucht) — registriert, keine zweite Reparatur.
+- Band: P_MEM unveraendert aus N53 (2/2 bestaetigt);
+  NOW-Arme ERSTFAHRT ohne Band.
+
+## Recon (2026-11-16)
+Basin Geometry and Reliable Recall of Dynamical Memories in
+Reservoir Computing (arXiv 2609.01914) — Becken-Geometrie
+vs verlaessliches Recall; kein Doppel. Intrinsic Task
+Symmetry Drives Generalization (arXiv 2603.01968) —
+Aufgaben-Symmetrie als Generalisierungs-Mechanismus,
+unterstuetzt die Aufgaben-Struktur-Lesart aus T28.
