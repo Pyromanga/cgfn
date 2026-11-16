@@ -1,0 +1,55 @@
+======================================================================================================================
+T30 — FENSTER-READOUT v1 (Prozess statt Ergebnis: die ganze Rechenspur als Readout-Eingabe)
+Konsequenz T29-R5: NOW 1.00 in beiden Konjugationen (Geometrie killt gedaechtnisfrei nicht);
+MEM Final-State-Ridge 0.00 auch bei a=0 — Instrument-Verdacht. FRAGE: haelt der Schalter
+bei fairer Lesespur (Fenster W=6, Feature-Dim 288)?
+Ridge lam=1.00 fix, Train 512, Test 1024, P_lernt = acc >= 0.95 (beide Aufgaben gleich).
+Stufen a {0,1}, Bloecke 1190..1269, 80 Runs, f64, kein Gradienten-Training.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t30.py
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm MEM_A0 (task=mem, a=0, seeds 1190..1209): n_ok=20/20 | P_lernt=0.00 | median acc=0.5020 | div=0
+
+Arm MEM_A1 (task=mem, a=1, seeds 1210..1229): n_ok=20/20 | P_lernt=0.00 | median acc=0.4990 | div=0
+
+Arm NOW_A0 (task=now, a=0, seeds 1230..1249): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | div=0
+
+Arm NOW_A1 (task=now, a=1, seeds 1250..1269): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | div=0
+
+--- T30-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: P_MEM(0)=0.0000 | P_MEM(1)=0.0000 | P_NOW(0)=1.0000 | P_NOW(1)=1.0000
+SE(P_MEM0 - P_MEM1) = 0.0000 (gemessen) | 3*SE = 0.0000
+DOPPELKLAUSEL: P_MEM(0) >= 0.5: False | P_NOW(0) >= 0.6: True | Diff >= 3*SE: False -> dm30 = -1.0000
+L5-BAND (registriert VOR dem Lauf, N54):
+  P_NOW(0) in [0.80, 1.00]: gemessen 1.0000 — TREFFER
+  MEM-Arme: ERSTFAHRT ohne Band (Fenster-Instrument neu, registriert).
+L5-BAND-TREFFER: 1/1 (Hand-Band, N54)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 54 (2026-11-16) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT
+
+## Arm-Zahlen (aus dem Contract generiert)
+  MEM_A0.pf = 0
+  MEM_A0.colnorm = 2.2
+  MEM_A0.ndiv = 0
+  MEM_A0.dm30 = -1
+  MEM_A1.pf = 0
+  MEM_A1.colnorm = 2.2
+  MEM_A1.ndiv = 0
+  MEM_A1.dm30 = -1
+  NOW_A0.pf = 1
+  NOW_A0.colnorm = 2.2
+  NOW_A0.ndiv = 0
+  NOW_A0.dm30 = -1
+  NOW_A1.pf = 1
+  NOW_A1.colnorm = 2.2
+  NOW_A1.ndiv = 0
+  NOW_A1.dm30 = -1
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
