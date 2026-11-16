@@ -3253,3 +3253,51 @@ die G-Linie, MC als Informationsmass).
 ## Compute-Disziplin
 Ein Stein, 80 Runs, ~30 min — die direkte Konsequenz der
 beiden KILLs, kein Rerun ohne neues Verdikt.
+
+
+---
+
+# Nachtrag 53 — ERGAENZUNG (2026-11-16): T29 UNENTSCHEIDEN (SANITY GERICHT)
+
+## Lauf
+Run 1 (43859073227) gruenn, 80/80, LUECKENLISTE LEER — alle
+registrierten Groessen gemessen, kein Gate-Fang noetig.
+
+## Zahlen (maschinell, N-Skelett im Results-File)
+P_MEM(0) = 0.50 | P_MEM(1) = 0.00 — BEIDE Hand-Baender
+getroffen (2/2): der Referenz-Kollaps repliziert exakt
+(Band [0.25, 0.64] bzw. [0.00, 0.22]).
+P_RND(0) = 0.00 | P_RND(1) = 0.10 — Sanity-Kontrolle
+RND_A0 >= 0.5 KRASS verletzt: der Zufalls-Lehrer ist im
+Reservoir-Regime mit Gradienten-Readout UNGELERNBAR, schon
+bei a = 0. dm29 = -1 (Klausel False).
+
+## Lesart (handgeschrieben, ehrlich)
+1. UNENTSCHEIDEN durch Sanity — aber die MEM-Seite ist ein
+   sauberer Replikations-Treffer: P_MEM(0) = 0.50,
+   P_MEM(1) = 0.00, beide Baender exakt. Die T23/T24/T25-
+   Stufen halten auch auf frischen Bloecken 1030..1069.
+2. Der Tod liegt im INSTRUMENT, nicht in der Geometrie:
+   RND_A0 = 0.00 scheitert UNABHAENGIG von der Konjugation.
+   Gradienten-Readout auf dem Reservoir kann die Zufalls-
+   Labels schlicht nicht fitten (konsistent mit T28s
+   Nebenbefund: Zufalls-Lehrer brauchen andere Koepfe).
+   Die Frage "Gedaechtnis oder Geometrie" ist mit diesem
+   Instrument nicht entscheidbar.
+3. Nebenbefund (Erstfahrt, kein Band, n = 20): P_RND(1) =
+   0.10 > P_RND(0) = 0.00 — die Gegenrichtung, kein
+   Hinweis auf Geometrie-Kollaps bei RND. Vorsicht
+   interpretiert, aber bemerkenswert.
+4. R5-Kandidat (Kapitaen-Entscheid, EINE Reparatur):
+   RND-Arme auf Ridge-Readout umstellen (stand schon im
+   N52-Backlog) — kein Gradienten-Training, kalibrier-
+  ungsfrei; MEM-Arme unveraendert als Referenz. Danach
+   ist die Linie tot, egal wie das Ergebnis aussieht.
+
+## Kernel-Bilanz (Stand)
+15 Steine gefeuert (T15..T29), 10 saubere Verdikte.
+T29: erster Sanity-Gericht der T-Serie — und wieder hat
+das Gate-Design (Sanity VOR Verdikt) ein falsches PASS/
+KILL verhindert: ohne RND_A0-Kontrolle haette dm29 =
+0.10 - 0.00 > 0 ein "SCHALTER-GEDAECHTNIS"-PASS aus
+einem toten Arm produziert.

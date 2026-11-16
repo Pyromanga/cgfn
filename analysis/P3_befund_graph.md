@@ -75,3 +75,13 @@ T27 -> OFFEN: TRAIN-INSTRUMENT (delayed recall fuer flaches MLP ungelernbar — 
 2. RESEARCH TASTE: Serie 22/23 gesamt (LLM 3/3; Maschine 19/20; R8-Bilanz 14/14 nach zwei Einsaetzen); Kalibration verengt (Nutzer-These Nachtrag 24).
 3. BLOCK-MITTEL-GESETZ: vertagt (Cap + konfirmatorisch; T22 liefert 10 Block-Konstanten als Startpunkt).
 
+
+### T29 (2026-11-16): UNENTSCHEIDEN (SANITY GERICHT)
+SCHALTER-TASK (Gedaechtnis oder Geometrie?): MEM repliziert
+exakt (P(0)=0.50, P(1)=0.00, Band 2/2); RND-Arme tot auch
+bei a=0 (P_RND(0)=0.00, P_RND(1)=0.10) — Zufalls-Lehrer im
+Reservoir-Regime mit Gradienten-Readout ungelernbar.
+Instrument-Tod, nicht Geometrie-Befund. R5-Kandidat:
+Ridge-Readout fuer RND (EINE Reparatur, dann Linie tot).
+Knoten: dm29 unentschieden; DM bleibt Struktur-Marker
+(T25/T28-Lesart unangetastet).
