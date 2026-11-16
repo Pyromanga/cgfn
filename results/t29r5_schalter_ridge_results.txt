@@ -1,0 +1,55 @@
+======================================================================================================================
+T29-R5 — SCHALTER-RIDGE v1 (die EINE Reparatur: Ridge-Readout + gedaechtnisfreier NOW-Task)
+Selbstkritik T29: RND-Task war selbst eine Gedaechtnis-Aufgabe (Confound), Gradienten-Kopf tot.
+Ridge lam=1.00 fix, Train 512, Test 1024, P_lernt = acc >= 0.95 (beide Aufgaben gleich).
+Stufen a {0,1}, Bloecke 1110..1189, 80 Runs, f64, kein Gradienten-Training.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t29r5.py
+Nach diesem Lauf ist die Linie TOT (R5 verbraucht) — registriert.
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm MEM_A0 (task=mem, a=0, seeds 1110..1129): n_ok=20/20 | P_lernt=0.00 | median acc=0.5098 | div=0
+
+Arm MEM_A1 (task=mem, a=1, seeds 1130..1149): n_ok=20/20 | P_lernt=0.00 | median acc=0.5146 | div=0
+
+Arm NOW_A0 (task=now, a=0, seeds 1150..1169): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | div=0
+
+Arm NOW_A1 (task=now, a=1, seeds 1170..1189): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | div=0
+
+--- T29R5-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: P_MEM(0)=0.0000 | P_MEM(1)=0.0000 | P_NOW(0)=1.0000 | P_NOW(1)=1.0000
+SE(P_NOW1 - P_MEM1) = 0.0000 (gemessen) | 3*SE = 0.0000
+DOPPELKLAUSEL: P_NOW(1) >= 0.5: True | P_MEM(1) <= 0.15: True | P_NOW(0) >= 0.6: True | P_MEM(0) >= 0.25: False | Diff >= 3*SE: True -> dm29r5 = -1.0000
+L5-BAND (registriert VOR dem Lauf, N53, unveraendert):
+  P_MEM(0) in [0.25, 0.64]: gemessen 0.0000 — NEIN
+  P_MEM(1) in [0.00, 0.22]: gemessen 0.0000 — TREFFER
+  NOW-Arme: ERSTFAHRT ohne Band (registriert).
+L5-BAND-TREFFER: 1/2 (Hand-Band, N53)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 53 (2026-11-16) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: UNENTSCHEIDEN — SANITY GERICHT
+
+## Arm-Zahlen (aus dem Contract generiert)
+  MEM_A0.pf = 0
+  MEM_A0.colnorm = 2.2
+  MEM_A0.ndiv = 0
+  MEM_A0.dm29r5 = -1
+  MEM_A1.pf = 0
+  MEM_A1.colnorm = 2.2
+  MEM_A1.ndiv = 0
+  MEM_A1.dm29r5 = -1
+  NOW_A0.pf = 1
+  NOW_A0.colnorm = 2.2
+  NOW_A0.ndiv = 0
+  NOW_A0.dm29r5 = -1
+  NOW_A1.pf = 1
+  NOW_A1.colnorm = 2.2
+  NOW_A1.ndiv = 0
+  NOW_A1.dm29r5 = -1
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG === Linie TOT (R5 verbraucht), egal wie das Ergebnis aussieht.
