@@ -3193,3 +3193,63 @@ Lernbarkeits-Kollaps nicht.
 Gate-Faenge an T28 mit 0 Experiment-Minuten (Contract-Param-
 Luecke, Bericht-Crash) — die Wette von W1 zahlt sich zweifach:
 kein stilles Loch, kein verbrannter Lauf.
+
+
+
+---
+
+# Nachtrag 53 (2026-11-13): T29 SCHALTER-TASK REGISTRIERT (Konsequenz aus T26+T28: Gedaechtnis oder Geometrie?). Band und Schwellen VOR dem Lauf eingefroren.
+
+## Motivation
+Zwei KILLs des Vortags zeichnen eine Grenze: T26 (Per-Seed-
+Lotto unveraenderlich) und T28 (Konjugation kippt die
+Lernbarkeit bei Zufalls-Lehrern im MLP nicht). Offen bleibt
+die Lokalisierung des Reservoir-Schalters selbst: Ist der
+P-Kollaps bei a >= 1 (T23/T24/T25) eine GEDAECHTNIS-
+Eigenschaft der delayed-recall-Aufgabe, oder kollabiert
+JEDE Aufgabe am konjugierten Reservoir (Geometrie)?
+
+## Design (eingefroren)
+Exakt die T20/T23-Maschine (H=48, s=2.2, wb=0.6, delayed-
+recall-Eingabeprotokoll, Gradienten-Readout, 600 Steps),
+zwei Aufgaben-Familien auf DEMSELBEN Eingabeprotokoll:
+  MEM — delayed recall (Referenz, Kollaps bekannt)
+  RND — Zufalls-Lehrer je Seed (Lehre T28): binaeres Label
+    aus frischer tanh-Funktion der Gesamtsequenz
+Stufen a {0,1}: MEM 1030..1069, RND 1070..1109. 80 Runs,
+f64, ~30 min. Sanity: RND_A0 >= 0.5 UND MEM_A0 >= 0.25.
+
+## Verdict-Schwellen (unantastbar)
+- PASS — SCHALTER-GEDAECHTNIS: dm29 = P_RND(1) - P_MEM(1)
+  >= 0.0 (Doppelklausel: P_RND(1) >= 0.5 UND P_MEM(1) <=
+  0.15 UND beide Sanity UND >= 3*SE). Konsequenz: Kollaps
+  an Gedaechtnis gebunden — der Schalter lebt in der
+  Aufgaben-Reservoir-Schnittstelle, nicht in der Geometrie
+  allein; konsistent mit T28.
+- KILL — SCHALTER-ALLGEMEIN: dm29 < 0.0 (RND kollabiert
+  auch, oder Referenz-Kollaps fehlt; Grauzone 0.15..0.50
+  komplementaer registriert). Konsequenz: der Kollaps ist
+  aufgabenunabhaengige Geometrie — die T23/T24-Lesart
+  verengt sich auf "Geometrie kippt Lernen generell".
+- UNENTSCHEIDEN: Crash (Sanity, ndiv > 6, Divergenz >
+  10 Prozent). R5: EINE Reparatur, dann Linie tot.
+
+## Vorhersageband (mechanisch, R8, mit T26-Lehre verbreitert)
+- P_MEM(0) in [0.25, 0.64] (T22/T23/T24 — R8-Verbreiterung
+  nach der T26-Band-Lehre: nicht nachklauben)
+- P_MEM(1) in [0.00, 0.22] (T23/T24/T25)
+- RND-Arme: ERSTFAHRT ohne Band (registriert).
+
+## Recon-Positionierung (2026-11-13)
+Naher Nachbar gefunden: "Task-Matched Memory, Not Criticality,
+Decides Which Frozen Reservoir Helps" (MDPI Entropy 28(11):1215,
+2026) — waehlt Reservoirs nach Aufgaben-Fit, fragt aber NICHT
+nach Geometrie-Kollaps per Konjugation. Kein Doppel. Weitere
+Nachbarn: Organization of Computation in Reservoir Computing
+(arXiv 2607.17858); Memory Capacity of Nonlinear Recurrent
+Networks: Is it Informative? (arXiv 2502.04832 — relevant fuer
+die G-Linie, MC als Informationsmass).
+
+## Compute-Disziplin
+Ein Stein, 80 Runs, ~30 min — die direkte Konsequenz der
+beiden KILLs, kein Rerun ohne neues Verdikt.
