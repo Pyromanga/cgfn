@@ -94,3 +94,14 @@ auch bei a=0 — Final-State-Readout zu schwach (Instrument).
 dm29r5=-1. Kombiniert mit T23-T25: Schalter lebt im
 Gedaechtnis-Anteil. Folge-Stein T30 (Fenster-Readout,
 N54) prueft den Readout-Verdacht.
+
+### T30 (2026-11-16): UNENTSCHEIDEN (SANITY GERICHT); Ridge-Linie GESCHLOSSEN
+FENSTER-READOUT (Prozess statt Ergebnis): MEM auf Chance
+(0.5020 vs 0.4990, Differenz 0.003) — linearer Readout auf
+FROZENEM Reservoir ist strukturell blind fuer die
+nichtlineare Produkt-Aufgabe. NOW wieder 1.00/1.00
+(80/80 ueber T29-R5+T30): Geometrie killt gedaechtnisfreies
+Lernen nie. Frage "Gedaechtnis oder Geometrie" mit Ridge-
+Instrumenten geschlossen (registriert); offen mit
+Gradienten-Instrument. Instrument-Diagnose: lineare
+Readouts sehen Gedaechtnis-Aufgaben nicht.

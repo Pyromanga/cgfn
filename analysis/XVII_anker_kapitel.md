@@ -3428,3 +3428,49 @@ Basin Geometry and Reliable Recall of Dynamical Memories
 (arXiv 2609.01914) — Becken-Geometrie vs verlaessliches
 Recall; kein Doppel. Der Fenster-Readout als
 "Prozess-Belohnung"-Analogie ist unsere eigene Lesart.
+
+
+---
+
+# T30 — VERDIKT ERGAENZUNG (2026-11-16): UNENTSCHEIDEN (SANITY GERICHT); Ridge-Instrumente fuer die Schalter-Frage GESCHLOSSEN (registriert)
+
+## Lauf
+Run (43912113082) gruenn, 80/80, LUECKENLISTE LEER, Band 1/1
+(P_NOW(0) = 1.00 in [0.80, 1.00]).
+
+## Zahlen
+MEM_A0: median acc = 0.5020, P_lernt = 0.00 (Chance!).
+MEM_A1: median acc = 0.4990, P_lernt = 0.00.
+NOW_A0: median acc = 1.0000, P_lernt = 1.00.
+NOW_A1: median acc = 1.0000, P_lernt = 1.00.
+DM30-Differenz MEM: 0.0030 — exakt NULL, beide Stufen auf
+Chance. dm30 = -1 (Klausel P_MEM(0) >= 0.5 FALSE).
+
+## Lesart (handgeschrieben, ehrlich)
+1. Das Ridge-Instrument ist STRUKTURELL blind fuer MEM:
+   ein linearer Readout auf dem FROZENEN Reservoir kann
+   das Produkt zweier vergangener Pulse (nichtlineare
+   Kombination) nicht aus linearen Zustands-Features
+   lesen — Chance-Level (0.50) ist die erwartete
+   Antwort, kein Befund. Der Gradienten-Kopf (T29)
+   trainierte dagegen das Reservoir SELBST und erreichte
+   0.50 P_lernt. Instrument-Asymmetrie verstanden.
+2. Der NOW-Befund haelt und verstaerkt sich: 1.00 in
+   beiden Konjugationen, jetzt 80/80 ueber ZWEI Steine
+   (T29-R5 + T30). Die Geometrie killt gedaechtnisfreies
+   Lernen NICHT — selbst ein linearer Readout auf dem
+   konjugierten Reservoir trennt den Zufalls-Lehrer
+   perfekt.
+3. Registrierte Konsequenz: keine R5 mehr, die Frage
+   "Gedaechtnis oder Geometrie" ist mit Ridge-
+   Instrumenten GESCHLOSSEN. Sie bleibt mit dem
+   Gradienten-Instrument offen (T23-T25: MEM kollabiert;
+   T29-R5/T30: NOW kollabiert nie). Der naechste Stein
+   dieser Linie braucht Gradienten-Training + NOW-
+   aehnliche Aufgaben-Entropie — oder eine neue Achse.
+4. Bilanz der Dreifach-Kette T29/T29-R5/T30: 3 Laeufe,
+   240 Runs, 0 verbrannte Minuten durch Gates, 3x
+   UNENTSCHEIDEN als Verdikt, aber 2 echte Befunde
+   (MEM-Kollaps repliziert; NOW kollabiert nie) und 1
+   Instrument-Diagnose (lineare Readouts auf frozen
+   Reservoirs sehen Gedaechtnis-Aufgaben nicht).
