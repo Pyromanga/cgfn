@@ -1,0 +1,59 @@
+======================================================================================================================
+T31 — VOLL-AEQUIVARIANTE ROTATION (Antwort auf den Readout-Einwand: Teil-Rotation vs volle Rotation)
+PART: nur W gedreht (exakt T23) | FULL: W, b, Uw alle mit demselben Q, trainierter Readout.
+Stufen a {0,1}, Bloecke 1270..1349, 80 Runs, f64.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t31.py
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm FULL_A0 (rot=full, a=0, seeds 1310..1329): n_ok=20/20 | P_lernt=0.60 | median acc=1.0000 | div=0
+
+Arm FULL_A1 (rot=full, a=1, seeds 1330..1349): n_ok=20/20 | P_lernt=0.20 | median acc=0.4980 | div=0
+
+Arm PART_A0 (rot=part, a=0, seeds 1270..1289): n_ok=20/20 | P_lernt=0.80 | median acc=1.0000 | div=0
+
+Arm PART_A1 (rot=part, a=1, seeds 1290..1309): n_ok=20/20 | P_lernt=0.10 | median acc=0.4785 | div=0
+
+--- T31-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: P_PART(0)=0.8000 | P_PART(1)=0.1000 | P_FULL(0)=0.6000 | P_FULL(1)=0.2000
+IMMUN-Klausel: P_PART(1) <= 0.15: True | P_FULL(1) <= 0.15: False -> immun = 0.0
+ARTEFAKT-Klausel: P_PART(1) <= 0.15: True | P_FULL(1) >= 0.5: False -> artefakt = 0.0
+L5-BAND (registriert VOR dem Lauf, N55):
+  P_PART(1) in [0.00, 0.22]: gemessen 0.1000 — TREFFER
+  FULL-Arme: ERSTFAHRT ohne Band (registriert).
+L5-BAND-TREFFER: 1/1 (Hand-Band, N55)
+
+VERDICT: GEMISCHT — keine registrierte Konstellation sitzt
+
+--- N-SKELETT (N-Modul, Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 55 (2026-11-17) — AUTO-SKELETT (N-Modul; Lesart handzuschreiben)
+
+VERDICT: GEMISCHT — keine registrierte Konstellation sitzt
+
+## Arm-Zahlen (aus dem Contract generiert)
+  FULL_A0.pf = 0.6
+  FULL_A0.colnorm = 2.2
+  FULL_A0.ndiv = 0
+  FULL_A0.immun = 0
+  FULL_A0.artefakt = 0
+  FULL_A1.pf = 0.2
+  FULL_A1.colnorm = 2.2
+  FULL_A1.ndiv = 0
+  FULL_A1.immun = 0
+  FULL_A1.artefakt = 0
+  PART_A0.pf = 0.8
+  PART_A0.colnorm = 2.2
+  PART_A0.ndiv = 0
+  PART_A0.immun = 0
+  PART_A0.artefakt = 0
+  PART_A1.pf = 0.1
+  PART_A1.colnorm = 2.2
+  PART_A1.ndiv = 0
+  PART_A1.immun = 0
+  PART_A1.artefakt = 0
+
+## LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
+
+[i] Laufzeit: 25.5 min
+[i] Ergebnisse: results/t31_aequivariant_rotation_results.txt | results/t31_aequivariant_rotation_table.csv | results/t31_measurements.json

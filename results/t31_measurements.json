@@ -1,0 +1,35 @@
+{
+ "measurements": {
+  "FULL_A0": {
+   "pf": 0.6,
+   "colnorm": 2.2,
+   "ndiv": 0,
+   "immun": 0.0,
+   "artefakt": 0.0
+  },
+  "FULL_A1": {
+   "pf": 0.2,
+   "colnorm": 2.2,
+   "ndiv": 0,
+   "immun": 0.0,
+   "artefakt": 0.0
+  },
+  "PART_A0": {
+   "pf": 0.8,
+   "colnorm": 2.2,
+   "ndiv": 0,
+   "immun": 0.0,
+   "artefakt": 0.0
+  },
+  "PART_A1": {
+   "pf": 0.1,
+   "colnorm": 2.2,
+   "ndiv": 0,
+   "immun": 0.0,
+   "artefakt": 0.0
+  }
+ },
+ "immun": 0.0,
+ "artefakt": 0.0,
+ "band_hits": 1
+}
