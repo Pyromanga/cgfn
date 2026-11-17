@@ -3569,3 +3569,53 @@ pruefen. Ohne T31b gilt der Immun-Anspruch als vor-
 laeufig. Ein ARTEFAKT- oder GEMISCHT-Verdikt ist von
 diesem Caveat nicht beruehrt (er schwaecht nur den
 PASS, nie den KILL).
+
+
+
+---
+
+# Nachtrag 56 (2026-11-17): T32 RUECKMELDUNGS-DICHTE BEI FIXEM HORIZONT REGISTRIERT — korrigiert nach externem Einwand (EINE Variable pro Test, Hypothese/Test/Falsifikation).
+
+## Der Einwand (extern, 2026-11-17) — berechtigt, beide Teile
+1. Mein T32-Entwurf ("Label je Frame abhaengig vom Frame
+   davor") aenderte ZWEI Variablen: Gedaechtnis-Fenster
+   (20 → 1) und Rueckmeldungs-Dichte (sparse → dense).
+   Ein verschwindender Schalter dort waere Tautologie
+   gewesen (Aufgabe ohne Gedaechtnis zeigt keinen
+   Gedaechtnis-Kollaps). Zelle gestrichen.
+2. Meine Formulierung war eine Schlussfolgerung, keine
+   Hypothese. Korrigiert im Format Hypothese/Test/
+   Falsifikation.
+
+## Registrierung (eingefroren, VOR dem Lauf)
+HYPOTHESE: Die Rueckmeldungs-Dichte der Aufgabe (sparse:
+ein Label am Ende; dense: ein Label je Frame) — NICHT die
+Gedaechtnis-Forderung — ist der Traeger des Reservoir-
+Schalters.
+TEST: Gedaechtnis-Horizont FIX bei D = 20 Frames. Zwei
+Zellen: SPARSE/D20 (exakt T20/T23-MEM, Referenz) und
+DENSE/D20 (Label an JEDEM Frame t >= D, abhaengig vom
+Input exakt D Frames vorher, Zufalls-Lehrer je Seed;
+Frames t < D ohne Loss-Anteil). Stufen a {0,1}: SPARSE
+1350..1389, DENSE 1390..1429. 80 Runs, f64, ~30 min,
+Gradienten-Maschine exakt T20/T23.
+FALSIFIKATION: P_DENSE(1) <= 0.15 (bei intakter Sanity:
+P_SPARSE(0) >= 0.25, P_DENSE(0) >= 0.5) → Hypothese
+gefallen; die Gedaechtnis-Forderung ist der Traeger.
+- PASS — DICHTE-TRAEGER: P_DENSE(1) >= 0.5 UND
+  P_SPARSE(1) <= 0.15 UND P_DENSE(0) >= 0.5.
+- KILL — HORIZONT-TRAEGER: P_DENSE(1) <= 0.15.
+- GEMISCHT: P_DENSE(1) in (0.15, 0.50) — registriert
+  VOR dem Lauf (Lehre aus dem zweiten Einwand: drei
+  Ausgaenge, nicht zwei).
+- UNENTSCHEIDEN: Sanity verletzt, ndiv > 6 je Block.
+- Band (R8): P_SPARSE wie T23/T24/T25; DENSE-Arme
+  ERSTFAHRT ohne Band.
+
+## Recon (2026-11-17)
+Why Code, Why Now: An Information-Theoretic Perspective on
+the Limits of Machine Learning (arXiv 2602.13934) —
+Informationsstruktur der Aufgabe als Obergrenze des
+Lernens; Code skaliert, weil Rueckmeldung dicht, lokal und
+verifizierbar ist. T32 testet genau dieses Prinzip an
+einem kontrollierbaren Mini-System. Kein Doppel bekannt.
