@@ -3619,3 +3619,66 @@ Informationsstruktur der Aufgabe als Obergrenze des
 Lernens; Code skaliert, weil Rueckmeldung dicht, lokal und
 verifizierbar ist. T32 testet genau dieses Prinzip an
 einem kontrollierbaren Mini-System. Kein Doppel bekannt.
+
+
+# Nachtrag 57 (2026-11-17): T33 SIGNALSTRAEKE-MATCH REGISTRIERT — der T32-Konfund wird geschlossen, nicht nur benannt.
+
+## Der Einwand (extern, 2026-11-17) — berechtigt, plus eine Korrektur MEINERSEITS
+1. T32 variierte zwei Dinge: Rueckmeldungs-Struktur UND Optimierungs-
+   Dynamik. Solange der Konfund offen ist, ist die Dichte-These mit dem
+   ersten Reviewer-Satz abgetan ("Du hast zwei Dinge geaendert").
+2. KORREKTUR: Die Lesart N56 und der externe Vorschlag ("lr/20 oder
+   20x Steps") beruhten auf meiner FALSCHEN Zahl (~20x Loss-Terme).
+   Korrekt: T_SEQ=24, DELAY=20 → 4 Label-Frames; DENSE hat 4x mehr
+   Terme je Step (128 vs 32 bei batch=32). Und bei Mean-Reduction ist
+   die Gradienten-MAGNITUDE je Step vergleichbar — der Konfund ist die
+   VARIANZ (Mittelung ueber 4 Lehrer-Terme), nicht die Magnitude. Ein
+   lr/20-Arm haette die falsche Groesse gematcht und entfaellt.
+3. Der externe Vorschlag "maskierter Backprop" ist der sauberste und
+   billigste Kontrollstein — er wird PRIMARY, nicht Fallback.
+
+## Design (eingefroren, VOR dem Lauf)
+Maschine exakt T20/T23/T32 (H=48, s=2.2, wb=0.6, D=20, lr=5e-3, Adam).
+Vier Arme, a in {0,1}:
+  MB (DENSE_MASK, 600 Steps): dichte Aufgabe wie T32, aber je Step
+    geht nur EINES der 4 Label-Frames in den Loss (zyklisch k mod 4).
+    Matched Terme je Step (32 = sparse), Gradienten-Varianz und
+    totale Signalmenge (600 x 32) bei ERHALTENER dichter Aufgaben-
+    struktur (jeder Frame wird alle 4 Steps aktualisiert).
+  S4X (SPARSE, 2400 Steps): sparse Aufgabe mit 4x Training — testet
+    "zu wenig Training" als alternative Erklaerung des T32-Kollaps.
+Bloecke: MB 1430..1469, S4X 1470..1509. 80 Runs, f64, ~75-90 min
+(S4X-Arme dominieren die Laufzeit). SPARSE/DENSE-Referenz kommt aus
+T32 (0.05/0.75 bzw. 1.00/1.00) — keine Referenz-Arme neu gefahren,
+Kontingent geschont.
+
+## Lesarten (eingefroren, VOR dem Lauf; win-win-Struktur)
+- Sanity: P_MB(0) >= 0.5 UND P_S4X(0) >= 0.5.
+- PASS — DICHTE-TRAEGER (T32-These GESCHLOSSEN): P_MB(1) >= 0.5 UND
+  P_S4X(1) <= 0.15 — dichte Aufgabenstruktur traegt bei gematchtem
+  Signal; mehr Training rettet sparse nicht.
+- KILL — OPTIMIERUNGS-TRAEGER (T32-These GEKILLT, wertvoller KILL):
+  P_MB(1) <= 0.15 UND P_S4X(1) >= 0.5 — Optimierungs-Dynamik traegt,
+  die Dichte als Aufgabenstruktur nicht.
+- GEMISCHT (registriert, Divergenzen einzeln gedeutet):
+  MB haelt UND S4X haelt → beide Faktoren tragen; dritte Variable.
+  MB faellt UND S4X faellt → sparse kollabiert robust gegen mehr
+  Training, dense-Struktur traegt bei gematchtem Signal nicht —
+  Zwischenwelt, Lesart offen.
+- UNENTSCHEIDEN: Sanity verletzt, ndiv > 6 je Block.
+- Baender: ALLE vier Arme ERSTFAHRT ohne Band (neue Optimierungs-
+  Regime; die T32-Baender gelten nur fuer lr=5e-3, 600 Steps,
+  voller Dense-Loss).
+
+## T23-Reankerzung (Kommunikations-Pflicht, externer Punkt)
+Die alte Effektstaerke der T23-T25-Linie (PART-Rotation) ist als
+Zahl tot. Wer T23 zitiert, zitiert kuenftig P_FULL(1) = 0.20 (T31),
+nicht die PART-Zahl. Verengung, kein Widerruf; die Zerlegung in zwei
+Mechanismen (tanh-Basis-Fehlausrichtung, ueberlebt volle Rotation;
+Input-W-Inkonsistenz, nur bei Teil-Rotation) ist der Gewinn.
+
+## Recon (2026-11-17)
+arXiv 2602.13934 (Why Code, Why Now): dichte, lokale, verifizierbare
+Rueckmeldung als Skalierungstraeger. T33 ist das Kontrollexperiment
+zu T32: es schliesst oder killt die Dichte-These — beides ist
+Fortschritt. Kein Doppel bekannt.

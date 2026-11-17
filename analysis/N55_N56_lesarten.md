@@ -1,4 +1,5 @@
 # Nachtraege 55/56 — Lesarten (handgeschrieben, ehrlich), 2026-11-17
+(Korrektur 2026-11-17, siehe Punkt 2 der N56-Lesart und Nachtrag 57.)
 
 ## Nachtrag 55 — T31 VOLL-AEQUIVARIANTE ROTATION: VERDICT GEMISCHT
 Gemessen: P_PART(0)=0.80 | P_PART(1)=0.10 | P_FULL(0)=0.60 | P_FULL(1)=0.20.
@@ -16,9 +17,13 @@ vorab registrierten Grauzone [0.10, 0.40].
    0.20). Ein Teil des T23-Kollaps kommt also doch aus der Inkonsistenz
    der Teil-Rotation (W gedreht, b/Uw in der alten Basis). Ehrliche
    Konsequenz: die T23-T25-Lesart stuetzt sich kuenftig auf die FULL-Zahl
-   (0.20), nicht auf die PART-Zahl (0.10). Der Schalter ist real, aber
-   die fruehere Effektstaerke war teilweise ein Rotations-Implementierungs-
-   Effekt. Das ist eine Verengung, kein Widerruf.
+   (0.20), nicht auf die PART-Zahl. Der Schalter ist real, aber die
+   fruehere Effektstaerke war teilweise ein Rotations-Implementierungs-
+   Effekt. Das ist eine ZERLEGUNG in zwei Mechanismen, kein Widerruf:
+   tanh-Basis-Fehlausrichtung (ueberlebt volle Rotation, traegt ~0.20)
+   und Input-W-Inkonsistenz (nur bei Teil-Rotation, traegt den Rest).
+   Zitier-Pflicht: wer T23 zitiert, zitiert kuenftig 0.20 (FULL), nicht
+   die alte PART-Zahl (Nachtrag 57, T23-Reankerzung).
 3. 0.10 vs 0.20 liegt innerhalb des Block-Rauschens (SE je Arm ~ 0.09-0.11,
    n=20): die Differenz PART vs FULL bei a=1 ist HINWEIS, kein Befund.
    Getrennt ist nur FULL(1)=0.20 vs FULL(0)=0.60 und die Replikation des
@@ -43,28 +48,32 @@ Die registrierte PASS-Konstellation sitzt exakt.
    arXiv 2602.13934 (dichte, lokale, verifizierbare Rueckmeldung als
    Skalierungstraeger) — jetzt an einem kontrollierbaren Mini-System
    kausal-variiert, eine Variable, ein Befund.
-2. Ehrliche Konfundierung, VOR der Feier registriert: Dichte variiert
-   ZWEI Dinge — die Rueckmeldungs-Struktur UND die Gradienten-Signal-
-   staerke pro Step (DENSE hat ~20x mehr Loss-Terme je Sequenz). Die
-   alternative Lesart lautet: nicht die Dichte als Aufgabenstruktur,
-   sondern das staerkere Gradientensignal rettet das Training (oder
-   wascht die Rotation schneller aus). Der Befund Differenz SPARSE vs
-   DENSE haelt auch dann, aber die DEUTUNG (Aufgabenstruktur vs
-   Optimierungs-Dynamik) ist damit noch nicht entschieden.
-3. Registrierte Konsequenz: T33-Kandidat SIGNALSTAERKE-MATCHED-KONTROLLE
-   (DENSE mit lr/20 ODER SPARSE mit 20x Steps) — erst wenn der Schalter
-   unter gematchter Signalstaerke erhalten bleibt, ist die Dichte-These
-   als geschlossen zu behandeln. Bis dahin: PASS als registriert,
-   Deutung vorlaeufig.
+2. KORREKTUR (2026-11-17, nach externem Einwand): Diese Lesart sprach
+   zunaechst von "~20x mehr Loss-Terme" — FALSCH. Korrekt: T_SEQ=24,
+   DELAY=20 → 4 Label-Frames; DENSE hat 4x mehr Terme je Step (128 vs 32
+   bei batch=32). Und bei Mean-Reduction ist die Gradienten-MAGNITUDE je
+   Step vergleichbar — der Konfund ist die VARIANZ (Mittelung ueber 4
+   Lehrer-Terme), nicht die Magnitude. Die urspruenglich geplante
+   Falsifikation "DENSE lr/20 oder SPARSE 20x Steps" matchte daher die
+   falsche Groesse und wurde VOR dem Lauf von T33 ersetzt (Nachtrag 57):
+   PRIMARY ist der maskierte Backprop (MB), plus SPARSE-4x-Steps (S4X).
+   Der Konfund selbst bleibt real und wird jetzt geschlossen, nicht nur
+   benannt.
+3. Registrierte Konsequenz: T33 (Signalstaerke-Match, N57). Erst wenn
+   der Schalter unter gematchtem Signal erhalten bleibt (MB haelt,
+   S4X faellt), ist die Dichte-These als geschlossen zu behandeln.
+   Bis dahin: PASS als registriert, Deutung vorlaeufig.
 4. Washout-Caveat (aus N55): trifft hier NICHT die Kern-Logik — Washout
    wuerde GLEICHMAESSIG helfen und kann die SPARSE-Kollaps-Differenz
-   nicht erzeugen. Er verschaerft aber Punkt 2: schnelleres Washout im
-   DENSE-Arm ist genau die Optimierungs-Lesart.
+   nicht erzeugen.
 
 ## Bilanz (2026-11-17)
 Zwei Steine gefeuert (T31, T32), 160 Runs, 0 verbrannte Minuten durch
-Gates. Ein GEMISCHT (T31: Verengung der T23-Lesart, Schalter bleibt),
-ein PASS (T32: Dichte-Traeger, Deutung mit registrierter Konfundierung
-offen). Der externe Kritiker hat zweimal richtig gelegen: die Teil-
-Rotation war ein ungetesteter Freiheitsgrad (T31), und die Dichte-
-Frage war ohne seine Korrektur eine Tautologie-Zelle gewesen (T32).
+Gates. Ein GEMISCHT (T31: Zerlegung in zwei Mechanismen, Schalter
+bleibt), ein PASS (T32: Dichte-Traeger, Konfund registriert und an T33
+uebergeben). Der externe Kritiker hat zweimal richtig gelegen: die Teil-
+Rotation war ein ungetesteter Freiheitsgrad (T31), und die Dichte-Frage
+waere ohne seine Korrektur eine Tautologie-Zelle gewesen (T32). Ein
+Fehler geht auf mein Konto: die ~20x-Zahl in der ersten Fassung dieser
+Lesart (korrigiert, Punkt 2 oben) — der Kritiker hat sie uebernommen,
+bevor ich sie selbst pruefte.
