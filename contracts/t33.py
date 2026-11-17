@@ -82,10 +82,18 @@ def contract_t33():
                        'Signal; mehr Training rettet sparse nicht'),
                  predicate=[dict(metric='DENSE_MASK_A0.pf', op='ge',
                                  value=0.0)]),
-            dict(id='KILL — OPTIMIERUNGS-TRAEGER',
-                 text=('P_MB(1) <= 0.15 UND P_S4X(1) >= 0.5: '
-                       'Optimierungs-Dynamik traegt, die Dichte als '
-                       'Aufgabenstruktur nicht — T32-These gekillt'),
+            dict(id='GEMISCHT — REDUNDANZ',
+                 text=('P_MB(1) >= 0.5 UND P_S4X(1) >= 0.5: dichte '
+                       'Aufgabe UND dichtes Total-Signal koennen den '
+                       'Kollaps je verhindern; keins ist notwendig '
+                       '(Befund, registriert N57-Erg)'),
+                 predicate=[dict(metric='DENSE_MASK_A0.pf', op='lt',
+                                 value=-1.0)]),
+            dict(id='GEMISCHT — PER-FRAME-EXPOSITIONS-KONFUND',
+                 text=('P_MB(1) <= 0.15 UND P_S4X(1) >= 0.5: KILL der '
+                       'Dichte-These erst mit MB-2400 (nicht gefahren); '
+                       'MB-600 hat die geringste Per-Frame-Exposition '
+                       '(150 vs 600/600/2400), registriert N57-Erg'),
                  predicate=[dict(metric='DENSE_MASK_A0.pf', op='lt',
                                  value=-1.0)]),
         ])

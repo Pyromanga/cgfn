@@ -3682,3 +3682,32 @@ arXiv 2602.13934 (Why Code, Why Now): dichte, lokale, verifizierbare
 Rueckmeldung als Skalierungstraeger. T33 ist das Kontrollexperiment
 zu T32: es schliesst oder killt die Dichte-These — beides ist
 Fortschritt. Kein Doppel bekannt.
+
+
+# Nachtrag 57 — ERGAENZUNG (2026-11-17, VOR dem Feuer, auf Kapitaen-Anweisung): Per-Frame-Expositions-Asymmetrie eingefroren.
+
+## Die Asymmetrie (Kapitaen-Punkt, berechtigt)
+Per-Frame-Exposition (Terme-Updates je Label-Frame ueber das
+gesamte Training): MB-600: 600/4 = 150 | DENSE (T32): 600 |
+SPARSE (T32): 600 | S4X: 2400. MB hat die GERINGS TE Exposition
+aller vier Arme. Ohne Freeze wuerde der KILL-Fall nach dem Lauf
+als staerker gelesen, als er ist — genau der Fehler, den die
+Erstfahrt-Regel verhindern soll.
+
+## Konsequenzen (eingefroren, VOR dem Lauf)
+1. PASS bleibt clean: MB haelt TROTZ geringster Exposition —
+   das ist die STARKE Lesart (exposure kann nur schaden).
+2. KILL der Dichte-These gilt NUR mit MB-2400 (nicht gefahren,
+   Budget). Faellt nur MB-600 (und S4X haelt), ist das Verdikt
+   GEMISCHT mit Per-Frame-Expositions-Konfund — NIEMALS KILL.
+   Der KILL-Label der Erstregistrierung ("KILL — OPTIMIERUNGS-
+   TRAEGER") war mehrdeutig und ist ersetzt: gemeint war
+   "DICHTE-THESE GEKILLT, OPTIMIERUNGS-TRAEGER BESTAETIGT";
+   ohne MB-2400 ist dieser Ausgang nicht erreichbar.
+3. Beide halten = REDUNDANZ (vorab definiert): dichte Aufgabe
+   UND dichtes Total-Signal koennen den Kollaps je verhindern;
+   keins ist notwendig. Das ist ein Befund, keine Zwischenwelt.
+4. Budget-Entscheidung (Kapitaen): Option 2 (Vorbehalt statt
+   fuenftem Arm) — MB-2400 wuerde ~60 weitere Runner-Minuten
+   kosten; registriert als T33b-Kandidat, falls die GEMISCHT-
+   Expositions-Zelle eintritt.

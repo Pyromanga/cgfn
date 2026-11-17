@@ -16,10 +16,15 @@ TEST: Vier Arme, a {0,1}:
 Bloecke 1430..1509, 80 Runs, f64, ~75-90 min. Referenz aus T32.
 PASS — DICHTE-TRAEGER (geschlossen): P_MB(1) >= 0.5 UND
   P_S4X(1) <= 0.15.
-KILL — OPTIMIERUNGS-TRAEGER (gekillt): P_MB(1) <= 0.15 UND
-  P_S4X(1) >= 0.5.
-GEMISCHT: sonst bei intakter Sanity (Divergenzen einzeln gedeutet,
-registriert). Sanity P_MB(0) >= 0.5, P_S4X(0) >= 0.5.
+GEMISCHT — REDUNDANZ: P_MB(1) >= 0.5 UND P_S4X(1) >= 0.5 —
+  dichte Aufgabe UND dichtes Total-Signal koennen den Kollaps
+  je verhindern; keins ist notwendig (Befund, registriert).
+GEMISCHT — PER-FRAME-EXPOSITIONS-KONFUND: P_MB(1) <= 0.15 UND
+  P_S4X(1) >= 0.5 — KILL der Dichte-These erst mit MB-2400
+  (nicht gefahren); MB-600 hat die geringste Per-Frame-
+  Exposition (150 vs 600/600/2400), registriert N57-Erg.
+GEMISCHT — ZWISCHENWELT: sonst bei intakter Sanity.
+Sanity P_MB(0) >= 0.5, P_S4X(0) >= 0.5.
 Baender: ALLE Arme ERSTFAHRT ohne Band (neue Optimierungs-Regime).
 R2: jedes Mass an JEDEM Arm.'''
 import json
@@ -226,7 +231,7 @@ def main():
     L.append('T33 — SIGNALSTRAEKE-MATCH (T32-Konfund: MB matcht Terme/Step + Varianz + Total; S4X testet zu wenig Training)')
     L.append('HYPOTHESE (T32): Rueckmeldungs-Dichte, nicht Gedaechtnis-Forderung, ist der Traeger des Schalters.')
     L.append('Korrektur ggue. erster Lesart: 4x Loss-Terme (nicht ~20x); Konfund ist die VARIANZ, nicht die Magnitude.')
-    L.append('PASS: P_MB(1) >= 0.5 UND P_S4X(1) <= 0.15 | KILL: P_MB(1) <= 0.15 UND P_S4X(1) >= 0.5.')
+    L.append('PASS: P_MB(1) >= 0.5 UND P_S4X(1) <= 0.15 | GEMISCHT-Redundanz / GEMISCHT-Expositions-Konfund (N57-Erg).')
     L.append('Stufen a {0,1}, Bloecke 1430..1509, 80 Runs, f64, MB 600 Steps / S4X 2400 Steps.')
     L.append('Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t33.py')
     L.append('=' * 118)
@@ -278,12 +283,14 @@ def main():
     sanity_ok = (pmb0 >= 0.5 and ps40 >= 0.5)
     if not sanity_ok:
         verdict_txt = 'UNENTSCHEIDEN — SANITY GERICHT'
-    elif pmb1 <= 0.15 and ps41 >= 0.5:
-        verdict_txt = 'KILL — OPTIMIERUNGS-TRAEGER (T32-These gekillt)'
     elif pmb1 >= 0.5 and ps41 <= 0.15:
         verdict_txt = 'PASS — DICHTE-TRAEGER (KONFUND GESCHLOSSEN)'
+    elif pmb1 >= 0.5 and ps41 >= 0.5:
+        verdict_txt = 'GEMISCHT — REDUNDANZ (beide Faktoren tragen; keins notwendig; registriert N57-Erg)'
+    elif pmb1 <= 0.15 and ps41 >= 0.5:
+        verdict_txt = 'GEMISCHT — PER-FRAME-EXPOSITIONS-KONFUND (KILL nur mit MB-2400; registriert N57-Erg)'
     else:
-        verdict_txt = 'GEMISCHT — Divergenz als Befund (registriert, N57)'
+        verdict_txt = 'GEMISCHT — ZWISCHENWELT (registriert, N57-Erg)'
     L.append('')
     L.append('--- T33-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---')
     L.append('P-Stufen: P_MB(0)=%.4f | P_MB(1)=%.4f | P_S4X(0)=%.4f | P_S4X(1)=%.4f'
