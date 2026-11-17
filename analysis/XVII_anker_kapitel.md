@@ -3768,3 +3768,114 @@ Referenz aus T32: P_SPARSE(1) = 0.05, P_DENSE(1) = 1.00.
 7. Bilanz: 3 Steine (T31, T32, T33), 240 Runs, 0 verbrannte Minuten
    durch Gates. Ein GEMISCHT (Verengung), zwei PASS (Dichte-Traeger,
    Konfund geschlossen).
+
+
+# Nachtrag 58 (2026-11-18): B1 BASIS-ABHAENGIGKEIT SPEKTRALER THEORIEN — NEUE SERIE "B" REGISTRIERT (gefeuert auf Kapitaen-Auftrag).
+
+## Auftrag (Kapitaen ueber externen Kritiker, 2026-11-18)
+Neue, eigenstaendige Linie: Angriff auf die verbreitete Annahme,
+spektrale Groessen (spektraler Radius, Lyapunov-Exponent, Edge-of-
+Chaos) determinierten, wie ein Netz rechnet. Erster Stein: Gibt es
+eine basisinvariante Groesse, die Gedaechtnis-Lernen vorhersagt, wo
+spektraler Radius und DM es nicht tun? Alle drei Kandidaten, nicht
+nur einer. Nicht Teil des Auftrags: neue Schalter-Steine, Dichte-
+Serie, T27. Diese Linie ist eigenstaendig.
+
+## BEKANNT-NEU-TRENNUNG (Pflicht, eingefroren)
+BEKANNT (Funktionalanalysis / Folklore, zu zitieren, nicht zu
+beanspruchen): Die elementweise tanh ist nicht rotations-
+aequivariant; Eigenschaften, die von der Beziehung zwischen W und
+den festen Achsen der Nichtlinearitaet abhaengen, sind basis-
+abhaengig. Das ist seit Jaegers ESN-Arbeit (Jaeger 2001) implizit
+bekannt und wurde in der Initialisierungs-Literatur (dynamische
+Isometrie, Pennington, Schoenholz, Ganguli 2017ff) als Spektrum-
+These formalisiert — ohne dass diese Literatur die Basis-Abhaengig-
+keit ihrer Vorhersagen thematisiert. NEU (unser Anspruch): die
+systematische KONSEQUENZ — exakt spektral-erhaltende Um-Basierung
+(orthogonale Aehnlichkeit, Geometrie identisch bis auf Rotation)
+zerstoert Lernbarkeit von Gedaechtnis-Aufgaben (T23-T25, T31).
+Das Spektrum sieht beide Netze identisch; das Lernen nicht.
+Wer spektrale Knebel als Lernbarkeits-Regler anwendet, muss die
+Basis-Anhaengigkeit seiner Vorhersage kennen.
+
+## Design (eingefroren, VOR dem Lauf)
+Basis: 5 Rotation-Dosen a in {0, 0.25, 0.5, 0.75, 1.0} auf exakt
+dem T23-MEM-Setup (H=48, s=2.2, wb=0.6, Produkt-Task am Seq-Ende,
+600 Steps, Adam lr=5e-3, Schwellwert 0.99). 20 Seeds je Dosis,
+Bloecke 1510..1709, 100 Runs, f64, ~40-50 min. Pro Seed (aus dem
+UNTRAINIERTEN W0, deterministischer Drive, Seed 777):
+  K1 Kommutator-Norm ||[W, D]||_F / (||W||_F ||D||_F), mit
+     D = diag(Mittel sech^2 der getriebenen Trajektorie).
+  K2 Participation Ratio der Singulaerwerte von J = -I/tau + W D
+     (effektiver Rang des Dynamik-Jacobianers).
+  K3 log10 Konditionszahl der Kovarianz erreichbarer Zustaende.
+  Baseline: DM (T25/T26-Ordnungsparameter) und spektraler Radius
+  (unter Konjugation EXAKT konstant 0.6 → kann die Dosis-Antwort
+  prinzipiell nicht tragen — eingebauter Selbst-Check der
+  Auswertung).
+SEKUNDAER (registriert): historische Stein-Bilanz (16 Kernel-
+Steine, Block-Mittel P aus dem Anker) gegen deterministisch
+nachgerechnete Kandidaten. Nicht rekonstruierbar → Lueckenliste,
+keine Schaetzung.
+
+## Lesarten (eingefroren, VOR dem Lauf)
+- Sanity: pf(a=0) >= 0.5 UND pf(a=1) <= 0.30 (Kollaps-Replikation).
+- PASS — BASISINVARIANTE-TRAEGER: ein Kandidat mit gepooltem
+  |r| >= 0.30 UND |r| >= |r_DM| + 0.10 (frische Bloecke).
+- GEMISCHT: bester Kandidat in [ |r_DM| + 0.05, |r_DM| + 0.10 ).
+- KILL — KEINE BASISINVARIANTE GROESSE: kein Kandidat erreicht
+  |r_DM| + 0.05. Dann gibt es keine einfache Groesse naeher an
+  der Einzelnetz-Lernbarkeit als DM — und das Spektrum traegt
+  die Vorhersage allein schon wegen seiner Konjugations-Konstanz
+  nicht. Die "tune the spectral radius"-Praxis ist dann ohne
+  Lernbarkeits-Beleg. Das ist selbst ein Befund.
+  Label praezisiert (Lehre aus N57-Erg): KILL bedeutet "keine
+  basisinvariante Praediktor-Groesse gefunden", NICHT "Basis-
+  These gekillt" — die Basis-Abhaengigkeit selbst ist durch
+  T23/T31 bereits belegt.
+- UNENTSCHEIDEN: Sanity verletzt, ndiv > 6 je Block, Sekundaer-
+  Rechnung unvollstaendig.
+- Baender: Alle Kandidaten ERSTFAHRT ohne Band.
+
+## Reichweite (Absatz in normaler Sprache, Pflicht-Lieferung 4)
+Wenn der Befund haelt (egal ob PASS oder KILL), ist eine konkret
+benennbare Annahme falsch: dass es einen DREH an einer spektralen
+Klammer gibt, der Lernbarkeit regelt. Konkret: (1) Im Reservoir
+Computing gilt der spektrale Radius als Standard-Knopf (Jaeger
+2001, "Echo state networks"; Lukosevicius & Jaeger 2009,
+"Reservoir computing approaches to recurrent neural network
+training", dort explizit als Tuning-Richtlinie). (2) In der
+RNN-Initialisierung wird dynamische Isometrie ueber Eigenwert-
+spektren gesteuert (Pennington, Schoenholz & Ganguli 2017,
+"Resurrecting the sigmoid in recurrent networks through dynamic
+isometry"). (3) In der Kritikalitaets-Linie wird Edge-of-Chaos
+als Lern-Fenster behandelt (Bertschinger & Natschlaeger 2004,
+"Real-time computation at the edge of chaos"). Unser Befund
+sagt: Zwei Netze mit DEMSELBEN Spektrum — derselbe Radius,
+dasselbe Edge-of-Chaos-Regime — lernen Gedaechtnis unter-
+schiedlich gut, und das ist keine Streuung, sondern Geometrie.
+Keine der drei Originalarbeiten behauptet die starke Version
+("das Spektrum allein genuegt") so unvorsichtig, wie die Folge-
+literatur sie anwendet. Der Angriff richtet sich auf die
+ANWENDUNG in der Praxis, nicht auf die papers.
+
+## Wer es lesen muesste (Pflicht-Lieferung 5, konkrete Gruppen)
+1. Reservoir Computing: Herbert Jaeger und die Praxis-Linie um
+   Lukosevicius — dort steht die Tuning-Richtlinie, die wir
+   angreifen; der Befund trifft ihre Standard-Anleitung.
+2. RNN-Initialisierung / dynamische Isometrie: die Pennington-
+   Linie (Schoenholz, Ganguli) und die Saxe-Linie — dort ist
+   "Spektrum bestimmt Lernbarkeit" am praezisesten formuliert
+   und am leichtesten an unserem Design zu pruefen.
+3. Kritikalitaet: die Bertschinger/Natschlaeger-Linie und die
+   Beggs-Linie (critical brain) — ihr Regime-Begriff kollabiert
+   wortwoertlich unter der Konjugation.
+Alle drei als erste Leser, nicht als Gegner: sie nehmen den
+Befund beim Wort. Ohne mindestens eine dieser Gruppen bleibt
+jede Revolution ein Selbstgespraech.
+
+## Recon (2026-11-18)
+Task-Restricted Symmetries (arXiv 2606.18457) — Schur-Analysen
+trainierter RNNs: verwandt, aber Analyse NACH dem Training, nicht
+kausale Basis-Verschiebung VOR dem Training. Basisnae Praediktoren
+fuer Einzelnetz-Lernbarkeit: kein Doppel bekannt.
