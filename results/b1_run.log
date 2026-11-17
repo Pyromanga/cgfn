@@ -1,0 +1,12 @@
+======================================================================================================================
+B1 — BASIS-ABHAENGIGKEIT SPEKTRALER THEORIEN (neue B-Serie; 3 Kandidaten gegen Spektrum + DM)
+FRAGE: Praediziert eine basisnae Groesse Gedaechtnis-Lernen, wo spektraler Radius (EXAKT konstant
+unter Konjugation) und DM es nicht tun? K1 Kommutator-Norm | K2 Jacobian-Effektivrang | K3 Zustands-Kond.
+5 Dosen a {0,0.25,0.5,0.75,1.0}, je 20 Seeds, T23-MEM, 600 Steps. Bloecke 1510..1709.
+Verdikt generiert | Contract: contracts/b1.py
+======================================================================================================================
+K-GATE VERWEIGERT VOR DEM LAUF — keine Runner-Minuten verbrannt:
+  ALARM: Praedikat 'DOSE_A0.pf' referenziert UNBEKANNTEN Arm 'DOSE_A0'.
+  ALARM: Praedikat 'DOSE_A0.pf' referenziert UNBEKANNTEN Arm 'DOSE_A0'.
+  ALARM: Praedikat 'DOSE_A0.pf' referenziert UNBEKANNTEN Arm 'DOSE_A0'.
+
