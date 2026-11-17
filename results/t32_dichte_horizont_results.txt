@@ -1,0 +1,35 @@
+======================================================================================================================
+T32 — RUECKMELDUNGS-DICHTE BEI FIXEM HORIZONT (EINE Variable: sparse vs dense bei D=20)
+HYPOTHESE: Rueckmeldungs-Dichte, nicht Gedaechtnis-Forderung, ist der Traeger des Schalters.
+FALSIFIKATION: P_DENSE(1) <= 0.15 → Hypothese gefallen.
+Stufen a {0,1}, Bloecke 1350..1429, 80 Runs, f64, Gradienten-Maschine exakt T20/T23.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t32.py
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm DENSE_A0 (cell=dense, a=0, seeds 1390..1409): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | div=0
+
+Arm DENSE_A1 (cell=dense, a=1, seeds 1410..1429): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | div=0
+
+Arm SPARSE_A0 (cell=sparse, a=0, seeds 1350..1369): n_ok=20/20 | P_lernt=0.75 | median acc=1.0000 | div=0
+
+Arm SPARSE_A1 (cell=sparse, a=1, seeds 1370..1389): n_ok=20/20 | P_lernt=0.05 | median acc=0.5215 | div=0
+
+--- T32-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: P_SPARSE(0)=0.7500 | P_SPARSE(1)=0.0500 | P_DENSE(0)=1.0000 | P_DENSE(1)=1.0000
+SANITY: P_SPARSE(0) >= 0.25: True | P_DENSE(0) >= 0.5: True
+FALSIFIKATIONS-Klausel: P_DENSE(1) <= 0.15: False
+L5-BAND (registriert VOR dem Lauf, N56):
+  P_SPARSE(0) in [0.25, 0.64]: gemessen 0.7500 — NEIN
+  P_SPARSE(1) in [0.00, 0.22]: gemessen 0.0500 — TREFFER
+  DENSE-Arme: ERSTFAHRT ohne Band (registriert).
+L5-BAND-TREFFER: 1/2 (Hand-Band, N56)
+
+VERDICT: PASS — DICHTE-TRAEGER
+
+--- N-SKELETT (Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 56 (2026-11-17) — AUTO-SKELETT
+  SPARSE_A0.pf = 0.7500 | SPARSE_A1.pf = 0.0500
+  DENSE_A0.pf = 1.0000 | DENSE_A1.pf = 1.0000
+  LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===

@@ -1,0 +1,26 @@
+{
+ "measurements": {
+  "DENSE_A0": {
+   "pf": 1.0,
+   "colnorm": 2.2,
+   "ndiv": 0
+  },
+  "DENSE_A1": {
+   "pf": 1.0,
+   "colnorm": 2.2,
+   "ndiv": 0
+  },
+  "SPARSE_A0": {
+   "pf": 0.75,
+   "colnorm": 2.2,
+   "ndiv": 0
+  },
+  "SPARSE_A1": {
+   "pf": 0.05,
+   "colnorm": 2.2,
+   "ndiv": 0
+  }
+ },
+ "verdict": "PASS \u2014 DICHTE-TRAEGER",
+ "band_hits": 1
+}
