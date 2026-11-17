@@ -280,7 +280,7 @@ def main():
             yy = (ys - ys.mean()) / (ys.std() + 1e-30)
             rs[key] = float((xs * yy).mean())
 
-    pf_a0 = arms_out.get('DOSE_A0', {}).get('pf', float('nan'))
+    pf_a0 = arms_out.get('DOSE_A00', {}).get('pf', float('nan'))
     pf_a1 = arms_out.get('DOSE_A10', {}).get('pf', float('nan'))
     sanity_ok = (pf_a0 >= 0.5 and pf_a1 <= 0.30)
     best_key = max([k for k in ['k1', 'k2', 'k3'] if k in rs and rs[k] == rs[k]],

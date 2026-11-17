@@ -3879,3 +3879,14 @@ Task-Restricted Symmetries (arXiv 2606.18457) — Schur-Analysen
 trainierter RNNs: verwandt, aber Analyse NACH dem Training, nicht
 kausale Basis-Verschiebung VOR dem Training. Basisnae Praediktoren
 fuer Einzelnetz-Lernbarkeit: kein Doppel bekannt.
+
+
+# Nachtrag 58 — ERGAENZUNG (2026-11-18, VOR dem Refire): Gate-Abfang protokolliert.
+Erster Lauf (Run 44200191425) stoppte am Import-Gate: Praedikat-Referenzen
+nannten DOSE_A0 / DOSE_A05, waehrend die Arme als DOSE_A00/A025/A05/
+A075/A1 registriert waren (Namens-Ableitung aus str(a).replace war
+fehleranfaellig). Kein Runner-Minute verbrannt, kein Ergebnis
+angefasst. Fix: explizite ARM_NAMES-Liste im Contract, Sanity- und
+Verdikt-Praedikate darauf umgesetzt, Auswertung im Instrument
+(NOSE_A-Zeiger) angeglichen. Refire via Trigger. Design, Bloecke
+und eingefrorene Lesarten UNVERAENDERT.

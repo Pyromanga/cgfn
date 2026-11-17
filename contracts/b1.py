@@ -33,6 +33,7 @@ Instrument: experiments/b1_basisinvariante.py. Rolle: dose.''';
 H = 48
 Q_SEED = 2020
 DOSES = [0.0, 0.25, 0.5, 0.75, 1.0]
+ARM_NAMES = ['DOSE_A00', 'DOSE_A025', 'DOSE_A05', 'DOSE_A075', 'DOSE_A10']
 BLOCK0 = 1510
 DELAY = 20
 
@@ -45,7 +46,7 @@ def contract_b1():
     arms = []
     for i, a in enumerate(DOSES):
         rng = (BLOCK0 + i * 20, BLOCK0 + i * 20 + 19)
-        arms.append(dict(name='DOSE_A%s' % str(a).replace('.', ''),
+        arms.append(dict(name=ARM_NAMES[i],
                          H=H, kind='norm', role='dose', s=2.2, wb=0.6,
                          conj_a=a, cell='sparse',
                          seeds=_seeds(rng),
@@ -62,7 +63,7 @@ def contract_b1():
         arms=arms,
         sanity=[dict(id='sanity-a0', text='a=0 lernt (Referenz '
                      'T23-Basis)', predicate=[dict(
-                         metric='DOSE_A0.pf', op='ge', value=0.5)]),
+                         metric='DOSE_A00.pf', op='ge', value=0.5)]),
                 dict(id='sanity-a1', text='a=1 kollabiert (T23/T32-'
                      'Referenz 0.05-0.10)', predicate=[dict(
                          metric='DOSE_A10.pf', op='le', value=0.3)])],
@@ -70,12 +71,12 @@ def contract_b1():
             dict(id='PASS — BASISINVARIANTE-TRAEGER',
                  text=('ein Kandidat: |r| >= 0.30 UND |r| >= |r_DM| '
                        '+ 0.10 (gepoolt, frische Bloecke)'),
-                 predicate=[dict(metric='DOSE_A0.pf', op='ge',
+                 predicate=[dict(metric='DOSE_A00.pf', op='ge',
                                  value=0.0)]),
             dict(id='KILL — KEINE BASISINVARIANTE GROESSE',
                  text=('kein Kandidat erreicht |r_DM| + 0.05: keine '
                        'einfache basisnae Praediktor-Groesse — selbst '
                        'ein Befund (N58-Label-Praezisierung)'),
-                 predicate=[dict(metric='DOSE_A0.pf', op='lt',
+                 predicate=[dict(metric='DOSE_A00.pf', op='lt',
                                  value=-1.0)]),
         ])
