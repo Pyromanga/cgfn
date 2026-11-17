@@ -105,3 +105,27 @@ Lernen nie. Frage "Gedaechtnis oder Geometrie" mit Ridge-
 Instrumenten geschlossen (registriert); offen mit
 Gradienten-Instrument. Instrument-Diagnose: lineare
 Readouts sehen Gedaechtnis-Aufgaben nicht.
+
+## Kanten (Ergaenzung 2026-11-17)
+T30 -> T31 (Readout-Einwand: Teil-Rotation vs volle Rotation als ungetesteter Freiheitsgrad)
+T23-T25 -> T32 (Dichte-vs-Horizont-Frage, externer Einwand; EINE Variable, D=20 fix)
+T31 + T32 -> OFFEN: SIGNALSTAERKE-KONFOUND (DENSE = mehr Gradient pro Step; matched Kontrolle T33-Kandidat vor Dichte-These-final)
+
+### T31 (2026-11-17): GEMISCHT
+VOLL-AEQUIVARIANTE ROTATION (Readout-Einwand): P_PART(1)=0.10 (Band-
+Treffer) vs P_FULL(1)=0.20 — in der vorab registrierten Grauzone
+[0.10, 0.40]. Kollaps ueberlebt volle Rotation: kein reines Teil-
+Rotations-Artefakt. ABER Teil-Rotation kollabiert staerker als volle:
+ein Teil des T23-Kollaps kommt aus der Inkonsistenz der Teil-Rotation.
+T23-T25-Lesart stuetzt sich kuenftig auf die FULL-Zahl. Sanity intakt
+(0.20 < 0.32). Washout-Caveat beruehrt GEMISCHT nicht (registriert);
+T31b entfaellt (nur bei PASS-IMMUN noetig).
+
+### T32 (2026-11-17): PASS (DICHTE-TRAEGER)
+RUECKMELDUNGS-DICHTE BEI FIXEM HORIZONT D=20: P_SPARSE(1)=0.05 (Band-
+Treffer) vs P_DENSE(1)=1.00; Sanities intakt (0.75 / 1.00). Registrierte
+PASS-Konstellation sitzt exakt: Dichte, nicht Gedaechnis-Forderung, ist
+der Traeger des Schalters. Registrierte Konfundierung (Lesart N56):
+Dichte variiert auch die Gradienten-Signalstaerke pro Step; Signal-
+staerke-gematchte Kontrolle (T33-Kandidat) vor der endgueltigen Deutung.
+
