@@ -3517,3 +3517,55 @@ Einwand extern; naechster Nachbar bleibt Task-Matched Memory
 (MDPI Entropy 28(11):1215). Kein Doppel: die Frage
 "Teil-Rotation vs volle aequivalente Rotation" ist nach
 unserer Recherche ungestellt.
+
+
+---
+
+# Nachtrag 55 — ERGAENZUNG (2026-11-17, WAEHREND des Laufs, VOR dem Verdikt-Lesen): Drei Ausgaenge, eingefrorene Lesart-Baender, Washout-Caveat.
+
+Anlass: zweiter externer Einwand (Agenten-Dialog). Der Lauf
+(44046697852) ist in_progress; diese Ergaenzung friert die
+Interpretation VOR dem Lesen des Results-Files ein — keine
+Nachverhandlung hinterher.
+
+## 1. Drei Ausgaenge, nicht zwei (eingefroren)
+Das registrierte Verdikt (PASS/KILL/Grauzone-UNENTSCHEIDEN)
+bleibt unangetastet. Die Lesart von P_FULL(1) wird JETZT
+eingefroren, mit Baseline P_PART(0) = 0.575 und Kollaps
+P_PART(1) = 0.025 (T23) als Referenz:
+- GENUIN: P_FULL(1) < 0.10 — Kollaps haelt praktisch voll;
+  Readout-Einwand abgewiesen.
+- ARTEFAKT: P_FULL(1) > 0.40 — Kollaps praktisch weg;
+  Teil-Rotation war der Traeger.
+- GEMISCHT: P_FULL(1) in [0.10, 0.40] — beide Mechanismen
+  tragen bei. Resolves KOMPLEMENTAER zur registrierten
+  Grauzone (UNENTSCHEIDEN, Lesart offen) — ausdruecklich
+  als eigenes moegliches Verdikt registriert, damit nichts
+  nachtraeglich als "haelt ja noch" oder "ist ja weg"
+  umgedeutet wird.
+
+## 2. Sanity Q = I (eingefroren)
+FULL a=0 ist per Konstruktion exakt der PART a=0-Aufbau
+(Q = I). Die Arme laufen auf FRISCHEN, verschiedenen
+Bloecken (1270..1289 vs 1310..1329) — exakte Reproduktion
+ist also nicht zu erwarten; die Verletzungsschwelle ist
+Block-Rauschen (T22: std(P_Block) ~ 0.107). Registriert:
+wenn |P_FULL(0) - P_PART(0)| > 3 * 0.107 ~ 0.32 (oder eine
+Sanity < 0.25), ist die Rotations-Implementierung selbst
+verdaechtig und das Verdikt ist UNENTSCHEIDEN, nicht
+PASS/KILL.
+
+## 3. Washout-Caveat (eingefroren, ehrlich)
+T31 trainiert W mit Adam (600 Steps). Die Loss-Funktion
+bevorzugt keine Basis — das Training kann die Rotation
+AUSWASCHEN. Dann misst der FULL-Arm nicht die tanh-
+Ausrichtung, sondern wie schnell Adam die Basis wieder-
+findet. Das Instrument emittiert DM_final nicht (nach-
+traeglich nicht ergaenzbar, Freeze). Registrierte
+Konsequenz: Ein PASS — SCHALTER-IMMUN ist VOR Verwendung
+des Immun-Anspruchs durch einen Folgestein (T31b: gleiche
+Arme + DM_final-Emission, 0 neue Physik) auf Washout zu
+pruefen. Ohne T31b gilt der Immun-Anspruch als vor-
+laeufig. Ein ARTEFAKT- oder GEMISCHT-Verdikt ist von
+diesem Caveat nicht beruehrt (er schwaecht nur den
+PASS, nie den KILL).
