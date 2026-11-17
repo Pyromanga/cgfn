@@ -3711,3 +3711,60 @@ Erstfahrt-Regel verhindern soll.
    fuenftem Arm) — MB-2400 wuerde ~60 weitere Runner-Minuten
    kosten; registriert als T33b-Kandidat, falls die GEMISCHT-
    Expositions-Zelle eintritt.
+
+
+# Nachtrag 57 — VERDICT ERGAENZUNG (2026-11-18): PASS — DICHTE-TRAEGER, KONFUND GESCHLOSSEN
+
+## Lauf
+Run 44169778981, 80/80 ok, LUECKENLISTE LEER, Sanity intakt. Erstfahrt
+ohne Band (registriert).
+
+## Zahlen
+MB_A0: P_lernt = 1.00 | MB_A1: P_lernt = 1.00 (median acc = 1.0000).
+S4X_A0: P_lernt = 0.65 (median acc = 1.0000) | S4X_A1: P_lernt = 0.10
+(median acc = 0.5020, Chance).
+Referenz aus T32: P_SPARSE(1) = 0.05, P_DENSE(1) = 1.00.
+
+## Lesart (handgeschrieben, ehrlich)
+1. Die registrierte PASS-Konstellation sitzt exakt: P_MB(1) = 1.00 UND
+   P_S4X(1) = 0.10. Der 2x2 ueber T32 + T33 ist VOLLSTAENDIG:
+   dichte Aufgabe + gematchtes Signal (MB) haelt; dichte Aufgabe +
+   dichtes Total-Signal (DENSE, T32) haelt; sparse + 4x Training
+   (S4X) faellt; sparse + Referenz-Signal (SPARSE, T32) faellt.
+2. Die STARKE Lesart greift: MB hielt TROTZ der geringsten Per-Frame-
+   Exposition aller vier Arme (150 vs 600/600/2400, N57-Ergaenzung).
+   Exposure kann nur schaden — der Befund ist damit gegen die
+   Optimierungs-Lesart genau in der Richtung immun, die der Kapitaen
+   vor dem Lauf eingefroren hat. Der KILL-Pfad (MB-600 faellt)
+   trat nicht ein; MB-2400 / T33b ist damit NICHT noetig.
+3. Mehr Training rettet sparse NICHT: S4X_A1 = 0.10 liegt auf dem
+   Kollaps-Niveau der T32-Referenz (0.05), trotz 2400 Steps und
+   VIERFACHER Exposition. "Zu wenig Training" ist als Erklaerung des
+   T23/T32-Kollaps tot.
+4. S4X_A0 = 0.65 (unter DENSE_A0 = 1.00): die sparse Aufgabe lernt
+   auch OHNE Konjugation nicht perfekt pro Term — sie ist pro Signal-
+   Term haerter. Der Kollaps (a=1: 0.10 vs a=0: 0.65) ist davon
+   unberuehrt, aber die Referenz-Zelle hat Block-Rauschen-Vorbehalt.
+5. Der Dreiklang steht (Erzaehlung des externen Kritikers, jetzt
+   belegt): (i) Rotation kollabiert Gedaechtnis-Aufgaben (T23-T25,
+   verengt auf FULL = 0.20, T31-Zerlegung: tanh-Basis-Fehlausrichtung
+   + Input-W-Inkonsistenz); (ii) der Traeger ist die Rueckmeldungs-
+   Dichte der Aufgabe, nicht die Gedaechtnis-Forderung (T32);
+   (iii) Signalstaerke/Varianz/Exposition als Konfund ausgeschlossen
+   (T33). Task-Informationsstruktur traegt den Schalter — die Mini-
+   Version von "Why Code, Why Now" (arXiv 2602.13934): dichte,
+   verifizierbare Rueckmeldung skaliert, sparse nicht. Die Aussage
+   ist klein, falsifizierbar und reproduzierbar (80-Run-Bloecke,
+   eingefrorene Baender, registrierte Lesarten).
+6. Rest-Konfunde, ehrlich benannt: (a) Washout — MB trainiert W in
+   der rotierten Basis; dass Adam die Rotation NICHT auswaescht, ist
+   hier Eigenschaft, nicht Bug (der Schalter misst das Reservoir-
+   Regime, nicht die Basis); (b) Lehrer-Struktur: der dense Zufalls-
+   Lehrer ist tanh-linear auf dem Input, der sparse Lehrer ist ein
+   Produkt — Aufgaben-Inhalt variiert MIT der Dichte. Die These
+   "Dichte, nicht Gedaechnis-Forderung" ist belegt; die engere These
+   "unabhaengig vom Aufgaben-INHALT" ist NICHT getestet (T34-Kandidat:
+   sparse Lehrer im dense Gewand, gleiche Produkt-Struktur).
+7. Bilanz: 3 Steine (T31, T32, T33), 240 Runs, 0 verbrannte Minuten
+   durch Gates. Ein GEMISCHT (Verengung), zwei PASS (Dichte-Traeger,
+   Konfund geschlossen).

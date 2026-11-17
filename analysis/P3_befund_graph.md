@@ -107,6 +107,8 @@ Gradienten-Instrument. Instrument-Diagnose: lineare
 Readouts sehen Gedaechtnis-Aufgaben nicht.
 
 ## Kanten (Ergaenzung 2026-11-17)
+T32 -> T33 (Konfund-Integration: MB matcht Terme/Step + Varianz + Total; S4X testet zu wenig Training)
+T33 -> T27 (Dichte-These geschlossen; Bruecke zum realistischen Fall freigegeben)
 T30 -> T31 (Readout-Einwand: Teil-Rotation vs volle Rotation als ungetesteter Freiheitsgrad)
 T23-T25 -> T32 (Dichte-vs-Horizont-Frage, externer Einwand; EINE Variable, D=20 fix)
 T31 + T32 -> OFFEN: SIGNALSTAERKE-KONFOUND (DENSE = mehr Gradient pro Step; matched Kontrolle T33-Kandidat vor Dichte-These-final)
@@ -129,3 +131,17 @@ der Traeger des Schalters. Registrierte Konfundierung (Lesart N56):
 Dichte variiert auch die Gradienten-Signalstaerke pro Step; Signal-
 staerke-gematchte Kontrolle (T33-Kandidat) vor der endgueltigen Deutung.
 
+
+
+### T33 (2026-11-18): PASS (DICHTE-TRAEGER, KONFUND GESCHLOSSEN)
+SIGNALSTRAEKE-MATCH: P_MB(1)=1.00 — dichte Aufgabe lernt unter
+VOLLIGEM Signal-Match (Terme/Step 32 = sparse, Varianz gematcht,
+Total 600x32) trotz geringster Per-Frame-Exposition (150);
+P_S4X(1)=0.10 — sparse + 4x Training rettet nicht. Sanity intakt
+(1.00 / 0.65). Der 2x2 ueber T32+T33 vollstaendig: die Rueck-
+meldungs-Dichte der Aufgabe traegt den Schalter, Optimierungs-
+Dynamik nicht. KILL-Pfad (MB-2400) nicht eingetreten, T33b
+entfaellt. Offen (N57-Lesart Punkt 6): Aufgaben-INHALT variiert
+mit der Dichte (Produkt-Lehrer vs tanh-Lehrer); T34-Kandidat
+testet Dichte bei festem Inhalt. T23-Reankerzung: FULL = 0.20
+ist die zitierfaehige Zahl.
