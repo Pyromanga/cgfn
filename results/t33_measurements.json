@@ -1,0 +1,25 @@
+{
+ "measurements": {
+  "DENSE_MASK_A0": {
+   "pf": 1.0,
+   "colnorm": 2.2,
+   "ndiv": 0
+  },
+  "DENSE_MASK_A1": {
+   "pf": 1.0,
+   "colnorm": 2.2,
+   "ndiv": 0
+  },
+  "SPARSE4X_A0": {
+   "pf": 0.65,
+   "colnorm": 2.2,
+   "ndiv": 0
+  },
+  "SPARSE4X_A1": {
+   "pf": 0.1,
+   "colnorm": 2.2,
+   "ndiv": 0
+  }
+ },
+ "verdict": "PASS \u2014 DICHTE-TRAEGER (KONFUND GESCHLOSSEN)"
+}

@@ -1,0 +1,32 @@
+======================================================================================================================
+T33 — SIGNALSTRAEKE-MATCH (T32-Konfund: MB matcht Terme/Step + Varianz + Total; S4X testet zu wenig Training)
+HYPOTHESE (T32): Rueckmeldungs-Dichte, nicht Gedaechtnis-Forderung, ist der Traeger des Schalters.
+Korrektur ggue. erster Lesart: 4x Loss-Terme (nicht ~20x); Konfund ist die VARIANZ, nicht die Magnitude.
+PASS: P_MB(1) >= 0.5 UND P_S4X(1) <= 0.15 | GEMISCHT-Redundanz / GEMISCHT-Expositions-Konfund (N57-Erg).
+Stufen a {0,1}, Bloecke 1430..1509, 80 Runs, f64, MB 600 Steps / S4X 2400 Steps.
+Verdikt generiert von tools/lab_kernel.py | Contract: contracts/t33.py
+======================================================================================================================
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm DENSE_MASK_A0 (cell=dense_mask, task=dense, a=0, steps=600, seeds 1430..1449): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | div=0
+
+Arm DENSE_MASK_A1 (cell=dense_mask, task=dense, a=1, steps=600, seeds 1450..1469): n_ok=20/20 | P_lernt=1.00 | median acc=1.0000 | div=0
+
+Arm SPARSE4X_A0 (cell=sparse4x, task=sparse, a=0, steps=2400, seeds 1470..1489): n_ok=20/20 | P_lernt=0.65 | median acc=1.0000 | div=0
+
+Arm SPARSE4X_A1 (cell=sparse4x, task=sparse, a=1, steps=2400, seeds 1490..1509): n_ok=20/20 | P_lernt=0.10 | median acc=0.5020 | div=0
+
+--- T33-KERNEL-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: P_MB(0)=1.0000 | P_MB(1)=1.0000 | P_S4X(0)=0.6500 | P_S4X(1)=0.1000
+SANITY: P_MB(0) >= 0.5: True | P_S4X(0) >= 0.5: True
+Referenz (T32, nicht neu gefahren): P_SPARSE(1)=0.05 | P_DENSE(1)=1.00
+L5-BAND: ALLE Arme ERSTFAHRT ohne Band (registriert, N57 — neue Optimierungs-Regime).
+
+VERDICT: PASS — DICHTE-TRAEGER (KONFUND GESCHLOSSEN)
+
+--- N-SKELETT (Zahlen maschinell; Lesart handzuschreiben) ---
+# Nachtrag 57 (2026-11-17) — AUTO-SKELETT
+  DENSE_MASK_A0.pf = 1.0000 | DENSE_MASK_A1.pf = 1.0000
+  SPARSE4X_A0.pf = 0.6500 | SPARSE4X_A1.pf = 0.1000
+  LUECKENLISTE: KEINE — alle registrierten Groessen gemessen.
+=== FERTIG ===
