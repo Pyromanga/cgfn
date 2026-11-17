@@ -3474,3 +3474,46 @@ Chance. dm30 = -1 (Klausel P_MEM(0) >= 0.5 FALSE).
    (MEM-Kollaps repliziert; NOW kollabiert nie) und 1
    Instrument-Diagnose (lineare Readouts auf frozen
    Reservoirs sehen Gedaechtnis-Aufgaben nicht).
+
+
+
+---
+
+# Nachtrag 55 (2026-11-17): T31 VOLL-AEQUIVARIANTE ROTATION REGISTRIERT — Antwort auf den Readout-Einwand.
+
+## Der Einwand (extern, Agenten-Dialog, 2026-11-17)
+T23-T25 rotieren nur W (b und Uw bleiben in der alten Basis,
+tanh sitzt in Absolutkoordinaten). Der Kollaps koennte ein
+Artefakt der TEIL-Rotation sein, kein Gedaechnis-Befund.
+Gegenposition (protokolliert): Unsere Readouts sind
+trainiert (Ridge wie Gradienten-Kopf), und lineare
+Funktionale sind unter invertierbaren linearen Abbildungen
+geschlossen — Readout-Fehlausrichtung kann den T23-Kollaps
+nicht erzeugen. Aber die Teil-Rotation selbst ist ein
+ungetesteter Freiheitsgrad: dieser Stein testet sie.
+
+## Design (eingefroren, VOR dem Lauf)
+Exakt die T20/T23-Maschine (H=48, s=2.2, wb=0.6, delayed
+recall, Gradienten-Readout, 600 Steps). Zwei Rotations-
+modi: PART (nur W → Q W Q^T, exakt T23) und FULL (W, b,
+Uw alle mit demselben Q). Stufen a {0,1}: PART 1270..1309,
+FULL 1310..1349. 80 Runs, f64, ~30 min. Bei a=0 sind PART
+und FULL identisch (Q=I) — frische Bloecke als Replikations-
+Kontrolle.
+- Sanity: PART_A0 >= 0.25 UND FULL_A0 >= 0.25 (T22-Band).
+- PASS — SCHALTER-IMMUN: P_PART(1) <= 0.15 UND
+  P_FULL(1) <= 0.15 — der Kollaps haelt unter voller
+  Rotation; Befund gegen jeden Readout-Einwand immun.
+- KILL — ROTATIONS-ARTEFAKT: P_PART(1) <= 0.15 UND
+  P_FULL(1) >= 0.5 — der Kollaps war ein Artefakt der
+  Teil-Rotation; T23-T25-Lesart verengt sich.
+- Grauzone (P_FULL(1) in 0.15..0.50 oder PART repliziert
+  nicht): UNENTSCHEIDEN — Lesart offen.
+- Band (R8): P_PART(1) in [0.00, 0.22] (T23/T24/T25);
+  FULL-Arme ERSTFAHRT ohne Band.
+
+## Recon (2026-11-17)
+Einwand extern; naechster Nachbar bleibt Task-Matched Memory
+(MDPI Entropy 28(11):1215). Kein Doppel: die Frage
+"Teil-Rotation vs volle aequivalente Rotation" ist nach
+unserer Recherche ungestellt.
