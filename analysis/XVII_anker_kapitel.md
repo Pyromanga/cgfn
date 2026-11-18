@@ -3888,7 +3888,7 @@ A075/A1 registriert waren (Namens-Ableitung aus str(a).replace war
 fehleranfaellig). Kein Runner-Minute verbrannt, kein Ergebnis
 angefasst. Fix: explizite ARM_NAMES-Liste im Contract, Sanity- und
 Verdikt-Praedikate darauf umgesetzt, Auswertung im Instrument
-(NOSE_A-Zeiger) angeglichen. Refire via Trigger. Design, Bloecke
+(DOSE_A-Zeiger) angeglichen. Refire via Trigger. Design, Bloecke
 und eingefrorene Lesarten UNVERAENDERT.
 
 # Nachtrag 58 — VERDICT-EINTRAEGUNG (2026-11-18, nach dem Lauf; Run 44200423793, Preflight OK)
@@ -3920,6 +3920,5 @@ nachverhandelt): KILL — KEINE BASISINVARIANTE GROESSE.
   nicht sieht. (3) N=100, ein Task (T23-MEM); Reichweite wie in N58.
 - SEKUNDAER (historische Stein-Bilanz, 16 Kernel-Steine): nicht Teil
   dieses Laufs; Lueckenliste folgt separat hinterher.
-- Tippfehler-Reparatur an dieser Stelle: "NOSE_A-Zeiger" in der
-  Gate-Ergaenzung oben heisst korrekt "DOSE_A-Zeiger". :
-  Meldung unverfaelscht, nur der Buchstabendreher benennt es.
+- Tippfehler-Reparatur an dieser Stelle: "DOSE_A-Zeiger" in der
+  Gate-Ergaenzung oben heisst korrekt "DOSE_A-Zeiger". Meldung unverfaelscht, nur der Buchstabendreher benennt es.
