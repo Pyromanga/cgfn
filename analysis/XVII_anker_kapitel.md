@@ -3890,3 +3890,36 @@ angefasst. Fix: explizite ARM_NAMES-Liste im Contract, Sanity- und
 Verdikt-Praedikate darauf umgesetzt, Auswertung im Instrument
 (NOSE_A-Zeiger) angeglichen. Refire via Trigger. Design, Bloecke
 und eingefrorene Lesarten UNVERAENDERT.
+
+# Nachtrag 58 — VERDICT-EINTRAEGUNG (2026-11-18, nach dem Lauf; Run 44200423793, Preflight OK)
+
+VERDICT (generiert, gegen die eingefrorene Bande gelesen, nicht
+nachverhandelt): KILL — KEINE BASISINVARIANTE GROESSE.
+
+- P-Stufen: pf(a=0)=0.75 | pf(a=0.25)=0.00 | pf(a=0.5)=0.05 |
+  pf(a=0.75)=0.20 | pf(a=1.0)=0.05. n_ok=20/20 in allen Armen, ndiv=0.
+  SANITY intakt (0.75 >= 0.5; 0.05 <= 0.30).
+- Selbstcheck: r_spec=0.049 nahe 0 (Radius unter Konjugation konstant,
+  darf die Dosis-Antwort prinzipiell nicht tragen) — Auswertung besteht.
+- Gepoolte Korrelationen (n=100): r_dm=0.63 | r_k1=-0.44 | r_k2=0.42 |
+  r_k3=0.32 | r_spec=0.05.
+- Banden-Lesung: K1 passt |r|>=0.30, aber KEIN Kandidat erreicht
+  |r_DM|+0.05 (0.68) — eingefrorenes KILL sitzt. KILL im N58-Sinn:
+  "keine basisinvariante Praediktor-Groesse gefunden", NICHT "Basis-
+  These gekillt" (T23/T31 stehen). DM (0.63) bleibt der staerkste
+  Einzel-Praediktor — und DM wird von der Konjugation nachweislich
+  veraendert (T26/T31), d. h. die Praediktions-Kraft braucht offenbar
+  Basis UND Spektrum zugleich.
+- Ehrliche Randbemerkungen (Rest-Konfunde, keine Nachverhandlung):
+  (1) Dosis-Antwort NICHT monoton: a=0.25 kollabiert am hartesten
+  (pf=0.00, unter a=1.0). Die drei Kandidaten sind in a grob monoton
+  gebaut; eine nicht-monotone Antwort drueckt ihre gepoolten r und
+  kann allein dafuer sorgen, dass DM gewinnt. (2) DM ruhrt aus einer
+  Matrix-Familie nahe K1; dass DM gewinnt, stuetzt die Lesart, dass
+  die tanh-Interaktion die Vorhersagekraft traegt, die das Spektrum
+  nicht sieht. (3) N=100, ein Task (T23-MEM); Reichweite wie in N58.
+- SEKUNDAER (historische Stein-Bilanz, 16 Kernel-Steine): nicht Teil
+  dieses Laufs; Lueckenliste folgt separat hinterher.
+- Tippfehler-Reparatur an dieser Stelle: "NOSE_A-Zeiger" in der
+  Gate-Ergaenzung oben heisst korrekt "DOSE_A-Zeiger". :
+  Meldung unverfaelscht, nur der Buchstabendreher benennt es.

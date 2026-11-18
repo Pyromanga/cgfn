@@ -145,3 +145,22 @@ entfaellt. Offen (N57-Lesart Punkt 6): Aufgaben-INHALT variiert
 mit der Dichte (Produkt-Lehrer vs tanh-Lehrer); T34-Kandidat
 testet Dichte bei festem Inhalt. T23-Reankerzung: FULL = 0.20
 ist die zitierfaehige Zahl.
+
+## Serie B — Basis-Invarianz (neu 2026-11-18)
+
+### Kanten-Ergaenzung (2026-11-18, B-Serie eigenstaendig)
+T31/T32/T33 -> B1: KEINE Kante in die Switch-Linie. B1 ist erster Stein
+der neuen B-Serie (Basis-Invarianz-Frage), teilt Setup (T23-MEM), aber
+keinen Schalter und keine Dichte-These.
+T23/T26 -> B1 (DM-Ebenen-Lesart: wird DM von voller Rotation geschrott?
+Kandidaten K1-K3 als Konjugations-feste Alternative getestet).
+
+### B1 (2026-11-18): KILL (KEINE BASISINVARIANTE GROESSE)
+BASIS-ABHAENGIGKEIT SPEKTRALER THEORIEN (Refire, Run 44200423793,
+Preflight OK): r_dm=0.63 | r_k1=-0.44 | r_k2=0.42 | r_k3=0.32 |
+r_spec=0.05 (Selbstcheck OK). Kein Kandidat erreicht |r_DM|+0.05 ->
+eingefrorenes KILL. Label-Nuance (N58): "keine basisinvariante
+Praediktor-Groesse gefunden", NICHT "Basis-These gekillt". Rest-Konfund
+registriert: Dosis-Antwort nicht monoton (a=0.25 haerter als a=1.0,
+pf=0.00), Kandidaten in a grob monoton gebaut. N58-Verdict-Eintrag im
+Anker ist die Referenz.
