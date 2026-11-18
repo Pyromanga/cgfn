@@ -5,7 +5,28 @@ unter Konjugation) und DM es nicht tun? K1 Kommutator-Norm | K2 Jacobian-Effekti
 5 Dosen a {0,0.25,0.5,0.75,1.0}, je 20 Seeds, T23-MEM, 600 Steps. Bloecke 1510..1709.
 Verdikt generiert | Contract: contracts/b1.py
 ======================================================================================================================
-K-GATE VERWEIGERT VOR DEM LAUF — keine Runner-Minuten verbrannt:
-  ALARM: Praedikat 'DOSE_A0.pf' referenziert UNBEKANNTEN Arm 'DOSE_A0'.
-  ALARM: Praedikat 'DOSE_A0.pf' referenziert UNBEKANNTEN Arm 'DOSE_A0'.
-  ALARM: Praedikat 'DOSE_A0.pf' referenziert UNBEKANNTEN Arm 'DOSE_A0'.
+K-PRE-FLIGHT: OK — Contract strukturell feuerbar.
+
+Arm DOSE_A00 (a=0.0, seeds 1510..1529): n_ok=20/20 | P_lernt=0.75 | median acc=1.0000 | div=0
+
+Arm DOSE_A025 (a=0.25, seeds 1530..1549): n_ok=20/20 | P_lernt=0.00 | median acc=0.5215 | div=0
+
+Arm DOSE_A05 (a=0.5, seeds 1550..1569): n_ok=20/20 | P_lernt=0.05 | median acc=0.5215 | div=0
+
+Arm DOSE_A075 (a=0.75, seeds 1570..1589): n_ok=20/20 | P_lernt=0.20 | median acc=0.4951 | div=0
+
+Arm DOSE_A10 (a=1.0, seeds 1590..1609): n_ok=20/20 | P_lernt=0.05 | median acc=0.5215 | div=0
+
+--- B1-AUSWERTUNG (generiert, nicht handgeschrieben) ---
+P-Stufen: pf(a=0)=0.75 | pf(a=0.5)=0.05 | pf(a=1)=0.05
+SANITY: pf(a=0) >= 0.5: True | pf(a=1) <= 0.30: True
+Gepoolte Korrelationen (frische Bloecke, n=100):
+  r_k1 = -0.4419
+  r_k2 = 0.4163
+  r_k3 = 0.3242
+  r_dm = 0.6315
+  r_spec = 0.0491
+Spektralradius unter Konjugation konstant (0.6): kann die Dosis-Antwort prinzipiell nicht tragen.
+
+VERDICT: KILL — KEINE BASISINVARIANTE GROESSE
+=== FERTIG ===
