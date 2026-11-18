@@ -3920,5 +3920,5 @@ nachverhandelt): KILL — KEINE BASISINVARIANTE GROESSE.
   nicht sieht. (3) N=100, ein Task (T23-MEM); Reichweite wie in N58.
 - SEKUNDAER (historische Stein-Bilanz, 16 Kernel-Steine): nicht Teil
   dieses Laufs; Lueckenliste folgt separat hinterher.
-- Tippfehler-Reparatur an dieser Stelle: "DOSE_A-Zeiger" in der
-  Gate-Ergaenzung oben heisst korrekt "DOSE_A-Zeiger". Meldung unverfaelscht, nur der Buchstabendreher benennt es.
+- Tippfehler-Reparatur (2026-11-18): "NOSE_A" -> "DOSE_A" in der
+  Gate-Ergaenzung oben, im Nachgang korrigiert. Inhalt unverfaelscht.
